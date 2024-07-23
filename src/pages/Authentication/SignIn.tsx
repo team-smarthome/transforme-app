@@ -92,7 +92,7 @@ const SignIn = () => {
     <>
       <div className="h-screen rounded-sm border border-strokedark  shadow-default bg-boxdark">
         <div className="flex flex-wrap items-center">
-          <div className="hidden w-full xl:block xl:w-1/2   ">
+          <div className="hidden w-full xl:block xl:w-1/2 gap-y-20">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-1 inline-block" to="/">
                 <img
