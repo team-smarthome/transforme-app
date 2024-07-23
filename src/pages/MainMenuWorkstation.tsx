@@ -213,60 +213,60 @@ const MainMenuWorkstation = () => {
 };
 
 const routes = [
-  {
-    id: 0,
-    name: "Entry Data",
-    link: "/entry-data",
-    icon: <FaCirclePlus size={90} />,
-  },
-  {
-    id: 1,
-    name: "Penyidikan",
-    link: "/penyidikan",
-    icon: <PiIdentificationCardThin size={90} />,
-  },
-  {
-    id: 2,
-    name: "Daftar BAP",
-    link: "/pencatatan-bap",
-    icon: BAPIcon,
-  },
-  {
-    id: 3,
-    name: "Daftar Sidang",
-    link: "/daftar-sidang",
-    icon: <VscLaw size={80} />,
-  },
-  {
-    id: 4,
-    name: "Daftar Kasus",
-    link: "/daftar-kasus",
-    icon: <BsBriefcaseFill size={80} />,
-  },
+  // {
+  //   id: 0,
+  //   name: "Entry Data",
+  //   link: "/entry-data",
+  //   icon: <FaCirclePlus size={90} />,
+  // },
+  // {
+  //   id: 1,
+  //   name: "Penyidikan",
+  //   link: "/penyidikan",
+  //   icon: <PiIdentificationCardThin size={90} />,
+  // },
+  // {
+  //   id: 2,
+  //   name: "Daftar BAP",
+  //   link: "/pencatatan-bap",
+  //   icon: BAPIcon,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Daftar Sidang",
+  //   link: "/daftar-sidang",
+  //   icon: <VscLaw size={80} />,
+  // },
+  // {
+  //   id: 4,
+  //   name: "Daftar Kasus",
+  //   link: "/daftar-kasus",
+  //   icon: <BsBriefcaseFill size={80} />,
+  // },
   {
     id: 5,
-    name: "Aktivitas Pengunjung",
+    name: "STAFF",
     link: "/pengunjung",
     icon: Pengunjung,
   },
-  {
-    id: 6,
-    name: "Shift",
-    link: "/shift-jaga",
-    icon: ShiftIcon,
-  },
-  {
-    id: 7,
-    name: "Master Data",
-    link: "/master-data",
-    icon: DashboardIcon,
-  },
-  {
-    id: 8,
-    name: "Kegiatan",
-    link: "/kegiatan",
-    icon: eventIcons,
-  },
+  // {
+  //   id: 6,
+  //   name: "Shift",
+  //   link: "/shift-jaga",
+  //   icon: ShiftIcon,
+  // },
+  // {
+  //   id: 7,
+  //   name: "Master Data",
+  //   link: "/master-data",
+  //   icon: DashboardIcon,
+  // },
+  // {
+  //   id: 8,
+  //   name: "Kegiatan",
+  //   link: "/kegiatan",
+  //   icon: eventIcons,
+  // },
   {
     id: 9,
     name: "Daftar Inventaris",
@@ -279,24 +279,24 @@ const routes = [
     link: "/kamera-live",
     icon: CameraIcon,
   },
-  {
-    id: 11,
-    name: "Kamera Playback",
-    link: "/kamera-playback",
-    icon: CameraIcon,
-  },
-  {
-    id: 12,
-    name: "Pelacakan",
-    link: "/pelacakan",
-    icon: PelacakanIcon,
-  },
-  {
-    id: 13,
-    name: "Live Chat",
-    link: "/live-chat-list",
-    icon: ChatIcon,
-  },
+  // {
+  //   id: 11,
+  //   name: "Kamera Playback",
+  //   link: "/kamera-playback",
+  //   icon: CameraIcon,
+  // },
+  // {
+  //   id: 12,
+  //   name: "Pelacakan",
+  //   link: "/pelacakan",
+  //   icon: PelacakanIcon,
+  // },
+  // {
+  //   id: 13,
+  //   name: "Live Chat",
+  //   link: "/live-chat-list",
+  //   icon: ChatIcon,
+  // },
   {
     id: 14,
     name: "Pengaturan",

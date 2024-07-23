@@ -103,7 +103,7 @@ const AktifitasPengunjungList = () => {
           element: ".search",
           popover: {
             title: "Search",
-            description: "Mencari nama pengunjung ",
+            description: "Mencari nama staff ",
           },
         },
         {
@@ -117,7 +117,7 @@ const AktifitasPengunjungList = () => {
           element: ".b-search",
           popover: {
             title: "Button Search",
-            description: "Click button untuk mencari nama pengunjung dan wbp",
+            description: "Click button untuk mencari nama staff",
           },
         },
         {
@@ -131,7 +131,7 @@ const AktifitasPengunjungList = () => {
           element: ".b-tambah",
           popover: {
             title: "Tambah",
-            description: "Menambahkan data aktivitas pengunjung",
+            description: "Menambahkan data aktivitas",
           },
         },
       ],

@@ -372,8 +372,8 @@ const GelangList = () => {
 
   const exportToExcel = async () => {
     const dataToExcel = [
-      ["Nama Gelang", "DMAC", "Tanggal Pasang", "Tanggal aktivasi", "Batrai", "Nama Lokasi Otmil", "Nama Ruangan Otmil", "Zona"],
-      ...data.map((item: any) => [item.nama_gelang, item.dmac, item.tanggal_pasang, item.tanggal_aktivasi, item.baterai, item.nama_lokasi_otmil, item.nama_ruangan_otmil, item.status_zona_ruangan_otmil]),
+      ["Nama Gelang", "DMAC", "Tanggal Pasang", "Tanggal aktivasi", "Baterai", "Nama Lokasi", "Nama Ruangan"],
+      ...data.map((item: any) => [item.nama_gelang, item.dmac, item.tanggal_pasang, item.tanggal_aktivasi, item.baterai, item.nama_lokasi_otmil, item.nama_ruangan_otmil]),
     ];
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);

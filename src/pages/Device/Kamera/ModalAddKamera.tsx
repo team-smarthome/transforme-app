@@ -704,7 +704,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
 
                   <div className="form-group h-22 w-full">
                     <label htmlFor="ruangan_otmil_id">
-                      Pilih Ruangan Otmil:
+                      Pilih Ruangan
                     </label>
                     <Select
                       className="basic-single p-ruang"
@@ -722,16 +722,6 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                             }
                           : formState.ruangan_otmil_id
                       }
-                      // onChange={handleRuanganChange}
-                      // options={building?.data?.records?.gedung?.flatMap(
-                      //   (gedung) =>
-                      //     gedung.lantai.flatMap((lantai) =>
-                      //       lantai.ruangan.map((ruangan) => ({
-                      //         value: ruangan.ruangan_otmil_id,
-                      //         label: ruangan.nama_ruangan_otmil,
-                      //       })),
-                      //     ),
-                      // )}
 
                       options={building?.data?.records.map((item: any) => ({
                         value: item.ruangan_otmil_id,
@@ -766,7 +756,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     <p className="error-text">
                       {errors.map((item) =>
                         item === 'ruangan_otmil_id'
-                          ? 'Pilih Ruangan Otmil'
+                          ? 'Pilih Ruangan'
                           : '',
                       )}
                     </p>

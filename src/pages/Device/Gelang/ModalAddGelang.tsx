@@ -626,7 +626,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
 
                   <div className="form-group w-full h-22">
                     <label htmlFor="ruangan_otmil_id">
-                      Pilih Ruangan Otmil:
+                      Pilih Ruangan:
                     </label>
                     <Select
                       className="basic-single p-otmil"
@@ -671,7 +671,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                     <p className="error-text">
                       {errors.map((item) =>
                         item === 'ruangan_otmil_id'
-                          ? 'Pilih Ruangan Otmil'
+                          ? 'Pilih Ruangan'
                           : '',
                       )}
                     </p>
@@ -716,7 +716,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       )}
                     </p>
                   </div>
-                  <div className="form-group w-full h-22">
+                  {/* <div className="form-group w-full h-22">
                     <label htmlFor="nama_zona">Zona :</label>
                     <input
                       type="text"
@@ -733,9 +733,9 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                         item === 'nama_zona' ? 'Masukan Zona' : '',
                       )}
                     </p>
-                  </div>
+                  </div> */}
 
-                  {isDetail && (
+                  {/* {isDetail && (
                     <div className="form-group w-full h-22">
                       <label
                         className="block text-sm font-medium text-black dark:text-white"
@@ -753,7 +753,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                         disabled={isDetail}
                       />
                     </div>
-                  )}
+                  )} */}
                 </div>
 
                 <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
