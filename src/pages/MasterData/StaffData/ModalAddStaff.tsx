@@ -846,10 +846,10 @@ export const AddStaffModal = ({
 								<div>
 									<h3 className="text-xl font-semibold text-black dark:text-white">
 										{isDetail
-											? "Detail Data Petugas"
+											? "Detail Data Staff"
 											: isEdit
-											? "Edit Data Petugas"
-											: "Tambah Data Petugas"}
+											? "Edit Data Staff"
+											: "Tambah Data Staff"}
 									</h3>
 								</div>
 
@@ -1078,7 +1078,7 @@ export const AddStaffModal = ({
 												</p>
 											</div>
 											{/* Pangkat */}
-											<div className="form-group h-22 w-full ">
+											{/* <div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
@@ -1120,10 +1120,59 @@ export const AddStaffModal = ({
 															: ""
 													)}
 												</p>
+											</div> */}
+											{/* NIK */}
+											<div className="form-group h-22 w-full">
+												<label
+													className="  block text-sm font-medium text-black dark:text-white"
+													htmlFor="id"
+												>
+													NIK
+												</label>
+												<input
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nrp"
+													name="nrp"
+													placeholder="NRP"
+													onChange={handleChange}
+													value={formState.nrp}
+													disabled={isDetail}
+												/>
+												<p className="error-text">
+													{errors.map((item) =>
+														item === "nrp"
+															? "Masukan nrp"
+															: ""
+													)}
+												</p>
+											</div>
+											<div className="form-group h-22 w-full ">
+												<label
+													className="  block text-sm font-medium text-black dark:text-white"
+													htmlFor="id"
+												>
+													Tanggal Lahir
+												</label>
+												<input
+													type="date"
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-tanggal"
+													name="tanggal_lahir"
+													onChange={handleChange}
+													value={
+														formState.tanggal_lahir
+													}
+													disabled={isDetail}
+												/>
+												<p className="error-text">
+													{errors.map((item) =>
+														item === "tanggal_lahir"
+															? "Masukan tanggal lahir"
+															: ""
+													)}
+												</p>
 											</div>
 
 											{/* Matra */}
-											<div className="form-group h-22 w-full ">
+											{/* <div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
@@ -1163,61 +1212,20 @@ export const AddStaffModal = ({
 															: ""
 													)}
 												</p>
-											</div>
-
-											{/* Nomor Petugas */}
-											<div className="form-group h-22 w-full">
-												<label
-													className="  block text-sm font-medium text-black dark:text-white"
-													htmlFor="id"
-												>
-													NRP
-												</label>
-												<input
-													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nrp"
-													name="nrp"
-													placeholder="NRP"
-													onChange={handleChange}
-													value={formState.nrp}
-													disabled={isDetail}
-												/>
-												<p className="error-text">
-													{errors.map((item) =>
-														item === "nrp"
-															? "Masukan nrp"
-															: ""
-													)}
-												</p>
-											</div>
+											</div> */}
 										</div>
 									</div>
 
 									<div className="grid grid-cols-1 gap-x-4">
 										<div className="mt-5 grid grid-cols-2 gap-x-4 ">
 											{/* Kode Lokasi */}
-											<div className="form-group h-22 w-full ">
+											{/* <div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
 													Lokasi Kesatuan
 												</label>
-												{/* <select
-                          className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                          name="kode_lokasi"
-                          onChange={handleChange}
-                          value={formState.kode_lokasi}
-                          disabled={isDetail}
-                        >
-                          <option disabled value="">
-                            Pilih lokasi
-                          </option>
-                          {lokasi.map((item) => (
-                            <option value={item.lokasi_kesatuan_id}>
-                              {item.nama_lokasi_kesatuan}
-                            </option>
-                          ))}
-                        </select> */}
 												<Select
 													className="basic-single p-lokasi"
 													classNamePrefix="select"
@@ -1252,33 +1260,16 @@ export const AddStaffModal = ({
 															: ""
 													)}
 												</p>
-											</div>
+											</div> */}
 
 											{/* Kesatuan */}
-											<div className="form-group h-22 w-full ">
+											{/* <div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
 													Kesatuan
 												</label>
-
-												{/* <select
-                          className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                          name="kesatuan_id"
-                          onChange={handleChange}
-                          value={formState.kesatuan_id}
-                          disabled={isDetail}
-                        >
-                          <option disabled value="">
-                            Pilih kesatuan
-                          </option>
-                          {kesatuan.map((item) => (
-                            <option value={item.kesatuan_id}>
-                              {item.nama_kesatuan}
-                            </option>
-                          ))}
-                        </select> */}
 												<Select
 													className="basic-single p-kesatuan"
 													classNamePrefix="select"
@@ -1313,52 +1304,80 @@ export const AddStaffModal = ({
 															: ""
 													)}
 												</p>
-											</div>
+											</div> */}
 
-											{/* Jabatan */}
-											<div className="form-group h-22 w-full">
+											<div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
-													Jabatan
+													Jenis Kelamin
 												</label>
-												<input
-													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-jabatan"
-													name="jabatan"
-													placeholder="Jabatan"
+												<select
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-jenis"
+													name="jenis_kelamin"
 													onChange={handleChange}
-													value={formState.jabatan}
+													value={
+														formState.jenis_kelamin
+													}
 													disabled={isDetail}
-												/>
+												>
+													<option disabled value="">
+														Pilih jenis kelamin
+													</option>
+													<option value="1">
+														Laki-laki
+													</option>
+													<option value="0">
+														Perempuan
+													</option>
+												</select>
 												<p className="error-text">
 													{errors.map((item) =>
-														item === "jabatan"
-															? "Masukan jabatan"
+														item === "jenis_kelamin"
+															? "Pilih jenis kelamin"
 															: ""
 													)}
 												</p>
 											</div>
-											{/* Divisi */}
-											<div className="form-group h-22 w-full">
+											
+											{/*  Agama */}
+											<div className="form-group h-22 w-full ">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
-													Divisi
+													Agama
 												</label>
-												<input
-													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-divisi"
-													name="divisi"
-													placeholder="Divisi"
-													onChange={handleChange}
-													value={formState.divisi}
-													disabled={isDetail}
+												<Select
+													className="basic-single p-agama"
+													classNamePrefix="select"
+													styles={customStyles}
+													isDisabled={isDetail}
+													isClearable={true}
+													isSearchable={true}
+													name="agama_id"
+													placeholder="Pilih Agama"
+													defaultValue={
+														isEdit || isDetail
+															? {
+																	value: formState.agama_id,
+																	label: formState.nama_agama,
+															  }
+															: formState.agama_id
+													}
+													options={agama.map(
+														(item: any) => ({
+															value: item.agama_id,
+															label: item.nama_agama,
+														})
+													)}
+													onChange={handleSelectAgama}
 												/>
 												<p className="error-text">
 													{errors.map((item) =>
-														item === "divisi"
-															? "Masukan divisi"
+														item === "agama_id"
+															? "Pilih agama"
 															: ""
 													)}
 												</p>
@@ -1370,7 +1389,7 @@ export const AddStaffModal = ({
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
-													Pendidikan Militer
+													Pendidikan Terakhir
 												</label>
 												<Select
 													className="basic-single p-militer"
@@ -1453,79 +1472,52 @@ export const AddStaffModal = ({
 												</p>
 											</div>
 
-											{/* Jenis Kelamin */}
-											<div className="form-group h-22 w-full ">
+											
+											{/* Jabatan */}
+											<div className="form-group h-22 w-full">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
-													Jenis Kelamin
+													Jabatan
 												</label>
-												<select
-													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-jenis"
-													name="jenis_kelamin"
+												<input
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-jabatan"
+													name="jabatan"
+													placeholder="Jabatan"
 													onChange={handleChange}
-													value={
-														formState.jenis_kelamin
-													}
+													value={formState.jabatan}
 													disabled={isDetail}
-												>
-													<option disabled value="">
-														Pilih jenis kelamin
-													</option>
-													<option value="1">
-														Laki-laki
-													</option>
-													<option value="0">
-														Perempuan
-													</option>
-												</select>
+												/>
 												<p className="error-text">
 													{errors.map((item) =>
-														item === "jenis_kelamin"
-															? "Pilih jenis kelamin"
+														item === "jabatan"
+															? "Masukan jabatan"
 															: ""
 													)}
 												</p>
 											</div>
 
-											{/*  Agama */}
-											<div className="form-group h-22 w-full ">
+											{/* Divisi */}
+											<div className="form-group h-22 w-full">
 												<label
 													className="  block text-sm font-medium text-black dark:text-white"
 													htmlFor="id"
 												>
-													Agama
+													Divisi
 												</label>
-												<Select
-													className="basic-single p-agama"
-													classNamePrefix="select"
-													styles={customStyles}
-													isDisabled={isDetail}
-													isClearable={true}
-													isSearchable={true}
-													name="agama_id"
-													placeholder="Pilih Agama"
-													defaultValue={
-														isEdit || isDetail
-															? {
-																	value: formState.agama_id,
-																	label: formState.nama_agama,
-															  }
-															: formState.agama_id
-													}
-													options={agama.map(
-														(item: any) => ({
-															value: item.agama_id,
-															label: item.nama_agama,
-														})
-													)}
-													onChange={handleSelectAgama}
+												<input
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-divisi"
+													name="divisi"
+													placeholder="Divisi"
+													onChange={handleChange}
+													value={formState.divisi}
+													disabled={isDetail}
 												/>
 												<p className="error-text">
 													{errors.map((item) =>
-														item === "agama_id"
-															? "Pilih agama"
+														item === "divisi"
+															? "Masukan divisi"
 															: ""
 													)}
 												</p>
@@ -1557,35 +1549,6 @@ export const AddStaffModal = ({
 													)}
 												</p>
 											</div>
-											{/* Tanggal Lahir */}
-											<div className="form-group h-22 w-full ">
-												<label
-													className="  block text-sm font-medium text-black dark:text-white"
-													htmlFor="id"
-												>
-													Tanggal Lahir
-												</label>
-												<input
-													type="date"
-													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-tanggal"
-													name="tanggal_lahir"
-													onChange={handleChange}
-													value={
-														formState.tanggal_lahir
-													}
-													disabled={isDetail}
-												/>
-												<p className="error-text">
-													{errors.map((item) =>
-														item === "tanggal_lahir"
-															? "Masukan tanggal lahir"
-															: ""
-													)}
-												</p>
-											</div>
-										</div>
-
-										<div className=" grid grid-cols-2 gap-4">
 											{/* Status Kawin */}
 											<div className="form-group h-22 w-full ">
 												<label
@@ -1594,22 +1557,6 @@ export const AddStaffModal = ({
 												>
 													Status Kawin
 												</label>
-												{/* <select
-                            className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                            name="status_kawin_id"
-                            onChange={handleChange}
-                            value={formState.status_kawin_id}
-                            disabled={isDetail}
-                          >
-                            <option value="" disabled>
-                              Pilih status kawin
-                            </option>
-                            {statusKawin.map((item) => (
-                              <option value={item.status_kawin_id}>
-                                {item.nama_status_kawin}
-                              </option>
-                            ))}
-                          </select> */}
 												<Select
 													className="basic-single p-status"
 													classNamePrefix="select"
@@ -1848,7 +1795,7 @@ export const AddStaffModal = ({
 											) : (
 												""
 											)}
-											Ubah Data Petugas
+											Ubah Data Staff
 										</button>
 									) : (
 										<button
@@ -1883,7 +1830,7 @@ export const AddStaffModal = ({
 											) : (
 												""
 											)}
-											Tambah Data Petugas
+											Tambah Data Staff
 										</button>
 									)}
 									{errors.filter((item: string) =>

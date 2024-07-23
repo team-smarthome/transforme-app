@@ -556,7 +556,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
                   <div className="form-group w-full h-22">
                     <label htmlFor="ruangan_otmil_id">
-                      Pilih Ruangan otmil:
+                      Pilih Ruangan:
                     </label>
                     <Select
                       className="basic-single p-ruang"
@@ -623,7 +623,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
                   <div className="form-group w-full h-22">
                     <label htmlFor="nama_lokasi_otmil">
-                      Nama Lokasi otmil:
+                      Nama Lokasi:
                     </label>
                     <input
                       type="text"
@@ -641,7 +641,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       )}
                     </p>
                   </div>
-                  <div className="form-group w-full h-22">
+                  {/* <div className="form-group w-full h-22">
                     <label htmlFor="nama_zona">Zona :</label>
                     <input
                       type="text"
@@ -658,7 +658,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                         item === 'nama_zona' ? 'Masukan Zona' : '',
                       )}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>

@@ -276,8 +276,8 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
         {
           element: '.i-lokasi',
           popover: {
-            title: 'Nama Lokasi Otmil',
-            description: 'Pilih nama lokasi otmil',
+            title: 'Nama Lokasi',
+            description: 'Pilih nama lokasi',
           },
         },
         {
@@ -698,7 +698,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
 
                   <div className="form-group w-full h-22">
                     <label htmlFor="nama_lokasi_otmil">
-                      Nama Lokasi otmil:
+                      Nama Lokasi:
                     </label>
                     <input
                       type="text"

@@ -509,18 +509,18 @@ const StaffList = () => {
 						<div className="w-full s-petugas">
 							<SearchInputButton
 								value={filter}
-								placehorder="Cari nama petugas"
+								placehorder="Cari nama staff"
 								onChange={handleFilterChange}
 							/>
 						</div>
-						<div className="w-full s-jabatan">
+						{/* <div className="w-full s-jabatan">
 							<SearchInputButton
 								value={filterJabatan}
 								placehorder="Cari jabatan"
 								onChange={handleFilterChangeJabatan}
 							/>
-						</div>
-						<select
+						</div> */}
+						{/* <select
 							value={filterPangkat}
 							onChange={handleFilterChangePangkat}
 							className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary p-pangkat"
@@ -531,7 +531,7 @@ const StaffList = () => {
 									{item.nama_pangkat}
 								</option>
 							))}
-						</select>
+						</select> */}
 
 						<button
 							className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
@@ -577,7 +577,7 @@ const StaffList = () => {
 
 				<div className="flex justify-between items-center mb-3">
 					<h4 className="text-xl font-semibold text-black dark:text-white">
-						Data Petugas
+						Data Staff
 					</h4>
 					{!isOperator && !isAdmin && (
 						<button
@@ -593,7 +593,7 @@ const StaffList = () => {
 						<div className="grid grid-cols-3 rounded-t-md bg-gray-2 dark:bg-slate-600 sm:grid-cols-3">
 							<div className="p-2.5 xl:p-5 justify-center flex">
 								<h5 className="text-sm font-medium uppercase xsm:text-base">
-									Nama Petugas
+									Nama Staff
 								</h5>
 							</div>
 							<div className="p-2.5 text-center xl:p-5 justify-center flex">
@@ -611,7 +611,7 @@ const StaffList = () => {
 						<div className="grid grid-cols-4 rounded-t-md bg-gray-2 dark:bg-slate-600 sm:grid-cols-4">
 							<div className="p-2.5 xl:p-5 justify-center flex">
 								<h5 className="text-sm font-medium uppercase xsm:text-base">
-									Nama Petugas
+									Nama Staff
 								</h5>
 							</div>
 							<div className="p-2.5 text-center xl:p-5 justify-center flex">
@@ -621,7 +621,7 @@ const StaffList = () => {
 							</div>
 							<div className="p-2.5 text-center xl:p-5 justify-center flex">
 								<h5 className="text-sm font-medium uppercase xsm:text-base">
-									Pangkat
+									Divisi
 								</h5>
 							</div>
 							<div className=" p-2.5 text-center xl:p-5 justify-center flex">
@@ -677,7 +677,7 @@ const StaffList = () => {
 														className="flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
 													>
 														<p className="text-black dark:text-white capitalize">
-															{item.nama_pangkat}
+															{item.divisi}
 														</p>
 													</div>
 												</div>
@@ -719,7 +719,7 @@ const StaffList = () => {
 														className="flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
 													>
 														<p className="text-black dark:text-white capitalize">
-															{item.nama_pangkat}
+															{item.divisi}
 														</p>
 													</div>
 													<div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5 flex-wrap lg:flex-nowrap gap-2">

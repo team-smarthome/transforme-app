@@ -367,7 +367,7 @@ const GatewayList = () => {
         "status gateway",
         "Nama Lokasi Otmil",
         "Nama Ruangan Otmil",
-        "Zona",
+        // "Zona",
       ],
       ...data.map((item: any) => [
         item.nama_gateway,
@@ -376,7 +376,7 @@ const GatewayList = () => {
         item.status_gateway === "tidak" ? "tidak aktif" : item.status_gateway,
         item.nama_lokasi_otmil,
         item.nama_ruangan_otmil,
-        item.status_zona_ruangan_otmil,
+        // item.status_zona_ruangan_otmil,
       ]),
     ];
 
@@ -490,7 +490,7 @@ const GatewayList = () => {
         <div className="flex flex-col">
           <div
             className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${
-              isOperator ? "grid-cols-5" : "grid-cols-6"
+              isOperator ? "grid-cols-5" : "grid-cols-5"
             }`}
           >
             <div className="p-2.5 text-center xl:p-5">
@@ -513,11 +513,11 @@ const GatewayList = () => {
                 Ruangan
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
+            {/* <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Zona
               </h5>
-            </div>
+            </div> */}
             <div
               className={` ${
                 isOperator ? "hidden" : "sm:block"
@@ -534,7 +534,7 @@ const GatewayList = () => {
               <div>
                 <div
                   className={`grid ${
-                    isOperator ? "grid-cols-5" : "grid-cols-6"
+                    isOperator ? "grid-cols-5" : "grid-cols-5"
                   } rounded-sm bg-gray-2 dark:bg-meta-4`}
                 >
                   <div
@@ -581,7 +581,7 @@ const GatewayList = () => {
                       {item.nama_ruangan_otmil}
                     </p>
                   </div>
-                  <div
+                  {/* <div
                     onClick={() => handleDetailClick(item)}
                     className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
                   >
@@ -600,7 +600,7 @@ const GatewayList = () => {
                         Status Tidak Dikenali
                       </p>
                     )}
-                  </div>
+                  </div> */}
                   <div
                     className={`hidden items-center ${
                       isOperator ? "hidden" : "block sm:flex"
