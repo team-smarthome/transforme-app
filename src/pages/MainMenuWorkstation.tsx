@@ -42,15 +42,13 @@ const MainMenuWorkstation = () => {
   ) : (
     <div className="min-h-screen dark:text-bodydark bg-slate-700">
       <div className="min-h-screen dark:text-bodydark bg-blue-950 bg-opacity-50 ">
-        <div className="flex justify-center items-center gap-x-2 bg-transparent-dark1 backdrop-blur w-full py-5 fixed z-10">
-          <img src={Logo} alt="Logo" className="w-12" />
-          <span className="text-4xl text-white font-bold tracking-wider uppercase">
-            {dataUser.nama_lokasi_otmil
-              ? "SIRAM Workstation OTMIL " + dataUser.nama_lokasi_otmil
-              : "SIRAM Workstation LEMASMIL " + dataUser.nama_lokasi_lemasmil}
+        <div className="flex justify-center items-center gap-x-6 py-4 bg-transparent-dark1 backdrop-blur w-full fixed z-10">
+          <img src={Logo} alt="Logo" className="w-100" />
+          <span className="text-3xl text-white font-bold tracking-wider uppercase">
+            {dataUser.nama_lokasi_otmil ? "Admin Panel" : "Admin Panel"}
           </span>
         </div>
-        <div className="pb-20 pt-30 px-20 overflow-y-auto grid grid-cols-1 gap-20 md:grid-cols-2 md:gap-20 xl:grid-cols-3 2xl:gap-20 relative">
+        <div className="pb-20 pt-40 px-20 overflow-y-auto grid grid-cols-1 gap-20 md:grid-cols-2 md:gap-20 xl:grid-cols-3 2xl:gap-20 relative">
           {routes.map((menu: any) => {
             return (
               <MenuItem
