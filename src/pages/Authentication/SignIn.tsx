@@ -28,7 +28,7 @@ const SignIn = () => {
     const paramsState = location.state;
     const forceLogout = paramsState && paramsState.forceLogout;
     if (ls_dataUser && !forceLogout) {
-      navigate("/dashboard");
+      navigate("/");
     }
 
     if (forceLogout) {
@@ -72,8 +72,7 @@ const SignIn = () => {
           localStorage.setItem("token", JSON.stringify(token));
           setError(false);
 
-          navigate("/dashboard");
-          window.location.reload();
+          navigate("/home");
         });
         setButtonLoad(false);
       } else {
@@ -94,20 +93,20 @@ const SignIn = () => {
       <div className="h-screen rounded-sm border border-strokedark  shadow-default bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2   ">
-            <div className="py-17.5 px-26 text-center space-y-8">
+            <div className="py-17.5 px-26 text-center">
               <Link className="mb-1 inline-block" to="/">
                 <img
-                  className="hidden xl:block w-50 h-50"
+                  className="hidden xl:block w-50 h-50 "
                   src={Logo}
                   alt="Logo"
                 />
               </Link>
 
               <p className="2xl:px-20 text-white font-bold text-[40px]">
-                BABINKUM
+                TRANSFORME
               </p>
               <p className="2xl:px-20 text-white opacity-80 font-bold text-[20px]">
-                Sistem Informasi Perkara Militer
+                Sistem Informasi Staff
               </p>
             </div>
           </div>
@@ -115,10 +114,10 @@ const SignIn = () => {
           <div className="w-full border-strokedark xl:w-1/2 xl:border-l-2 xl:mt-20">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="text-center xl:text-left mb-2 text-2xl font-bold text-white sm:text-title-xl2">
-                SIRAM Dashboard
+                TRANSFORME
               </h2>
               <h2 className="text-center xl:text-left mb-9 text-xl font-bold text-white sm:text-title-xl2">
-              LEMASMIL Cimahi
+                ADMIN PANEL
               </h2>
 
               <p
@@ -137,11 +136,11 @@ const SignIn = () => {
               >
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    NRP
+                    ID
                   </label>
                   <div className="relative">
                     <input
-                      placeholder="masukan NRP"
+                      placeholder="masukan ID"
                       className="w-full text-white rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       {...register("nrp", registerOptions.nrp)}
                     />

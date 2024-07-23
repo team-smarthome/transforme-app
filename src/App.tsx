@@ -23,17 +23,12 @@ function App() {
     <Loader />
   ) : (
     <>
-      {/* <Toaster
-        position="top-right"
-        reverseOrder={false}
-        containerClassName="overflow-auto"
-      /> */}
       <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route path="/auth/signin" element={<SignIn />} />
+          <Route path="/" element={<SignIn />} />
           <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/dashboard" element={<MainMenu />} />
-          <Route path="/workstation" element={<MainMenuWorkstation />} />
+          <Route path="/home" element={<MainMenu />} />
+          <Route path="/dashboard" element={<MainMenuWorkstation />} />
           <Route element={<DefaultLayout />}>
             {routes.map(({ path, component: Component }) => (
               <Route
