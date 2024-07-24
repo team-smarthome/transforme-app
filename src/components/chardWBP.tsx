@@ -135,7 +135,7 @@ const ChartBar = () => {
         setMatra(dataMatra);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -148,7 +148,7 @@ const ChartBar = () => {
     if (token !== null) {
       data();
     } else {
-      navigate("/auth/signin");
+      navigate("/");
     }
   }, []);
   const namaMatra = matra

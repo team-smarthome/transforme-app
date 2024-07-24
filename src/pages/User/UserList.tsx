@@ -175,7 +175,7 @@ const UserList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -218,7 +218,7 @@ const UserList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -253,7 +253,7 @@ const UserList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -286,7 +286,7 @@ const UserList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -319,7 +319,7 @@ const UserList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -392,7 +392,7 @@ const UserList = () => {
       getAllRole();
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -415,7 +415,7 @@ const UserList = () => {
       setRoleData(result.records);
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -447,7 +447,8 @@ const UserList = () => {
             <select
               value={filterRole}
               onChange={handleFilterChangeRole}
-              className="capitalize rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary p-role">
+              className="capitalize rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary p-role"
+            >
               <option value="">Semua role</option>
               {roleData.map((item: any) => (
                 <option value={item.id}>{item.role_name}</option>
@@ -460,12 +461,14 @@ const UserList = () => {
               onClick={handleSearchClick}
               id="button-addon1"
               data-te-ripple-init
-              data-te-ripple-color="light">
+              data-te-ripple-color="light"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="h-5 w-5 text-black">
+                className="h-5 w-5 text-black"
+              >
                 <path
                   fillRule="evenodd"
                   d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
@@ -476,7 +479,8 @@ const UserList = () => {
 
             <button
               onClick={exportToExcel}
-              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium b-excel">
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium b-excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -498,7 +502,8 @@ const UserList = () => {
           </h4>
           <button
             onClick={() => setModalAddOpen(true)}
-            className=" text-black rounded-md bg-blue-300 w-20 h-10 b-tambah">
+            className=" text-black rounded-md bg-blue-300 w-20 h-10 b-tambah"
+          >
             Tambah
           </button>
         </div>
@@ -538,7 +543,8 @@ const UserList = () => {
                     <div className="grid grid-cols-4 rounded-sm  bg-gray-2 dark:bg-meta-4  ">
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block">
                           {item.nama}
                         </p>
@@ -546,7 +552,8 @@ const UserList = () => {
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block">
                           {item.role_name}
                         </p>
@@ -554,7 +561,8 @@ const UserList = () => {
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block">
                           {item.email}
                         </p>
@@ -589,9 +597,8 @@ const UserList = () => {
                         <DropdownActionWithPass
                           handleUbahPassword={() => handleUbahPassword(item)}
                           handleEditClick={() => handleEditClick(item)}
-                          handleDeleteClick={() =>
-                            handleDeleteClick(item)
-                          }></DropdownActionWithPass>
+                          handleDeleteClick={() => handleDeleteClick(item)}
+                        ></DropdownActionWithPass>
                       </div>
                     </div>
                     <div className="border-t border-slate-600"></div>

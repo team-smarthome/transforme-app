@@ -64,12 +64,14 @@ const Header = (props: {
             {/* <Link className="block flex-shrink-0 lg:hidden" to="/"> */}
 
             <NavLink
-              to="/dashboard"
+              to="/home"
               className="flex justify-center items-center gap-x-2 w-full"
             >
               <img src={Logo} alt="Logo" className="w-50  overflow-hidden" />
               <span className="text-lg text-white ">
-                {dataUser.nama_lokasi_otmil ? "ADMIN PANEL " : "ADMIN PANEL "}
+                {dataUser.nama_lokasi_otmil
+                  ? "Monitoring System"
+                  : "Monitoring System"}
               </span>
             </NavLink>
           </div>

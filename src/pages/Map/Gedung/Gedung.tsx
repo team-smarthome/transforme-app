@@ -8674,7 +8674,7 @@ const Gedung = () => {
           }`}
         >
           <div
-            className={`h-full w-full bg-white relative border-4 border-black  animate-popupin z-99999`}
+            className={`h-full w-full bg-white relative border-4 border-black  animate-popupin`}
           >
             {rooms.map((data: any, index) => {
               console.log(data, "dataError");

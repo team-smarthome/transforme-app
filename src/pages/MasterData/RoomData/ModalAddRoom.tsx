@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   apiLantaiOtmilRead,
   apiReadAllRuanganSummary,
   apiReadAlllokasiOtmil,
   apiReadZona,
-} from '../../../services/api';
-import Select from 'react-select';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from './AlertRoom';
-import { Error403Message } from '../../../utils/constants';
+} from "../../../services/api";
+import Select from "react-select";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "./AlertRoom";
+import { Error403Message } from "../../../utils/constants";
 
 // interface
 interface AddRoomModalProps {
@@ -49,128 +49,128 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-          ? ''
+          ? ""
           : isFocused
-          ? 'rgb(51, 133, 255)'
+          ? "rgb(51, 133, 255)"
           : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_ruangan_otmil: '',
-      jenis_ruangan_otmil: '',
-      lokasi_otmil_id: '',
-      zona_id: '',
-      lantai_otmil_id: '',
-      nama_lantai: '',
-    },
+      nama_ruangan_otmil: "",
+      jenis_ruangan_otmil: "",
+      lokasi_otmil_id: "",
+      zona_id: "",
+      lantai_otmil_id: "",
+      nama_lantai: "",
+    }
   );
 
-  console.log(defaultValue, 'Default');
+  console.log(defaultValue, "Default");
 
   const [errors, setErrors] = useState({
-    nama: '',
-    jenis: '',
-    zona: '',
-    lokasi: '',
-    panjang: '',
-    lebar: '',
-    posisi_X: '',
-    posisi_Y: '',
-    lantai: '',
+    nama: "",
+    jenis: "",
+    zona: "",
+    lokasi: "",
+    panjang: "",
+    lebar: "",
+    posisi_X: "",
+    posisi_Y: "",
+    lantai: "",
   });
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const [lokasi, setLokasi] = useState<LokasiRuangan[]>([]);
   const [zona, setZona] = useState<Zona[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalWbp, setTotalWbp] = useState({
-    total_gateway: '',
-    total_kamera: '',
-    total_wbp: '',
+    total_gateway: "",
+    total_kamera: "",
+    total_wbp: "",
   });
 
   const [isLantai, setIsLantai] = useState<LantaiOtmil[]>([]);
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   const fetchData = () => {
@@ -187,12 +187,12 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -203,12 +203,12 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -219,7 +219,7 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
     // //   })
     //   .catch((e: any) => {
     //     if (e.response.status === 403) {
-    //       navigate('/auth/signin', {
+    //       navigate('/', {
     //         state: { forceLogout: true, lastPage: location.pathname },
     //       });
     //     }
@@ -235,12 +235,12 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -255,17 +255,17 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
   }, []);
 
   const validateForm = () => {
-    console.log('FromState', formState);
+    console.log("FromState", formState);
     const newErrors = {
-      nama: '',
-      jenis: '',
-      zona: '',
-      lokasi: '',
-      panjang: '',
-      lebar: '',
-      posisi_X: '',
-      posisi_Y: '',
-      lantai: '',
+      nama: "",
+      jenis: "",
+      zona: "",
+      lokasi: "",
+      panjang: "",
+      lebar: "",
+      posisi_X: "",
+      posisi_Y: "",
+      lantai: "",
     };
 
     if (
@@ -278,46 +278,46 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
       // Menghapus semua kesalahan jika kondisi ini terpenuhi
       setErrors({
         ...errors,
-        nama: '',
-        jenis: '',
-        zona: '',
-        lokasi: '',
-        panjang: '',
-        lebar: '',
-        posisi_X: '',
-        posisi_Y: '',
-        lantai: '',
+        nama: "",
+        jenis: "",
+        zona: "",
+        lokasi: "",
+        panjang: "",
+        lebar: "",
+        posisi_X: "",
+        posisi_Y: "",
+        lantai: "",
       });
 
       return true;
     } else {
       if (!formState.nama_ruangan_otmil) {
-        newErrors.nama = 'Nama Ruangan harus diisi';
+        newErrors.nama = "Nama Ruangan harus diisi";
       }
       if (!formState.jenis_ruangan_otmil) {
-        newErrors.jenis = 'Jenis Ruangan harus diisi';
+        newErrors.jenis = "Jenis Ruangan harus diisi";
       }
       if (!formState.zona_id) {
-        newErrors.zona = 'Zona Ruangan harus diisi';
+        newErrors.zona = "Zona Ruangan harus diisi";
       }
       if (!formState.lokasi_otmil_id) {
-        newErrors.lokasi = 'Lokasi harus diisi';
+        newErrors.lokasi = "Lokasi harus diisi";
       }
       if (!formState.panjang) {
-        newErrors.panjang = 'Panjang harus diisi';
+        newErrors.panjang = "Panjang harus diisi";
       }
       if (!formState.lebar) {
-        newErrors.lebar = 'Lebar harus diisi';
+        newErrors.lebar = "Lebar harus diisi";
       }
       if (!formState.posisi_X) {
-        newErrors.posisi_X = 'Posisi X harus diisi';
+        newErrors.posisi_X = "Posisi X harus diisi";
       }
       if (!formState.posisi_Y) {
-        newErrors.posisi_Y = 'Posisi Y harus diisi';
+        newErrors.posisi_Y = "Posisi Y harus diisi";
       }
       if (!formState.lantai_otmil_id) {
-        console.log(formState.lantai_otmil_id, 'kondisi_Lantai');
-        newErrors.lantai = 'Lantai harus diisi';
+        console.log(formState.lantai_otmil_id, "kondisi_Lantai");
+        newErrors.lantai = "Lantai harus diisi";
       }
       // Mengatur kesalahan sesuai dengan validasi
       setErrors(newErrors);
@@ -331,37 +331,37 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(formState, 'formState_submit');
+    console.log(formState, "formState_submit");
     e.preventDefault();
     if (validateForm()) {
       onSubmit(formState);
     }
 
-    console.log(formState, 'formState submit');
+    console.log(formState, "formState submit");
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -369,74 +369,74 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
   const handleClickTutorial = () => {
     const steps = [
       {
-        element: '.f-nama',
+        element: ".f-nama",
         popover: {
-          title: 'Nama ruangan',
-          description: 'Isi nama ruangan',
+          title: "Nama ruangan",
+          description: "Isi nama ruangan",
         },
       },
       {
-        element: '.f-panjang',
+        element: ".f-panjang",
         popover: {
-          title: 'Panjang',
-          description: 'Isi ukuran panjang yang diinginkan',
+          title: "Panjang",
+          description: "Isi ukuran panjang yang diinginkan",
         },
       },
       {
-        element: '.f-lebar',
+        element: ".f-lebar",
         popover: {
-          title: 'Lebar',
-          description: 'Isi ukuran lebar yang diinginkan',
+          title: "Lebar",
+          description: "Isi ukuran lebar yang diinginkan",
         },
       },
       {
-        element: '.f-x',
+        element: ".f-x",
         popover: {
-          title: 'Posisi X',
-          description: 'Menentukan posisi X yang diinginkan',
+          title: "Posisi X",
+          description: "Menentukan posisi X yang diinginkan",
         },
       },
       {
-        element: '.f-y',
+        element: ".f-y",
         popover: {
-          title: 'Posisi Y',
-          description: 'Menentukan posisi Y yang diinginkan',
+          title: "Posisi Y",
+          description: "Menentukan posisi Y yang diinginkan",
         },
       },
       {
-        element: '.f-jenis-ruangan-modal',
+        element: ".f-jenis-ruangan-modal",
         popover: {
-          title: 'Jenis ruangan ',
-          description: 'Pilih jenis ruangan',
+          title: "Jenis ruangan ",
+          description: "Pilih jenis ruangan",
         },
       },
       {
-        element: '.f-zona',
+        element: ".f-zona",
         popover: {
-          title: 'Zona ruangan',
-          description: 'Pilih zona ruangan',
+          title: "Zona ruangan",
+          description: "Pilih zona ruangan",
         },
       },
       {
-        element: '.f-lokasi',
+        element: ".f-lokasi",
         popover: {
-          title: 'Lokasi',
-          description: 'Pilih lokasi',
+          title: "Lokasi",
+          description: "Pilih lokasi",
         },
       },
       {
-        element: '.f-lantai',
+        element: ".f-lantai",
         popover: {
-          title: 'Lantai',
-          description: 'Pilih lantai',
+          title: "Lantai",
+          description: "Pilih lantai",
         },
       },
       {
         element: `.b-submit`,
         popover: {
-          title: `${isEdit ? 'Ubah' : 'Tambah'}`,
+          title: `${isEdit ? "Ubah" : "Tambah"}`,
           description: `Klik untuk ${
-            isEdit ? 'mengubah' : 'menambahkan'
+            isEdit ? "mengubah" : "menambahkan"
           } data ruangan`,
         },
       },
@@ -472,13 +472,13 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
       >
         <div
           className={`modal rounded-sm border border-slate-600 bg-slate-600 shadow-default w-full ${
-            isDetail ? 'h-full' : 'h-full'
+            isDetail ? "h-full" : "h-full"
           }`}
         >
           {isLoading ? (
             <div
               className={`justify-center flex items-center ${
-                isDetail ? 'py-50' : 'py-40'
+                isDetail ? "py-50" : "py-40"
               }`}
             >
               <svg
@@ -508,10 +508,10 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
                 <div className="flex items-center gap-4  w-full">
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Ruangan'
+                      ? "Detail Data Ruangan"
                       : isEdit
-                      ? 'Edit Data Ruangan'
-                      : 'Tambah Data Ruangan'}
+                      ? "Edit Data Ruangan"
+                      : "Tambah Data Ruangan"}
                   </h3>
 
                   {isDetail ? null : isEdit ? (
@@ -810,7 +810,7 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
                           classNamePrefix="select"
                           styles={customStyles}
                           defaultValue={
-                            (console.log(formState, 'lantaiTesting'),
+                            (console.log(formState, "lantaiTesting"),
                             isEdit || isDetail
                               ? {
                                   value: formState.lantai_otmill_id,
@@ -825,12 +825,12 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
                           name="lantai_otmil_id"
                           options={isLantai.map(
                             (item: any) => (
-                              console.log(item.lantai_otmil_id, 'lantai2'),
+                              console.log(item.lantai_otmil_id, "lantai2"),
                               {
                                 value: item.lantai_otmil_id,
                                 label: item.nama_lantai,
                               }
-                            ),
+                            )
                           )}
                           onChange={handleSelectLantaiOtmil}
                         />

@@ -59,8 +59,7 @@ const AddSidang = ({ handleNext }: any) => {
     role_ketua_oditur: {},
     zona_waktu: "",
   });
-  console.log(formState, 'data sidang');
-
+  console.log(formState, "data sidang");
 
   const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
@@ -82,12 +81,12 @@ const AddSidang = ({ handleNext }: any) => {
 
   const getAllJenisSidang = async () => {
     let params = {
-      filter: '',
+      filter: "",
       pageSize: 1000,
     };
     try {
       const response = await apiJenisSidangRead(params, token);
-      console.log(response, 'jenis sidang');
+      console.log(response, "jenis sidang");
       const data = response.data.records;
       const uniqueData: any[] = [];
       const trackedNames: any[] = [];
@@ -99,15 +98,15 @@ const AddSidang = ({ handleNext }: any) => {
         }
       });
       setJenisSidang(uniqueData);
-      console.log('uniq', uniqueData);
+      console.log("uniq", uniqueData);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -125,7 +124,7 @@ const AddSidang = ({ handleNext }: any) => {
       // console.log('JAKSA', response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -146,7 +145,7 @@ const AddSidang = ({ handleNext }: any) => {
       setPengadilanMiliter(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -168,7 +167,7 @@ const AddSidang = ({ handleNext }: any) => {
       setAhli(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -189,7 +188,7 @@ const AddSidang = ({ handleNext }: any) => {
   //     // setSaksi(response.data.records);
   //   } catch (e: any) {
   //     if (e.response.status === 403) {
-  //       navigate('/auth/signin', {
+  //       navigate('/', {
   //         state: { forceLogout: true, lastPage: location.pathname},
   //       });
   //     }
@@ -210,7 +209,7 @@ const AddSidang = ({ handleNext }: any) => {
       setKasus(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -226,7 +225,7 @@ const AddSidang = ({ handleNext }: any) => {
   };
 
   const handleJenisPersidangan = (e: any) => {
-    console.log(e, "Jenis Sidang")
+    console.log(e, "Jenis Sidang");
     setFormState({ ...formState, jenis_persidangan_id: e?.value });
   };
 
@@ -612,36 +611,36 @@ const AddSidang = ({ handleNext }: any) => {
     setGetSaksi([]);
     setFormState({
       ...formState,
-      waktu_mulai_sidang: '',
-      waktu_selesai_sidang: '',
-      jadwal_sidang: '',
-      perubahan_jadwal_sidang: '',
-      kasus_id: '',
-      nama_kasus: '',
-      nomor_kasus: '',
-      masa_tahanan_tahun: '',
-      masa_tahanan_bulan: '',
-      masa_tahanan_hari: '',
-      nama_sidang: '',
+      waktu_mulai_sidang: "",
+      waktu_selesai_sidang: "",
+      jadwal_sidang: "",
+      perubahan_jadwal_sidang: "",
+      kasus_id: "",
+      nama_kasus: "",
+      nomor_kasus: "",
+      masa_tahanan_tahun: "",
+      masa_tahanan_bulan: "",
+      masa_tahanan_hari: "",
+      nama_sidang: "",
       wbp_profile: [],
-      juru_sita: '',
-      hasil_keputusan_sidang: '',
-      pengawas_peradilan_militer: '',
-      jenis_persidangan_id: '',
-      pengadilan_militer_id: '',
-      nama_dokumen_persidangan: '',
-      link_dokumen_persidangan: '',
-      hasil_vonis: '',
+      juru_sita: "",
+      hasil_keputusan_sidang: "",
+      pengawas_peradilan_militer: "",
+      jenis_persidangan_id: "",
+      pengadilan_militer_id: "",
+      nama_dokumen_persidangan: "",
+      link_dokumen_persidangan: "",
+      hasil_vonis: "",
       ahli: [],
-      agenda_sidang: '',
+      agenda_sidang: "",
       saksi: [],
       pengacara: [],
       oditur_penuntut_id: [],
       role_ketua_oditur: {},
-      zona_waktu: '',
+      zona_waktu: "",
     });
 
-    console.log(handleSubmitAddUser, "handleadd")
+    console.log(handleSubmitAddUser, "handleadd");
   };
   const handleUpload = (e: any) => {
     const file = e.target.files[0];
@@ -742,7 +741,7 @@ const AddSidang = ({ handleNext }: any) => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -828,12 +827,10 @@ const AddSidang = ({ handleNext }: any) => {
                 className="basic-multi-select p-anggota"
                 isMulti
                 classNamePrefix="select"
-                defaultValue={
-                  formState.oditur_penuntut_id.map((item: any) => ({
-                    value: item.oditur_penuntut_id,
-                    label: item.nama_oditur
-                  }))
-                }
+                defaultValue={formState.oditur_penuntut_id.map((item: any) => ({
+                  value: item.oditur_penuntut_id,
+                  label: item.nama_oditur,
+                }))}
                 placeholder={"Pilih oditur penuntut"}
                 isClearable={true}
                 isSearchable={true}

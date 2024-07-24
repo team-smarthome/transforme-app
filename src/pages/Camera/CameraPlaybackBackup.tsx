@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import ReactPlayer from 'react-player';
-import axios from 'axios';
-import { set } from 'react-hook-form';
+import React, { useState, useEffect, useRef } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+import ReactPlayer from "react-player";
+import axios from "axios";
+import { set } from "react-hook-form";
 import {
   allKameraOtmilByLocation,
   apiBuilding,
   apiDeviceDetail,
-} from '../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from './AlertCamera';
-import { Error403Message } from '../../utils/constants';
-import { Breadcrumbs } from '../../components/Breadcrumbs';
-import { IoMdDownload } from 'react-icons/io';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import DataCamera from './DataCamera';
+} from "../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "./AlertCamera";
+import { Error403Message } from "../../utils/constants";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { IoMdDownload } from "react-icons/io";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import DataCamera from "./DataCamera";
 
-const tokenItem = localStorage.getItem('token');
+const tokenItem = localStorage.getItem("token");
 const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
 const token = dataToken.token;
 
@@ -40,50 +40,50 @@ function extractTimeFromURL(url) {
 function getTime(offset = 0) {
   const now = new Date();
   now.setHours(now.getHours() + offset);
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
 }
 
 function getCurrentDate() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 
 const CameraPlayback = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentDate = new Date(Date.now()).toISOString().split('T')[0];
+  const currentDate = new Date(Date.now()).toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(currentDate);
   const [endDate, setEndDate] = useState(currentDate);
   const [mulaiDate, setMulaiDate] = useState(new Date());
   const [selesaiDate, setSelesaiDate] = useState(new Date());
 
-  const [baseUrl] = useState('http://100.81.142.71:4007/record/');
-  const [extension] = useState('.mp4');
+  const [baseUrl] = useState("http://100.81.142.71:4007/record/");
+  const [extension] = useState(".mp4");
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [forUrl, setForurl] = useState('');
+  const [forUrl, setForurl] = useState("");
   const [currentRecordingIndex, setCurrentRecordingIndex] = useState(-1);
   const [dataAllCamera, setDataAllCamera] = useState([]);
   const [selectedCamera, setSelectedCamera] = useState(null); // Initially, no camera is selected.
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [date, setDate] = useState(getCurrentDate());
   const [timeStart, setTimeStart] = useState(getTime(-1));
   const [timeFinish, setTimeFinish] = useState(getTime());
   const [detailKamera, setDetailKamera] = useState();
-  const [deviceName, setDeviceName] = useState('');
+  const [deviceName, setDeviceName] = useState("");
   const [building, setBuilding] = useState([]);
   const [cameraid, setCameraId] = useState();
   let [locationDeviceListOtmil, setLocationDeviceListOtmil] = useState([
     {
-      nama_ruangan_otmil: '',
-      kamera: [{ kamera_id: '', nama_kamera: '' }],
-      ruangan_otmil_id: '',
+      nama_ruangan_otmil: "",
+      kamera: [{ kamera_id: "", nama_kamera: "" }],
+      ruangan_otmil_id: "",
     },
   ]);
 
@@ -93,7 +93,7 @@ const CameraPlayback = (props) => {
 
   const videoRef = useRef(null);
   let playerRef = useRef(null);
-  const client = useRef(new W3CWebSocket('ws://192.168.100.111:4007'));
+  const client = useRef(new W3CWebSocket("ws://192.168.100.111:4007"));
 
   // useEffect(() => {
   //   const getCurrentDateTime = () => {
@@ -118,9 +118,9 @@ const CameraPlayback = (props) => {
   // };
 
   const formatTime = (date) => {
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const seconds = ('0' + date.getSeconds()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+    const seconds = ("0" + date.getSeconds()).slice(-2);
     return `${hours}:${minutes}:${seconds}`;
   };
 
@@ -134,7 +134,7 @@ const CameraPlayback = (props) => {
   }, []);
   let fetchData = async () => {
     try {
-      let dataLocal = localStorage.getItem('dataUser');
+      let dataLocal = localStorage.getItem("dataUser");
       let dataUser = JSON.parse(dataLocal!);
       dataUser = {
         lokasi_lemasmil_id: dataUser.lokasi_lemasmil_id,
@@ -142,20 +142,20 @@ const CameraPlayback = (props) => {
         nama_lokasi_lemasmil: dataUser.nama_lokasi_lemasmil,
         nama_lokasi_otmil: dataUser.nama_lokasi_otmil,
       };
-      console.log('data user', dataUser);
+      console.log("data user", dataUser);
 
       const response = await apiBuilding(dataUser);
-      console.log('response from apiBuilding', response);
+      console.log("response from apiBuilding", response);
 
-      if (response.data.status === 'OK') {
+      if (response.data.status === "OK") {
         setBuilding(response);
       } else {
         throw new Error(response.data.message);
       }
     } catch (e: any) {
-      console.log('error', e);
+      console.log("error", e);
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -177,7 +177,7 @@ const CameraPlayback = (props) => {
   //     })
   //     .catch((e: any) => {
   //       if (e.response.status === 403) {
-  //         navigate('/auth/signin', {
+  //         navigate('/', {
   //           state: { forceLogout: true, lastPage: location.pathname },
   //         });
   //       }
@@ -230,53 +230,53 @@ const CameraPlayback = (props) => {
   // }, [date, selectedCamera]);
   useEffect(() => {
     client.current.onopen = () => {
-      console.log('WebSocket Client Connected');
+      console.log("WebSocket Client Connected");
       // No need to send a request here; it will be sent when the camera is selected.
     };
 
     // Handle WebSocket messages (response from the server)
     client.current.onmessage = async (message) => {
       const dataFromServer = JSON.parse(message.data);
-      console.log('data_server', message.data);
+      console.log("data_server", message.data);
       // await setDeviceName(dataFromServer.deviceName);
 
-      if (dataFromServer.message === 'GET FILE FROM DIRECTORY PATH') {
-        let formattedDate = date.split('-').join('.');
-        let formattedDeviceName = dataFromServer.deviceName.split(' ').join('');
+      if (dataFromServer.message === "GET FILE FROM DIRECTORY PATH") {
+        let formattedDate = date.split("-").join(".");
+        let formattedDeviceName = dataFromServer.deviceName.split(" ").join("");
         let playlist = dataFromServer.files.map((file) => {
           console.log(
             baseUrl +
               formattedDeviceName +
-              '/' +
+              "/" +
               formattedDate +
-              '/video/' +
-              file,
+              "/video/" +
+              file
           );
 
           return (
             baseUrl +
             formattedDeviceName +
-            '/' +
+            "/" +
             formattedDate +
-            '/video/' +
+            "/video/" +
             file
           );
         });
         setPlaylistPlayback(playlist);
-        console.log('ini playback', playlist);
-      } else if (dataFromServer.message === 'FILE FROM DIRECTORY EMPTY') {
-        console.log('Got reply from the server:', dataFromServer);
+        console.log("ini playback", playlist);
+      } else if (dataFromServer.message === "FILE FROM DIRECTORY EMPTY") {
+        console.log("Got reply from the server:", dataFromServer);
         setPlaylistPlayback([]);
       }
     };
 
     // WebSocket close and error handling
     client.current.onclose = (event) => {
-      console.log('WebSocket Client Closed:', event);
+      console.log("WebSocket Client Closed:", event);
     };
 
     client.current.onerror = (error) => {
-      console.error('WebSocket Error:', error);
+      console.error("WebSocket Error:", error);
     };
   }, [date, selectedCamera]);
   useEffect(() => {
@@ -284,42 +284,42 @@ const CameraPlayback = (props) => {
   }, [cameraid]);
   const fetchDeviceDetail = async () => {
     const id = cameraid;
-    console.log(id, 'props from data camera playback');
+    console.log(id, "props from data camera playback");
 
     try {
       const res = await apiDeviceDetail(id);
       setDetailKamera(res);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
   const handleClickCam = (camId) => {
     setCameraId(camId);
-    console.log('iii', camId);
+    console.log("iii", camId);
   };
   useEffect(() => {
     if (forUrl) {
       // Set the video URL when `forUrl` changes
       playerRef = forUrl;
-      console.log(playerRef, 'ini url');
+      console.log(playerRef, "ini url");
     }
   }, [forUrl]);
-  console.log('for', forUrl);
+  console.log("for", forUrl);
   // Function to send a request to the WebSocket server
   const sendRequest = (method, params) => {
-    console.log('dataKameraSendWebsocket', params);
-    console.log('dataKameraSendWebsocketMethod', method);
+    console.log("dataKameraSendWebsocket", params);
+    console.log("dataKameraSendWebsocketMethod", method);
     client.current.send(JSON.stringify({ method, params }));
   };
-  console.log(detailKamera, 'ini detail');
+  console.log(detailKamera, "ini detail");
   // Handle camera change
   const handleCameraChange = async (e) => {
     const selectedIndex = e.target.value;
@@ -330,10 +330,10 @@ const CameraPlayback = (props) => {
     // await setDeviceName(selectedCam.nama_kamera.split(' ').join('_'));
 
     // Send a request when a camera is selected
-    await sendRequest('getPlayback', {
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCam.nama_kamera,
           urlRTSP: selectedCam.url_rtsp,
           IpAddress: selectedCam.ip_address,
@@ -347,10 +347,10 @@ const CameraPlayback = (props) => {
 
   const handleDateChange = async (e) => {
     await setDate(e.target.value);
-    await sendRequest('getPlayback', {
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCamera?.nama_kamera,
           urlRTSP: selectedCamera?.url_rtsp,
           IpAddress: selectedCamera?.ip_address,
@@ -366,10 +366,10 @@ const CameraPlayback = (props) => {
     let formattedTime = e.target.value;
     console.log(formattedTime);
     await setTimeStart(formattedTime);
-    await sendRequest('getPlayback', {
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCamera?.nama_kamera,
           urlRTSP: selectedCamera?.url_rtsp,
           IpAddress: selectedCamera?.ip_address,
@@ -385,10 +385,10 @@ const CameraPlayback = (props) => {
     let formattedTime = e.target.value;
     console.log(formattedTime);
     await setTimeFinish(formattedTime);
-    await sendRequest('getPlayback', {
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCamera?.nama_kamera,
           urlRTSP: selectedCamera?.url_rtsp,
           IpAddress: selectedCamera?.ip_address,
@@ -410,31 +410,31 @@ const CameraPlayback = (props) => {
       showProgress: true,
       steps: [
         {
-          element: '.i-gedung',
+          element: ".i-gedung",
           popover: {
-            title: 'Gedung',
-            description: 'Pilih Gedung',
+            title: "Gedung",
+            description: "Pilih Gedung",
           },
         },
         {
-          element: '.i-lantai',
+          element: ".i-lantai",
           popover: {
-            title: 'Lantai',
-            description: 'Pilih lantai',
+            title: "Lantai",
+            description: "Pilih lantai",
           },
         },
         {
-          element: '.i-ruangan',
+          element: ".i-ruangan",
           popover: {
-            title: 'Ruangan',
-            description: 'Pilih ruangan',
+            title: "Ruangan",
+            description: "Pilih ruangan",
           },
         },
         {
-          element: '.i-kamera',
+          element: ".i-kamera",
           popover: {
-            title: 'Kamera',
-            description: 'Pilih kamera',
+            title: "Kamera",
+            description: "Pilih kamera",
           },
         },
       ],
@@ -460,18 +460,18 @@ const CameraPlayback = (props) => {
   }, [currentVideoIndex]);
 
   const handleRecordingClick = (recording: any, index: any) => {
-    let newUrl = recording.replace('100.81.142.71', '192.168.1.111');
+    let newUrl = recording.replace("100.81.142.71", "192.168.1.111");
     // console.log('Recording clicked:', newUrl);
-    console.log('clicked', recording);
+    console.log("clicked", recording);
     setForurl(newUrl);
     // setForurl(recording);
     setCurrentRecordingIndex(index);
   };
   const handleDownload = () => {
     // Create a new anchor element
-    const anchor = document.createElement('a');
+    const anchor = document.createElement("a");
     anchor.href = forUrl;
-    anchor.download = 'video.mp4'; // Nama file yang akan diunduh
+    anchor.download = "video.mp4"; // Nama file yang akan diunduh
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
@@ -479,10 +479,10 @@ const CameraPlayback = (props) => {
 
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
@@ -495,18 +495,18 @@ const CameraPlayback = (props) => {
   const handleChangeStartDate = async (date) => {
     setMulaiDate(date);
     const formattedDate = formatDate(date);
-    console.log('Tanggal_dipilih:', formattedDate);
+    console.log("Tanggal_dipilih:", formattedDate);
     await setStartDate(formattedDate);
-    console.log('startDateSatu:', formattedDate);
-    await sendRequest('getPlayback', {
+    console.log("startDateSatu:", formattedDate);
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCamera?.nama_kamera,
           urlRTSP: selectedCamera?.url_rtsp,
           IpAddress: selectedCamera?.ip_address,
-          timeStart: startDate + ':00',
-          timeFinish: endDate + ':59',
+          timeStart: startDate + ":00",
+          timeFinish: endDate + ":59",
           date,
         },
       ],
@@ -516,12 +516,12 @@ const CameraPlayback = (props) => {
   const handleChangeEndDate = async (date) => {
     setSelesaiDate(date);
     const formattedDate = formatDate(date);
-    console.log('Tanggal_dipilih:', formattedDate);
+    console.log("Tanggal_dipilih:", formattedDate);
     await setEndDate(formattedDate);
-    await sendRequest('getPlayback', {
+    await sendRequest("getPlayback", {
       dataCamera: [
         {
-          deviceName: 'Camera 1',
+          deviceName: "Camera 1",
           // deviceName: selectedCamera?.nama_kamera,
           urlRTSP: selectedCamera?.url_rtsp,
           IpAddress: selectedCamera?.ip_address,
@@ -561,7 +561,7 @@ const CameraPlayback = (props) => {
                   <h1 className="font-semibold text-lg mt-1 tracking-wider">
                     {detailKamera?.nama_kamera !== undefined
                       ? `(${detailKamera?.nama_kamera} - ${detailKamera?.nama_ruangan_otmil} - ${detailKamera?.nama_lokasi_otmil})`
-                      : ''}
+                      : ""}
                   </h1>
                 </div>
                 {detailKamera?.nama_kamera !== undefined && (
@@ -576,7 +576,7 @@ const CameraPlayback = (props) => {
           </select> */}
                     <div className=" flex flex-col gap-5 w-1/2 justify-center items-center">
                       <label className="text-lg font-semibold tracking-wider">
-                        {' '}
+                        {" "}
                         Pilih Waktu Mulai
                       </label>
                       <DatePicker
@@ -589,7 +589,7 @@ const CameraPlayback = (props) => {
                         timeIntervals={1}
                       />
                       <label className="text-lg font-semibold tracking-wider">
-                        {' '}
+                        {" "}
                         Pilih Waktu Selesai
                       </label>
                       <DatePicker
@@ -620,8 +620,8 @@ const CameraPlayback = (props) => {
               ) : (
                 <p className="tracking-wider text-center animate-pulse mr-2">
                   {!cameraid
-                    ? 'Silahkan pilih gedung'
-                    : 'Silahkan pilih tanggal dan waktu'}
+                    ? "Silahkan pilih gedung"
+                    : "Silahkan pilih tanggal dan waktu"}
                 </p>
               )}
             </div>
@@ -632,14 +632,16 @@ const CameraPlayback = (props) => {
                 </h2>
                 <ul className="flex flex-col overflow-auto h-96 divide-y divide-dashed divide-zinc-500">
                   {playlistPlayback.map((recording, index) => {
-                    const urlParts = recording.split('/');
+                    const urlParts = recording.split("/");
                     const fileName = urlParts[urlParts.length - 1];
                     const isActive = index === currentRecordingIndex;
 
                     return (
                       <div className="flex items-center justify-center gap-8">
                         <li
-                          className={`flex p-4 gap-3 items-center cursor-pointer text-white text-center ${isActive ? 'bg-green-700' : 'bg-transparent'} font-light tracking-widest py-2`}
+                          className={`flex p-4 gap-3 items-center cursor-pointer text-white text-center ${
+                            isActive ? "bg-green-700" : "bg-transparent"
+                          } font-light tracking-widest py-2`}
                           key={index}
                           onClick={() => handleRecordingClick(recording, index)}
                         >
@@ -702,7 +704,7 @@ const CameraPlayback = (props) => {
                                       <span>
                                         {a?.nama_lantai
                                           ? a?.nama_lantai
-                                          : 'Undifined'}
+                                          : "Undifined"}
                                       </span>
                                       <span className="transition-transform groupChild-open:rotate-180">
                                         <svg
@@ -781,24 +783,24 @@ const CameraPlayback = (props) => {
                                                   }
                                                   className={` group-open:animate-fadeIn cursor-pointer ml-3 ${
                                                     k.status_kamera ==
-                                                      'aktif' ||
-                                                    k.status_kamera == 'online'
-                                                      ? 'text-green-500' // warna teks hijau jika status kamera aktif
+                                                      "aktif" ||
+                                                    k.status_kamera == "online"
+                                                      ? "text-green-500" // warna teks hijau jika status kamera aktif
                                                       : k.status_kamera ===
-                                                          'rusak'
-                                                        ? 'text-yellow-500' // warna teks kuning jika status kamera rusak
-                                                        : 'text-red-500' // warna teks merah untuk status kamera lainnya
+                                                        "rusak"
+                                                      ? "text-yellow-500" // warna teks kuning jika status kamera rusak
+                                                      : "text-red-500" // warna teks merah untuk status kamera lainnya
                                                   } i-kamera`}
                                                 >
                                                   {k.nama_kamera} (
                                                   {k.status_kamera ===
-                                                    'aktif' ||
-                                                  k.status_kamera == 'online'
-                                                    ? 'aktif'
+                                                    "aktif" ||
+                                                  k.status_kamera == "online"
+                                                    ? "aktif"
                                                     : k.status_kamera ===
-                                                        'rusak'
-                                                      ? 'rusak'
-                                                      : 'tidak aktif'}
+                                                      "rusak"
+                                                    ? "rusak"
+                                                    : "tidak aktif"}
                                                   )
                                                 </p>
                                               ))}

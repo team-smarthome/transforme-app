@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Loader from '../../../common/Loader';
-import { Alerts } from './AlertGedung';
+import React, { useEffect, useState } from "react";
+import Loader from "../../../common/Loader";
+import { Alerts } from "./AlertGedung";
 import {
   apiAhliDelete,
   apiAhliInsert,
@@ -10,20 +10,20 @@ import {
   apiGedungOtmilRead,
   apiInsertGedungOtmil,
   apiUpdateGedungOtmil,
-} from '../../../services/api';
-import { DeleteAhliModal } from './ModalDeleteGedung';
-import SearchInputButton from '../Search';
-import Pagination from '../../../components/Pagination';
-import { useNavigate, useLocation } from 'react-router-dom';
-import * as xlsx from 'xlsx';
-import DropdownAction from '../../../components/DropdownAction';
-import dayjs from 'dayjs';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { Error403Message } from '../../../utils/constants';
-import { ModalAddGedung } from './ModalAddGedung';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+} from "../../../services/api";
+import { DeleteAhliModal } from "./ModalDeleteGedung";
+import SearchInputButton from "../Search";
+import Pagination from "../../../components/Pagination";
+import { useNavigate, useLocation } from "react-router-dom";
+import * as xlsx from "xlsx";
+import DropdownAction from "../../../components/DropdownAction";
+import dayjs from "dayjs";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { Error403Message } from "../../../utils/constants";
+import { ModalAddGedung } from "./ModalAddGedung";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Params {
   filter: string;
@@ -49,18 +49,18 @@ const GedungList = () => {
   const [modalAddOpen, setModalAddOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [rows, setRows] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   const handleClickTutorial = () => {
@@ -68,31 +68,31 @@ const GedungList = () => {
       showProgress: true,
       steps: [
         {
-          element: '.search',
+          element: ".search",
           popover: {
-            title: 'Search',
-            description: 'Mencari nama gedung otmil',
+            title: "Search",
+            description: "Mencari nama gedung otmil",
           },
         },
         {
-          element: '.b-search',
+          element: ".b-search",
           popover: {
-            title: 'Button Search',
-            description: 'Klik untuk mencari nama gedung otmil',
+            title: "Button Search",
+            description: "Klik untuk mencari nama gedung otmil",
           },
         },
         {
-          element: '.excel',
+          element: ".excel",
           popover: {
-            title: 'Excel',
-            description: 'Mendapatkan file excel',
+            title: "Excel",
+            description: "Mendapatkan file excel",
           },
         },
         {
-          element: '.b-tambah',
+          element: ".b-tambah",
           popover: {
-            title: 'Tambah',
-            description: 'Menambahkan data gedung otmil',
+            title: "Tambah",
+            description: "Menambahkan data gedung otmil",
           },
         },
       ],
@@ -114,10 +114,10 @@ const GedungList = () => {
         pageSize: pageSize,
       };
       const response = await apiGedungOtmilRead(params, token);
-      console.log(response, "res")
+      console.log(response, "res");
       if (response.status === 200) {
         const result = response.data.records;
-        console.log(result, 'DATA');
+        console.log(result, "DATA");
         setData(result);
         setPages(response.data.pagination.totalPages);
         setRows(response.data.pagination.totalRecords);
@@ -127,19 +127,19 @@ const GedungList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   const handleEnterKeyPress = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearchClick();
     }
   };
@@ -149,10 +149,10 @@ const GedungList = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('keypress', handleEnterKeyPress);
+    document.addEventListener("keypress", handleEnterKeyPress);
 
     return () => {
-      document.removeEventListener('keypress', handleEnterKeyPress);
+      document.removeEventListener("keypress", handleEnterKeyPress);
     };
   }, [filter]);
 
@@ -168,7 +168,7 @@ const GedungList = () => {
 
   const fetchData = async () => {
     let param = {
-      filter: '',
+      filter: "",
       page: currentPage,
       pageSize: pageSize,
     };
@@ -178,7 +178,7 @@ const GedungList = () => {
       const response = await apiGedungOtmilRead(param, token);
       if (response.status === 200) {
         const result = response.data.records;
-        console.log(result, 'DATA');
+        console.log(result, "DATA");
         setData(result);
         setPages(response.data.pagination.totalPages);
         setRows(response.data.pagination.totalRecords);
@@ -188,12 +188,12 @@ const GedungList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -251,27 +251,27 @@ const GedungList = () => {
       const response = await apiDeleteGedungOtmil(params, token);
       if (response.status === 200) {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
         setModalDeleteOpen(false);
         fetchData();
       } else if (response.status === 400) {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal hapus data',
+          icon: "error",
+          title: "Gagal hapus data",
         });
       } else {
         throw new Error(response.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -280,30 +280,30 @@ const GedungList = () => {
   const handleInsertGedungOtmil = async (params: any) => {
     try {
       const response = await apiInsertGedungOtmil(params, token);
-      console.log(response, "testing insert")
+      console.log(response, "testing insert");
       if (response.status === 201) {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
         setModalAddOpen(false);
         fetchData();
       } else if (response.status === 400) {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal membuat data',
+          icon: "error",
+          title: "Gagal membuat data",
         });
       } else {
         throw new Error(response.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -314,34 +314,34 @@ const GedungList = () => {
       const response = await apiUpdateGedungOtmil(params, token);
       if (response.status === 200) {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengubah data',
+          icon: "success",
+          title: "Berhasil mengubah data",
         });
         setModalEditOpen(false);
         fetchData();
       } else if (response.status === 400) {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengubah data',
+          icon: "error",
+          title: "Gagal mengubah data",
         });
       } else {
         throw new Error(response.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
@@ -351,12 +351,12 @@ const GedungList = () => {
   const exportToExcel = () => {
     const dataToExcel = [
       [
-        'Nama Gedung Otmil',
-        'Panjang',
-        'Lebar',
-        'posisi_x',
-        'posisi_y',
-        'lokasi',
+        "Nama Gedung Otmil",
+        "Panjang",
+        "Lebar",
+        "posisi_x",
+        "posisi_y",
+        "lokasi",
       ],
       ...data.map((item: any) => [
         item.nama_gedung_otmil,
@@ -370,10 +370,10 @@ const GedungList = () => {
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
     xlsx.writeFile(
       wb,
-      `Data-Gedung ${dayjs(new Date()).format('DD-MM-YYYY HH.mm')}.xlsx`,
+      `Data-Gedung ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
     );
   };
 

@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react';
-import Pagination from '../../../components/Pagination';
-import AddDataGrup from './modalAad';
-import { Alerts } from './Alert';
+import { useEffect, useState } from "react";
+import Pagination from "../../../components/Pagination";
+import AddDataGrup from "./modalAad";
+import { Alerts } from "./Alert";
 import {
   apiCreatGrupPetugas,
   apiDeleteGrupPetugas,
   apiReadAllGrupPetugas,
   apiReadAllStaff,
   apiUpdateGrupPetugas,
-} from '../../../services/api';
-import DetailGrup from './ModalDetail';
-import { DeleteGrupModal } from './deleteGrupShift';
-import EditGrup from './editGrup';
-import Loader from '../../../common/Loader';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import dayjs from 'dayjs';
-import id from 'date-fns/locale/id';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
-import 'dayjs/locale/id';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+} from "../../../services/api";
+import DetailGrup from "./ModalDetail";
+import { DeleteGrupModal } from "./deleteGrupShift";
+import EditGrup from "./editGrup";
+import Loader from "../../../common/Loader";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from "dayjs";
+import id from "date-fns/locale/id";
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import "dayjs/locale/id";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
-  grup_petugas_id: '';
-  nama_grup_petugas: '';
+  grup_petugas_id: "";
+  nama_grup_petugas: "";
 }
 
 const GrupShift = () => {
@@ -33,7 +33,7 @@ const GrupShift = () => {
   const location = useLocation();
 
   //get Token
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   let tokens = tokenItem ? JSON.parse(tokenItem) : null;
   let token = tokens.token;
 
@@ -47,30 +47,30 @@ const GrupShift = () => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
     }
 
-    console.log(isOperator, 'Operator');
+    console.log(isOperator, "Operator");
   }, [isOperator]);
 
   const [dataGrup, setDataGrup] = useState([
     {
-      grup_petugas_id: '',
-      nama_grup_petugas: '',
-      nama_ketua_grup: '',
+      grup_petugas_id: "",
+      nama_grup_petugas: "",
+      nama_ketua_grup: "",
     },
   ]);
   const [detailData, setDetailData] = useState<Item | null>(null);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [deleteData, setDeleteData] = useState({
-    grup_petugas_id: '',
+    grup_petugas_id: "",
   });
 
   // //DatePicker
@@ -79,8 +79,8 @@ const GrupShift = () => {
   const handleMonthChange = (date: any) => {
     setSelectedMonth(dayjs(date));
   };
-  registerLocale('id', id);
-  setDefaultLocale('id');
+  registerLocale("id", id);
+  setDefaultLocale("id");
 
   //Modal function
   const handleCloseAddModal = () => {
@@ -104,7 +104,7 @@ const GrupShift = () => {
   //       setIsLoading(false);
   //     } catch (e: any) {
   //       if (e.response.status === 403) {
-  //         navigate('/auth/signin', {
+  //         navigate('/', {
   //           state: { forceLogout: true, lastPage: location.pathname },
   //         });
   //       }
@@ -128,7 +128,7 @@ const GrupShift = () => {
     };
     try {
       const response = await apiReadAllGrupPetugas(params, token);
-      if (response.data.status !== 'OK') {
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       setDataGrup(response?.data.records);
@@ -138,7 +138,7 @@ const GrupShift = () => {
     } catch (e: any) {
       console.log(e);
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -154,28 +154,28 @@ const GrupShift = () => {
     try {
       const AddData = await apiCreatGrupPetugas(params, token);
 
-      if (AddData.data.status === 'OK') {
+      if (AddData.data.status === "OK") {
         handleCloseAddModal();
 
         fetchGrupShift();
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal menambah data',
+          icon: "error",
+          title: "Gagal menambah data",
         });
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -202,28 +202,28 @@ const GrupShift = () => {
     try {
       const EditData = await apiUpdateGrupPetugas(params, token);
 
-      if (EditData.data.status === 'OK') {
+      if (EditData.data.status === "OK") {
         handleCloseEditModal();
         fetchGrupShift();
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengedit data',
+          icon: "success",
+          title: "Berhasil mengedit data",
         });
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengedit data',
+          icon: "error",
+          title: "Gagal mengedit data",
         });
       }
     } catch (e: any) {
-      console.error('Error editing data:', e);
+      console.error("Error editing data:", e);
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -242,29 +242,29 @@ const GrupShift = () => {
     try {
       const AddData = await apiDeleteGrupPetugas(params, token);
 
-      if (AddData.data.status === 'OK') {
+      if (AddData.data.status === "OK") {
         handleCloseDeleteModal();
 
         fetchGrupShift();
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal menghapus data',
+          icon: "error",
+          title: "Gagal menghapus data",
         });
       }
     } catch (e: any) {
-      console.error('Error deleting data:', e);
+      console.error("Error deleting data:", e);
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -399,7 +399,7 @@ const GrupShift = () => {
                                   <button
                                     onClick={() =>
                                       handleDeleteClick(
-                                        itemGrup.grup_petugas_id,
+                                        itemGrup.grup_petugas_id
                                       )
                                     }
                                     className="py-1 text-sm px-2 text-white rounded-md bg-red-500"

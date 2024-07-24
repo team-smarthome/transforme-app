@@ -541,7 +541,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -560,7 +560,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -581,7 +581,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -600,7 +600,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -618,7 +618,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -636,7 +636,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -654,7 +654,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -672,7 +672,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -690,7 +690,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -708,7 +708,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -726,7 +726,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -749,7 +749,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -775,7 +775,7 @@ export const DetailPelacakanWajahPrajurit = ({
       }, token)
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -802,7 +802,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -829,7 +829,7 @@ export const DetailPelacakanWajahPrajurit = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1368,7 +1368,8 @@ export const DetailPelacakanWajahPrajurit = ({
       <div
         ref={modalContainerRef}
         style={modalStyles.modalContainer}
-        className="modal-container fixed z-[999] flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[85vh] w-1/2 overflow-y-scroll bg-slate-600 border border-slate-800 rounded-md">
+        className="modal-container fixed z-[999] flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[85vh] w-1/2 overflow-y-scroll bg-slate-600 border border-slate-800 rounded-md"
+      >
         {/* <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark w-full"> */}
         <div className="modal rounded-sm w-full">
           {isLoading ? (
@@ -1376,7 +1377,8 @@ export const DetailPelacakanWajahPrajurit = ({
               <div className="flex flex-row-reverse pr-5 pt-3">
                 <strong
                   className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}>
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
@@ -1385,18 +1387,21 @@ export const DetailPelacakanWajahPrajurit = ({
                   className="animate-spin h-20 w-20 text-white "
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
-                  viewBox="0 0 24 24">
+                  viewBox="0 0 24 24"
+                >
                   <circle
                     className="opacity-25"
                     cx="12"
                     cy="12"
                     r="10"
                     stroke="currentColor"
-                    strokeWidth="4"></circle>
+                    strokeWidth="4"
+                  ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
               </div>
             </div>
@@ -1424,7 +1429,8 @@ export const DetailPelacakanWajahPrajurit = ({
                 </div>
                 <strong
                   className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}>
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
@@ -1512,14 +1518,16 @@ export const DetailPelacakanWajahPrajurit = ({
                                 </label>
                                 <button
                                   onClick={handleRemoveFoto}
-                                  className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded">
+                                  className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded"
+                                >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
                                     stroke="currentColor"
-                                    className="w-5 h-5">
+                                    className="w-5 h-5"
+                                  >
                                     <path
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
@@ -1569,14 +1577,16 @@ export const DetailPelacakanWajahPrajurit = ({
 
                                 <button
                                   onClick={handleRemoveFoto}
-                                  className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded">
+                                  className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded"
+                                >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
                                     stroke="currentColor"
-                                    className="w-5 h-5">
+                                    className="w-5 h-5"
+                                  >
                                     <path
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
@@ -1599,7 +1609,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-nama form-group w-full flex flex-col">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Nama
                             </label>
                             <input
@@ -1621,7 +1632,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-pangkat form-group w-full flex flex-col">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Pangkat
                             </label>
                             <Select
@@ -1658,7 +1670,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-matra form-group w-full flex flex-col">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Matra
                             </label>
                             <Select
@@ -1695,7 +1708,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-nrp form-group w-full flex flex-col">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               NRP
                             </label>
                             <input
@@ -1751,7 +1765,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                     item.image_kamera_log
                                   }
                                   alt="picture"
-                                  className="object-cover w-[150px] h-[150px] border border-slate-400"></img>
+                                  className="object-cover w-[150px] h-[150px] border border-slate-400"
+                                ></img>
                               </div>
                               <div className="ml-10 grid grid-cols-1 items-center">
                                 <div className="flex flex-col w-full">
@@ -1777,7 +1792,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                       strokeWidth="1.5"
                                       stroke="currentColor"
                                       width="15"
-                                      height="15">
+                                      height="15"
+                                    >
                                       <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -1817,7 +1833,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                     item.image_kamera_log
                                   }
                                   alt="picture"
-                                  className="object-cover w-[150px] h-[150px] border border-slate-400"></img>
+                                  className="object-cover w-[150px] h-[150px] border border-slate-400"
+                                ></img>
                               </div>
                               <div className="ml-10 grid grid-cols-1 items-center">
                                 <div className="flex flex-col w-full">
@@ -1843,7 +1860,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                       strokeWidth="1.5"
                                       stroke="currentColor"
                                       width="15"
-                                      height="15">
+                                      height="15"
+                                    >
                                       <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -1873,7 +1891,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-pendidikan form-group w-full flex flex-col ">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Pendidikan Militer
                         </label>
                         <Select
@@ -1910,7 +1929,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-kesatuan form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Kesatuan
                         </label>
                         {/* <select
@@ -1963,7 +1983,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-kelamin form-group w-full flex flex-col">
                         <label
                           className=" block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Jenis Kelamin
                         </label>
                         <select
@@ -1971,7 +1992,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           name="jenis_kelamin"
                           onChange={handleChange}
                           value={formState.jenis_kelamin}
-                          disabled={isDetail}>
+                          disabled={isDetail}
+                        >
                           <option disabled value="">
                             Pilih Jenis Kelamin
                           </option>
@@ -1991,7 +2013,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-agama form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Agama
                         </label>
                         {/* <select
@@ -2045,7 +2068,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-tempat-lahir form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Tempat Lahir
                         </label>
                         <input
@@ -2069,7 +2093,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-tanggal-lahir form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Tanggal Lahir
                         </label>
                         <input
@@ -2093,7 +2118,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-provinsi form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Provinsi
                         </label>
 
@@ -2147,7 +2173,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-kota form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Kota
                         </label>
                         {/* <select
@@ -2210,7 +2237,8 @@ export const DetailPelacakanWajahPrajurit = ({
                     <div className="f-alamat form-group w-full flex flex-col">
                       <label
                         className=" block text-sm font-medium text-black dark:text-white"
-                        htmlFor="id">
+                        htmlFor="id"
+                      >
                         Alamat
                       </label>
                       <textarea
@@ -2233,7 +2261,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-status-kawin form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Status Kawin
                         </label>
 
@@ -2290,7 +2319,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-nama-keluarga form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Nama Keluarga
                         </label>
                         <input
@@ -2314,7 +2344,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-status-keluarga form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Status Hubungan
                         </label>
                         <input
@@ -2339,7 +2370,8 @@ export const DetailPelacakanWajahPrajurit = ({
                       <div className="f-kontak-keluarga form-group w-full flex flex-col">
                         <label
                           className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id">
+                          htmlFor="id"
+                        >
                           Nomor Kontak Keluarga
                         </label>
                         <input
@@ -2614,7 +2646,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-tanggal-ditahan form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Tanggal Ditahan
                             </label>
                             <input
@@ -2638,7 +2671,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-keahlian form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Keahlian
                             </label>
                             {/* <select
@@ -2698,7 +2732,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-gelang form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Gelang
                             </label>
                             <select
@@ -2706,7 +2741,8 @@ export const DetailPelacakanWajahPrajurit = ({
                               name="gelang_id"
                               onChange={handleChange}
                               value={formState.gelang.gelang_id}
-                              disabled={isDetail}>
+                              disabled={isDetail}
+                            >
                               <option value="" disabled>
                                 Pilih Gelang
                               </option>
@@ -2726,7 +2762,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                     return (
                                       <option
                                         value={item.gelang_id}
-                                        key={item.gelang_id}>
+                                        key={item.gelang_id}
+                                      >
                                         {item.nama_gelang}{" "}
                                         {isUsed
                                           ? "(Sedang Digunakan)"
@@ -2770,7 +2807,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-dmac-gelang form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               DMAC Gelang
                             </label>
                             <input
@@ -2793,7 +2831,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-residivis form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Residivis
                             </label>
 
@@ -2802,7 +2841,8 @@ export const DetailPelacakanWajahPrajurit = ({
                               name="residivis"
                               onChange={handleChange}
                               value={formState.residivis}
-                              disabled={isDetail}>
+                              disabled={isDetail}
+                            >
                               <option value="" disabled>
                                 Pilih Residivis
                               </option>
@@ -2821,7 +2861,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-hunian-tahanan form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Hunian Tahanan
                             </label>
                             <Select
@@ -2865,7 +2906,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-nomor-tahanan form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Nomor Tahanan
                             </label>
                             <input
@@ -2890,7 +2932,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-status-terisolasi form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Terisolasi (?)
                             </label>
                             <select
@@ -2898,7 +2941,8 @@ export const DetailPelacakanWajahPrajurit = ({
                               name="is_isolated"
                               onChange={handleChange}
                               value={formState.is_isolated}
-                              disabled={isDetail}>
+                              disabled={isDetail}
+                            >
                               <option value="" disabled>
                                 Silahkan Dipilih
                               </option>
@@ -2917,7 +2961,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-status-tersangka form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Status Tersangka
                             </label>
                             <select
@@ -2933,7 +2978,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                     }
                                   : formState.status_wbp_kasus_id
                               }
-                              disabled={isDetail}>
+                              disabled={isDetail}
+                            >
                               <option disabled value="">
                                 Pilih status
                               </option>
@@ -3052,10 +3098,12 @@ export const DetailPelacakanWajahPrajurit = ({
                                   "55ae39b7-dbad-4c89-8968-6d1e2450c963"
                                     ? "block"
                                     : "hidden"
-                                }`}>
+                                }`}
+                              >
                                 <label
                                   className="  block text-sm font-medium text-black dark:text-white"
-                                  htmlFor="id">
+                                  htmlFor="id"
+                                >
                                   Tanggal penetapan terpidana
                                 </label>
                                 <input
@@ -3082,10 +3130,12 @@ export const DetailPelacakanWajahPrajurit = ({
                                   "ca91a6a8-4a1e-4bb3-a6bf-7a2e708a2064"
                                     ? "block"
                                     : "hidden"
-                                }`}>
+                                }`}
+                              >
                                 <label
                                   className="  block text-sm font-medium text-black dark:text-white"
-                                  htmlFor="id">
+                                  htmlFor="id"
+                                >
                                   Tanggal penetapan terdakwa
                                 </label>
                                 <input
@@ -3112,10 +3162,12 @@ export const DetailPelacakanWajahPrajurit = ({
                                   "e9e467a1-9132-4787-8938-7517da9ba964"
                                     ? "block"
                                     : "hidden"
-                                }`}>
+                                }`}
+                              >
                                 <label
                                   className="  block text-sm font-medium text-black dark:text-white"
-                                  htmlFor="id">
+                                  htmlFor="id"
+                                >
                                   Tanggal penetapan tersangka
                                 </label>
                                 <input
@@ -3141,7 +3193,8 @@ export const DetailPelacakanWajahPrajurit = ({
                           <div className="f-tanggal-masa-penahanan form-group w-full ">
                             <label
                               className="  block text-sm font-medium text-black dark:text-white"
-                              htmlFor="id">
+                              htmlFor="id"
+                            >
                               Tanggal Masa Penahanan
                             </label>
                             <input
@@ -3177,7 +3230,8 @@ export const DetailPelacakanWajahPrajurit = ({
                             <div className="f-penyakit form-group w-full ">
                               <label
                                 className="  block text-sm font-medium text-black dark:text-white"
-                                htmlFor="id">
+                                htmlFor="id"
+                              >
                                 Penyakit (?)
                               </label>
                               <select
@@ -3185,7 +3239,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                 name="is_sick"
                                 onChange={handleChange}
                                 value={formState.is_sick}
-                                disabled={isDetail}>
+                                disabled={isDetail}
+                              >
                                 <option value="" disabled>
                                   Silahkan Pilih
                                 </option>
@@ -3206,7 +3261,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                 <div className="f-nama-penyakit form-group w-full flex flex-col">
                                   <label
                                     className="  block text-sm font-medium text-black dark:text-white"
-                                    htmlFor="id">
+                                    htmlFor="id"
+                                  >
                                     Nama Penyakit
                                   </label>
                                   <input
@@ -3320,7 +3376,8 @@ export const DetailPelacakanWajahPrajurit = ({
                             <div className="f-jenis-olahraga form-group w-full flex flex-col">
                               <label
                                 className=" block text-sm font-medium text-black dark:text-white"
-                                htmlFor="id">
+                                htmlFor="id"
+                              >
                                 Jenis Olahraga
                               </label>
                               <select
@@ -3328,7 +3385,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                 name="jenis_olahraga"
                                 onChange={handleChange}
                                 value={formState.jenis_olahraga}
-                                disabled={isDetail}>
+                                disabled={isDetail}
+                              >
                                 <option disabled value="">
                                   Pilih Jenis Olahraga
                                 </option>
@@ -3353,7 +3411,8 @@ export const DetailPelacakanWajahPrajurit = ({
                             <div className="f-zat-adiktif form-group w-full flex flex-col">
                               <label
                                 className=" block text-sm font-medium text-black dark:text-white"
-                                htmlFor="id">
+                                htmlFor="id"
+                              >
                                 Jenis Zat Adiktif
                               </label>
                               <select
@@ -3361,7 +3420,8 @@ export const DetailPelacakanWajahPrajurit = ({
                                 name="zat_adiktif"
                                 onChange={handleChange}
                                 value={formState.zat_adiktif}
-                                disabled={isDetail}>
+                                disabled={isDetail}
+                              >
                                 <option disabled value="">
                                   Pilih Jenis Zat Adiktif
                                 </option>
@@ -3432,24 +3492,28 @@ export const DetailPelacakanWajahPrajurit = ({
                       buttonLoad ? "bg-slate-400" : ""
                     }`}
                     type="submit"
-                    disabled={buttonLoad}>
+                    disabled={buttonLoad}
+                  >
                     {buttonLoad ? (
                       <svg
                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24">
+                        viewBox="0 0 24 24"
+                      >
                         <circle
                           className="opacity-25"
                           cx="12"
                           cy="12"
                           r="10"
                           stroke="currentColor"
-                          strokeWidth="4"></circle>
+                          strokeWidth="4"
+                        ></circle>
                         <path
                           className="opacity-75"
                           fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""
@@ -3462,24 +3526,28 @@ export const DetailPelacakanWajahPrajurit = ({
                       buttonLoad ? "bg-slate-400" : ""
                     }`}
                     type="submit"
-                    disabled={buttonLoad}>
+                    disabled={buttonLoad}
+                  >
                     {buttonLoad ? (
                       <svg
                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24">
+                        viewBox="0 0 24 24"
+                      >
                         <circle
                           className="opacity-25"
                           cx="12"
                           cy="12"
                           r="10"
                           stroke="currentColor"
-                          strokeWidth="4"></circle>
+                          strokeWidth="4"
+                        ></circle>
                         <path
                           className="opacity-75"
                           fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""

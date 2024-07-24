@@ -164,7 +164,7 @@ const InventarisList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -197,7 +197,7 @@ const InventarisList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -229,7 +229,7 @@ const InventarisList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -268,7 +268,7 @@ const InventarisList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -344,7 +344,7 @@ const InventarisList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -366,7 +366,7 @@ const InventarisList = () => {
       setTipeAset(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -424,7 +424,8 @@ const InventarisList = () => {
             <select
               value={filterTipe}
               onChange={handleFilterChangeTipe}
-              className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary tipe">
+              className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary tipe"
+            >
               <option value="">Semua tipe</option>
               {tipeAset.map((item: any) => (
                 <option value={item.nama_tipe}>{item.nama_tipe}</option>
@@ -437,12 +438,14 @@ const InventarisList = () => {
               onClick={handleSearchClick}
               id="button-addon1"
               data-te-ripple-init
-              data-te-ripple-color="light">
+              data-te-ripple-color="light"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="h-5 w-5 text-black">
+                className="h-5 w-5 text-black"
+              >
                 <path
                   fillRule="evenodd"
                   d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
@@ -453,7 +456,8 @@ const InventarisList = () => {
 
             <button
               onClick={exportToExcel}
-              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -476,7 +480,8 @@ const InventarisList = () => {
           {!isOperator && (
             <button
               onClick={() => setModalAddOpen(true)}
-              className=" text-black rounded-md font-semibold bg-blue-300 w-20 h-10 b-tambah">
+              className=" text-black rounded-md font-semibold bg-blue-300 w-20 h-10 b-tambah"
+            >
               Tambah
             </button>
           )}
@@ -486,7 +491,8 @@ const InventarisList = () => {
           <div
             className={`text-center  rounded-t-md bg-gray-2 dark:bg-slate-600 ${
               isOperator ? "grid grid-cols-5" : "grid grid-cols-6"
-            }`}>
+            }`}
+          >
             <div className="p-2.5 xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base ">
                 Foto Barang
@@ -534,10 +540,12 @@ const InventarisList = () => {
                     <div
                       className={` rounded-sm justify-center bg-gray-2 dark:bg-meta-4 ${
                         isOperator ? "grid grid-cols-5" : "grid grid-cols-6"
-                      }`}>
+                      }`}
+                    >
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <img
                           src={
                             // `http://127.0.0.1:8000/storage/${item.foto_barang}`
@@ -545,12 +553,14 @@ const InventarisList = () => {
                             item.foto_barang
                           }
                           alt="picture"
-                          className="w-20 h-20 object-fit border-slate-400 border"></img>
+                          className="w-20 h-20 object-fit border-slate-400 border"
+                        ></img>
                       </div>
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block truncate">
                           {item.nama_aset}
                         </p>
@@ -558,17 +568,20 @@ const InventarisList = () => {
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block">
                           <TextWithEllipsis
                             text={item.serial_number}
-                            maxLength={10}></TextWithEllipsis>
+                            maxLength={10}
+                          ></TextWithEllipsis>
                         </p>
                       </div>
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block truncate">
                           {item.model}
                         </p>
@@ -576,7 +589,8 @@ const InventarisList = () => {
 
                       <div
                         onClick={() => handleDetailClick(item)}
-                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                        className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                      >
                         <p className="hidden text-black dark:text-white sm:block truncate">
                           {item.updated_at}
                         </p>
@@ -599,9 +613,8 @@ const InventarisList = () => {
                           <div className="relative">
                             <DropdownAction
                               handleEditClick={() => handleEditClick(item)}
-                              handleDeleteClick={() =>
-                                handleDeleteClick(item)
-                              }></DropdownAction>
+                              handleDeleteClick={() => handleDeleteClick(item)}
+                            ></DropdownAction>
                           </div>
                         </div>
                       )}
@@ -656,7 +669,8 @@ const InventarisList = () => {
               <select
                 value={pageSize}
                 onChange={handleChangePageSize}
-                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary">
+                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary"
+              >
                 <option value="10">10</option>
                 <option value="50">50</option>
                 <option value="100">100</option>

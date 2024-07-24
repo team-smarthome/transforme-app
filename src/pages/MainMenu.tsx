@@ -22,7 +22,7 @@ const MainMenu = () => {
       <div className="flex justify-center items-center gap-x-4 bg-transparent-dark1 backdrop-blur w-full py-5 fixed z-10">
         <img src={Logo} alt="Logo" className="w-50" />
         <span className="text-3xl text-white font-bold tracking-wider">
-          ADMIN PANEL
+          Monitoring System
         </span>
       </div>
 

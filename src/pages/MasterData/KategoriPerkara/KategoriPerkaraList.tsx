@@ -98,7 +98,7 @@ const KategoriPerkaraList = () => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate("/auth/signin", {
+      //   navigate("/", {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -149,7 +149,7 @@ const KategoriPerkaraList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -213,7 +213,7 @@ const KategoriPerkaraList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -246,7 +246,7 @@ const KategoriPerkaraList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -279,7 +279,7 @@ const KategoriPerkaraList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }

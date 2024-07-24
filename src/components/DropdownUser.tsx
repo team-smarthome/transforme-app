@@ -45,7 +45,7 @@ const DropdownUser = () => {
   const handleLogout = () => {
     localStorage.removeItem("dataUser");
     localStorage.removeItem("token");
-    navigate("/auth/signin");
+    navigate("/");
   };
 
   return (
@@ -54,7 +54,8 @@ const DropdownUser = () => {
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="flex items-center gap-4"
-        to="#">
+        to="#"
+      >
         <span className="hidden text-right lg:block">
           <span className="block capitalize text-sm font-medium text-black dark:text-white">
             {dataUser.nama_petugas}
@@ -86,7 +87,8 @@ const DropdownUser = () => {
           height="8"
           viewBox="0 0 12 8"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -103,17 +105,20 @@ const DropdownUser = () => {
         onBlur={() => setDropdownOpen(false)}
         className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? "block" : "hidden"
-        }`}>
+        }`}
+      >
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"
             height="22"
             viewBox="0 0 22 22"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M15.5375 0.618744H11.6531C10.7594 0.618744 10.0031 1.37499 10.0031 2.26874V4.64062C10.0031 5.05312 10.3469 5.39687 10.7594 5.39687C11.1719 5.39687 11.55 5.05312 11.55 4.64062V2.23437C11.55 2.16562 11.5844 2.13124 11.6531 2.13124H15.5375C16.3625 2.13124 17.0156 2.78437 17.0156 3.60937V18.3562C17.0156 19.1812 16.3625 19.8344 15.5375 19.8344H11.6531C11.5844 19.8344 11.55 19.8 11.55 19.7312V17.3594C11.55 16.9469 11.2062 16.6031 10.7594 16.6031C10.3125 16.6031 10.0031 16.9469 10.0031 17.3594V19.7312C10.0031 20.625 10.7594 21.3812 11.6531 21.3812H15.5375C17.2219 21.3812 18.5625 20.0062 18.5625 18.3562V3.64374C18.5625 1.95937 17.1875 0.618744 15.5375 0.618744Z"
               fill=""
@@ -126,15 +131,15 @@ const DropdownUser = () => {
           Keluar
         </button>
         <div className="z-[999999] mt-11 fixed top-[30px] right-2 flex flex-col justify-start items-end">
-                <Toaster
-                    position="top-right"
-                    toastOptions={{
-                        style: {
-                            marginTop: '10px',
-                        },
-                    }}
-                />
-            </div>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                marginTop: "10px",
+              },
+            }}
+          />
+        </div>
       </div>
       {/* <!-- Dropdown End --> */}
     </div>

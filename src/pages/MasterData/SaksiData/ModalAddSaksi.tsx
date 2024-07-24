@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
 
-import { Alerts } from './AlertSaksi';
-import { apiReadKasus } from '../../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
+import { Alerts } from "./AlertSaksi";
+import { apiReadKasus } from "../../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
 
-const dataUserItem = localStorage.getItem('dataUser');
+const dataUserItem = localStorage.getItem("dataUser");
 const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
-console.log(dataAdmin, 'DATA ADMIN');
+console.log(dataAdmin, "DATA ADMIN");
 
 export const AddSaksiModal = ({
   closeModal,
@@ -23,12 +23,12 @@ export const AddSaksiModal = ({
 }: any) => {
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_saksi: '',
-      no_kontak: '',
-      alamat: '',
-      jenis_kelamin: '',
-      keterangan: '',
-    },
+      nama_saksi: "",
+      no_kontak: "",
+      alamat: "",
+      jenis_kelamin: "",
+      keterangan: "",
+    }
   );
   // const lokasi_lemasmil_id = localStorage.getItem('lokasi_lemasmil_id')
 
@@ -41,17 +41,13 @@ export const AddSaksiModal = ({
   const [errors, setErrors] = useState<string[]>([]);
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const [dataKasus, setDataKasus] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   const validateForm = () => {
     let errorFields = [];
 
     for (const [key, value] of Object.entries(formState)) {
-      if (
-        key !== 'kasus_id' &&
-        key !== 'nama_kasus' &&
-        key !== 'keterangan'
-      ) {
+      if (key !== "kasus_id" && key !== "nama_kasus" && key !== "keterangan") {
         if (!value) {
           errorFields.push(key);
         }
@@ -71,38 +67,40 @@ export const AddSaksiModal = ({
       showProgress: true,
       steps: [
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama Saksi',
-            description: 'Isi nama saksi',
+            title: "Nama Saksi",
+            description: "Isi nama saksi",
           },
         },
         {
-          element: '.i-no',
+          element: ".i-no",
           popover: {
-            title: 'No Kontak',
-            description: 'Isi no kontak',
+            title: "No Kontak",
+            description: "Isi no kontak",
           },
         },
         {
-          element: '.p-jenis',
+          element: ".p-jenis",
           popover: {
-            title: 'Jenis Kelamin',
-            description: 'Pilih jenis kelamin',
+            title: "Jenis Kelamin",
+            description: "Pilih jenis kelamin",
           },
         },
         {
-          element: '.t-alamat',
+          element: ".t-alamat",
           popover: {
-            title: 'Alamat',
-            description: 'Isi alamat dengan lengkap',
+            title: "Alamat",
+            description: "Isi alamat dengan lengkap",
           },
         },
         {
-          element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+          element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
-            title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-            description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} data tipe`,
+            title: `${isEdit ? "Ubah" : "Tambah"}`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data tipe`,
           },
         },
       ],
@@ -122,13 +120,13 @@ export const AddSaksiModal = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState, 'From State');
+    console.log(formState, "From State");
 
     if (!validateForm()) return;
     setButtonLoad(true);
 
     onSubmit(formState).then(() => setButtonLoad(false));
-    console.log('berhasil');
+    console.log("berhasil");
   };
 
   useEffect(() => {
@@ -147,7 +145,7 @@ export const AddSaksiModal = ({
   //     })
   //     .catch((e: any) => {
   //       if (e.response.status === 403) {
-  //         navigate('/auth/signin', {
+  //         navigate('/', {
   //           state: { forceLogout: true, lastPage: location.pathname },
   //         });
   //       }
@@ -161,104 +159,104 @@ export const AddSaksiModal = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -316,10 +314,10 @@ export const AddSaksiModal = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Saksi'
+                      ? "Detail Data Saksi"
                       : isEdit
-                        ? 'Edit Data Saksi'
-                        : 'Tambah Data Saksi'}
+                      ? "Edit Data Saksi"
+                      : "Tambah Data Saksi"}
                   </h3>
                 </div>
 
@@ -370,7 +368,7 @@ export const AddSaksiModal = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'nama_saksi' ? 'Masukan Nama Saksi' : '',
+                        item === "nama_saksi" ? "Masukan Nama Saksi" : ""
                       )}
                     </p>
                   </div>
@@ -392,7 +390,7 @@ export const AddSaksiModal = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'no_kontak' ? 'Masukan No Kontak' : '',
+                        item === "no_kontak" ? "Masukan No Kontak" : ""
                       )}
                     </p>
                   </div>
@@ -420,7 +418,7 @@ export const AddSaksiModal = ({
                     </select>
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'jenis_kelamin' ? 'Pilih Jenis Kelamin' : '',
+                        item === "jenis_kelamin" ? "Pilih Jenis Kelamin" : ""
                       )}
                     </p>
                   </div>
@@ -442,16 +440,16 @@ export const AddSaksiModal = ({
                   />
                   <p className="error-text absolute bottom-1">
                     {errors.map((item) =>
-                      item === 'alamat' ? 'Masukan Alamat' : '',
+                      item === "alamat" ? "Masukan Alamat" : ""
                     )}
                   </p>
                 </div>
 
-                <div className={`mt-3 ${isDetail ? 'h-full' : 'h-15'}`}>
+                <div className={`mt-3 ${isDetail ? "h-full" : "h-15"}`}>
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -479,14 +477,14 @@ export const AddSaksiModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Data Saksi
                     </button>
                   ) : (
                     <button
                       className={` items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -514,22 +512,22 @@ export const AddSaksiModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Data Saksi
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

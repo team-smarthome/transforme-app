@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../common/Loader";
-import Alerts  from "./AlertRoom";
+import Alerts from "./AlertRoom";
 import * as xlsx from "xlsx";
 import { AddRoomModal } from "./ModalAddRoom";
 import { DeleteRoomModal } from "./ModalDeleteRoom";
@@ -125,7 +125,7 @@ const RoomList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -186,7 +186,7 @@ const RoomList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -259,7 +259,7 @@ const RoomList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -292,7 +292,7 @@ const RoomList = () => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -324,7 +324,7 @@ const RoomList = () => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }

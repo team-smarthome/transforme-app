@@ -173,7 +173,7 @@ const Brecelet = () => {
         });
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -188,7 +188,7 @@ const Brecelet = () => {
     } else {
       localStorage.removeItem("dataUser");
       localStorage.removeItem("token");
-      navigate("/auth/signin");
+      navigate("/");
     }
   }, []);
   return (

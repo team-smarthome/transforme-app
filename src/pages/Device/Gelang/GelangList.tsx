@@ -3,7 +3,12 @@ import Loader from "../../../common/Loader";
 import { AddGelang } from "./ModalAddGelang";
 import { DeleteGelangModal } from "./ModalDeleteGelang";
 import { Alerts } from "./AlertGelang";
-import { apiReadGelang, apiDeleteGelang, apiCreateGelang, apiUpdateGelang } from "../../../services/api";
+import {
+  apiReadGelang,
+  apiDeleteGelang,
+  apiCreateGelang,
+  apiUpdateGelang,
+} from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
 import * as xlsx from "xlsx";
@@ -121,7 +126,7 @@ const GelangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -154,7 +159,8 @@ const GelangList = () => {
           element: ".b-search",
           popover: {
             title: "Button Search",
-            description: "Click button untuk mencari nama gelang dan nomor DMAC",
+            description:
+              "Click button untuk mencari nama gelang dan nomor DMAC",
           },
         },
         {
@@ -219,7 +225,7 @@ const GelangList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -283,7 +289,7 @@ const GelangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -316,7 +322,7 @@ const GelangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -349,7 +355,7 @@ const GelangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -372,14 +378,33 @@ const GelangList = () => {
 
   const exportToExcel = async () => {
     const dataToExcel = [
-      ["Nama Gelang", "DMAC", "Tanggal Pasang", "Tanggal aktivasi", "Baterai", "Nama Lokasi", "Nama Ruangan"],
-      ...data.map((item: any) => [item.nama_gelang, item.dmac, item.tanggal_pasang, item.tanggal_aktivasi, item.baterai, item.nama_lokasi_otmil, item.nama_ruangan_otmil]),
+      [
+        "Nama Gelang",
+        "DMAC",
+        "Tanggal Pasang",
+        "Tanggal aktivasi",
+        "Baterai",
+        "Nama Lokasi",
+        "Nama Ruangan",
+      ],
+      ...data.map((item: any) => [
+        item.nama_gelang,
+        item.dmac,
+        item.tanggal_pasang,
+        item.tanggal_aktivasi,
+        item.baterai,
+        item.nama_lokasi_otmil,
+        item.nama_ruangan_otmil,
+      ]),
     ];
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
-    xlsx.writeFile(wb, `Data-Gelang ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`);
+    xlsx.writeFile(
+      wb,
+      `Data-Gelang ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+    );
   };
 
   useEffect(() => {
@@ -403,7 +428,11 @@ const GelangList = () => {
         <div className="flex justify-center w-full">
           <div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
             <div className="flex w-full search">
-              <SearchInputButton value={filter} placehorder="Cari nama Gelang" onChange={handleFilterChange} />
+              <SearchInputButton
+                value={filter}
+                placehorder="Cari nama Gelang"
+                onChange={handleFilterChange}
+              />
               {/* <select
             className="w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
             name="status_gateway"
@@ -418,19 +447,38 @@ const GelangList = () => {
             </div>
             <div className="flex w-full i-search">
               {/* <SearchInputButton value={searchData.dmac} placehorder="Cari Nomor DMAC" onChange={(e) => setSearchData({ ...searchData, dmac: e.target.value })} /> */}
-              <SearchInputButton 
-                value={filterDmac} 
-                placehorder="Cari Nomor DMAC" 
-                onChange={handleFilterChangeDmac} 
+              <SearchInputButton
+                value={filterDmac}
+                placehorder="Cari Nomor DMAC"
+                onChange={handleFilterChangeDmac}
               />
             </div>
-            <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search" type="button" onClick={handleSearchClick} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
-                <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+            <button
+              className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
+              type="button"
+              onClick={handleSearchClick}
+              id="button-addon1"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5 text-black"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
 
-            <button onClick={exportToExcel} className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium b-excel">
+            <button
+              onClick={exportToExcel}
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium b-excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -447,65 +495,133 @@ const GelangList = () => {
           </div>
         </div>
         <div className="flex justify-between items-center mb-3">
-          <h4 className="ext-xl font-semibold text-black dark:text-white capitalize">data perangkat gelang</h4>
+          <h4 className="ext-xl font-semibold text-black dark:text-white capitalize">
+            data perangkat gelang
+          </h4>
           {!isOperator && (
-            <button onClick={() => setModalAddOpen(true)} className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
+            <button
+              onClick={() => setModalAddOpen(true)}
+              className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
+            >
               Tambah
             </button>
           )}
         </div>
 
         <div className="flex flex-col">
-          <div className={`grid ${isOperator ? "grid-cols-6" : "grid-cols-7"} rounded-t-md capitalize bg-gray-2 dark:bg-slate-600 `}>
+          <div
+            className={`grid ${
+              isOperator ? "grid-cols-6" : "grid-cols-7"
+            } rounded-t-md capitalize bg-gray-2 dark:bg-slate-600 `}
+          >
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Gelang</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Nama Gelang
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">DMAC</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                DMAC
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:py-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Tanggal Pasang</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Tanggal Pasang
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:py-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">tanggal aktivasi</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                tanggal aktivasi
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">baterai</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                baterai
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Lokasi</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Nama Lokasi
+              </h5>
             </div>
-            <div className={`hidden ${isOperator ? "hidden" : "sm:block"} p-2.5 text-center xl:p-5`}>
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Aksi</h5>
+            <div
+              className={`hidden ${
+                isOperator ? "hidden" : "sm:block"
+              } p-2.5 text-center xl:p-5`}
+            >
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Aksi
+              </h5>
             </div>
           </div>
 
           {data.map((item: any) => {
             return (
               <div>
-                <div className={`grid ${isOperator ? "grid-cols-6" : "grid-cols-7"} rounded-sm bg-gray-2 dark:bg-meta-4`}>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.nama_gelang}</p>
+                <div
+                  className={`grid ${
+                    isOperator ? "grid-cols-6" : "grid-cols-7"
+                  } rounded-sm bg-gray-2 dark:bg-meta-4`}
+                >
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.nama_gelang}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.dmac}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.dmac}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.tanggal_pasang}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.tanggal_pasang}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.tanggal_aktivasi}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.tanggal_aktivasi}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.baterai}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.baterai}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black truncate dark:text-white">{item.nama_lokasi_otmil}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black truncate dark:text-white">
+                      {item.nama_lokasi_otmil}
+                    </p>
                   </div>
 
-                  <div className={`hidden items-center ${isOperator ? "hidden" : "block sm:flex"} justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}>
+                  <div
+                    className={`hidden items-center ${
+                      isOperator ? "hidden" : "block sm:flex"
+                    } justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}
+                  >
                     <div className="relative">
-                      <DropdownAction handleEditClick={() => handleEditClick(item)} handleDeleteClick={() => handleDeleteClick(item)}></DropdownAction>
+                      <DropdownAction
+                        handleEditClick={() => handleEditClick(item)}
+                        handleDeleteClick={() => handleDeleteClick(item)}
+                      ></DropdownAction>
                     </div>
                   </div>
                 </div>
@@ -513,10 +629,35 @@ const GelangList = () => {
               </div>
             );
           })}
-          {modalDetailOpen && <AddGelang closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAdd} defaultValue={detailData} isDetail={true} />}
-          {modalEditOpen && <AddGelang closeModal={handleCloseEditModal} onSubmit={handleSubmitEdit} defaultValue={editData} isEdit={true} />}
-          {modalAddOpen && <AddGelang closeModal={handleCloseAddModal} onSubmit={handleSubmitAdd} />}
-          {modalDeleteOpen && <DeleteGelangModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
+          {modalDetailOpen && (
+            <AddGelang
+              closeModal={() => setModalDetailOpen(false)}
+              onSubmit={handleSubmitAdd}
+              defaultValue={detailData}
+              isDetail={true}
+            />
+          )}
+          {modalEditOpen && (
+            <AddGelang
+              closeModal={handleCloseEditModal}
+              onSubmit={handleSubmitEdit}
+              defaultValue={editData}
+              isEdit={true}
+            />
+          )}
+          {modalAddOpen && (
+            <AddGelang
+              closeModal={handleCloseAddModal}
+              onSubmit={handleSubmitAdd}
+            />
+          )}
+          {modalDeleteOpen && (
+            <DeleteGelangModal
+              closeModal={handleCloseDeleteModal}
+              onSubmit={handleSubmitDelete}
+              defaultValue={deleteData}
+            />
+          )}
         </div>
         {data.length === 0 ? null : (
           <div className="mt-5">
@@ -535,7 +676,11 @@ const GelangList = () => {
                 <option value="1000">1000</option>
               </select>
             </div>
-            <Pagination currentPage={currentPage} totalPages={pages} onChangePage={handleChagePage} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={pages}
+              onChangePage={handleChagePage}
+            />
           </div>
         )}
       </div>

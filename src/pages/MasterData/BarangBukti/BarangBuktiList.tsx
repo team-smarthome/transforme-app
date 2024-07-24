@@ -164,7 +164,7 @@ const AhliList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -227,7 +227,7 @@ const AhliList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -295,7 +295,7 @@ const AhliList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -328,7 +328,7 @@ const AhliList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -361,7 +361,7 @@ const AhliList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -449,12 +449,14 @@ const AhliList = () => {
               onClick={handleSearchClick}
               id="button-addon1"
               data-te-ripple-init
-              data-te-ripple-color="light">
+              data-te-ripple-color="light"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="h-5 w-5 text-black">
+                className="h-5 w-5 text-black"
+              >
                 <path
                   fillRule="evenodd"
                   d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
@@ -465,7 +467,8 @@ const AhliList = () => {
 
             <button
               onClick={exportToExcel}
-              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -487,7 +490,8 @@ const AhliList = () => {
           {!isOperator && (
             <button
               onClick={() => setModalAddOpen(true)}
-              className="  text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
+              className="  text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
+            >
               Tambah
             </button>
           )}
@@ -577,10 +581,12 @@ const AhliList = () => {
                       <>
                         <div
                           className="grid grid-cols-6 grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4"
-                          key={item.nama_bukti_kasus}>
+                          key={item.nama_bukti_kasus}
+                        >
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <img
                               src={
                                 // "http://127.0.0.1:8000/storage/" +
@@ -588,12 +594,14 @@ const AhliList = () => {
                                 item.gambar_barang_bukti
                               }
                               alt="picture"
-                              className="w-20 h-20 object-fit border-slate-400 border"></img>
+                              className="w-20 h-20 object-fit border-slate-400 border"
+                            ></img>
                           </div>
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_bukti_kasus}
                             </p>
@@ -601,7 +609,8 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_kasus}
                             </p>
@@ -609,7 +618,8 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nomor_barang_bukti}
                             </p>
@@ -625,14 +635,16 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.tanggal_diambil}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_jenis_perkara}
                             </p>
@@ -644,10 +656,12 @@ const AhliList = () => {
                       <>
                         <div
                           className="grid grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-7 capitalize"
-                          key={item.nama_bukti_kasus}>
+                          key={item.nama_bukti_kasus}
+                        >
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <img
                               src={
                                 // "http://127.0.0.1:8000/storage/" +
@@ -656,12 +670,14 @@ const AhliList = () => {
                                 item.gambar_barang_bukti
                               }
                               alt="picture"
-                              className="w-20 h-20 object-fit border-slate-400 border"></img>
+                              className="w-20 h-20 object-fit border-slate-400 border"
+                            ></img>
                           </div>
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_bukti_kasus}
                             </p>
@@ -669,7 +685,8 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_kasus}
                             </p>
@@ -677,7 +694,8 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nomor_barang_bukti}
                             </p>
@@ -693,14 +711,16 @@ const AhliList = () => {
 
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.tanggal_diambil}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
                             <p className=" text-black truncate dark:text-white capitalize">
                               {item.nama_jenis_perkara}
                             </p>
@@ -724,7 +744,8 @@ const AhliList = () => {
                                 handleEditClick={() => handleEditClick(item)}
                                 handleDeleteClick={() =>
                                   handleDeleteClick(item)
-                                }></DropdownAction>
+                                }
+                              ></DropdownAction>
                             </div>
                           </div>
                         </div>
@@ -780,7 +801,8 @@ const AhliList = () => {
               <select
                 value={pageSize}
                 onChange={handleChangePageSize}
-                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary">
+                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary"
+              >
                 <option value="10">10</option>
                 <option value="50">50</option>
                 <option value="100">100</option>

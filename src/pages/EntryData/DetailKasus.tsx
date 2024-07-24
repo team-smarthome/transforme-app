@@ -14,7 +14,7 @@ import {
   apiReadjenisperkara,
   apiJenisPidanaRead,
   apiCreateDaftarKasus,
-  apiReadKasus
+  apiReadKasus,
 } from "../../services/api";
 import { Error403Message } from "../../utils/constants";
 import { Alerts } from "../Daftarkasus/AlertDaftarKasus";
@@ -43,24 +43,24 @@ const DetailKasus = ({
   handleNext,
 }: any) => {
   const [formState, setFormState] = useState<any>({
-    nama_kasus: '',
+    nama_kasus: "",
     nomor_kasus: nomorKasus,
-    lokasi_kasus: '',
+    lokasi_kasus: "",
     jenis_perkara_id: defaultValue?.jenis_perkara_id,
     jenis_pidana_id: defaultValue?.jenis_pidana_id,
-    kategori_perkara_id: '',
+    kategori_perkara_id: "",
     waktu_kejadian: dayjs().format("YYYY-MM-DDTHH:mm"),
     waktu_pelaporan_kasus: dayjs().format("YYYY-MM-DDTHH:mm"),
     wbp_profile_id: [],
     keterangan_wbp: [],
-    role_ketua: '',
+    role_ketua: "",
     oditur_penyidik_id: [],
     nama_jenis_perkara: defaultValue?.nama_jenis_perkara,
     nama_jenis_pidana: defaultValue?.nama_jenis_pidana,
     saksi_id: [],
     keterangan_saksi: [],
-    zona_waktu: '',
-    tanggal_pelimpahan_kasus: '',
+    zona_waktu: "",
+    tanggal_pelimpahan_kasus: "",
   });
 
   // interface type {
@@ -130,7 +130,7 @@ const DetailKasus = ({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [dateEdited, setDateEdited] = useState(false);
   const [pihakTerlibat, setPihakTerlibat] = useState([]);
-  const [nomor, setNomor] = useState("")
+  const [nomor, setNomor] = useState("");
 
   const [ketuaOditurPenyidik, setKetuaOditurPenyidik] = useState([
     {
@@ -347,7 +347,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -368,7 +368,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -389,7 +389,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -417,7 +417,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -445,7 +445,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -464,7 +464,7 @@ const DetailKasus = ({
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -475,28 +475,28 @@ const DetailKasus = ({
       });
   };
 
-  const generateNomorKasus = async() => {
-    function convertToRoman(num:number) {
+  const generateNomorKasus = async () => {
+    function convertToRoman(num: number) {
       const romanNumerals = [
-        'M',
-        'CM',
-        'D',
-        'CD',
-        'C',
-        'XC',
-        'L',
-        'XL',
-        'X',
-        'IX',
-        'V',
-        'IV',
-        'I',
+        "M",
+        "CM",
+        "D",
+        "CD",
+        "C",
+        "XC",
+        "L",
+        "XL",
+        "X",
+        "IX",
+        "V",
+        "IV",
+        "I",
       ];
       const decimalValues = [
         1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,
       ];
 
-      let result = '';
+      let result = "";
 
       for (let i = 0; i < romanNumerals.length; i++) {
         while (num >= decimalValues[i]) {
@@ -504,14 +504,14 @@ const DetailKasus = ({
           num -= decimalValues[i];
         }
       }
-    
+
       return result;
     }
-    const type = 'Pid.K';
-    const day = dayjs(new Date()).format('DD');
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const type = "Pid.K";
+    const day = dayjs(new Date()).format("DD");
+    const month = (new Date().getMonth() + 1).toString().padStart(2, "0");
     const year = new Date().getFullYear().toString();
-    const lokasi = 'Otmil';
+    const lokasi = "Otmil";
     const romanNumber = convertToRoman(parseInt(month));
     const currentDate = `${day}-${romanNumber}/${year}`;
     let angkaTerbesar = 0;
@@ -519,7 +519,7 @@ const DetailKasus = ({
     const resultKasus = kasus.data.records;
     resultKasus.forEach((item: any) => {
       if (item.nomor_kasus) {
-        const nomorKasus = item.nomor_kasus.split('/')[0];
+        const nomorKasus = item.nomor_kasus.split("/")[0];
         const angka = parseInt(nomorKasus, 10);
 
         if (!isNaN(angka) && item.nomor_kasus.includes(currentDate)) {
@@ -528,14 +528,14 @@ const DetailKasus = ({
       }
     });
 
-    if (angkaTerbesar ===0) {
+    if (angkaTerbesar === 0) {
       angkaTerbesar = 1;
     } else {
       angkaTerbesar += 1;
     }
-    const output =`${angkaTerbesar}/${type}/${currentDate}/${lokasi}`
-    console.log(output, "Nomor kasus")
-    setNomor(output)
+    const output = `${angkaTerbesar}/${type}/${currentDate}/${lokasi}`;
+    console.log(output, "Nomor kasus");
+    setNomor(output);
   };
 
   useEffect(() => {
@@ -547,7 +547,7 @@ const DetailKasus = ({
       jenisPerkara(),
       jenisPidana(),
       Oditur(),
-      generateNomorKasus()
+      generateNomorKasus(),
     ]).then(() => {
       setIsLoading(false);
     });
@@ -578,7 +578,11 @@ const DetailKasus = ({
         errorFields.push(key);
       }
 
-      if (key === "keterangan_wbp" && Array.isArray(value) && value.length === 0) {
+      if (
+        key === "keterangan_wbp" &&
+        Array.isArray(value) &&
+        value.length === 0
+      ) {
         errorFields.push(key);
       }
       if (key === "saksi_id" && Array.isArray(value) && value.length === 0) {
@@ -640,7 +644,7 @@ const DetailKasus = ({
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -1062,9 +1066,7 @@ const DetailKasus = ({
             <div className="h-2">
               <p className="error-text">
                 {errors.map((item) =>
-                  item === "role_ketua"
-                    ? "Pilih Ketua Oditur Penyidik"
-                    : ""
+                  item === "role_ketua" ? "Pilih Ketua Oditur Penyidik" : ""
                 )}
               </p>
             </div>
@@ -1161,7 +1163,7 @@ const DetailKasus = ({
                             id={`keterangan_wbp${index}`}
                             className="w-full rounded border border-stroke py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
                             placeholder={`${
-                              errors.includes('keterangan_wbp')
+                              errors.includes("keterangan_wbp")
                                 ? "Keterangan Belum Di Isi"
                                 : "Keterangan"
                             }`}

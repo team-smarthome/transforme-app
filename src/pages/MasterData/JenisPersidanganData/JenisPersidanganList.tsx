@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../common/Loader";
 import { Alerts } from "./AlertJenisPersingan";
-import { apiJenisSidangInsert, apiJenisSidangRead, apiJenisSidangUpdate, apiJenisSidangDelete } from "../../../services/api";
+import {
+  apiJenisSidangInsert,
+  apiJenisSidangRead,
+  apiJenisSidangUpdate,
+  apiJenisSidangDelete,
+} from "../../../services/api";
 import { AddJenisPersidanganModal } from "./ModalAddJenisPersidangan";
 import { DeleteJenisPersidanganModal } from "./ModalDeleteJenisPersidangan";
 import SearchInputButton from "../Search";
@@ -148,7 +153,7 @@ const JenisPersidanganList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -210,7 +215,7 @@ const JenisPersidanganList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -276,7 +281,7 @@ const JenisPersidanganList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -309,7 +314,7 @@ const JenisPersidanganList = () => {
   //     }
   //   } catch (e: any) {
   //     if (e.response.status === 403) {
-  //       navigate('/auth/signin', {
+  //       navigate('/', {
   //         state: { forceLogout: true, lastPage: location.pathname },
   //       });
   //     }
@@ -341,7 +346,7 @@ const JenisPersidanganList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -374,7 +379,7 @@ const JenisPersidanganList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -396,12 +401,20 @@ const JenisPersidanganList = () => {
   }, [isOperator]);
 
   const exportToExcel = () => {
-    const dataToExcel = [["nama jenis persidangan"], ...data.map((item: any) => [item.nama_jenis_persidangan])];
+    const dataToExcel = [
+      ["nama jenis persidangan"],
+      ...data.map((item: any) => [item.nama_jenis_persidangan]),
+    ];
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
-    xlsx.writeFile(wb, `Data-JenisPersidangan ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`);
+    xlsx.writeFile(
+      wb,
+      `Data-JenisPersidangan ${dayjs(new Date()).format(
+        "DD-MM-YYYY HH.mm"
+      )}.xlsx`
+    );
   };
 
   return isLoading ? (
@@ -415,16 +428,39 @@ const JenisPersidanganList = () => {
         <div className="flex justify-center w-full">
           <div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
             <div className="w-full search">
-              <SearchInputButton value={filter} placehorder="Cari jenis persidangan" onChange={handleFilterChange} />
+              <SearchInputButton
+                value={filter}
+                placehorder="Cari jenis persidangan"
+                onChange={handleFilterChange}
+              />
             </div>
 
-            <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search" type="button" onClick={handleSearchClick} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
-                <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+            <button
+              className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
+              type="button"
+              onClick={handleSearchClick}
+              id="button-addon1"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5 text-black"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
 
-            <button onClick={exportToExcel} className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+            <button
+              onClick={exportToExcel}
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -440,9 +476,14 @@ const JenisPersidanganList = () => {
         </div>
 
         <div className="flex justify-between items-center mb-3">
-          <h4 className="text-xl font-semibold text-black dark:text-white">Data Jenis Persidangan</h4>
+          <h4 className="text-xl font-semibold text-black dark:text-white">
+            Data Jenis Persidangan
+          </h4>
           {!isOperator && (
-            <button onClick={() => setModalAddOpen(true)} className="  text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
+            <button
+              onClick={() => setModalAddOpen(true)}
+              className="  text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
+            >
               Tambah
             </button>
           )}
@@ -451,17 +492,23 @@ const JenisPersidanganList = () => {
           {isOperator ? (
             <div className="grid grid-cols-1 rounded-t-md bg-gray-2 dark:bg-slate-600 ">
               <div className="p-2.5 xl:p-5 justify-center flex">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jenis Persidangan</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jenis Persidangan
+                </h5>
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-2 rounded-t-md bg-gray-2 dark:bg-slate-600 sm:grid-cols-2">
               <div className="p-2.5 xl:p-5 justify-center flex">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jenis Persidangan</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jenis Persidangan
+                </h5>
               </div>
 
               <div className=" p-2.5 text-center xl:p-5 justify-center flex">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Aksi</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Aksi
+                </h5>
               </div>
             </div>
           )}
@@ -475,18 +522,34 @@ const JenisPersidanganList = () => {
                   <div>
                     {isOperator ? (
                       <>
-                        <div className="grid grid-cols-1 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-1 capitalize" key={item.nama_jenis_persidangan}>
-                          <div onClick={() => handleDetailClick(item)} className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
-                            <p className=" text-black dark:text-white capitalize">{item.nama_jenis_persidangan}</p>
+                        <div
+                          className="grid grid-cols-1 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-1 capitalize"
+                          key={item.nama_jenis_persidangan}
+                        >
+                          <div
+                            onClick={() => handleDetailClick(item)}
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
+                            <p className=" text-black dark:text-white capitalize">
+                              {item.nama_jenis_persidangan}
+                            </p>
                           </div>
                         </div>
                         <div className="border-t border-slate-600"></div>
                       </>
                     ) : (
                       <>
-                        <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 capitalize" key={item.nama_jenis_persidangan}>
-                          <div onClick={() => handleDetailClick(item)} className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer">
-                            <p className=" text-black dark:text-white capitalize">{item.nama_jenis_persidangan}</p>
+                        <div
+                          className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 capitalize"
+                          key={item.nama_jenis_persidangan}
+                        >
+                          <div
+                            onClick={() => handleDetailClick(item)}
+                            className="flex items-center justify-center gap-3 p-2.5 xl:p-5 cursor-pointer"
+                          >
+                            <p className=" text-black dark:text-white capitalize">
+                              {item.nama_jenis_persidangan}
+                            </p>
                           </div>
                           <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5 flex-wrap lg:flex-nowrap gap-2">
                             {/* <button
@@ -502,7 +565,12 @@ const JenisPersidanganList = () => {
                               Hapus
                             </button> */}
                             <div className="relative">
-                              <DropdownAction handleEditClick={() => handleEditClick(item)} handleDeleteClick={() => handleDeleteClick(item)}></DropdownAction>
+                              <DropdownAction
+                                handleEditClick={() => handleEditClick(item)}
+                                handleDeleteClick={() =>
+                                  handleDeleteClick(item)
+                                }
+                              ></DropdownAction>
                             </div>
                           </div>
                         </div>
@@ -515,10 +583,38 @@ const JenisPersidanganList = () => {
             </>
           )}
 
-          {modalDetailOpen && <AddJenisPersidanganModal closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAddDataPetugas} defaultValue={detailData} isDetail={true} token={token} />}
-          {modalEditOpen && <AddJenisPersidanganModal closeModal={handleCloseEditModal} onSubmit={handleSubmitEditDataPetugas} defaultValue={editData} isEdit={true} token={token} />}
-          {modalAddOpen && <AddJenisPersidanganModal closeModal={handleCloseAddModal} onSubmit={handleSubmitAddDataPetugas} token={token} />}
-          {modalDeleteOpen && <DeleteJenisPersidanganModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
+          {modalDetailOpen && (
+            <AddJenisPersidanganModal
+              closeModal={() => setModalDetailOpen(false)}
+              onSubmit={handleSubmitAddDataPetugas}
+              defaultValue={detailData}
+              isDetail={true}
+              token={token}
+            />
+          )}
+          {modalEditOpen && (
+            <AddJenisPersidanganModal
+              closeModal={handleCloseEditModal}
+              onSubmit={handleSubmitEditDataPetugas}
+              defaultValue={editData}
+              isEdit={true}
+              token={token}
+            />
+          )}
+          {modalAddOpen && (
+            <AddJenisPersidanganModal
+              closeModal={handleCloseAddModal}
+              onSubmit={handleSubmitAddDataPetugas}
+              token={token}
+            />
+          )}
+          {modalDeleteOpen && (
+            <DeleteJenisPersidanganModal
+              closeModal={handleCloseDeleteModal}
+              onSubmit={handleSubmitDelete}
+              defaultValue={deleteData}
+            />
+          )}
         </div>
 
         {data.length === 0 ? null : (
@@ -538,7 +634,11 @@ const JenisPersidanganList = () => {
                 <option value="1000">1000</option>
               </select>
             </div>
-            <Pagination currentPage={currentPage} totalPages={pages} onChangePage={handleChagePage} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={pages}
+              onChangePage={handleChagePage}
+            />
           </div>
         )}
       </div>
