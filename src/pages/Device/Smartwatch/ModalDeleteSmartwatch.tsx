@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export const DeleteGelangModal = ({
+export const DeleteSmartwatchModal = ({
   closeModal,
   onSubmit,
   defaultValue,
@@ -82,7 +82,7 @@ export const DeleteGelangModal = ({
                 Apakah Anda yakin ingin menghapus data ini?
               </p>
               <p className="text-sm text-center text-black dark:text-white">
-                Nama Gelang{' '}
+                Nama Smartwatch{' '}
                 <span className="text-red-400">{formState.nama_gelang}</span>{' '}
                 akan dihapus
               </p>

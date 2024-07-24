@@ -1093,51 +1093,55 @@ export const AddStaffModal = ({
 													)}
 												</p>
 											</div> */}
-                      {/* NIK */}
-                      <div className="form-group h-22 w-full">
-                        <label
-                          className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id"
-                        >
-                          NIK
-                        </label>
-                        <input
-                          className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nrp"
-                          name="nrp"
-                          placeholder="NRP"
-                          onChange={handleChange}
-                          value={formState.nrp}
-                          disabled={isDetail}
-                        />
-                        <p className="error-text">
-                          {errors.map((item) =>
-                            item === "nrp" ? "Masukan nrp" : ""
-                          )}
-                        </p>
-                      </div>
-                      <div className="form-group h-22 w-full ">
-                        <label
-                          className="  block text-sm font-medium text-black dark:text-white"
-                          htmlFor="id"
-                        >
-                          Tanggal Lahir
-                        </label>
-                        <input
-                          type="date"
-                          className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-tanggal"
-                          name="tanggal_lahir"
-                          onChange={handleChange}
-                          value={formState.tanggal_lahir}
-                          disabled={isDetail}
-                        />
-                        <p className="error-text">
-                          {errors.map((item) =>
-                            item === "tanggal_lahir"
-                              ? "Masukan tanggal lahir"
-                              : ""
-                          )}
-                        </p>
-                      </div>
+											{/* NIK */}
+											<div className="form-group h-22 w-full">
+												<label
+													className="  block text-sm font-medium text-black dark:text-white"
+													htmlFor="id"
+												>
+													NIK
+												</label>
+												<input
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nrp"
+													name="nrp"
+													placeholder="NIK"
+													onChange={handleChange}
+													value={formState.nrp}
+													disabled={isDetail}
+												/>
+												<p className="error-text">
+													{errors.map((item) =>
+														item === "nrp"
+															? "Masukan NIK"
+															: ""
+													)}
+												</p>
+											</div>
+											<div className="form-group h-22 w-full ">
+												<label
+													className="  block text-sm font-medium text-black dark:text-white"
+													htmlFor="id"
+												>
+													Tanggal Lahir
+												</label>
+												<input
+													type="date"
+													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-tanggal"
+													name="tanggal_lahir"
+													onChange={handleChange}
+													value={
+														formState.tanggal_lahir
+													}
+													disabled={isDetail}
+												/>
+												<p className="error-text">
+													{errors.map((item) =>
+														item === "tanggal_lahir"
+															? "Masukan tanggal lahir"
+															: ""
+													)}
+												</p>
+											</div>
 
                       {/* Matra */}
                       {/* <div className="form-group h-22 w-full ">

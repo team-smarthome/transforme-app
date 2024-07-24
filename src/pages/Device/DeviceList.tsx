@@ -2,25 +2,32 @@ import { AiOutlineCamera } from "react-icons/ai";
 import { BsHddNetwork, BsSmartwatch } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { GiMiningHelmet } from "react-icons/gi";
 
 const routeDevice = [
   {
     id: 1,
-    name: "Gelang",
-    link: "/workstation/pengaturan-list/perangkat/gelang",
+    name: "Smartwatch",
+    link: "/dashboard/pengaturan-list/perangkat/smartwatch",
     icon: <BsSmartwatch size={25} />,
   },
   {
     id: 2,
     name: "Kamera",
-    link: "/workstation/pengaturan-list/perangkat/kamera",
+    link: "/dashboard/pengaturan-list/perangkat/kamera",
     icon: <AiOutlineCamera size={25} />,
   },
   {
     id: 3,
     name: "Gateway",
-    link: "/workstation/pengaturan-list/perangkat/gateway",
+    link: "/dashboard/pengaturan-list/perangkat/gateway",
     icon: <BsHddNetwork size={25} />,
+  },
+  {
+    id: 3,
+    name: "Helmet",
+    link: "/dashboard/pengaturan-list/perangkat/helmet",
+    icon: <GiMiningHelmet size={25} />,
   },
 ];
 

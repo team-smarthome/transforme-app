@@ -7,13 +7,13 @@ const routeSettingList = [
   {
     id: 1,
     name: "Manajement Pengguna",
-    link: "/workstation/pengaturan-list/manajemen-pengguna",
+    link: "/dashboard/pengaturan-list/manajemen-pengguna",
     icon: <AiOutlineUserSwitch size={25} />,
   },
   {
     id: 2,
     name: "Perangkat",
-    link: "/workstation/pengaturan-list/perangkat",
+    link: "/dashboard/pengaturan-list/perangkat",
     icon: <AiOutlineCamera size={25} />,
   },
 ];

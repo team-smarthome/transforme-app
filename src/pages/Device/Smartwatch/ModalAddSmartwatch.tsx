@@ -1,17 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  apiReadAllRuanganOtmil,
-  apiReadAllWBP,
-  apiReadAlllokasiOtmil,
-  apiReadZona,
-} from "../../../services/api";
+import { apiReadAllRuanganOtmil, apiReadAllWBP, apiReadAlllokasiOtmil, apiReadZona } from "../../../services/api";
 import { webpack } from "webpack";
 import Select from "react-select";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alerts } from "./AlertGelang";
+import { Alerts } from "./AlertSmartwatch";
 import { Error403Message } from "../../../utils/constants";
 import { Label } from "@windmill/react-ui";
 
@@ -42,13 +37,7 @@ interface namazona {
   nama_zona: string;
 }
 
-export const AddGelang: React.FC<AddGelangModalProps> = ({
-  closeModal,
-  onSubmit,
-  defaultValue,
-  isDetail,
-  isEdit,
-}) => {
+export const AddSmartwatch: React.FC<AddGelangModalProps> = ({ closeModal, onSubmit, defaultValue, isDetail, isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -180,13 +169,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled
-          ? undefined
-          : isSelected
-          ? ""
-          : isFocused
-          ? "rgb(51, 133, 255)"
-          : undefined,
+        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -230,8 +213,8 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
         {
           element: ".i-nama",
           popover: {
-            title: "Nama Gelang",
-            description: "Isi nama gelang",
+            title: "Nama Smartwatch",
+            description: "Isi nama smartwatch",
           },
         },
         {
@@ -291,9 +274,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
           element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
             title: `${isEdit ? "Ubah" : "Tambah"}`,
-            description: `Klik untuk ${
-              isEdit ? "mengubah" : "menambahkan"
-            } data gelang`,
+            description: `Klik untuk ${isEdit ? "mengubah" : "menambahkan"} data gelang`,
           },
         },
       ],
@@ -302,11 +283,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
     driverObj.drive();
   };
 
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -328,9 +305,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
     // console.log('selectedData');
 
     // Temukan data ruangan berdasarkan ID yang dipilih
-    const selectedData = ruanganotmil.find(
-      (item) => item.ruangan_otmil_id === selectedRuangan
-    );
+    const selectedData = ruanganotmil.find((item) => item.ruangan_otmil_id === selectedRuangan);
 
     if (selectedData) {
       setFormState({
@@ -387,7 +362,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
         }, 300);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/", {
+          navigate("/auth/signin", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -400,9 +375,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
     fetchData();
   }, []);
 
-  const [inputValue, setInputValue] = useState(
-    formState.wbp[0]?.nama_wbp || ""
-  );
+  const [inputValue, setInputValue] = useState(formState.wbp[0]?.nama_wbp || "");
 
   const modalStyles: any = {
     backdrop: {
@@ -438,33 +411,14 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
           {isLoading ? (
             <div>
               <div className="flex flex-row-reverse pr-5 pt-3">
-                <strong
-                  className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}
-                >
+                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
                   &times;
                 </strong>
               </div>
               <div className="h-[500px] justify-center flex items-center">
-                <svg
-                  className="animate-spin h-20 w-20 text-white "
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                <svg className="animate-spin h-20 w-20 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             </div>
@@ -472,13 +426,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
             <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
               <div className="w-full flex justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-black dark:text-white">
-                    {isDetail
-                      ? "Detail Data Gelang"
-                      : isEdit
-                      ? "Edit Data Gelang"
-                      : "Tambah Data Gelang"}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-black dark:text-white">{isDetail ? "Detail Data Smartwatch" : isEdit ? "Edit Data Smartwatch" : "Tambah Data Smartwatch"}</h3>
                 </div>
 
                 {/* <div className="w-10"> */}
@@ -503,42 +451,29 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                 )}
                 {/* </div> */}
 
-                <strong
-                  className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}
-                >
+                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
                   &times;
                 </strong>
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-1 justify-normal">
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
-                      Nama Gelang
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      Nama Smartwatch
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
                       name="nama_gelang"
-                      placeholder="Nama Gelang"
+                      placeholder="Nama Smartwatch"
                       onChange={handleChange}
                       value={formState.nama_gelang}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">
-                      {errors.map((item) =>
-                        item === "nama_gelang" ? "Pilih gelang" : ""
-                      )}
-                    </p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "nama_gelang" ? "Pilih Smartwatch" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label
-                      className="capitalize block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
+                    <label className="capitalize block text-sm font-medium text-black dark:text-white" htmlFor="id">
                       dmac
                     </label>
                     <input
@@ -549,18 +484,11 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.dmac}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">
-                      {errors.map((item) =>
-                        item === "dmac" ? "Pilih dmac" : ""
-                      )}
-                    </p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "dmac" ? "Pilih dmac" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label
-                      className="capitalize block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
+                    <label className="capitalize block text-sm font-medium text-black dark:text-white" htmlFor="id">
                       baterai
                     </label>
                     <input
@@ -571,19 +499,12 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.baterai}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">
-                      {errors.map((item) =>
-                        item === "baterai" ? "Pilih baterai" : ""
-                      )}
-                    </p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "baterai" ? "Pilih baterai" : ""))}</p>
                   </div>
 
                   {/* Tanggal Pasang */}
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
                       Tanggal Pasang
                     </label>
                     <input
@@ -594,19 +515,12 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.tanggal_pasang}
                       disabled={isDetail}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "tanggal_pasang" ? "Pilih Tanggal Pasang" : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "tanggal_pasang" ? "Pilih Tanggal Pasang" : ""))}</p>
                   </div>
 
                   {/* Tanggal Aktivasi */}
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
                       Tanggal Aktivasi
                     </label>
                     <input
@@ -617,13 +531,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.tanggal_aktivasi}
                       disabled={isDetail}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "tanggal_aktivasi"
-                          ? "Pilih Tanggal Aktivasi"
-                          : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "tanggal_aktivasi" ? "Pilih Tanggal Aktivasi" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -668,11 +576,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                         </option>
                       ))}
                     </select> */}
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "ruangan_otmil_id" ? "Pilih Ruangan" : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "ruangan_otmil_id" ? "Pilih Ruangan" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -685,13 +589,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.jenis_ruangan_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "jenis_ruangan_otmil"
-                          ? "Masukan Jenis Ruangan"
-                          : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "jenis_ruangan_otmil" ? "Masukan Jenis Ruangan" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -704,13 +602,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                       value={formState.nama_lokasi_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "nama_lokasi_otmil"
-                          ? "Masukan Nama Lokasi"
-                          : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "nama_lokasi_otmil" ? "Masukan Nama Lokasi" : ""))}</p>
                   </div>
                   {/* <div className="form-group w-full h-22">
                     <label htmlFor="nama_zona">Zona :</label>
@@ -755,96 +647,39 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
                 <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {/* <br></br> */}
                   {isDetail ? null : isEdit ? (
-                    <button
-                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? "bg-slate-400" : ""
-                      }`}
-                      type="submit"
-                      disabled={buttonLoad}
-                      id="b-ubah"
-                    >
+                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-ubah">
                       {buttonLoad ? (
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       ) : (
                         ""
                       )}
-                      Ubah Data Gelang
+                      Ubah Data Smartwatch
                     </button>
                   ) : (
-                    <button
-                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? "bg-slate-400" : ""
-                      }`}
-                      type="submit"
-                      disabled={buttonLoad}
-                      id="b-tambah"
-                    >
+                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-tambah">
                       {buttonLoad ? (
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       ) : (
                         ""
                       )}
-                      Tambah Data Gelang
+                      Tambah Data Smartwatch
                     </button>
                   )}
-                  {errors.filter((item: string) =>
-                    item.startsWith("INVALID_ID")
-                  ).length > 0 && (
+                  {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
                     <>
                       <br />
-                      <div className="error">
-                        {errors
-                          .filter((item: string) =>
-                            item.startsWith("INVALID_ID")
-                          )[0]
-                          .replace("INVALID_ID_", "")}{" "}
-                        is not a valid bond
-                      </div>
+                      <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
                     </>
                   )}
                   {errors.length > 0 && (
                     <div className="error text-center">
-                      <p className="text-red-400">
-                        Ada data yang masih belum terisi !
-                      </p>
+                      <p className="text-red-400">Ada data yang masih belum terisi !</p>
                     </div>
                   )}
                 </div>
