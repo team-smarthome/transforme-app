@@ -117,7 +117,7 @@ const SignIn = () => {
                 TRANSFORME
               </h2>
               <h2 className="text-center xl:text-left mb-9 text-xl font-bold text-white sm:text-title-xl2">
-                ADMIN PANEL
+                Monitori System
               </h2>
 
               <p

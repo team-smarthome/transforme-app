@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import Loader from '../../common/Loader';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../utils/constants';
-import { Alerts } from './AlertDaftarKasus';
+import { useState, useEffect } from "react";
+import Loader from "../../common/Loader";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../utils/constants";
+import { Alerts } from "./AlertDaftarKasus";
 
-import { apiReadAllWBP } from '../../services/api';
+import { apiReadAllWBP } from "../../services/api";
 
 const PenetapanPerkara = ({ token }: any) => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const PenetapanPerkara = ({ token }: any) => {
   //      )
   //      .catch((e) => {
   //           if (e.response.status === 403) {
-  //             navigate('/auth/signin', {
+  //             navigate('/', {
   //               state: { forceLogout: true, lastPage: location.pathname },
   //             });
   //           }
@@ -42,38 +42,38 @@ const PenetapanPerkara = ({ token }: any) => {
 
   const dummyData = [
     {
-      tanggal_penetapan: 'Sabtu, 01 Januari 2023',
-      nama_hakim: 'Hakim 1',
-      posisi: 'Hakim Ketua',
-      aktif: 'Ya',
+      tanggal_penetapan: "Sabtu, 01 Januari 2023",
+      nama_hakim: "Hakim 1",
+      posisi: "Hakim Ketua",
+      aktif: "Ya",
     },
     {
-      tanggal_penetapan: 'Sabtu, 01 Januari 2023',
-      nama_hakim: 'Hakim 2',
-      posisi: 'Hakim Anggota',
-      aktif: 'Ya',
+      tanggal_penetapan: "Sabtu, 01 Januari 2023",
+      nama_hakim: "Hakim 2",
+      posisi: "Hakim Anggota",
+      aktif: "Ya",
     },
   ];
   const dummyData1 = [
     {
-      tanggal_penetapan: 'Sabtu, 02 Januari 2023',
-      nama_panitera_pengganti: 'Rahmat',
-      aktif: 'Ya',
+      tanggal_penetapan: "Sabtu, 02 Januari 2023",
+      nama_panitera_pengganti: "Rahmat",
+      aktif: "Ya",
     },
     {
-      tanggal_penetapan: 'Rabu, 04 Januari 2023',
-      nama_panitera_pengganti: 'Karyono',
-      aktif: 'Ya',
+      tanggal_penetapan: "Rabu, 04 Januari 2023",
+      nama_panitera_pengganti: "Karyono",
+      aktif: "Ya",
     },
   ];
   const dummyData2 = [
     {
-      tanggal_penetapan: 'Kamis, 05 Januari 2021',
-      nama_hakim: 'Purwanto, SH, MH',
+      tanggal_penetapan: "Kamis, 05 Januari 2021",
+      nama_hakim: "Purwanto, SH, MH",
     },
     {
-      tanggal_penetapan: 'Jumat, 06 Januari 2021',
-      nama_hakim: 'Sri Wahyuni, SH, MH',
+      tanggal_penetapan: "Jumat, 06 Januari 2021",
+      nama_hakim: "Sri Wahyuni, SH, MH",
     },
   ];
 
@@ -115,7 +115,9 @@ const PenetapanPerkara = ({ token }: any) => {
                 return (
                   <div
                     key={index}
-                    className={`dark:bg-slate-300 ${index !== dummyData.length - 1 ? '' : ''} `}
+                    className={`dark:bg-slate-300 ${
+                      index !== dummyData.length - 1 ? "" : ""
+                    } `}
                   >
                     <div className="grid grid-cols-4 hover:bg-slate-500">
                       <div className="text-sm flex items-center justify-center p-2.5 xl:p-3 cursor-pointer">
@@ -159,7 +161,11 @@ const PenetapanPerkara = ({ token }: any) => {
                   return (
                     <div
                       key={index}
-                      className={`dark:bg-slate-300 ${index !== dummyData.length - 1 ? ' border-b bg-gray-1 ' : ''}`}
+                      className={`dark:bg-slate-300 ${
+                        index !== dummyData.length - 1
+                          ? " border-b bg-gray-1 "
+                          : ""
+                      }`}
                     >
                       <div className="grid grid-cols-3 hover:bg-slate-500">
                         <div className="text-sm flex items-center justify-center p-2.5 xl:p-3 cursor-pointer">
@@ -198,7 +204,11 @@ const PenetapanPerkara = ({ token }: any) => {
                   return (
                     <div
                       key={index}
-                      className={`dark:bg-slate-300 ${index !== dummyData.length - 1 ? ' border-b bg-gray-1' : ''}`}
+                      className={`dark:bg-slate-300 ${
+                        index !== dummyData.length - 1
+                          ? " border-b bg-gray-1"
+                          : ""
+                      }`}
                     >
                       <div className="grid grid-cols-2 hover:bg-slate-500">
                         <div className="text-sm flex items-center justify-center p-2.5 xl:p-3 cursor-pointer">

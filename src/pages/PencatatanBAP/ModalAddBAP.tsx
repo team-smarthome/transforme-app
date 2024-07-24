@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
-import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // import DocViewer, { DocViewerRenderers } from "@react-pdf-viewer/core";
-import { apiReadPenyidikan } from '../../services/api';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { Alerts } from './AlertBAP';
-import { Error403Message } from '../../utils/constants';
+import { apiReadPenyidikan } from "../../services/api";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { Alerts } from "./AlertBAP";
+import { Error403Message } from "../../utils/constants";
 
 interface AddBAPModalProps {
   closeModal: () => void;
@@ -19,7 +19,7 @@ interface AddBAPModalProps {
   isEdit?: boolean;
 }
 
-const dataUserItem = localStorage.getItem('dataUser');
+const dataUserItem = localStorage.getItem("dataUser");
 const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
 export const AddBAPModal: React.FC<AddBAPModalProps> = ({
@@ -31,15 +31,15 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
 }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_dokumen_bap: '',
-      link_dokumen_bap: '',
-      penyidikan_id: '',
-      nomor_penyidikan: '',
-      link_dokumen_bap: '',
-    },
+      nama_dokumen_bap: "",
+      link_dokumen_bap: "",
+      penyidikan_id: "",
+      nomor_penyidikan: "",
+      link_dokumen_bap: "",
+    }
   );
-  console.log(defaultValue, "defaultValue")
-  console.log(formState, "formState")
+  console.log(defaultValue, "defaultValue");
+  console.log(formState, "formState");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,13 +49,15 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   const [dataPenyidikan, setDataPenyidikan] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [buttonLoad, setButtonLoad] = useState(false);
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
   const [file, setFile] = useState(null);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [pdf, setPdf] = useState(`https://dev.transforme.co.id${formState.link_dokumen_bap}`)
+  const [pdf, setPdf] = useState(
+    `https://dev.transforme.co.id${formState.link_dokumen_bap}`
+  );
 
   // useEffect untuk mengambil data dari api
   useEffect(() => {
@@ -67,15 +69,15 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
 
     for (const [key, value] of Object.entries(formState)) {
       if (
-        key !== 'lokasi_lemasmil' &&
-        key !== 'lokasi_otmil' &&
-        key !== 'nama' &&
-        key !== 'saksi_id' &&
-        key !== 'nama_saksi' &&
-        key !== 'wbp_profile_id' &&
-        key !== 'nrp_wbp' &&
-        key !== 'link_dokumen_bap' &&
-        key !== 'nama'
+        key !== "lokasi_lemasmil" &&
+        key !== "lokasi_otmil" &&
+        key !== "nama" &&
+        key !== "saksi_id" &&
+        key !== "nama_saksi" &&
+        key !== "wbp_profile_id" &&
+        key !== "nrp_wbp" &&
+        key !== "link_dokumen_bap" &&
+        key !== "nama"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -96,35 +98,35 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   const handleClickTutorial = () => {
     const steps = [
       {
-        element: '.input-bap',
+        element: ".input-bap",
         popover: {
-          title: 'Nama Dokumen BAP',
-          description: 'Isi nama dokumen BAP',
+          title: "Nama Dokumen BAP",
+          description: "Isi nama dokumen BAP",
         },
       },
       {
-        element: '.p-nomor',
+        element: ".p-nomor",
         popover: {
-          title: 'Nomor Penyidikan',
-          description: 'Pilih nomor penyidikan yang diinginkan',
+          title: "Nomor Penyidikan",
+          description: "Pilih nomor penyidikan yang diinginkan",
         },
       },
       {
-        element: '.input-kasus',
-        popover: { title: 'Nomor Kasus', description: 'Isi nomor kasus' },
+        element: ".input-kasus",
+        popover: { title: "Nomor Kasus", description: "Isi nomor kasus" },
       },
       {
-        element: '.input-nama',
+        element: ".input-nama",
         popover: {
-          title: 'Nama Kasus',
-          description: 'Isi nama kasus',
+          title: "Nama Kasus",
+          description: "Isi nama kasus",
         },
       },
       {
-        element: '.input-pihak',
+        element: ".input-pihak",
         popover: {
-          title: 'Pihak Terlibat',
-          description: 'Isi pihak terlibat',
+          title: "Pihak Terlibat",
+          description: "Isi pihak terlibat",
         },
       },
     ];
@@ -133,36 +135,36 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
     if (formState.nama && formState.nama.trim()) {
       // If yes, add NRP tutorial step
       steps.push({
-        element: '.input-nrp',
+        element: ".input-nrp",
         popover: {
-          title: 'NRP',
-          description: 'Isi NRP',
+          title: "NRP",
+          description: "Isi NRP",
         },
       });
     }
 
     steps.push(
       {
-        element: '.t-agenda',
+        element: ".t-agenda",
         popover: {
-          title: 'Agenda Penyidikan',
-          description: 'Isi agenda penyidikan dengan lengkap',
+          title: "Agenda Penyidikan",
+          description: "Isi agenda penyidikan dengan lengkap",
         },
       },
       {
-        element: '.d-dokumen',
+        element: ".d-dokumen",
         popover: {
-          title: 'Dokumen BAP',
-          description: 'Unggah file yang dibutuhkan',
+          title: "Dokumen BAP",
+          description: "Unggah file yang dibutuhkan",
         },
       },
       {
-        element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+        element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
         popover: {
-          title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-          description: `${isEdit ? 'Ubah' : 'Tambah'} data BAP`,
+          title: `${isEdit ? "Ubah" : "Tambah"}`,
+          description: `${isEdit ? "Ubah" : "Tambah"} data BAP`,
         },
-      },
+      }
     );
 
     // Initialize driver with the updated steps
@@ -182,13 +184,13 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (formState) {
       e.preventDefault();
-      console.log(formState, 'From State');
+      console.log(formState, "From State");
       if (!validateForm()) return;
       setButtonLoad(true);
 
       setSubmitted(true);
       onSubmit(formState).then(() => setButtonLoad(false));
-      console.log('berhasil');
+      console.log("berhasil");
     }
   };
 
@@ -203,9 +205,9 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   //   }
   // }, [formState.link_dokumen_bap]);
 
-   const handleUpload = (e: any) => {
-     const file = e.target.files[0];
-     console.log(file, "file")
+  const handleUpload = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file, "file");
     // const maxSizeInBytes = 10 * 1024 * 1024; // 5 MB, adjust as needed
 
     if (file) {
@@ -217,9 +219,8 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
       //   );
       //   return;
       // }
-      
-         setFormState({ ...formState, link_dokumen_bap: file });
-      
+
+      setFormState({ ...formState, link_dokumen_bap: file });
     }
   };
 
@@ -229,33 +230,33 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
     const url = `http://127.0.0.1:8000/storage/${formState.link_dokumen_bap}`;
 
     // Specify window features (optional)
-    const windowFeatures = 'width=600,height=400';
+    const windowFeatures = "width=600,height=400";
 
     // Open the new window
-    window.open(url, '_blank', windowFeatures);
+    window.open(url, "_blank", windowFeatures);
   };
 
   const handleRemoveDoc = () => {
-    setFormState({ ...formState, link_dokumen_bap: '' });
+    setFormState({ ...formState, link_dokumen_bap: "" });
     const inputElement = document.getElementById(
-      'fileUpload',
+      "fileUpload"
     ) as HTMLInputElement;
     if (inputElement) {
-      inputElement.value = '';
+      inputElement.value = "";
     }
   };
 
   const handlePenyidikanChange = (e: any) => {
     const selectedPenyidikan: any = dataPenyidikan.find(
-      (item: any) => item.penyidikan_id === e?.value,
+      (item: any) => item.penyidikan_id === e?.value
     );
 
     if (!e?.value) {
       // Jika penyidikan_id tidak terdefinisi, set pesan kesalahan
-      setErrors(['penyidikan_id']);
+      setErrors(["penyidikan_id"]);
     } else {
       // Jika penyidikan_id terdefinisi, hapus pesan kesalahan jika ada
-      setErrors(errors.filter((item) => item !== 'penyidikan_id'));
+      setErrors(errors.filter((item) => item !== "penyidikan_id"));
     }
 
     setFormState({
@@ -263,23 +264,22 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
       penyidikan_id: e?.value,
       nomor_penyidikan: selectedPenyidikan
         ? selectedPenyidikan.nomor_penyidikan
-        : '',
+        : "",
       agenda_penyidikan: selectedPenyidikan
         ? selectedPenyidikan.agenda_penyidikan
-        : '',
-      nomor_kasus: selectedPenyidikan ? selectedPenyidikan.nomor_kasus : '',
-      nama_kasus: selectedPenyidikan ? selectedPenyidikan.nama_kasus : '',
-      nrp_wbp: selectedPenyidikan ? selectedPenyidikan.nrp_wbp : '',
-      lokasi_otmil: selectedPenyidikan ? selectedPenyidikan.lokasi_otmil : '',
+        : "",
+      nomor_kasus: selectedPenyidikan ? selectedPenyidikan.nomor_kasus : "",
+      nama_kasus: selectedPenyidikan ? selectedPenyidikan.nama_kasus : "",
+      nrp_wbp: selectedPenyidikan ? selectedPenyidikan.nrp_wbp : "",
+      lokasi_otmil: selectedPenyidikan ? selectedPenyidikan.lokasi_otmil : "",
       wbp_profile_id: selectedPenyidikan
         ? selectedPenyidikan.wbp_profile_id
-        : '',
-      nama: selectedPenyidikan ? selectedPenyidikan.nama_wbp : '',
-      saksi_id: selectedPenyidikan ? selectedPenyidikan.saksi_id : '',
-      nama_saksi: selectedPenyidikan ? selectedPenyidikan.nama_saksi : '',
+        : "",
+      nama: selectedPenyidikan ? selectedPenyidikan.nama_wbp : "",
+      saksi_id: selectedPenyidikan ? selectedPenyidikan.saksi_id : "",
+      nama_saksi: selectedPenyidikan ? selectedPenyidikan.nama_saksi : "",
     });
-};
-
+  };
 
   const penyidikan = async () => {
     try {
@@ -287,7 +287,7 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
         pageSize: 10000,
       };
       const response = await apiReadPenyidikan(params, token);
-      if (response.data.status !== 'OK') {
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       const result = response.data.records;
@@ -297,12 +297,12 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
       setIsLoading(false);
       console.log(e.message);
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -311,107 +311,107 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
   // Add this CSS style within your modal component
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -419,17 +419,17 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
   const valueTerlibat = formState.nama_saksi
     ? `${formState.nama_saksi} (saksi)`
     : formState.nama
-      ? `${formState.nama} (tersangka)`
-      : '';
+    ? `${formState.nama} (tersangka)`
+    : "";
 
   const checkFileType = (file: any) => {
     if (file) {
-      console.log(file, 'file');
-      const fileExtension = file.split('.').pop().toLowerCase();
-      console.log(fileExtension, 'file');
+      console.log(file, "file");
+      const fileExtension = file.split(".").pop().toLowerCase();
+      console.log(fileExtension, "file");
       setFile(fileExtension);
     } else {
-      console.error('File is undefined or empty.');
+      console.error("File is undefined or empty.");
       // Tindakan tambahan jika perlu, seperti menetapkan nilai default atau memberikan notifikasi kesalahan.
     }
   };
@@ -483,10 +483,10 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail data Dokumen BAP'
+                      ? "Detail data Dokumen BAP"
                       : isEdit
-                        ? 'Edit data Dokumen BAP'
-                        : 'Tambah data Dokumen BAP'}
+                      ? "Edit data Dokumen BAP"
+                      : "Tambah data Dokumen BAP"}
                   </h3>
                 </div>
 
@@ -539,9 +539,9 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'nama_dokumen_bap'
-                          ? 'Pilih Nama Dokumen BAP'
-                          : '',
+                        item === "nama_dokumen_bap"
+                          ? "Pilih Nama Dokumen BAP"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -565,7 +565,7 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                             }
                           : formState.penyidikan_id
                       }
-                      placeholder={'Pilih Nomor penyidikan'}
+                      placeholder={"Pilih Nomor penyidikan"}
                       isClearable={true}
                       isSearchable={true}
                       isDisabled={isDetail}
@@ -590,7 +590,7 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     <p className="error-text error-text p-0 m-0">
                       {submitted &&
                         !formState.penyidikan_id &&
-                        'Pilih Nomor Penyidikan'}
+                        "Pilih Nomor Penyidikan"}
                     </p>
                   </div>
                 </div>
@@ -606,7 +606,11 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     </label>
                     <input
                       type=""
-                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-kasus ${isEdit ? "bg-transparent" : "bg-slate-800 dark:bg-slate-800"}`}
+                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-kasus ${
+                        isEdit
+                          ? "bg-transparent"
+                          : "bg-slate-800 dark:bg-slate-800"
+                      }`}
                       name="nomor_kasus"
                       placeholder="Nomor Kasus"
                       onChange={handleChange}
@@ -635,7 +639,11 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-nama ${isEdit ? "bg-transparent" : "bg-slate-800 dark:bg-slate-800"}`}
+                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-nama ${
+                        isEdit
+                          ? "bg-transparent"
+                          : "bg-slate-800 dark:bg-slate-800"
+                      }`}
                       name="nama_kasus"
                       placeholder="Nama Kasus"
                       onChange={handleChange}
@@ -659,7 +667,11 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     </label>
                     <input
                       type="text"
-                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-pihak ${isEdit ? "bg-transparent" : "bg-slate-800 dark:bg-slate-800"}`}
+                      className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-pihak ${
+                        isEdit
+                          ? "bg-transparent"
+                          : "bg-slate-800 dark:bg-slate-800"
+                      }`}
                       placeholder="Pihak Terlibat"
                       onChange={handleChange}
                       value={valueTerlibat}
@@ -682,12 +694,15 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                       </label>
                       <input
                         type="text"
-                        className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-nrp ${isEdit ? "bg-transparent" : "bg-slate-800 dark:bg-slate-800"}`}
-
+                        className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none input-nrp ${
+                          isEdit
+                            ? "bg-transparent"
+                            : "bg-slate-800 dark:bg-slate-800"
+                        }`}
                         placeholder="NRP"
                         name="nrp_wbp"
                         onChange={handleChange}
-                        value={formState.nrp_wbp ? formState.nrp_wbp : ''}
+                        value={formState.nrp_wbp ? formState.nrp_wbp : ""}
                         disabled
                       />
                       {/* <p className="error-text">
@@ -707,7 +722,11 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                     Agenda Penyidikan
                   </label>
                   <textarea
-                    className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none t-agenda input-agenda ${isEdit ? "bg-transparent" : "bg-slate-800 dark:bg-slate-800"}`}
+                    className={`w-full rounded border border-stroke dark:text-gray  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none t-agenda input-agenda ${
+                      isEdit
+                        ? "bg-transparent"
+                        : "bg-slate-800 dark:bg-slate-800"
+                    }`}
                     name="agenda_penyidikan"
                     id="textArea"
                     placeholder="Agenda Penyidikan"
@@ -744,76 +763,81 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                       className="hidden"
                     />
                     {formState.link_dokumen_bap ? (
-                      console.log(formState.link_dokumen_bap),
-                      <div className="grid grid-cols-1">
-                        <div
-                          className={`absolute top-0 right-0  bg-red-500 flex items-center  rounded-bl  ${
-                            isDetail ? 'hidden' : 'block'
-                          }`}
-                        >
-                          <button className="p-[2px]" onClick={handleRemoveDoc}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              width="20"
+                      (console.log(formState.link_dokumen_bap),
+                      (
+                        <div className="grid grid-cols-1">
+                          <div
+                            className={`absolute top-0 right-0  bg-red-500 flex items-center  rounded-bl  ${
+                              isDetail ? "hidden" : "block"
+                            }`}
+                          >
+                            <button
+                              className="p-[2px]"
+                              onClick={handleRemoveDoc}
                             >
-                              <path
-                                fillRule="evenodd"
-                                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                        <div className="">
-                          <div style={{ height: '10%' }}>
-                            {/* pdf */}
-                            {file && (
-                              <div className="">
-                                {file === 'pdf' ? (
-                                  <iframe
-                                    // src={`https://dev.transforme.co.id${formState.link_dokumen_bap}`}
-                                    src={pdf}
-                                    title="pdf"
-                                    width="100%"
-                                    height="600px" // Adjust the height as per your requirement
-                                    className="border-0 text-center justify-center"
-                                    // scrolling="no"
-                                  />
-                                ) : file === 'docx' || file === 'doc' ? (
-                                  // {/* docx */}
-                                  <iframe
-                                    src={`https://view.officeapps.live.com/op/embed.aspx?src=https://dev.transforme.co.id${formState.link_dokumen_bap}`}
-                                    title="docx"
-                                    width="100%"
-                                    height="600px" // Adjust the height as per your requirement
-                                    // className="border-0 text-center justify-center padding-left-10"
-                                  ></iframe>
-                                ) : (
-                                  <p>Ekstensi file tidak didukung</p>
-                                )}
-                              </div>
-                            )}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                width="20"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <div className="">
+                            <div style={{ height: "10%" }}>
+                              {/* pdf */}
+                              {file && (
+                                <div className="">
+                                  {file === "pdf" ? (
+                                    <iframe
+                                      // src={`https://dev.transforme.co.id${formState.link_dokumen_bap}`}
+                                      src={pdf}
+                                      title="pdf"
+                                      width="100%"
+                                      height="600px" // Adjust the height as per your requirement
+                                      className="border-0 text-center justify-center"
+                                      // scrolling="no"
+                                    />
+                                  ) : file === "docx" || file === "doc" ? (
+                                    // {/* docx */}
+                                    <iframe
+                                      src={`https://view.officeapps.live.com/op/embed.aspx?src=https://dev.transforme.co.id${formState.link_dokumen_bap}`}
+                                      title="docx"
+                                      width="100%"
+                                      height="600px" // Adjust the height as per your requirement
+                                      // className="border-0 text-center justify-center padding-left-10"
+                                    ></iframe>
+                                  ) : (
+                                    <p>Ekstensi file tidak didukung</p>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-center text-sm text-blue-500">
+                            Dokumen terupload !
+                          </p>
+                          <div
+                            className={`flex justify-center mt-3 ${
+                              isDetail ? "block" : "hidden"
+                            }`}
+                          >
+                            <button
+                              type="button"
+                              onClick={openNewWindow}
+                              className="bg-blue-500 px-3 py-1 rounded-xl text-white duration-300 ease-in-out  hover:scale-105 "
+                            >
+                              Unduh Dokumen
+                            </button>
                           </div>
                         </div>
-                        <p className="text-center text-sm text-blue-500">
-                          Dokumen terupload !
-                        </p>
-                        <div
-                          className={`flex justify-center mt-3 ${
-                            isDetail ? 'block' : 'hidden'
-                          }`}
-                        >
-                          <button
-                            type="button"
-                            onClick={openNewWindow}
-                            className="bg-blue-500 px-3 py-1 rounded-xl text-white duration-300 ease-in-out  hover:scale-105 "
-                          >
-                            Unduh Dokumen
-                          </button>
-                        </div>
-                      </div>
+                      ))
                     ) : (
                       <div className="flex flex-col items-center justify-center space-y-3">
                         <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -857,7 +881,7 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                   <p className="error-text">
                     {submitted &&
                       !formState.link_dokumen_bap &&
-                      'Masukan Dokumen BAP'}
+                      "Masukan Dokumen BAP"}
                   </p>
                   {/* <p className="error-text">
                     {errors.map((item) =>
@@ -866,25 +890,25 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                   </p> */}
                 </div>
 
-                {errors.filter((item: string) => item.startsWith('INVALID_ID'))
+                {errors.filter((item: string) => item.startsWith("INVALID_ID"))
                   .length > 0 && (
                   <>
                     <br />
                     <div className="error">
                       {errors
                         .filter((item: string) =>
-                          item.startsWith('INVALID_ID'),
+                          item.startsWith("INVALID_ID")
                         )[0]
-                        .replace('INVALID_ID_', '')}{' '}
+                        .replace("INVALID_ID_", "")}{" "}
                       is not a valid bond
                     </div>
                   </>
                 )}
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -912,14 +936,14 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Data BAP
                     </button>
                   ) : (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -947,22 +971,22 @@ export const AddBAPModal: React.FC<AddBAPModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Data BAP
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

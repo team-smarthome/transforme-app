@@ -170,7 +170,7 @@ const AktifitasPengunjungList = () => {
       // setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -234,7 +234,7 @@ const AktifitasPengunjungList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -298,7 +298,7 @@ const AktifitasPengunjungList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -331,7 +331,7 @@ const AktifitasPengunjungList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -364,7 +364,7 @@ const AktifitasPengunjungList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }

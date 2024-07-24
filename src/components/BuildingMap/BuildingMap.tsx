@@ -97,11 +97,11 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     setOpen(false);
   };
 
-  const handleClick = (arr, id, data, indormapData: any) => {
+  const handleClick = (arr: any, id: any, data: any, indormapData: any) => {
     console.log(arr, "arr");
     console.log(id, "id");
     console.log(data, "dataTestingBro");
-    const filteredData = arr.find((data) => data.id == id);
+    const filteredData = arr.find((data: any) => data.id == id);
     console.log(filteredData, "filteredData");
     if (filteredData.lantai && filteredData.lantai.length > 0) {
       navigate(`/dashboard/peta/${filteredData?.pathname}`, {
@@ -148,8 +148,8 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     setZoneVisible(!areAllVisible);
   };
 
-  const toggleVisibility = (setVisible) => {
-    setVisible((prev) => !prev);
+  const toggleVisibility = (setVisible: any) => {
+    setVisible((prev: any) => !prev);
     setAllVisible((prevState) => {
       const allVisible =
         gatewayVisible &&

@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 const MainMenu = () => {
   const navigate = useNavigate();
 
-  const handleSelectMap = (link: string) => {
+  const handleSelectMap = (data: string, link: string) => {
     navigate(`${link}`);
+    localStorage.setItem("appMode", data);
   };
 
   const backgroundStyle = {
@@ -22,7 +23,7 @@ const MainMenu = () => {
       <div className="flex justify-center items-center gap-x-4 bg-transparent-dark1 backdrop-blur w-full py-5 fixed z-10">
         <img src={Logo} alt="Logo" className="w-50" />
         <span className="text-3xl text-white font-bold tracking-wider">
-          ADMIN PANEL
+          Monitoring System
         </span>
       </div>
 
@@ -32,7 +33,7 @@ const MainMenu = () => {
             <MenuItem
               menu={menu}
               key={menu.id}
-              onSelect={() => handleSelectMap(menu.link)}
+              onSelect={() => handleSelectMap(menu.mode, menu.link)}
             />
           );
         })}
@@ -45,12 +46,14 @@ const routes = [
   {
     id: 1,
     name: "Dashboard",
+    mode: "workstation",
     link: "/dashboard",
     icon: DashboardIcon,
   },
   {
     id: 2,
     name: "Peta",
+    mode: "dashboard",
     link: "/peta",
     icon: PetaIcon,
   },

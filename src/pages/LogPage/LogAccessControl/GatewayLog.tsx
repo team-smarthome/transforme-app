@@ -1,19 +1,19 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from "react";
 
-import axios from 'axios';
-import { apiGatewayLog, apiVisitorLogList } from '../../../services/api';
-import { webserviceurl } from '../../../services/api';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import Pagination from '../../../components/Pagination';
-import Loader from '../../../common/Loader';
-import * as xlsx from 'xlsx';
-import dayjs from 'dayjs';
-import { Alerts } from '../AlertLog';
-import { Error403Message } from '../../../utils/constants';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
+import axios from "axios";
+import { apiGatewayLog, apiVisitorLogList } from "../../../services/api";
+import { webserviceurl } from "../../../services/api";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import Pagination from "../../../components/Pagination";
+import Loader from "../../../common/Loader";
+import * as xlsx from "xlsx";
+import dayjs from "dayjs";
+import { Alerts } from "../AlertLog";
+import { Error403Message } from "../../../utils/constants";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
 
 export default function GatewayLog() {
   const navigate = useNavigate();
@@ -25,30 +25,30 @@ export default function GatewayLog() {
   const [rows, setRows] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  let [startDate, setStartDate] = useState('');
-  let [endDate, setEndDate] = useState('');
+  let [startDate, setStartDate] = useState("");
+  let [endDate, setEndDate] = useState("");
 
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [selectedDevice, setSelectedDevice] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedAge, setSelectedAge] = useState('');
-  const [selectedName, setSelectedName] = useState('');
-  const [selectedAnalytics, setSelectedAnalytics] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedDevice, setSelectedDevice] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedAnalytics, setSelectedAnalytics] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
   const [jsonData, setJsonData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleLocationChange = (event: any) => {
     setSelectedLocation(event.target.value);
-    setSelectedDevice('');
+    setSelectedDevice("");
   };
 
   const handleDeviceChange = (event: any) => {
@@ -61,18 +61,18 @@ export default function GatewayLog() {
 
   // const devices = selectedLocationEntry ? selectedLocationEntry.devices : [];
 
-  console.log(data, 'Ini Data Boss QQ');
+  console.log(data, "Ini Data Boss QQ");
 
   const handleExportClick = async () => {
     const dataToExcel = [
       [
-        'Nama Prajurit Binaan',
-        'No DMAC Gelang',
-        'Lokasi OTMIL',
-        'Lokasi Ruangan',
-        'Zonasi Gateway',
-        'Jenis Ruangan OTMIL',
-        'Time Stamp',
+        "Nama Prajurit Binaan",
+        "No DMAC Gelang",
+        "Lokasi OTMIL",
+        "Lokasi Ruangan",
+        "Zonasi Gateway",
+        "Jenis Ruangan OTMIL",
+        "Time Stamp",
       ],
       ...data.map((item: any) => [
         item.nama_wbp,
@@ -87,10 +87,10 @@ export default function GatewayLog() {
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
     xlsx.writeFile(
       wb,
-      `Data-Gateway-Log ${dayjs(new Date()).format('DD-MM-YYYY HH.mm')}.xlsx`,
+      `Data-Gateway-Log ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
     );
 
     // if (data && data.length > 0) {
@@ -103,7 +103,7 @@ export default function GatewayLog() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setModalMessage('');
+    setModalMessage("");
   };
   function handleStartDateChange(e: any) {
     setStartDate(e.target.value);
@@ -115,8 +115,8 @@ export default function GatewayLog() {
   function getTodayDate() {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
     // setEndDate(`${year}-${month}-${day}`);
     return `${year}-${month}-${day}`;
   }
@@ -217,7 +217,7 @@ export default function GatewayLog() {
   const getGatewayLog = async () => {
     try {
       let params = {
-        filter: '',
+        filter: "",
       };
       setIsLoading(true);
       const responseLog = await apiGatewayLog(params, token);
@@ -227,12 +227,12 @@ export default function GatewayLog() {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -243,66 +243,66 @@ export default function GatewayLog() {
       showProgress: true,
       steps: [
         {
-          element: '.p-analitik',
+          element: ".p-analitik",
           popover: {
-            title: 'Pilih Analitik',
-            description: 'Pilih analitik yang diinginkan',
+            title: "Pilih Analitik",
+            description: "Pilih analitik yang diinginkan",
           },
         },
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama',
-            description: 'Isi nama',
+            title: "Nama",
+            description: "Isi nama",
           },
         },
         {
-          element: '.i-usia',
+          element: ".i-usia",
           popover: {
-            title: 'Usia',
-            description: 'Isi usia',
+            title: "Usia",
+            description: "Isi usia",
           },
         },
         {
-          element: '.p-gender',
+          element: ".p-gender",
           popover: {
-            title: 'Pilih Gender',
-            description: 'Pilih gender yang diinginkan',
+            title: "Pilih Gender",
+            description: "Pilih gender yang diinginkan",
           },
         },
         {
-          element: '.p-lokasi',
+          element: ".p-lokasi",
           popover: {
-            title: 'Pilih Lokasi',
-            description: 'Pilih lokasi yang diinginkan',
+            title: "Pilih Lokasi",
+            description: "Pilih lokasi yang diinginkan",
           },
         },
         {
-          element: '.p-kamera',
+          element: ".p-kamera",
           popover: {
-            title: 'Pilih Kamera',
-            description: 'Pilih kamera yang diinginkan',
+            title: "Pilih Kamera",
+            description: "Pilih kamera yang diinginkan",
           },
         },
         {
-          element: '.i-awal',
+          element: ".i-awal",
           popover: {
-            title: 'Tanggal Awal',
-            description: 'Pilih tanggal awal yang diinginkan',
+            title: "Tanggal Awal",
+            description: "Pilih tanggal awal yang diinginkan",
           },
         },
         {
-          element: '.i-akhir',
+          element: ".i-akhir",
           popover: {
-            title: 'Tanggal Akhir',
-            description: 'Pilih tanggal akhir yang diinginkan',
+            title: "Tanggal Akhir",
+            description: "Pilih tanggal akhir yang diinginkan",
           },
         },
         {
-          element: '.excel',
+          element: ".excel",
           popover: {
-            title: 'Export Excel',
-            description: 'Klik untuk mendapatkan file excel',
+            title: "Export Excel",
+            description: "Klik untuk mendapatkan file excel",
           },
         },
       ],
@@ -319,17 +319,17 @@ export default function GatewayLog() {
         <Breadcrumbs url={window.location.href} />
       </div>
       <div>
-        <div className='w-full flex justify-between'>
-        <h3 className="text-2xl font-semibold"> Gateway Log</h3>
-        
-        <button>
-          <HiQuestionMarkCircle
-            values={filter}
-            aria-placeholder="Show tutorial"
-            // onChange={}
-            onClick={handleClickTutorial}
-          />
-        </button>
+        <div className="w-full flex justify-between">
+          <h3 className="text-2xl font-semibold"> Gateway Log</h3>
+
+          <button>
+            <HiQuestionMarkCircle
+              values={filter}
+              aria-placeholder="Show tutorial"
+              // onChange={}
+              onClick={handleClickTutorial}
+            />
+          </button>
         </div>
 
         <div className="mt-5 mb-5">
@@ -351,7 +351,7 @@ export default function GatewayLog() {
                     </select>
                   </div>
 
-                  {selectedAnalytics == 'unrecognized' ? null : (
+                  {selectedAnalytics == "unrecognized" ? null : (
                     <>
                       <div className="grid grid-row-2 gap-2">
                         <label className="text-white">Nama</label>

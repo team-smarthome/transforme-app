@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Select from 'react-select';
-import { Alerts } from './AlertPengadilanMiliter';
-import { apiReadKota, apiReadProvinsi } from '../../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
+import React, { useEffect, useRef, useState } from "react";
+import Select from "react-select";
+import { Alerts } from "./AlertPengadilanMiliter";
+import { apiReadKota, apiReadProvinsi } from "../../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
 
-const dataUserItem = localStorage.getItem('dataUser');
+const dataUserItem = localStorage.getItem("dataUser");
 const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
-console.log(dataAdmin, 'DATA ADMIN');
+console.log(dataAdmin, "DATA ADMIN");
 
 export const AddPengadilanMiliterModal = ({
   closeModal,
@@ -25,12 +25,12 @@ export const AddPengadilanMiliterModal = ({
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_pengadilan_militer: '',
-      provinsi_id: '',
-      kota_id: '',
-      latitude: '',
-      longitude: '',
-    },
+      nama_pengadilan_militer: "",
+      provinsi_id: "",
+      kota_id: "",
+      latitude: "",
+      longitude: "",
+    }
   );
 
   const [buttonLoad, setButtonLoad] = useState(false);
@@ -40,10 +40,10 @@ export const AddPengadilanMiliterModal = ({
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const [dataProvinsi, setDataProvinsi] = useState([]);
   const [dataKota, setDataKota] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
-  console.log(dataKota, 'kota');
-  console.log(dataProvinsi, 'Provinsi');
+  console.log(dataKota, "kota");
+  console.log(dataProvinsi, "Provinsi");
 
   const validateForm = () => {
     let errorFields = [];
@@ -69,45 +69,47 @@ export const AddPengadilanMiliterModal = ({
       showProgress: true,
       steps: [
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama Pengadilan Militer',
-            description: 'Isi nama pengadilan militer',
+            title: "Nama Pengadilan Militer",
+            description: "Isi nama pengadilan militer",
           },
         },
         {
-          element: '.s-prov',
+          element: ".s-prov",
           popover: {
-            title: 'Provinsi',
-            description: 'Isi provinsi',
+            title: "Provinsi",
+            description: "Isi provinsi",
           },
         },
         {
-          element: '.p-kota',
+          element: ".p-kota",
           popover: {
-            title: 'Kota',
-            description: 'Pilih kota yang diinginkan',
+            title: "Kota",
+            description: "Pilih kota yang diinginkan",
           },
         },
         {
-          element: '.i-latitute',
+          element: ".i-latitute",
           popover: {
-            title: 'Latitute',
-            description: 'Isi latitute',
+            title: "Latitute",
+            description: "Isi latitute",
           },
         },
         {
-          element: '.i-long',
+          element: ".i-long",
           popover: {
-            title: 'Longitude',
-            description: 'Isi longitude',
+            title: "Longitude",
+            description: "Isi longitude",
           },
         },
         {
-          element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+          element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
-            title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-            description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} data pengadilan militer`,
+            title: `${isEdit ? "Ubah" : "Tambah"}`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data pengadilan militer`,
           },
         },
       ],
@@ -122,13 +124,13 @@ export const AddPengadilanMiliterModal = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState, 'From State');
+    console.log(formState, "From State");
 
     if (!validateForm()) return;
     setButtonLoad(true);
 
     onSubmit(formState).then(() => setButtonLoad(false));
-    console.log('berhasil');
+    console.log("berhasil");
   };
 
   const handleSelectProvinsi = (e: any) => {
@@ -157,12 +159,12 @@ export const AddPengadilanMiliterModal = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -178,12 +180,12 @@ export const AddPengadilanMiliterModal = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -192,104 +194,104 @@ export const AddPengadilanMiliterModal = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -347,10 +349,10 @@ export const AddPengadilanMiliterModal = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Pengadilan Militer'
+                      ? "Detail Data Pengadilan Militer"
                       : isEdit
-                        ? 'Edit Data Pengadilan Militer'
-                        : 'Tambah Data Pengadilan Militer'}
+                      ? "Edit Data Pengadilan Militer"
+                      : "Tambah Data Pengadilan Militer"}
                   </h3>
                 </div>
 
@@ -401,9 +403,9 @@ export const AddPengadilanMiliterModal = ({
                     />
                     <p className="error-text bottom-0">
                       {errors.map((item) =>
-                        item === 'nama_pengadilan_militer'
-                          ? 'Masukan Nama Pengadilan Militer'
-                          : '',
+                        item === "nama_pengadilan_militer"
+                          ? "Masukan Nama Pengadilan Militer"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -427,7 +429,7 @@ export const AddPengadilanMiliterModal = ({
                             }
                           : formState.provinsi_id
                       }
-                      placeholder={'Pilih provinsi'}
+                      placeholder={"Pilih provinsi"}
                       isClearable={true}
                       isSearchable={true}
                       isDisabled={isDetail}
@@ -441,7 +443,7 @@ export const AddPengadilanMiliterModal = ({
                     />
                     <p className="error-text bottom-0">
                       {errors.map((item) =>
-                        item === 'provinsi_id' ? 'Pilih provinsi' : '',
+                        item === "provinsi_id" ? "Pilih provinsi" : ""
                       )}
                     </p>
                   </div>
@@ -464,7 +466,7 @@ export const AddPengadilanMiliterModal = ({
                             }
                           : formState.kota_id
                       }
-                      placeholder={'Pilih kota'}
+                      placeholder={"Pilih kota"}
                       isClearable={true}
                       isSearchable={true}
                       isDisabled={isDetail}
@@ -482,7 +484,7 @@ export const AddPengadilanMiliterModal = ({
                     />
                     <p className="error-text bottom-0">
                       {errors.map((item) =>
-                        item === 'kota_id' ? 'Pilih kota' : '',
+                        item === "kota_id" ? "Pilih kota" : ""
                       )}
                     </p>
                   </div>
@@ -504,7 +506,7 @@ export const AddPengadilanMiliterModal = ({
                     />
                     <p className="error-text bottom-0">
                       {errors.map((item) =>
-                        item === 'latitude' ? 'Masukan Latitute' : '',
+                        item === "latitude" ? "Masukan Latitute" : ""
                       )}
                     </p>
                   </div>
@@ -526,7 +528,7 @@ export const AddPengadilanMiliterModal = ({
                     />
                     <p className="error-text bottom-0">
                       {errors.map((item) =>
-                        item === 'longitude' ? 'Masukan Longitude' : '',
+                        item === "longitude" ? "Masukan Longitude" : ""
                       )}
                     </p>
                   </div>
@@ -547,11 +549,11 @@ export const AddPengadilanMiliterModal = ({
                 )} */}
 
                 {/* <br></br> */}
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -579,14 +581,14 @@ export const AddPengadilanMiliterModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Pengadilan Militer
                     </button>
                   ) : (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -614,22 +616,22 @@ export const AddPengadilanMiliterModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Pengadilan Militer
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

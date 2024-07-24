@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import React, { useState, useEffect, useRef } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 import {
   faceCompareChina,
   apiVisitorLogList,
   apiDeviceDetail,
   apiVisitorRealtimeLogList,
-} from '../../services/api.js';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import ReactPlayer from 'react-player';
-import { Alerts } from './AlertCamera.js';
-import { Error403Message } from '../../utils/constants.js';
+} from "../../services/api.js";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import ReactPlayer from "react-player";
+import { Alerts } from "./AlertCamera.js";
+import { Error403Message } from "../../utils/constants.js";
 
 const stylesListComent = {
   inline: {
-    display: 'inline',
+    display: "inline",
   },
 };
 
@@ -24,11 +24,11 @@ const DataCamera = (props) => {
   const location = useLocation();
 
   const [state, setState] = useState({
-    groupId: '',
+    groupId: "",
     groupShow: [],
-    ffmpegIP: 'localhost',
-    baseUrl: 'http://localhost:4000/stream/',
-    extenstion: '_.m3u8',
+    ffmpegIP: "localhost",
+    baseUrl: "http://localhost:4000/stream/",
+    extenstion: "_.m3u8",
     girdView: 1,
     isFullscreenEnabled: false,
     selectOptionGroup: null,
@@ -37,27 +37,27 @@ const DataCamera = (props) => {
     listViewCamera: [],
     getDataPlayer: [],
     deviceDetail: {},
-    startDate: '',
-    endDate: '',
+    startDate: "",
+    endDate: "",
     isWebSocketConnected: false,
     dataVisitorLog: [],
   });
 
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const client = useRef(new W3CWebSocket('ws://100.81.142.71:5000'));
-  const clientFR = useRef(new W3CWebSocket('ws://100.81.142.71:5000'));
+  const client = useRef(new W3CWebSocket("ws://100.81.142.71:5000"));
+  const clientFR = useRef(new W3CWebSocket("ws://100.81.142.71:5000"));
 
   useEffect(() => {
     client.current.onopen = () => {
-      console.log('WebSocket Client Connected');
+      console.log("WebSocket Client Connected");
     };
     clientFR.current.onopen = () => {
-      console.log('WebSocket FR Connected');
+      console.log("WebSocket FR Connected");
     };
     clientFR.current.onmessage = (message) => {
       const dataFromServer = message;
-      console.log('got reply! ', dataFromServer);
+      console.log("got reply! ", dataFromServer);
       if (dataFromServer.data.id == state.deviceDetail.kamera_id) {
         fetchDataInmateRealtime();
       }
@@ -70,8 +70,8 @@ const DataCamera = (props) => {
 
       return () => {
         // clearInterval(fetchInterval);
-        sendRequest('disconnectedLive', {
-          status: 'disconnected',
+        sendRequest("disconnectedLive", {
+          status: "disconnected",
         });
       };
     };
@@ -85,19 +85,19 @@ const DataCamera = (props) => {
     const { id } = props;
     try {
       const res = await apiVisitorRealtimeLogList({ device_id: id });
-      console.log(res, 'data dataVisitorLog');
+      console.log(res, "data dataVisitorLog");
       setState((prevState) => ({
         ...prevState,
         dataVisitorLog: res,
       }));
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -108,7 +108,7 @@ const DataCamera = (props) => {
     try {
       const res = await apiDeviceDetail(id);
       // const res = await apiDeviceDetail(id);
-      console.log(res, 'Perangkat detail');
+      console.log(res, "Perangkat detail");
       // console.log(state.listViewCamera, 'listViewCamera');
 
       setState((prevState) => ({
@@ -131,7 +131,7 @@ const DataCamera = (props) => {
           },
         ],
       }));
-      sendRequest('startLiveView', {
+      sendRequest("startLiveView", {
         listViewCameraData: JSON.stringify([
           {
             IpAddress: res.ip_address,
@@ -141,7 +141,7 @@ const DataCamera = (props) => {
           },
         ]),
       });
-      sendRequestFR('startFR', {
+      sendRequestFR("startFR", {
         listViewCameraData: JSON.stringify([
           {
             IpAddress: res.ip_address,
@@ -156,12 +156,12 @@ const DataCamera = (props) => {
       // });
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -177,19 +177,19 @@ const DataCamera = (props) => {
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
   const formatTimestamp = (timestamp) => {
     const dateObj = new Date(timestamp);
     const day = dateObj.getDate();
-    const month = new Intl.DateTimeFormat('id-ID', { month: 'long' }).format(
-      dateObj,
+    const month = new Intl.DateTimeFormat("id-ID", { month: "long" }).format(
+      dateObj
     );
     const year = dateObj.getFullYear();
-    const time = dateObj.toLocaleTimeString('id-ID', { hour12: false });
+    const time = dateObj.toLocaleTimeString("id-ID", { hour12: false });
     return `${day} ${month} ${year} ${time}`;
   };
 
@@ -201,7 +201,7 @@ const DataCamera = (props) => {
   };
 
   const destroyCamera = (data) => {
-    console.log('destroy streaming');
+    console.log("destroy streaming");
     playerRef.current.stop();
     setState((prevState) => ({
       ...prevState,
@@ -223,7 +223,7 @@ const DataCamera = (props) => {
   };
 
   const renderStream1 = (obj, index) => {
-    console.log('render stream 1', obj);
+    console.log("render stream 1", obj);
     var urlStream = state.baseUrl + obj.IpAddress + state.extenstion;
     console.log(urlStream);
     return (
@@ -233,7 +233,7 @@ const DataCamera = (props) => {
             Error connection
           </h1>
         ) : (
-          ''
+          ""
         )}
         {/* {client.current.readyState !== 1 && client.current.readyState !== 3 ? (
           <h1 className="font-semibold text-xl text-red-500 mb-2 animate-pulse">
@@ -271,16 +271,16 @@ const DataCamera = (props) => {
 
   const { deviceDetail, dataVisitorLog } = state;
   const unrecognizedRows = dataVisitorLog.filter(
-    (row) => row.visitor_name === 'unrecognized',
+    (row) => row.visitor_name === "unrecognized"
   );
   const faceDetectionRows = dataVisitorLog.filter(
-    (row) => row.visitor_name !== 'unrecognized',
+    (row) => row.visitor_name !== "unrecognized"
   );
 
   return (
     <>
       <h1 className="font-semibold ">
-        {deviceDetail && deviceDetail.nama_kamera} -{' '}
+        {deviceDetail && deviceDetail.nama_kamera} -{" "}
         {deviceDetail.nama_ruangan_otmil && deviceDetail.nama_ruangan_otmil}
         {deviceDetail.nama_ruangan_lemasmil &&
           deviceDetail.nama_ruangan_lemasmil}

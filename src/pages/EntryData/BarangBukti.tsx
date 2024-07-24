@@ -24,7 +24,7 @@ const BarangBukti = ({ handleNext }: any) => {
   const [buttonLoad, setButtonLoad] = useState(false);
   const [dataKasus, setDataKasus] = useState([]);
   const [dataJenisPerkara, setDataJenisPerkara] = useState([]);
-  const [gambarBarangBuktiPreview, setGambarBarangBuktiPreview] = useState('');
+  const [gambarBarangBuktiPreview, setGambarBarangBuktiPreview] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
   const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
@@ -50,9 +50,9 @@ const BarangBukti = ({ handleNext }: any) => {
   const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
-        setFormState({ ...formState, gambar_barang_bukti: file});
-        const imageUrl = URL.createObjectURL(file);
-        setGambarBarangBuktiPreview(imageUrl)
+      setFormState({ ...formState, gambar_barang_bukti: file });
+      const imageUrl = URL.createObjectURL(file);
+      setGambarBarangBuktiPreview(imageUrl);
     }
   };
   const handleRemoveFoto = () => {
@@ -61,7 +61,7 @@ const BarangBukti = ({ handleNext }: any) => {
     //   ...dataDefaultValue,
     //   gambar_barang_bukti: '',
     // });
-    setGambarBarangBuktiPreview(null)
+    setGambarBarangBuktiPreview(null);
     const inputElement = document.getElementById(
       "image-upload"
     ) as HTMLInputElement;
@@ -73,7 +73,7 @@ const BarangBukti = ({ handleNext }: any) => {
     setFormState({
       ...formState,
       pdf_file_base64: "",
-      dokumen_barang_bukti: '',
+      dokumen_barang_bukti: "",
     });
     // setDataDefaultValue({
     //   ...dataDefaultValue,
@@ -93,9 +93,9 @@ const BarangBukti = ({ handleNext }: any) => {
       // console.log(reader.result, "reader reader");
 
       // reader.onloadend = async () => {
-        setFormState({ ...formState, dokumen_barang_bukti: file });
+      setFormState({ ...formState, dokumen_barang_bukti: file });
 
-        // setImagePreview(reader.result);
+      // setImagePreview(reader.result);
       //   console.log(formState.pdf_file_base64, "Preview");
       // };
       // reader.readAsDataURL(file);
@@ -219,7 +219,7 @@ const BarangBukti = ({ handleNext }: any) => {
       }
     } catch (e: any) {
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }

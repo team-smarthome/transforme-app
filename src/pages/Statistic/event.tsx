@@ -212,7 +212,7 @@ const Kegiatan = () => {
         setKegiatan(kegiatan);
       } catch (e: any) {
         // if (e.response.status === 403) {
-        //   navigate("/auth/signin", {
+        //   navigate("/", {
         //     state: { forceLogout: true, lastPage: location.pathname },
         //   });
         // }

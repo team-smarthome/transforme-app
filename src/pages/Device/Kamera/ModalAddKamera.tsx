@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   apiBuilding,
   apiReadAllRuanganOtmil,
   apiReadAlllokasiOtmil,
   apiReadZona,
-} from '../../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import Select from 'react-select';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from './AlertKamera';
-import { Error403Message } from '../../../utils/constants';
+} from "../../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import Select from "react-select";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "./AlertKamera";
+import { Error403Message } from "../../../utils/constants";
 
 // interface
 interface AddKameraModalProps {
@@ -49,22 +49,22 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(defaultValue, 'deff');
+  console.log(defaultValue, "deff");
   const [building, setBuilding] = useState([]);
   const [formState, setFormState] = useState<any>({
-    kamera_id: defaultValue?.kamera_id ?? '',
-    nama_kamera: defaultValue?.nama_kamera ?? '',
-    url_rtsp: defaultValue?.url_rtsp ?? '',
-    ip_address: defaultValue?.ip_address ?? '',
-    status_kamera: defaultValue?.status_kamera ?? '',
-    merk: defaultValue?.merk ?? '',
-    model: defaultValue?.model ?? '',
+    kamera_id: defaultValue?.kamera_id ?? "",
+    nama_kamera: defaultValue?.nama_kamera ?? "",
+    url_rtsp: defaultValue?.url_rtsp ?? "",
+    ip_address: defaultValue?.ip_address ?? "",
+    status_kamera: defaultValue?.status_kamera ?? "",
+    merk: defaultValue?.merk ?? "",
+    model: defaultValue?.model ?? "",
     jumlah_kamera: 1,
     // lokasi_otmil_id: defaultValue?.lokasi_otmil_id ?? '',
     // nama_lokasi_otmil: defaultValue?.nama_lokasi_otmil ?? '',
-    ruangan_otmil_id: defaultValue?.ruangan_otmil_id ?? '',
+    ruangan_otmil_id: defaultValue?.ruangan_otmil_id ?? "",
     // jenis_ruangan_otmil: defaultValue?.jenis_ruangan_otmil ?? '',
-    nama_ruangan_otmil: defaultValue?.nama_ruangan_otmil ?? '',
+    nama_ruangan_otmil: defaultValue?.nama_ruangan_otmil ?? "",
     // zona_id: defaultValue?.zona_id_otmil ?? '',
     // nama_zona: defaultValue?.status_zona_ruangan_otmil ?? '',
 
@@ -82,13 +82,13 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
   const [NamaZona, setNamaZona] = useState<namazona[]>([]);
   const [ruanganotmil, setruanganotmil] = useState<ruangan[]>([]);
   const [lokasiotmil, setlokasiotmil] = useState<lokasi[]>([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   //useEffect untuk menambahkan event listener  ke elemen dokumen
@@ -115,12 +115,12 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
       if (
         // key !== 'lokasi_lemasmil_id' &&
         // key !== 'nama_lokasi_lemasmil' &&
-        key !== 'nama_ruangan_lemasmil' &&
-        key !== 'jenis_ruangan_lemasmil' &&
+        key !== "nama_ruangan_lemasmil" &&
+        key !== "jenis_ruangan_lemasmil" &&
         // key !== 'zona_id_lemasmil' &&
-        key !== 'status_zona_ruangan_lemasmil' &&
-        key !== 'kamera_id' &&
-        key !== 'ruangan_lemasmi_id'
+        key !== "status_zona_ruangan_lemasmil" &&
+        key !== "kamera_id" &&
+        key !== "ruangan_lemasmi_id"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -141,66 +141,68 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
       showProgress: true,
       steps: [
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama Kamera',
-            description: 'Isi nama kamera',
+            title: "Nama Kamera",
+            description: "Isi nama kamera",
           },
         },
         {
-          element: '.i-url',
+          element: ".i-url",
           popover: {
-            title: 'URL RSTP',
-            description: 'Isi URL RSTP',
+            title: "URL RSTP",
+            description: "Isi URL RSTP",
           },
         },
         {
-          element: '.i-alamat',
+          element: ".i-alamat",
           popover: {
-            title: 'Alamat IP',
-            description: 'Isi alamat IP',
+            title: "Alamat IP",
+            description: "Isi alamat IP",
           },
         },
         {
-          element: '#p-status',
+          element: "#p-status",
           popover: {
-            title: 'Status Kamera',
-            description: 'Pilih status kamera yang diinginkan',
+            title: "Status Kamera",
+            description: "Pilih status kamera yang diinginkan",
           },
         },
         {
-          element: '.i-merk',
+          element: ".i-merk",
           popover: {
-            title: 'Merk',
-            description: 'Isi merk kamera',
+            title: "Merk",
+            description: "Isi merk kamera",
           },
         },
         {
-          element: '.i-model',
+          element: ".i-model",
           popover: {
-            title: 'Model',
-            description: 'Isi model kamera',
+            title: "Model",
+            description: "Isi model kamera",
           },
         },
         {
-          element: '.p-ruang',
+          element: ".p-ruang",
           popover: {
-            title: 'Pilih Ruangan Otmil',
-            description: 'Pilih ruangan otmil yang diinginkan',
+            title: "Pilih Ruangan Otmil",
+            description: "Pilih ruangan otmil yang diinginkan",
           },
         },
         {
-          element: '.i-zona',
+          element: ".i-zona",
           popover: {
-            title: 'Zona',
-            description: 'Isi zona kamera',
+            title: "Zona",
+            description: "Isi zona kamera",
           },
         },
         {
-          element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+          element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
-            title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-            description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} data kamera`,
+            title: `${isEdit ? "Ubah" : "Tambah"}`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data kamera`,
           },
         },
       ],
@@ -214,7 +216,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
   }, []);
   let fetchData = async () => {
     try {
-      let dataLocal = localStorage.getItem('dataUser');
+      let dataLocal = localStorage.getItem("dataUser");
       let dataUser = JSON.parse(dataLocal!);
       dataUser = {
         // lokasi_lemasmil_id: dataUser.lokasi_lemasmil_id,
@@ -222,19 +224,19 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
         // nama_lokasi_lemasmil: dataUser.nama_lokasi_lemasmil,
         // nama_lokasi_otmil: dataUser.nama_lokasi_otmil,
       };
-      console.log('data user', dataUser);
+      console.log("data user", dataUser);
 
       const response = await apiReadAllRuanganOtmil(dataUser, token);
 
-      if (response.data.status === 'OK') {
+      if (response.data.status === "OK") {
         setBuilding(response);
       } else {
         throw new Error(response.data.message);
       }
     } catch (e: any) {
-      console.log('error', e);
+      console.log("error", e);
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -267,7 +269,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
   //   } catch (e: any) {
   //     console.log('error', e);
   //     // if (e.response.status === 403) {
-  //     //   navigate('/auth/signin', {
+  //     //   navigate('/', {
   //     //     state: { forceLogout: true, lastPage: location.pathname },
   //     //   });
   //     // }
@@ -279,18 +281,18 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
   //   // setIsLoading(false);
   // };
 
-  console.log(building, 'building ini');
+  console.log(building, "building ini");
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState, 'formState');
+    console.log(formState, "formState");
 
     if (!validateForm()) return;
     setButtonLoad(true);
@@ -304,7 +306,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
 
     // Temukan data ruangan berdasarkan ID yang dipilih
     const selectedData = ruanganotmil.find(
-      (item) => item.ruangan_otmil_id === selectedRuangan,
+      (item) => item.ruangan_otmil_id === selectedRuangan
     );
     if (selectedData) {
       setFormState({
@@ -320,13 +322,13 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
     } else {
       setFormState({
         ...formState,
-        ruangan_otmil_id: '',
-        nama_ruangan_otmil: '',
+        ruangan_otmil_id: "",
+        nama_ruangan_otmil: "",
         // jenis_ruangan_otmil: '',
         // lokasi_otmil_id: '',
-        nama_lokasi_otmil: '',
-        zona_id: '',
-        nama_zona: '',
+        nama_lokasi_otmil: "",
+        zona_id: "",
+        nama_zona: "",
       });
     }
   };
@@ -338,7 +340,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
         pageSize: 1000,
         page: 1,
         filter: {
-          nama_lokasi_otmil: 'Cimahi',
+          nama_lokasi_otmil: "Cimahi",
         },
       };
       try {
@@ -358,12 +360,12 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
         }, 300);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       }
@@ -373,20 +375,20 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -394,85 +396,85 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
@@ -526,10 +528,10 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Kamera'
+                      ? "Detail Data Kamera"
                       : isEdit
-                        ? 'Edit Data Kamera'
-                        : 'Tambah Data Kamera'}
+                      ? "Edit Data Kamera"
+                      : "Tambah Data Kamera"}
                   </h3>
                 </div>
 
@@ -581,7 +583,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'nama_kamera' ? 'Pilih Kamera' : '',
+                        item === "nama_kamera" ? "Pilih Kamera" : ""
                       )}
                     </p>
                   </div>
@@ -603,7 +605,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'url_rtsp' ? 'Pilih URL RSTP' : '',
+                        item === "url_rtsp" ? "Pilih URL RSTP" : ""
                       )}
                     </p>
                   </div>
@@ -625,7 +627,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'ip_address' ? 'Pilih Alamat IP' : '',
+                        item === "ip_address" ? "Pilih Alamat IP" : ""
                       )}
                     </p>
                   </div>
@@ -653,7 +655,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     </select>
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'status_kamera' ? 'Pilih Status Kamera' : '',
+                        item === "status_kamera" ? "Pilih Status Kamera" : ""
                       )}
                     </p>
                   </div>
@@ -675,7 +677,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'merk' ? 'Pilih Merk' : '',
+                        item === "merk" ? "Pilih Merk" : ""
                       )}
                     </p>
                   </div>
@@ -697,15 +699,13 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'model' ? 'Pilih model' : '',
+                        item === "model" ? "Pilih model" : ""
                       )}
                     </p>
                   </div>
 
                   <div className="form-group h-22 w-full">
-                    <label htmlFor="ruangan_otmil_id">
-                      Pilih Ruangan
-                    </label>
+                    <label htmlFor="ruangan_otmil_id">Pilih Ruangan</label>
                     <Select
                       className="basic-single p-ruang"
                       classNamePrefix="select"
@@ -722,7 +722,6 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                             }
                           : formState.ruangan_otmil_id
                       }
-
                       options={building?.data?.records.map((item: any) => ({
                         value: item.ruangan_otmil_id,
                         label: item.nama_ruangan_otmil,
@@ -755,9 +754,7 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                     </select> */}
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'ruangan_otmil_id'
-                          ? 'Pilih Ruangan'
-                          : '',
+                        item === "ruangan_otmil_id" ? "Pilih Ruangan" : ""
                       )}
                     </p>
                   </div>
@@ -821,12 +818,12 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                   </div> */}
                 </div>
 
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {/* <br></br> */}
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -854,14 +851,14 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Data Kamera
                     </button>
                   ) : (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -889,22 +886,22 @@ export const AddKamera: React.FC<AddKameraModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Data Kamera
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

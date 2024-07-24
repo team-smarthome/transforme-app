@@ -35,7 +35,7 @@ export const NASVisibleAtom = atom<boolean>(false);
 
 export const zoneVisibleAtom = atom<boolean>(false);
 
-export const isFullScreenAtom = atom<boolean>(false);
+export const isFullScreenAtom = atom<boolean>(true);
 
 export const NotificationAtom = atom<boolean>(false);
 
@@ -94,8 +94,8 @@ export const selectedNASSearch = atom<any>([]);
 export const accordionWbpAtom = atom({
   wbp: [],
   petugas: [],
-  pengunjung: []
-})
+  pengunjung: [],
+});
 
 export const modeNotificationDropdown = atom<string>("notification");
 

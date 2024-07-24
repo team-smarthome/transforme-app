@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   apiReadAllRuanganOtmil,
   apiReadAlllokasiOtmil,
   apiReadZona,
-} from '../../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import Select from 'react-select';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from './AlertGateway';
-import { Error403Message } from '../../../utils/constants';
+} from "../../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import Select from "react-select";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "./AlertGateway";
+import { Error403Message } from "../../../utils/constants";
 
 // interface
 interface AddGatewayModalProps {
@@ -51,23 +51,23 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: '',
-      gmac: '',
-      status_gateway: '',
+      nama_gateway: "",
+      gmac: "",
+      status_gateway: "",
       jumlah_gateway: 1,
-      lokasi_otmil_id: '',
-      nama_lokasi_otmil: '',
-      ruangan_otmil_id: '',
-      jenis_ruangan_otmil: '',
-      nama_ruangan_otmil: '',
-      zona_id: '',
-      nama_zona: defaultValue?.status_zona_ruangan_otmil ?? '',
+      lokasi_otmil_id: "",
+      nama_lokasi_otmil: "",
+      ruangan_otmil_id: "",
+      jenis_ruangan_otmil: "",
+      nama_ruangan_otmil: "",
+      zona_id: "",
+      nama_zona: defaultValue?.status_zona_ruangan_otmil ?? "",
 
       // nama_ruangan_lemasmil: '',
       // jenis_ruangan_lemasmil: '',
       // lokasi_lemasmil_id: '',
       // ruangan_lemasmil_id: '',
-    },
+    }
   );
 
   //state
@@ -78,13 +78,13 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
   const [NamaZona, setNamaZona] = useState<namazona[]>([]);
   const [ruanganotmil, setruanganotmil] = useState<ruangan[]>([]);
   const [lokasiotmil, setlokasiotmil] = useState<lokasi[]>([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   //useEffect untuk menambahkan event listener  ke elemen dokumen
@@ -109,13 +109,13 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
     for (const [key, value] of Object.entries(formState)) {
       if (
-        key !== 'lokasi_lemasmil_id' &&
-        key !== 'nama_lokasi_lemasmil' &&
-        key !== 'nama_ruangan_lemasmil' &&
-        key !== 'jenis_ruangan_lemasmil' &&
-        key !== 'zona_id_lemasmil' &&
-        key !== 'status_zona_ruangan_lemasmil' &&
-        key !== 'ruangan_lemasmi_id'
+        key !== "lokasi_lemasmil_id" &&
+        key !== "nama_lokasi_lemasmil" &&
+        key !== "nama_ruangan_lemasmil" &&
+        key !== "jenis_ruangan_lemasmil" &&
+        key !== "zona_id_lemasmil" &&
+        key !== "status_zona_ruangan_lemasmil" &&
+        key !== "ruangan_lemasmi_id"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -136,59 +136,61 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
       showProgress: true,
       steps: [
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama Gateway',
-            description: 'Isi nama gateway',
+            title: "Nama Gateway",
+            description: "Isi nama gateway",
           },
         },
         {
-          element: '.i-gmac',
+          element: ".i-gmac",
           popover: {
-            title: 'GMAC',
-            description: 'Isi GMAC',
+            title: "GMAC",
+            description: "Isi GMAC",
           },
         },
         {
-          element: '.p-status',
+          element: ".p-status",
           popover: {
-            title: 'Status Gateway',
-            description: 'Pilih status gateway yang diinginkan',
+            title: "Status Gateway",
+            description: "Pilih status gateway yang diinginkan",
           },
         },
         {
-          element: '.p-ruang',
+          element: ".p-ruang",
           popover: {
-            title: 'Pilih Ruangan Otmil',
-            description: 'Pilih ruangan otmil yang diinginkan',
+            title: "Pilih Ruangan Otmil",
+            description: "Pilih ruangan otmil yang diinginkan",
           },
         },
         {
-          element: '.i-jenis',
+          element: ".i-jenis",
           popover: {
-            title: 'Jenis Ruangan',
-            description: 'Isi jenis ruangan',
+            title: "Jenis Ruangan",
+            description: "Isi jenis ruangan",
           },
         },
         {
-          element: '.i-lokasi',
+          element: ".i-lokasi",
           popover: {
-            title: 'Nama Lokasi Otmil',
-            description: 'Isi nama lokasi otmil',
+            title: "Nama Lokasi Otmil",
+            description: "Isi nama lokasi otmil",
           },
         },
         {
-          element: '.i-zona',
+          element: ".i-zona",
           popover: {
-            title: 'Zona',
-            description: 'Isi zona',
+            title: "Zona",
+            description: "Isi zona",
           },
         },
         {
-          element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+          element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
-            title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-            description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} data gateway`,
+            title: `${isEdit ? "Ubah" : "Tambah"}`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data gateway`,
           },
         },
       ],
@@ -200,21 +202,21 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formState, 'formState');
+    console.log(formState, "formState");
 
     // if (!validateForm()) return;
     // setButtonLoad(true);
 
     onSubmit(formState).then(() => setButtonLoad(false));
     // closeModal();
-    console.log(formState, 'formstateSuccesValidate');
+    console.log(formState, "formstateSuccesValidate");
   };
 
   const handleRuanganChange = (e: any) => {
@@ -222,7 +224,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
     // Temukan data ruangan berdasarkan ID yang dipilih
     const selectedData = ruanganotmil.find(
-      (item) => item.ruangan_otmil_id === selectedRuangan,
+      (item) => item.ruangan_otmil_id === selectedRuangan
     );
     if (selectedData) {
       setFormState({
@@ -238,13 +240,13 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
     } else {
       setFormState({
         ...formState,
-        ruangan_otmil_id: '',
-        nama_ruangan_otmil: '',
-        jenis_ruangan_otmil: '',
-        lokasi_otmil_id: '',
-        nama_lokasi_otmil: '',
-        zona_id: '',
-        nama_zona: '',
+        ruangan_otmil_id: "",
+        nama_ruangan_otmil: "",
+        jenis_ruangan_otmil: "",
+        lokasi_otmil_id: "",
+        nama_lokasi_otmil: "",
+        zona_id: "",
+        nama_zona: "",
       });
     }
   };
@@ -257,7 +259,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
           pageSize: 1000,
           page: 1,
           filter: {
-            nama_lokasi_otmil: 'Cimahi',
+            nama_lokasi_otmil: "Cimahi",
           },
         };
         const ruangan = await apiReadAllRuanganOtmil(params, token);
@@ -276,12 +278,12 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
         }, 300);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       }
@@ -291,20 +293,20 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -312,85 +314,85 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
@@ -444,10 +446,10 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Gateway'
+                      ? "Detail Data Gateway"
                       : isEdit
-                        ? 'Edit Data Gateway'
-                        : 'Tambah Data Gateway'}
+                      ? "Edit Data Gateway"
+                      : "Tambah Data Gateway"}
                   </h3>
                 </div>
 
@@ -499,7 +501,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'nama_gateway' ? 'Pilih gateway' : '',
+                        item === "nama_gateway" ? "Pilih gateway" : ""
                       )}
                     </p>
                   </div>
@@ -521,7 +523,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === 'gmac' ? 'Pilih GMAC' : '',
+                        item === "gmac" ? "Pilih GMAC" : ""
                       )}
                     </p>
                   </div>
@@ -549,15 +551,13 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     </select>
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'status_gateway' ? 'Pilih Status Gateway' : '',
+                        item === "status_gateway" ? "Pilih Status Gateway" : ""
                       )}
                     </p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label htmlFor="ruangan_otmil_id">
-                      Pilih Ruangan:
-                    </label>
+                    <label htmlFor="ruangan_otmil_id">Pilih Ruangan:</label>
                     <Select
                       className="basic-single p-ruang"
                       classNamePrefix="select"
@@ -595,9 +595,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     </select> */}
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'ruangan_otmil_id'
-                          ? 'Pilih Ruangan Otmil'
-                          : '',
+                        item === "ruangan_otmil_id" ? "Pilih Ruangan Otmil" : ""
                       )}
                     </p>
                   </div>
@@ -614,17 +612,15 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'jenis_ruangan_otmil'
-                          ? 'Masukan Jenis Ruangan'
-                          : '',
+                        item === "jenis_ruangan_otmil"
+                          ? "Masukan Jenis Ruangan"
+                          : ""
                       )}
                     </p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label htmlFor="nama_lokasi_otmil">
-                      Nama Lokasi:
-                    </label>
+                    <label htmlFor="nama_lokasi_otmil">Nama Lokasi:</label>
                     <input
                       type="text"
                       id="nama_lokasi_otmil"
@@ -635,9 +631,9 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'nama_lokasi_otmil'
-                          ? 'Masukan Nama Lokasi'
-                          : '',
+                        item === "nama_lokasi_otmil"
+                          ? "Masukan Nama Lokasi"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -661,12 +657,12 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                   </div> */}
                 </div>
 
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {/* <br></br> */}
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -694,14 +690,14 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Data Gateway
                     </button>
                   ) : (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -729,22 +725,22 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Data Gateway
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

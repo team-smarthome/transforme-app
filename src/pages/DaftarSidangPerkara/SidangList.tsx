@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { apiJenisSidangRead, apiSidangDelete, apiSidangInsert, apiSidangRead, apiSidangUpdate } from "../../services/api";
+import {
+  apiJenisSidangRead,
+  apiSidangDelete,
+  apiSidangInsert,
+  apiSidangRead,
+  apiSidangUpdate,
+} from "../../services/api";
 import { AddSidangModal } from "./ModalAddSidang";
 import { Alerts } from "./AlertSidang";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -135,8 +141,12 @@ const SidangList = () => {
     //   }
     // });
 
-    const hakimKetua = item?.sidang_hakim.find((item: any) => item.ketua_hakim === "1");
-    const jaksaKetua = item?.sidang_oditur.find((item: any) => item.role_ketua_oditur === "1");
+    const hakimKetua = item?.sidang_hakim.find(
+      (item: any) => item.ketua_hakim === "1"
+    );
+    const jaksaKetua = item?.sidang_oditur.find(
+      (item: any) => item.role_ketua_oditur === "1"
+    );
 
     const detailItem: any = {
       sidang_id: item?.sidang_id,
@@ -162,7 +172,9 @@ const SidangList = () => {
       ahliHolder: newArrayAhli,
       agenda_sidang: item?.agenda_sidang,
       saksiHolder: newArraySaksi,
-      pengacara: item?.sidang_pengacara?.map((item: any) => item?.nama_pengacara),
+      pengacara: item?.sidang_pengacara?.map(
+        (item: any) => item?.nama_pengacara
+      ),
       hakimHolder: newArrayHakim,
       wbpHolder: newArrayWbp,
       oditurHolder: newArrayJaksa,
@@ -254,7 +266,9 @@ const SidangList = () => {
       })
     );
 
-    item?.sidang_pengacara.map((item: any) => newArrayPengacara.push(item?.nama_pengacara));
+    item?.sidang_pengacara.map((item: any) =>
+      newArrayPengacara.push(item?.nama_pengacara)
+    );
 
     item?.sidang_hakim.map((item: any) =>
       newArrayHakim.push({
@@ -270,8 +284,12 @@ const SidangList = () => {
       })
     );
 
-    const hakimKetua = item?.sidang_hakim.find((item: any) => item.ketua_hakim === "1");
-    const jaksaKetua = item?.sidang_oditur.find((item: any) => item.role_ketua_oditur === "1");
+    const hakimKetua = item?.sidang_hakim.find(
+      (item: any) => item.ketua_hakim === "1"
+    );
+    const jaksaKetua = item?.sidang_oditur.find(
+      (item: any) => item.role_ketua_oditur === "1"
+    );
     // console.log('HAKIM KETUA', hakimKetua);
 
     // console.log('NEW ARRAY',newArrayJaksa)
@@ -306,7 +324,9 @@ const SidangList = () => {
       wbp_profile: newArrayWbp?.map((item: any) => item?.wbp_profile_id),
       pengacara: newArrayPengacara,
       hakimHolder: newArrayHakim,
-      oditur_penuntut_id: newArrayJaksa?.map((item: any) => item?.oditur_penuntut_id),
+      oditur_penuntut_id: newArrayJaksa?.map(
+        (item: any) => item?.oditur_penuntut_id
+      ),
       oditurHolder: newArrayJaksa,
       hasil_keputusan_sidang: item?.hasil_keputusan_sidang,
       role_ketua_oditur_holder: {
@@ -357,7 +377,7 @@ const SidangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -391,7 +411,7 @@ const SidangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -423,7 +443,7 @@ const SidangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -476,7 +496,7 @@ const SidangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -519,7 +539,7 @@ const SidangList = () => {
       }
     } catch (e) {
       if (e.response && e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       } else {
@@ -528,7 +548,8 @@ const SidangList = () => {
 
       Alerts.fire({
         icon: e.response && e.response.status === 403 ? "warning" : "error",
-        title: e.response && e.response.status === 403 ? Error403Message : e.message,
+        title:
+          e.response && e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
@@ -537,12 +558,19 @@ const SidangList = () => {
     return Object.keys(obj).reduce((acc: any, key) => {
       const propName = prefix ? `${prefix}.${key}` : key;
 
-      if (typeof obj[key] === "object" && obj[key] !== null && !Array.isArray(obj[key])) {
+      if (
+        typeof obj[key] === "object" &&
+        obj[key] !== null &&
+        !Array.isArray(obj[key])
+      ) {
         return { ...acc, ...flattenObject(obj[key], propName) };
       } else {
         return {
           ...acc,
-          [propName]: obj[key] !== null && typeof obj[key] === "object" ? JSON.stringify(obj[key]) : obj[key],
+          [propName]:
+            obj[key] !== null && typeof obj[key] === "object"
+              ? JSON.stringify(obj[key])
+              : obj[key],
         };
       }
     }, {});
@@ -569,7 +597,10 @@ const SidangList = () => {
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
-    xlsx.writeFile(wb, `DataSidang${dayjs(new Date()).format("DDMMYYYY-HHmmss")}.xlsx`);
+    xlsx.writeFile(
+      wb,
+      `DataSidang${dayjs(new Date()).format("DDMMYYYY-HHmmss")}.xlsx`
+    );
   };
 
   interface ItemType {
@@ -604,7 +635,7 @@ const SidangList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -643,12 +674,20 @@ const SidangList = () => {
         <div className="flex justify-center w-full">
           <div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
             <div className="w-full search">
-              <SearchInputButton value={searchData.namaSidang} placehorder="Cari nama sidang" onChange={(e) => setSearchData({ ...searchData, namaSidang: e.target.value })} />
+              <SearchInputButton
+                value={searchData.namaSidang}
+                placehorder="Cari nama sidang"
+                onChange={(e) =>
+                  setSearchData({ ...searchData, namaSidang: e.target.value })
+                }
+              />
             </div>
 
             <select
               value={searchData.jenisSidang}
-              onChange={(e) => setSearchData({ ...searchData, jenisSidang: e.target.value })}
+              onChange={(e) =>
+                setSearchData({ ...searchData, jenisSidang: e.target.value })
+              }
               className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary p-sidang"
             >
               <option value="">Semua jenis sidang</option>
@@ -659,13 +698,32 @@ const SidangList = () => {
               ))}
             </select>
 
-            <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search " type="button" onClick={handleSearchSidang} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
-                <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+            <button
+              className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search "
+              type="button"
+              onClick={handleSearchSidang}
+              id="button-addon1"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5 text-black"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
 
-            <button onClick={exportToExcel} className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+            <button
+              onClick={exportToExcel}
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -682,9 +740,14 @@ const SidangList = () => {
           </div>
         </div>
         <div className="flex justify-between">
-          <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">Data Daftar Sidang</h4>
+          <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+            Data Daftar Sidang
+          </h4>
           {!isOperator && (
-            <button onClick={() => setModalAddOpen(true)} className=" text-black rounded-md bg-blue-300 w-20 h-10 b-tambah">
+            <button
+              onClick={() => setModalAddOpen(true)}
+              className=" text-black rounded-md bg-blue-300 w-20 h-10 b-tambah"
+            >
               Tambah
             </button>
           )}
@@ -694,46 +757,68 @@ const SidangList = () => {
           {isOperator ? (
             <div className="grid grid-cols-6 text-center  rounded-t-md bg-gray-2 dark:bg-slate-600 ">
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama Sidang
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">No Kasus</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  No Kasus
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jenis Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jenis Sidang
+                </h5>
               </div>
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jadwal Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jadwal Sidang
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Ketua Oditur</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ketua Oditur
+                </h5>
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-6 text-center  rounded-t-md bg-gray-2 dark:bg-slate-600 ">
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama Sidang
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">No Kasus</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  No Kasus
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jenis Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jenis Sidang
+                </h5>
               </div>
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Jadwal Sidang</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Jadwal Sidang
+                </h5>
               </div>
 
               <div className="p-2.5 xl:p-5">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Ketua Oditur</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ketua Oditur
+                </h5>
               </div>
               <div className="p-2.5 xl:p-5 ">
-                <h5 className="text-sm font-medium uppercase xsm:text-base">Aksi</h5>
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Aksi
+                </h5>
               </div>
             </div>
           )}
@@ -746,49 +831,106 @@ const SidangList = () => {
                   <div key={index}>
                     {isOperator ? (
                       <div className="grid grid-cols-6 rounded-sm  bg-gray-2 dark:bg-meta-4  ">
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nama_sidang}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nama_sidang}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nomor_kasus}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nomor_kasus}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer truncate">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nama_jenis_persidangan}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer truncate"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nama_jenis_persidangan}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{formatDate(item.jadwal_sidang)}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {formatDate(item.jadwal_sidang)}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer capitalize">
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer capitalize"
+                        >
                           <p className="hidden text-black dark:text-white sm:block text-center">
-                            {item?.sidang_oditur && item.sidang_oditur.length > 0 ? item?.sidang_oditur?.find((item: any) => item.role_ketua_oditur === "1")?.nama_oditur || "" : ""}
+                            {item?.sidang_oditur &&
+                            item.sidang_oditur.length > 0
+                              ? item?.sidang_oditur?.find(
+                                  (item: any) => item.role_ketua_oditur === "1"
+                                )?.nama_oditur || ""
+                              : ""}
                           </p>
                         </div>
                       </div>
                     ) : (
                       <div className="grid grid-cols-6 rounded-sm  bg-gray-2 dark:bg-meta-4  ">
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nama_sidang}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nama_sidang}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nomor_kasus}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nomor_kasus}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer truncate">
-                          <p className="hidden text-black dark:text-white sm:block">{item.nama_jenis_persidangan}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer truncate"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {item.nama_jenis_persidangan}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer">
-                          <p className="hidden text-black dark:text-white sm:block">{formatDate(item.jadwal_sidang)}</p>
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer"
+                        >
+                          <p className="hidden text-black dark:text-white sm:block">
+                            {formatDate(item.jadwal_sidang)}
+                          </p>
                         </div>
 
-                        <div onClick={() => handleDetailClick(item)} className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer capitalize">
+                        <div
+                          onClick={() => handleDetailClick(item)}
+                          className="sm:flex items-center justify-center p-2.5 xl:p-5 cursor-pointer capitalize"
+                        >
                           <p className="hidden text-black dark:text-white sm:block text-center">
-                            {item?.sidang_oditur && item.sidang_oditur.length > 0 ? item?.sidang_oditur?.find((oditur: any) => oditur.role_ketua_oditur === "1")?.nama_oditur || "" : ""}
+                            {item?.sidang_oditur &&
+                            item.sidang_oditur.length > 0
+                              ? item?.sidang_oditur?.find(
+                                  (oditur: any) =>
+                                    oditur.role_ketua_oditur === "1"
+                                )?.nama_oditur || ""
+                              : ""}
                           </p>
                         </div>
 
@@ -806,7 +948,10 @@ const SidangList = () => {
                         Hapus
                       </button> */}
                           <div className="relative">
-                            <DropdownAction handleEditClick={() => handleEditClick(item)} handleDeleteClick={() => handleDeleteClick(item)}></DropdownAction>
+                            <DropdownAction
+                              handleEditClick={() => handleEditClick(item)}
+                              handleDeleteClick={() => handleDeleteClick(item)}
+                            ></DropdownAction>
                           </div>
                         </div>
                       </div>
@@ -819,10 +964,38 @@ const SidangList = () => {
             </>
           )}
 
-          {modalDetailOpen && <AddSidangModal closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAddUser} defaultValue={detailData} isDetail={true} token={token} />}
-          {modalEditOpen && <AddSidangModal closeModal={handleCloseEditModal} onSubmit={handleSubmitEditUser} defaultValue={editData} isEdit={true} token={token} />}
-          {modalAddOpen && <AddSidangModal closeModal={handleCloseAddModal} onSubmit={handleSubmitAddUser} token={token} />}
-          {modalDeleteOpen && <DeleteSidangModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDeleteDataPetugas} defaultValue={deleteData} />}
+          {modalDetailOpen && (
+            <AddSidangModal
+              closeModal={() => setModalDetailOpen(false)}
+              onSubmit={handleSubmitAddUser}
+              defaultValue={detailData}
+              isDetail={true}
+              token={token}
+            />
+          )}
+          {modalEditOpen && (
+            <AddSidangModal
+              closeModal={handleCloseEditModal}
+              onSubmit={handleSubmitEditUser}
+              defaultValue={editData}
+              isEdit={true}
+              token={token}
+            />
+          )}
+          {modalAddOpen && (
+            <AddSidangModal
+              closeModal={handleCloseAddModal}
+              onSubmit={handleSubmitAddUser}
+              token={token}
+            />
+          )}
+          {modalDeleteOpen && (
+            <DeleteSidangModal
+              closeModal={handleCloseDeleteModal}
+              onSubmit={handleSubmitDeleteDataPetugas}
+              defaultValue={deleteData}
+            />
+          )}
           {/* {alertIsAdded && (
           <Alerts
             alertType="success"
@@ -857,7 +1030,11 @@ const SidangList = () => {
                 <option value="1000">1000</option>
               </select>
             </div>
-            <Pagination currentPage={currentPage} totalPages={pages} onChangePage={handleChagePage} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={pages}
+              onChangePage={handleChagePage}
+            />
           </div>
         )}
       </div>

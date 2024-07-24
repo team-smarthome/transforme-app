@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import { apiReadAllScheduleShift } from '../../../services/api';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'dayjs/locale/id';
-import { Alerts } from '../GrupShift/Alert';
-import dayjs from 'dayjs';
-import { BsTrash, BsX } from 'react-icons/bs';
-import { BiLoaderAlt } from 'react-icons/bi';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
+import { useEffect, useRef, useState } from "react";
+import { apiReadAllScheduleShift } from "../../../services/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "dayjs/locale/id";
+import { Alerts } from "../GrupShift/Alert";
+import dayjs from "dayjs";
+import { BsTrash, BsX } from "react-icons/bs";
+import { BiLoaderAlt } from "react-icons/bi";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
 
 interface Schedule {
   schedule_id: any;
@@ -19,7 +19,7 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
   const location = useLocation();
 
   //get Token
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   let tokens = tokenItem ? JSON.parse(tokenItem) : null;
   let token = tokens.token;
 
@@ -29,42 +29,42 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
   const tanggal = dayjs(
     `${defaultValue.tahun}-${defaultValue.bulan}-${defaultValue.tanggal}`,
     {
-      locale: 'id',
-    },
-  ).format('YYYY MM DD');
+      locale: "id",
+    }
+  ).format("YYYY MM DD");
 
   const [selectedDate, setSelectedDate] = useState(dayjs(tanggal));
   const [selectedEndDate, setSelectedEndDate] = useState(
-    dayjs(tanggal).add(4, 'day'),
+    dayjs(tanggal).add(4, "day")
   );
 
   const [startDate, setStartDate] = useState({
-    tanggal: parseInt(dayjs(selectedDate).format('D')),
-    bulan: parseInt(dayjs(selectedDate).format('M')),
-    tahun: parseInt(dayjs(selectedDate).format('YYYY')),
+    tanggal: parseInt(dayjs(selectedDate).format("D")),
+    bulan: parseInt(dayjs(selectedDate).format("M")),
+    tahun: parseInt(dayjs(selectedDate).format("YYYY")),
   });
 
   const [endDate, setEndDate] = useState({
-    tanggal: parseInt(dayjs(selectedEndDate).format('D')),
-    bulan: parseInt(dayjs(selectedEndDate).format('M')),
-    tahun: parseInt(dayjs(selectedEndDate).format('YYYY')),
+    tanggal: parseInt(dayjs(selectedEndDate).format("D")),
+    bulan: parseInt(dayjs(selectedEndDate).format("M")),
+    tahun: parseInt(dayjs(selectedEndDate).format("YYYY")),
   });
 
   const handleDateChange = (date: any) => {
-    const end = dayjs(date).add(4, 'day');
+    const end = dayjs(date).add(4, "day");
     setSelectedDate(dayjs(date));
     setStartDate({
       ...startDate,
-      tanggal: parseInt(dayjs(date).format('D')),
-      bulan: parseInt(dayjs(date).format('M')),
-      tahun: parseInt(dayjs(date).format('YYYY')),
+      tanggal: parseInt(dayjs(date).format("D")),
+      bulan: parseInt(dayjs(date).format("M")),
+      tahun: parseInt(dayjs(date).format("YYYY")),
     });
-    setSelectedEndDate(dayjs(date).add(4, 'day'));
+    setSelectedEndDate(dayjs(date).add(4, "day"));
     setEndDate({
       ...endDate,
-      tanggal: parseInt(dayjs(end).format('D')),
-      bulan: parseInt(dayjs(end).format('M')),
-      tahun: parseInt(dayjs(end).format('YYYY')),
+      tanggal: parseInt(dayjs(end).format("D")),
+      bulan: parseInt(dayjs(end).format("M")),
+      tahun: parseInt(dayjs(end).format("YYYY")),
     });
   };
 
@@ -72,9 +72,9 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
     setSelectedEndDate(dayjs(date));
     setEndDate({
       ...endDate,
-      tanggal: parseInt(dayjs(date).format('D')),
-      bulan: parseInt(dayjs(date).format('M')),
-      tahun: parseInt(dayjs(date).format('YYYY')),
+      tanggal: parseInt(dayjs(date).format("D")),
+      bulan: parseInt(dayjs(date).format("M")),
+      tahun: parseInt(dayjs(date).format("YYYY")),
     });
   };
 
@@ -88,9 +88,9 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
         closeModal();
       }
     };
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [closeModal]);
 
@@ -98,13 +98,13 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
   const [activeDeleteItemIds, setActiveDeleteItemIds] = useState<string[]>([]);
   const [scheduleDeleteData, setScheduleDeleteData] = useState([
     {
-      schedule_id: '',
+      schedule_id: "",
     },
   ]);
 
   const handledelete = (item: any) => {
     const newScheduleDeleteData = scheduleDeleteData.filter(
-      (schedule) => schedule.schedule_id !== '',
+      (schedule) => schedule.schedule_id !== ""
     );
 
     newScheduleDeleteData.push({ schedule_id: item });
@@ -115,7 +115,7 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
   const handleCancel = (item: any) => {
     const updatedItemIds = activeDeleteItemIds.filter((id) => id !== item);
     const updatedataDelete = scheduleDeleteData.filter(
-      (id) => id.schedule_id !== item,
+      (id) => id.schedule_id !== item
     );
     setActiveDeleteItemIds(updatedItemIds);
     setScheduleDeleteData(updatedataDelete);
@@ -147,12 +147,12 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
         setIsLoading(false);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       }
@@ -173,11 +173,11 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
       try {
         const schedule = await apiReadAllScheduleShift(filter, token);
         setSchedule(schedule.data.records);
-        setScheduleDeleteData([{ ...scheduleDeleteData, schedule_id: '' }]);
+        setScheduleDeleteData([{ ...scheduleDeleteData, schedule_id: "" }]);
         setActiveDeleteItemIds([]);
       } catch (error: any) {
         Alerts.fire({
-          icon: 'error',
+          icon: "error",
           title: error.message,
         });
       }
@@ -185,13 +185,13 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
     fetchSchedule();
   }, [selectedEndDate]);
 
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
   const validate = () => {
     if (
-      scheduleDeleteData[0]?.schedule_id == '' ||
+      scheduleDeleteData[0]?.schedule_id == "" ||
       scheduleDeleteData.length === 0
     ) {
-      setErrors('Silahkan pilih shift!');
+      setErrors("Silahkan pilih shift!");
       return false;
     } else {
       return true;
@@ -272,8 +272,8 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
                   dateFormat="dd MMMM yyyy"
                   placeholderText="Pilih tanggal"
                   locale="id"
-                  minDate={dayjs(selectedDate).endOf('day').toDate()} // Set minDate to the selected start date
-                  maxDate={dayjs(selectedDate).endOf('month').toDate()}
+                  minDate={dayjs(selectedDate).endOf("day").toDate()} // Set minDate to the selected start date
+                  maxDate={dayjs(selectedDate).endOf("month").toDate()}
                 />
               </div>
               <div className="w-full pb-2 flex justify-between mt-4  bg-slate-700 rounded-t">
@@ -290,21 +290,21 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
               <div className="h-36 overflow-y-auto bg-slate-800 rounded-b-md">
                 {schedule.map((item: any) => {
                   const isDeleteVisible = activeDeleteItemIds.includes(
-                    item.schedule_id,
+                    item.schedule_id
                   );
 
                   return (
                     <div className="flex justify-between pb-2">
                       <h1
                         className={`w-2/3 capitalize ${
-                          !isDeleteVisible ? 'text-white' : ''
+                          !isDeleteVisible ? "text-white" : ""
                         }`}
                       >
-                        {item.nama_shift}{' '}
+                        {item.nama_shift}{" "}
                       </h1>
                       <h1
                         className={`w-2/3 capitalize ${
-                          !isDeleteVisible ? 'text-white' : ''
+                          !isDeleteVisible ? "text-white" : ""
                         }`}
                       >
                         {` ${item.tanggal}/${item.bulan}/${item.tahun} `}
@@ -315,15 +315,15 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
                             onClick={() => handledelete(item.schedule_id)}
                             className="flex items-center space-x-2 rounded bg-red-500 px-2 text-white"
                           >
-                            <BsTrash size={10} />{' '}
-                            <h2 className="text-sm">Hapus</h2>{' '}
+                            <BsTrash size={10} />{" "}
+                            <h2 className="text-sm">Hapus</h2>{" "}
                           </button>
                         ) : (
                           <button
                             onClick={() => handleCancel(item.schedule_id)}
                             className="flex items-center space-x-2 rounded bg-blue-500 px-2 text-white"
                           >
-                            <BsX size={10} />{' '}
+                            <BsX size={10} />{" "}
                             <h2 className="text-sm">Cancel</h2>
                           </button>
                         )}
@@ -342,7 +342,7 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
                   onClick={handleDeleteAll}
                   className="flex items-center space-x-2 rounded bg-red-500 px-2 text-white"
                 >
-                  <BsTrash size={10} /> <h2 className="text-sm">Hapus Semua</h2>{' '}
+                  <BsTrash size={10} /> <h2 className="text-sm">Hapus Semua</h2>{" "}
                 </button>
               </div>
             </div>
@@ -350,7 +350,7 @@ const DeleteSchedule = ({ closeModal, onSubmit, defaultValue }: any) => {
             <div className="flex justify-center mt-5">
               <button
                 className={` ${
-                  buttonLoad ? 'bg-slate-600' : 'bg-primary hover:bg-blue-500'
+                  buttonLoad ? "bg-slate-600" : "bg-primary hover:bg-blue-500"
                 }btn w-full flex justify-center rounded  py-2 px-6 font-medium text-gray hover:shadow-1`}
                 type="submit"
                 onClick={handleSubmit}

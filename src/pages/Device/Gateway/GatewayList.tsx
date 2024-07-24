@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import Loader from '../../../common/Loader';
-import { AddGateway } from './ModalAddGateway';
-import { DeleteGatewayModal } from './ModalDeleteGateway';
-import { Alerts } from './AlertGateway';
+import { useEffect, useState } from "react";
+import Loader from "../../../common/Loader";
+import { AddGateway } from "./ModalAddGateway";
+import { DeleteGatewayModal } from "./ModalDeleteGateway";
+import { Alerts } from "./AlertGateway";
 import {
   apiReadGateway,
   apiDeleteGateway,
   apiCreateGateway,
   apiUpdateGateway,
-} from '../../../services/api';
-import Pagination from '../../../components/Pagination';
-import SearchInputButton from '../Search';
-import * as xlsx from 'xlsx';
-import DropdownAction from '../../../components/DropdownAction';
-import dayjs from 'dayjs';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+} from "../../../services/api";
+import Pagination from "../../../components/Pagination";
+import SearchInputButton from "../Search";
+import * as xlsx from "xlsx";
+import DropdownAction from "../../../components/DropdownAction";
+import dayjs from "dayjs";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 // Interface untuk objek 'params' dan 'item'
 
@@ -48,8 +48,8 @@ const GatewayList = () => {
   const [modalAddOpen, setModalAddOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState('');
-  const [filterStatus, setFilterStatus] = useState('');
+  const [filter, setFilter] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -58,11 +58,11 @@ const GatewayList = () => {
 
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   const handleFilterChange = async (e: any) => {
@@ -89,38 +89,38 @@ const GatewayList = () => {
       showProgress: true,
       steps: [
         {
-          element: '.search',
+          element: ".search",
           popover: {
-            title: 'Search',
-            description: 'Mencari nama gateway',
+            title: "Search",
+            description: "Mencari nama gateway",
           },
         },
         {
-          element: '#p-status',
+          element: "#p-status",
           popover: {
-            title: 'Semua Status',
-            description: 'Pilih status yang diinginkan',
+            title: "Semua Status",
+            description: "Pilih status yang diinginkan",
           },
         },
         {
-          element: '.b-search',
+          element: ".b-search",
           popover: {
-            title: 'Button Search',
-            description: 'Click button untuk mencari nama gateway',
+            title: "Button Search",
+            description: "Click button untuk mencari nama gateway",
           },
         },
         {
-          element: '.excel',
+          element: ".excel",
           popover: {
-            title: 'Excel',
-            description: 'Mendapatkan file excel',
+            title: "Excel",
+            description: "Mendapatkan file excel",
           },
         },
         {
-          element: '.b-tambah',
+          element: ".b-tambah",
           popover: {
-            title: 'Tambah',
-            description: 'Menambah data perangkat gateway',
+            title: "Tambah",
+            description: "Menambah data perangkat gateway",
           },
         },
       ],
@@ -139,7 +139,7 @@ const GatewayList = () => {
       filter: {
         nama_gateway: filter,
         status_gateway: filterStatus,
-        nama_lokasi_otmil: 'Cimahi',
+        nama_lokasi_otmil: "Cimahi",
       },
       page: currentPage,
       pageSize: pageSize,
@@ -152,25 +152,25 @@ const GatewayList = () => {
         const result = response.data;
         setData(result.records);
       } else {
-        throw new Error('Terjadi kesalahan saat mencari data.');
+        throw new Error("Terjadi kesalahan saat mencari data.");
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   const handleEnterKeyPress = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearchClick();
-      console.log('ENTER DIPNCET');
+      console.log("ENTER DIPNCET");
     }
   };
 
@@ -191,14 +191,14 @@ const GatewayList = () => {
 
   const fetchData = async () => {
     let params = {
-      filter: { nama_lokasi_otmil: 'Cimahi' },
+      filter: { nama_lokasi_otmil: "Cimahi" },
       page: currentPage,
       pageSize: pageSize,
     };
     setIsLoading(true);
     try {
       const response = await apiReadGateway(params, token);
-      if (response.data.status !== 'OK') {
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       const result = response.data.records;
@@ -208,12 +208,12 @@ const GatewayList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -255,29 +255,29 @@ const GatewayList = () => {
   const handleSubmitDelete = async (params: any) => {
     try {
       const responseDelete = await apiDeleteGateway(params, token);
-      if (responseDelete.data.status === 'OK') {
+      if (responseDelete.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
         setModalDeleteOpen(false);
         fetchData();
-      } else if (responseDelete.data.status === 'NO') {
+      } else if (responseDelete.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal hapus data',
+          icon: "error",
+          title: "Gagal hapus data",
         });
       } else {
         throw new Error(responseDelete.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -285,32 +285,32 @@ const GatewayList = () => {
 
   // function untuk menambah data
   const handleSubmitAdd = async (params: any) => {
-    console.log('DATA DARI LIST', params);
+    console.log("DATA DARI LIST", params);
     try {
       const responseCreate = await apiCreateGateway(params, token);
-      if (responseCreate.data.status === 'OK') {
+      if (responseCreate.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
         setModalAddOpen(false);
         fetchData();
-      } else if (responseCreate.data.status === 'NO') {
+      } else if (responseCreate.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal membuat data',
+          icon: "error",
+          title: "Gagal membuat data",
         });
       } else {
         throw new Error(responseCreate.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -318,62 +318,62 @@ const GatewayList = () => {
 
   // function untuk mengubah data
   const handleSubmitEdit = async (params: any) => {
-    console.log(params, 'edit');
+    console.log(params, "edit");
     try {
       const responseEdit = await apiUpdateGateway(params, token);
-      if (responseEdit.data.status === 'OK') {
+      if (responseEdit.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengubah data',
+          icon: "success",
+          title: "Berhasil mengubah data",
         });
         setModalEditOpen(false);
         fetchData();
-      } else if (responseEdit.data.status === 'NO') {
+      } else if (responseEdit.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengubah data',
+          icon: "error",
+          title: "Gagal mengubah data",
         });
       } else {
         throw new Error(responseEdit.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
     }
 
-    console.log(isOperator, 'Operator');
+    console.log(isOperator, "Operator");
   }, [isOperator]);
 
   const exportToExcel = async () => {
     const dataToExcel = [
       [
-        'Nama Gateway',
-        'GMAC',
-        'status gateway',
-        'Nama Lokasi Otmil',
-        'Nama Ruangan Otmil',
-        'Zona',
+        "Nama Gateway",
+        "GMAC",
+        "status gateway",
+        "Nama Lokasi Otmil",
+        "Nama Ruangan Otmil",
+        "Zona",
       ],
       ...data.map((item: any) => [
         item.nama_gateway,
         item.gmac,
         // item.status_gateway,
-        item.status_gateway === 'tidak' ? 'tidak aktif' : item.status_gateway,
+        item.status_gateway === "tidak" ? "tidak aktif" : item.status_gateway,
         item.nama_lokasi_otmil,
         item.nama_ruangan_otmil,
         item.status_zona_ruangan_otmil,
@@ -382,20 +382,20 @@ const GatewayList = () => {
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
     xlsx.writeFile(
       wb,
-      `Data-Gateway ${dayjs(new Date()).format('DD-MM-YYYY HH.mm')}.xlsx`,
+      `Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
     );
   };
 
   useEffect(() => {
     // Menambahkan event listener untuk tombol "Enter" pada komponen ini
-    document.addEventListener('keypress', handleEnterKeyPress);
+    document.addEventListener("keypress", handleEnterKeyPress);
 
     // Membersihkan event listener ketika komponen di-unmount
     return () => {
-      document.removeEventListener('keypress', handleEnterKeyPress);
+      document.removeEventListener("keypress", handleEnterKeyPress);
     };
   }, [filter, filterStatus]); // [] menandakan bahwa useEffect hanya akan dijalankan sekali saat komponen dimuat
 
@@ -490,7 +490,7 @@ const GatewayList = () => {
         <div className="flex flex-col">
           <div
             className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${
-              isOperator ? 'grid-cols-5' : 'grid-cols-6'
+              isOperator ? "grid-cols-5" : "grid-cols-6"
             }`}
           >
             <div className="p-2.5 text-center xl:p-5">
@@ -520,7 +520,7 @@ const GatewayList = () => {
             </div>
             <div
               className={` ${
-                isOperator ? 'hidden' : 'sm:block'
+                isOperator ? "hidden" : "sm:block"
               } hidden p-2.5 text-center xl:p-5`}
             >
               <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -534,7 +534,7 @@ const GatewayList = () => {
               <div>
                 <div
                   className={`grid ${
-                    isOperator ? 'grid-cols-5' : 'grid-cols-6'
+                    isOperator ? "grid-cols-5" : "grid-cols-6"
                   } rounded-sm bg-gray-2 dark:bg-meta-4`}
                 >
                   <div
@@ -555,15 +555,15 @@ const GatewayList = () => {
                     onClick={() => handleDetailClick(item)}
                     className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
                   >
-                    {item.status_gateway === 'aktif' ? (
+                    {item.status_gateway === "aktif" ? (
                       <p className="text-green-500 dark:text-green-300">
                         Aktif
                       </p>
-                    ) : item.status_gateway === 'tidak' ? (
+                    ) : item.status_gateway === "tidak" ? (
                       <p className="text-red-500 dark:text-red-300">
                         Tidak Aktif
                       </p>
-                    ) : item.status_gateway === 'rusak' ? (
+                    ) : item.status_gateway === "rusak" ? (
                       <p className="text-yellow-500 dark:text-yellow-300">
                         Rusak
                       </p>
@@ -585,13 +585,13 @@ const GatewayList = () => {
                     onClick={() => handleDetailClick(item)}
                     className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
                   >
-                    {item.status_zona_ruangan_otmil === 'Hijau' ? (
+                    {item.status_zona_ruangan_otmil === "Hijau" ? (
                       <p className="text-green-500 dark:text-green-300">
                         Hijau
                       </p>
-                    ) : item.status_zona_ruangan_otmil === 'Merah' ? (
+                    ) : item.status_zona_ruangan_otmil === "Merah" ? (
                       <p className="text-red-500 dark:text-red-300">Merah</p>
-                    ) : item.status_zona_ruangan_otmil === 'Kuning' ? (
+                    ) : item.status_zona_ruangan_otmil === "Kuning" ? (
                       <p className="text-yellow-500 dark:text-yellow-300">
                         Kuning
                       </p>
@@ -603,7 +603,7 @@ const GatewayList = () => {
                   </div>
                   <div
                     className={`hidden items-center ${
-                      isOperator ? 'hidden' : 'block sm:flex'
+                      isOperator ? "hidden" : "block sm:flex"
                     } justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}
                   >
                     <div className="relative">

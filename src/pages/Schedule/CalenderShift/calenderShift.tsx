@@ -230,7 +230,7 @@ const shiftJaga = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -583,7 +583,7 @@ const shiftJaga = () => {
       fetchData();
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -620,7 +620,7 @@ const shiftJaga = () => {
   //     fetchData();
   //   } catch (e: any) {
   //     if (e.response.status === 403) {
-  //       navigate('/auth/signin', {
+  //       navigate('/', {
   //         state: { forceLogout: true, lastPage: location.pathname },
   //       });
   //     }
@@ -646,7 +646,7 @@ const shiftJaga = () => {
       fetchData();
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -680,7 +680,7 @@ const shiftJaga = () => {
   //     }
   //   } catch (e: any) {
   //     if (e.response.status === 403) {
-  //       navigate('/auth/signin', {
+  //       navigate('/', {
   //         state: { forceLogout: true, lastPage: location.pathname },
   //       });
   //     }
@@ -709,7 +709,7 @@ const shiftJaga = () => {
       }
     } catch (e) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -735,7 +735,7 @@ const shiftJaga = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -773,7 +773,7 @@ const shiftJaga = () => {
       fetchData();
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -823,7 +823,7 @@ const shiftJaga = () => {
       fetchData();
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -1104,7 +1104,8 @@ const shiftJaga = () => {
             <>
               <button
                 className="bg-blue-500 text-white px-2 rounded-sm text-sm py-1 b-jadwal"
-                onClick={() => setModalAddScheduleOpen(true)}>
+                onClick={() => setModalAddScheduleOpen(true)}
+              >
                 Buat Jadwal
               </button>
               <button
@@ -1112,7 +1113,8 @@ const shiftJaga = () => {
                 className={`${
                   hapusPetugasShift ? "block" : "hidden"
                 } bg-blue-500 text-white p-1 rounded-sm space-x-2 text-sm flex items-center`}
-                id="b-ubah">
+                id="b-ubah"
+              >
                 Ubah Jadwal
               </button>
               <button
@@ -1120,14 +1122,16 @@ const shiftJaga = () => {
                 className={`${
                   !hapusPetugasShift ? "block" : "hidden"
                 } bg-red-500 text-white p-1 rounded-sm space-x-2 text-sm flex items-center`}
-                id="b-hapus">
+                id="b-hapus"
+              >
                 Hapus Jadwal
               </button>
             </>
           )}
           <button
             className="bg-blue-500 text-white px-2 rounded-sm text-sm py-1 b-excel"
-            onClick={() => exportToExcel()}>
+            onClick={() => exportToExcel()}
+          >
             Export Excel
           </button>
         </div>
@@ -1138,13 +1142,15 @@ const shiftJaga = () => {
             <h2
               className={`${
                 !openGrup ? "" : "hidden"
-              } pl-3 flex items-center h-full`}>
+              } pl-3 flex items-center h-full`}
+            >
               Nama Grup
             </h2>
             <h2
               className={`${
                 openGrup ? "" : "hidden"
-              } pl-3 flex items-center h-full`}>
+              } pl-3 flex items-center h-full`}
+            >
               Nama Pegawai
             </h2>
           </div>
@@ -1157,7 +1163,8 @@ const shiftJaga = () => {
                 return (
                   <div
                     key={index}
-                    className={`w-full xl:flex items-center justify-center ${backgroundColor}`}>
+                    className={`w-full xl:flex items-center justify-center ${backgroundColor}`}
+                  >
                     <h3 className={`flex justify-center font-bold text-2xl`}>
                       {item}
                     </h3>
@@ -1181,18 +1188,21 @@ const shiftJaga = () => {
               className="animate-spin h-20 w-20 text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 24 24">
+              viewBox="0 0 24 24"
+            >
               <circle
                 className="opacity-25"
                 cx="12"
                 cy="12"
                 r="10"
                 stroke="currentColor"
-                strokeWidth="4"></circle>
+                strokeWidth="4"
+              ></circle>
               <path
                 className="opacity-75"
                 fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
           </div>
         ) : (
@@ -1337,7 +1347,8 @@ const shiftJaga = () => {
                                       handleOpenModalDelete(dataEdit)
                                     }
                                     key={index}
-                                    className={`${shiftBackgroundColor} w-full flex justify-center items-center h-16`}>
+                                    className={`${shiftBackgroundColor} w-full flex justify-center items-center h-16`}
+                                  >
                                     <BsTrash className="w-5 text-black h-5" />
                                   </button>
                                 ) : (
@@ -1346,15 +1357,18 @@ const shiftJaga = () => {
                                     className={`w-full flex justify-center ${shiftBackgroundColor} h-16`}
                                     onClick={() =>
                                       handleOpenDetailModal(dataEdit)
-                                    }>
+                                    }
+                                  >
                                     <div className="text-black">
                                       <div
-                                        className={`h-2 w-full ${shiftBgList}`}></div>
+                                        className={`h-2 w-full ${shiftBgList}`}
+                                      ></div>
                                       <h3 className="sm:hidden xl:block text-sm font-semibold ml-1">
                                         {jam}
                                       </h3>
                                       <h3
-                                        className={`flex items-center font-bold text-sm ml-1`}>
+                                        className={`flex items-center font-bold text-sm ml-1`}
+                                      >
                                         {jadwalPegawai.nama_shift}
                                       </h3>
                                     </div>
@@ -1364,7 +1378,8 @@ const shiftJaga = () => {
                             ) : (
                               <div
                                 key={index}
-                                className={`w-full flex justify-center items-center ${backgroundColor} hover:${backgroundColorHover} h-16`}>
+                                className={`w-full flex justify-center items-center ${backgroundColor} hover:${backgroundColorHover} h-16`}
+                              >
                                 {scheduleShift ? (
                                   <>
                                     <button
@@ -1373,7 +1388,8 @@ const shiftJaga = () => {
                                       }
                                       className={`${
                                         hapusPetugasShift ? "block" : "hidden"
-                                      } text-white h-5 w-5 hover:${backgroundColorHover} rounded flex items-center justify-center`}>
+                                      } text-white h-5 w-5 hover:${backgroundColorHover} rounded flex items-center justify-center`}
+                                    >
                                       <BsTrash className="w-full h-full" />
                                     </button>
                                     <button
@@ -1382,7 +1398,8 @@ const shiftJaga = () => {
                                       }
                                       className={`${
                                         !hapusPetugasShift ? "block" : "hidden"
-                                      } text-white max-w-xs h-full w-auto  rounded flex flex-col items-center justify-center pt-2`}>
+                                      } text-white max-w-xs h-full w-auto  rounded flex flex-col items-center justify-center pt-2`}
+                                    >
                                       <BsPlusSquareDotted className="h-[40%] w-[40%] mb-2" />
                                       <span className="text-xs">
                                         Tambah Shift
@@ -1798,15 +1815,18 @@ const shiftJaga = () => {
                                 className={`w-full flex justify-center ${shiftBackgroundColor} h-16 `}
                                 onClick={() =>
                                   handleopenPegawaiShift(jadwalPegawai)
-                                }>
+                                }
+                              >
                                 <div className="text-black">
                                   <div
-                                    className={`h-2 w-full ${shiftBgList}`}></div>
+                                    className={`h-2 w-full ${shiftBgList}`}
+                                  ></div>
                                   <h3 className="sm:hidden xl:block text-sm font-semibold ml-1">
                                     {jam}
                                   </h3>
                                   <h3
-                                    className={`flex items-center font-bold text-sm ml-1`}>
+                                    className={`flex items-center font-bold text-sm ml-1`}
+                                  >
                                     {jadwalPegawai.nama_shift}
                                   </h3>
                                   <div className="w-full flex justify-center">
@@ -1823,7 +1843,8 @@ const shiftJaga = () => {
                             ) : (
                               <div
                                 key={index}
-                                className={`w-full flex justify-center items-center ${backgroundColor} h-16`}>
+                                className={`w-full flex justify-center items-center ${backgroundColor} h-16`}
+                              >
                                 {scheduleShift ? (
                                   <>
                                     <h1 className="text-gray-200	">

@@ -60,7 +60,7 @@ export const AddPenyidikan = ({
   const [pageSize, setPageSize] = useState(10);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [data, setData] = useState([]);
-  const [nomor, setNomor] = useState("")
+  const [nomor, setNomor] = useState("");
 
   const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
@@ -178,7 +178,7 @@ export const AddPenyidikan = ({
       handleErrorResponse(e);
       // setIsLoading(false);
       // if (e.response.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -193,7 +193,7 @@ export const AddPenyidikan = ({
     setIsLoading(false);
     const errorMessage =
       error.response.status === 403 ? Error403Message : error.message;
-    navigate("/auth/signin", {
+    navigate("/", {
       state: {
         forceLogout: error.response.status === 403,
         lastPage: location.pathname,
@@ -245,7 +245,7 @@ export const AddPenyidikan = ({
         key !== "nrp_wbp" &&
         key !== "no_kasus" &&
         key !== "nomor_kasus" &&
-        key !== "saksi_id" && 
+        key !== "saksi_id" &&
         key !== "nomor_penyidikan"
       ) {
         if (!value) {
@@ -442,7 +442,7 @@ export const AddPenyidikan = ({
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -636,28 +636,28 @@ export const AddPenyidikan = ({
     // setModalAddOpen(true);
   };
 
-  const generateNomorPenyidikan = async() => {
+  const generateNomorPenyidikan = async () => {
     function convertToRoman(num: number) {
       const romanNumerals = [
-        'M',
-        'CM',
-        'D',
-        'CD',
-        'C',
-        'XC',
-        'L',
-        'XL',
-        'X',
-        'IX',
-        'V',
-        'IV',
-        'I',
+        "M",
+        "CM",
+        "D",
+        "CD",
+        "C",
+        "XC",
+        "L",
+        "XL",
+        "X",
+        "IX",
+        "V",
+        "IV",
+        "I",
       ];
       const decimalValues = [
         1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,
       ];
 
-      let result = '';
+      let result = "";
 
       for (let i = 0; i < romanNumerals.length; i++) {
         while (num >= decimalValues[i]) {
@@ -668,19 +668,19 @@ export const AddPenyidikan = ({
 
       return result;
     }
-    const type = 'Sp.Sidik';
-    const day = dayjs(new Date()).format('DD');
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const type = "Sp.Sidik";
+    const day = dayjs(new Date()).format("DD");
+    const month = (new Date().getMonth() + 1).toString().padStart(2, "0");
     const year = new Date().getFullYear().toString();
-    const lokasi = 'Otmil';
+    const lokasi = "Otmil";
     const romanNumber = convertToRoman(parseInt(month));
     const currentDate = `${day}-${romanNumber}/${year}`;
     let angkaTerbesar = 0;
     const penyidikan = await apiReadPenyidikan({}, token);
-     const resultPenyidikan = penyidikan.data.records;
-     resultPenyidikan.forEach((item: any) => {
+    const resultPenyidikan = penyidikan.data.records;
+    resultPenyidikan.forEach((item: any) => {
       if (item.nomor_penyidikan) {
-        const nomorPenyidikan = item.nomor_penyidikan.split('/')[0]; // Get the first part of the case number
+        const nomorPenyidikan = item.nomor_penyidikan.split("/")[0]; // Get the first part of the case number
         const angka = parseInt(nomorPenyidikan, 10);
 
         if (!isNaN(angka) && item.nomor_penyidikan.includes(currentDate)) {
@@ -696,13 +696,10 @@ export const AddPenyidikan = ({
     } else {
       angkaTerbesar += 1;
     }
-    const output =`${angkaTerbesar}/${type}/${currentDate}/${lokasi}`
-    console.log(output, "outputnya")
-    setNomor(output)
-    
-   
+    const output = `${angkaTerbesar}/${type}/${currentDate}/${lokasi}`;
+    console.log(output, "outputnya");
+    setNomor(output);
   };
-
 
   return (
     <div className="bg-slate-600 w-full h-full flex flex-col gap-10 p-8 rounded-lg">
@@ -724,9 +721,7 @@ export const AddPenyidikan = ({
             />
             <p className="error-text">
               {errors?.map((item) =>
-                item === 'nomor_penyidikan'
-                    ? 'Masukan Nomor Penyidikan'
-                      : '',
+                item === "nomor_penyidikan" ? "Masukan Nomor Penyidikan" : ""
               )}
             </p>
           </div>

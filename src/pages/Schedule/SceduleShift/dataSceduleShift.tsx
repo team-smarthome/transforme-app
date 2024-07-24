@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import AddDataShiftKerja from './addDataShiftKerja';
+import { useEffect, useState } from "react";
+import AddDataShiftKerja from "./addDataShiftKerja";
 import {
   apiCreateShift,
   apiDeleteShift,
   apiEditShift,
   apiReadAllShift,
-} from '../../../services/api';
-import { Alerts } from './Alert';
-import Loader from '../../../common/Loader';
-import { DeleteShiftModal } from './deleteDataShift';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+} from "../../../services/api";
+import { Alerts } from "./Alert";
+import Loader from "../../../common/Loader";
+import { DeleteShiftModal } from "./deleteDataShift";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
   nama_shift: any;
@@ -26,10 +26,10 @@ const DataSceduleShift = () => {
 
   const [dataShift, setDataShift] = useState([
     {
-      nama_shift: '',
-      shift_id: '',
-      waktu_mulai: '',
-      waktu_selesai: '',
+      nama_shift: "",
+      shift_id: "",
+      waktu_mulai: "",
+      waktu_selesai: "",
     },
   ]);
 
@@ -42,21 +42,21 @@ const DataSceduleShift = () => {
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
     }
 
-    console.log(isOperator, 'Operator');
+    console.log(isOperator, "Operator");
   }, [isOperator]);
 
   const [deleteData, setDeleteData] = useState({
-    shift_id: '',
+    shift_id: "",
   });
 
   const handleEditClick = (item: Item) => {
@@ -70,7 +70,7 @@ const DataSceduleShift = () => {
   };
 
   //get Token
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
@@ -81,27 +81,27 @@ const DataSceduleShift = () => {
   const fetchData = async () => {
     setIsLoading(true);
     const params = {
-      shift_id: '',
-      nama_shift: '',
-      waktu_mulai: '',
-      waktu_selesai: '',
+      shift_id: "",
+      nama_shift: "",
+      waktu_mulai: "",
+      waktu_selesai: "",
     };
     try {
       const response = await apiReadAllShift(params, token);
       setDataShift(response.data.records);
-      console.log(response, 'response shift');
-      if (response.data.status !== 'OK') {
+      console.log(response, "response shift");
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -110,28 +110,28 @@ const DataSceduleShift = () => {
   const handleAddShift = async (params: any) => {
     try {
       const AddData = await apiCreateShift(params, token);
-      if (AddData.data.status === 'OK') {
+      if (AddData.data.status === "OK") {
         handleCloseAddModal();
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
         fetchData();
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal menambah data',
+          icon: "error",
+          title: "Gagal menambah data",
         });
       }
     } catch (e: any) {
-      console.error('Error adding shift data:', e);
+      console.error("Error adding shift data:", e);
       if (e.data.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -140,23 +140,23 @@ const DataSceduleShift = () => {
   const handleEditShift = async (params: any) => {
     try {
       const EditShift = await apiEditShift(params, token);
-      if (EditShift.data.status === 'OK') {
+      if (EditShift.data.status === "OK") {
         handleCloseAddModal();
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengubah data',
+          icon: "success",
+          title: "Berhasil mengubah data",
         });
         fetchData();
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengubah data',
+          icon: "error",
+          title: "Gagal mengubah data",
         });
       }
     } catch (e: any) {
       console.log(e);
       // if (e.data.status === 403) {
-      //   navigate('/auth/signin', {
+      //   navigate('/', {
       //     state: { forceLogout: true, lastPage: location.pathname },
       //   });
       // }
@@ -175,7 +175,7 @@ const DataSceduleShift = () => {
 
   //delete
   const handleDeleteClick = (item: any) => {
-    console.log(item, 'del');
+    console.log(item, "del");
     setDeleteData({ shift_id: item });
     setModalDeleteOpen(true);
   };
@@ -188,28 +188,28 @@ const DataSceduleShift = () => {
     try {
       const data = {};
       const AddData = await apiDeleteShift(params, token);
-      if (AddData.data.status === 'OK') {
+      if (AddData.data.status === "OK") {
         handleCloseDeleteModal();
         const response = await apiReadAllShift(data, token);
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
         setDataShift(response.data.records);
       } else {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal menghapus data',
+          icon: "error",
+          title: "Gagal menghapus data",
         });
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     } finally {

@@ -214,7 +214,7 @@ const Tahanan = ({ defaultValue }: any) => {
         setPagenationIsolate(pagenationIsolate.totalPages);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -229,7 +229,7 @@ const Tahanan = ({ defaultValue }: any) => {
     } else {
       localStorage.removeItem("dataUser");
       localStorage.removeItem("token");
-      navigate("/auth/signin");
+      navigate("/");
     }
   }, [currentPage, currentPageSick]);
 

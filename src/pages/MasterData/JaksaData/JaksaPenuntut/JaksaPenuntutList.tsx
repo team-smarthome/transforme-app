@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import Loader from '../../../../common/Loader';
-import { Alerts } from './AlertJaksaPenuntut';
+import React, { useEffect, useState } from "react";
+import Loader from "../../../../common/Loader";
+import { Alerts } from "./AlertJaksaPenuntut";
 import {
   apiReadOditurPenuntut,
   apiDeleteOditurPenuntut,
   apiCreateOditurPenuntut,
   apiUpdateOditurPenuntut,
-} from '../../../../services/api';
-import { AddJaksaPenuntutModal } from './ModalAddJaksaPenuntut';
-import { DeleteJaksaPenuntut } from './ModalDeleteJaksaPenuntut';
-import Pagination from '../../../../components/Pagination';
-import * as xlsx from 'xlsx';
-import SearchInputButton from '../../Search';
-import DropdownAction from '../../../../components/DropdownAction';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../../utils/constants';
-import { Breadcrumbs } from '../../../../components/Breadcrumbs';
+} from "../../../../services/api";
+import { AddJaksaPenuntutModal } from "./ModalAddJaksaPenuntut";
+import { DeleteJaksaPenuntut } from "./ModalDeleteJaksaPenuntut";
+import Pagination from "../../../../components/Pagination";
+import * as xlsx from "xlsx";
+import SearchInputButton from "../../Search";
+import DropdownAction from "../../../../components/DropdownAction";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../../utils/constants";
+import { Breadcrumbs } from "../../../../components/Breadcrumbs";
 
 // Interface untuk objek 'params' dan 'item'
 interface Params {
@@ -45,21 +45,21 @@ const JaksaPenuntutList = () => {
   const [modalAddOpen, setModalAddOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [rows, setRows] = useState(1);
-  const [filterJabatan, setFilterJabatan] = useState('');
-  const [filterPangkat, setFilterPangkat] = useState('');
+  const [filterJabatan, setFilterJabatan] = useState("");
+  const [filterPangkat, setFilterPangkat] = useState("");
   const [pangkatData, setPangkatData] = useState([]);
   const [pageSize, setPageSize] = useState(10);
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   // const navigate = useNavigate();
@@ -78,31 +78,31 @@ const JaksaPenuntutList = () => {
       showProgress: true,
       steps: [
         {
-          element: '.search',
+          element: ".search",
           popover: {
-            title: 'Search',
-            description: 'Mencari oditur penuntut',
+            title: "Search",
+            description: "Mencari oditur penuntut",
           },
         },
         {
-          element: '.b-search',
+          element: ".b-search",
           popover: {
-            title: 'Button Search',
-            description: 'Klik untuk mencari oditur penuntut',
+            title: "Button Search",
+            description: "Klik untuk mencari oditur penuntut",
           },
         },
         {
-          element: '.excel',
+          element: ".excel",
           popover: {
-            title: 'Excel',
-            description: 'Mendapatkan file excel',
+            title: "Excel",
+            description: "Mendapatkan file excel",
           },
         },
         {
-          element: '.b-tambah',
+          element: ".b-tambah",
           popover: {
-            title: 'Tambah',
-            description: 'Menambahkan data oditur penuntut',
+            title: "Tambah",
+            description: "Menambahkan data oditur penuntut",
           },
         },
       ],
@@ -153,29 +153,29 @@ const JaksaPenuntutList = () => {
       };
       const response = await apiReadOditurPenuntut(params, token);
 
-      if (response.data.status === 'OK') {
+      if (response.data.status === "OK") {
         const result = response.data;
         setData(result.records);
         setPages(response.data.pagination.totalPages);
         setRows(response.data.pagination.totalRecords);
       } else {
-        throw new Error('Terjadi kesalahan saat mencari data.');
+        throw new Error("Terjadi kesalahan saat mencari data.");
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   const handleEnterKeyPress = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearchClick();
     }
   };
@@ -196,17 +196,17 @@ const JaksaPenuntutList = () => {
 
   useEffect(() => {
     // Menambahkan event listener untuk tombol "Enter" pada komponen ini
-    document.addEventListener('keypress', handleEnterKeyPress);
+    document.addEventListener("keypress", handleEnterKeyPress);
 
     // Membersihkan event listener ketika komponen di-unmount
     return () => {
-      document.removeEventListener('keypress', handleEnterKeyPress);
+      document.removeEventListener("keypress", handleEnterKeyPress);
     };
   }, [filter, filterJabatan, filterPangkat]); // [] menandakan bahwa useEffect hanya akan dijalankan sekali saat komponen dimuat
 
   const fetchData = async () => {
     let param = {
-      filter: ' ',
+      filter: " ",
       page: currentPage,
       pageSize: pageSize,
     };
@@ -214,7 +214,7 @@ const JaksaPenuntutList = () => {
     setIsLoading(true);
     try {
       const response = await apiReadOditurPenuntut(param, token);
-      if (response.data.status !== 'OK') {
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       const result = response.data.records;
@@ -224,12 +224,12 @@ const JaksaPenuntutList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -237,14 +237,14 @@ const JaksaPenuntutList = () => {
 
   // function untuk menampilkan modal detail
   const handleDetailClick = (item: Item) => {
-    console.log('detail', item);
+    console.log("detail", item);
     setDetailData(item);
     setModalDetailOpen(true);
   };
 
   // function untuk menampilkan modal edit
   const handleEditClick = (item: Item) => {
-    console.log('edit', item);
+    console.log("edit", item);
     setEditData(item);
     setModalEditOpen(true);
   };
@@ -273,29 +273,29 @@ const JaksaPenuntutList = () => {
   const handleSubmitDeleteOditurPenuntut = async (params: any) => {
     try {
       const responseDelete = await apiDeleteOditurPenuntut(params, token);
-      if (responseDelete.data.status === 'OK') {
+      if (responseDelete.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
         setModalDeleteOpen(false);
         fetchData();
-      } else if (responseDelete.data.status === 'NO') {
+      } else if (responseDelete.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal hapus data',
+          icon: "error",
+          title: "Gagal hapus data",
         });
       } else {
         throw new Error(responseDelete.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -303,32 +303,32 @@ const JaksaPenuntutList = () => {
 
   // function untuk menambah data
   const handleSubmitAddDataPetugas = async (params: any) => {
-    console.log('DATA DARI LIST', params);
+    console.log("DATA DARI LIST", params);
     try {
       const responseCreate = await apiCreateOditurPenuntut(params, token);
-      if (responseCreate.data.status === 'OK') {
+      if (responseCreate.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
         setModalAddOpen(false);
         fetchData();
-      } else if (responseCreate.data.status === 'NO') {
+      } else if (responseCreate.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal membuat data',
+          icon: "error",
+          title: "Gagal membuat data",
         });
       } else {
         throw new Error(responseCreate.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -336,57 +336,57 @@ const JaksaPenuntutList = () => {
 
   // function untuk mengubah data
   const handleSubmitEditDataPetugas = async (params: any) => {
-    console.log(params, 'edit');
+    console.log(params, "edit");
     try {
       const responseEdit = await apiUpdateOditurPenuntut(params, token);
-      if (responseEdit.data.status === 'OK') {
+      if (responseEdit.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengubah data',
+          icon: "success",
+          title: "Berhasil mengubah data",
         });
         setModalEditOpen(false);
         fetchData();
-      } else if (responseEdit.data.status === 'NO') {
+      } else if (responseEdit.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengubah data',
+          icon: "error",
+          title: "Gagal mengubah data",
         });
       } else {
         throw new Error(responseEdit.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
     }
 
-    console.log(isOperator, 'Operator');
+    console.log(isOperator, "Operator");
   }, [isOperator]);
 
   const exportToExcel = () => {
     const dataToExcel = [
-      ['Nama Oditur', 'NIP', 'Alamat'],
+      ["Nama Oditur", "NIP", "Alamat"],
       ...data.map((item: any) => [item.nama_oditur, item.nip, item.alamat]),
     ];
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-    xlsx.writeFile(wb, 'data_oditur_Penuntut.xlsx');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
+    xlsx.writeFile(wb, "data_oditur_Penuntut.xlsx");
   };
 
   return isLoading ? (

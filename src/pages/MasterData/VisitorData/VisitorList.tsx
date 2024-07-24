@@ -1,28 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   apiCreateVisitor,
   apiReadVisitor,
   apiUpdateVisitor,
   apiDeletePengunjung,
   apiDeleteVisitor,
-} from '../../../services/api';
-import { AddVisitorModal } from './ModalAddVisitor';
-import { Alerts } from './AlertVisitor';
-import Loader from '../../../common/Loader';
-import { DeleteVisitorModal } from './ModalDeleteVisitor';
-import SearchInputButton from '../Search';
-import Pagination from '../../../components/Pagination';
-import * as xlsx from 'xlsx';
-import ToolsTip from '../../../components/ToolsTip';
-import { HiOutlineTrash, HiPencilAlt } from 'react-icons/hi';
-import DropdownAction from '../../../components/DropdownAction';
-import dayjs from 'dayjs';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+} from "../../../services/api";
+import { AddVisitorModal } from "./ModalAddVisitor";
+import { Alerts } from "./AlertVisitor";
+import Loader from "../../../common/Loader";
+import { DeleteVisitorModal } from "./ModalDeleteVisitor";
+import SearchInputButton from "../Search";
+import Pagination from "../../../components/Pagination";
+import * as xlsx from "xlsx";
+import ToolsTip from "../../../components/ToolsTip";
+import { HiOutlineTrash, HiPencilAlt } from "react-icons/hi";
+import DropdownAction from "../../../components/DropdownAction";
+import dayjs from "dayjs";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
   nama: string;
@@ -43,7 +43,7 @@ const VisitorList = () => {
   const [modalAddOpen, setModalAddOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [rows, setRows] = useState(0);
@@ -52,11 +52,11 @@ const VisitorList = () => {
 
   const [isOperator, setIsOperator] = useState<boolean>();
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
-  const dataUserItem = localStorage.getItem('dataUser');
+  const dataUserItem = localStorage.getItem("dataUser");
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   const handleFilterChange = async (e: any) => {
@@ -83,31 +83,31 @@ const VisitorList = () => {
       showProgress: true,
       steps: [
         {
-          element: '.search',
+          element: ".search",
           popover: {
-            title: 'Search',
-            description: 'Mencari nama pengunjung',
+            title: "Search",
+            description: "Mencari nama pengunjung",
           },
         },
         {
-          element: '.b-search',
+          element: ".b-search",
           popover: {
-            title: 'Button Search',
-            description: 'Click button untuk mencari nama pengunjung',
+            title: "Button Search",
+            description: "Click button untuk mencari nama pengunjung",
           },
         },
         {
-          element: '.excel',
+          element: ".excel",
           popover: {
-            title: 'Excel',
-            description: 'Mendapatkan file excel',
+            title: "Excel",
+            description: "Mendapatkan file excel",
           },
         },
         {
-          element: '.b-tambah',
+          element: ".b-tambah",
           popover: {
-            title: 'Tambah',
-            description: 'Menambahkan data pengunjung',
+            title: "Tambah",
+            description: "Menambahkan data pengunjung",
           },
         },
       ],
@@ -123,7 +123,7 @@ const VisitorList = () => {
   const handleSearchClick = async () => {
     let params = {
       // filter: {
-        nama: filter,
+      nama: filter,
       // },
       page: currentPage,
       pageSize: pageSize,
@@ -136,25 +136,25 @@ const VisitorList = () => {
         setPages(response.data.pagination.totalPages);
         setRows(response.data.pagination.totalRecords);
       } else {
-        throw new Error('Terjadi kesalahan saat mencari data.');
+        throw new Error("Terjadi kesalahan saat mencari data.");
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   const handleEnterKeyPress = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearchClick();
-      console.log('ENTER DIPNCET');
+      console.log("ENTER DIPNCET");
     }
   };
 
@@ -166,11 +166,11 @@ const VisitorList = () => {
 
   useEffect(() => {
     // Menambahkan event listener untuk tombol "Enter" pada komponen ini
-    document.addEventListener('keypress', handleEnterKeyPress);
+    document.addEventListener("keypress", handleEnterKeyPress);
 
     // Membersihkan event listener ketika komponen di-unmount
     return () => {
-      document.removeEventListener('keypress', handleEnterKeyPress);
+      document.removeEventListener("keypress", handleEnterKeyPress);
     };
   }, [filter]); // [] menandakan bahwa useEffect hanya akan dijalankan sekali saat komponen dimuat
 
@@ -181,14 +181,14 @@ const VisitorList = () => {
 
   const fetchData = async () => {
     let param = {
-      filter: ' ',
+      filter: " ",
       page: currentPage,
       pageSize: pageSize,
     };
     setIsLoading(true);
     try {
       const response = await apiReadVisitor(param, token);
-      if (response.data.status !== 'OK') {
+      if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
       const result = response.data.records;
@@ -198,12 +198,12 @@ const VisitorList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -245,29 +245,29 @@ const VisitorList = () => {
   const handleSubmitDeleteUser = async (params: any) => {
     try {
       const responseDelete = await apiDeletePengunjung(params, token);
-      if (responseDelete.data.status === 'OK') {
+      if (responseDelete.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menghapus data',
+          icon: "success",
+          title: "Berhasil menghapus data",
         });
         setModalDeleteOpen(false);
         fetchData();
-      } else if (responseDelete.data.status === 'NO') {
+      } else if (responseDelete.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal hapus data',
+          icon: "error",
+          title: "Gagal hapus data",
         });
       } else {
         throw new Error(responseDelete.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -275,32 +275,32 @@ const VisitorList = () => {
 
   // function untuk menambah data
   const handleSubmitAddUser = async (params: any) => {
-    console.log('DATA DARI LIST', params);
+    console.log("DATA DARI LIST", params);
     try {
       const responseCreate = await apiCreateVisitor(params, token);
-      if (responseCreate.data.status === 'OK') {
+      if (responseCreate.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil menambah data',
+          icon: "success",
+          title: "Berhasil menambah data",
         });
         setModalAddOpen(false);
         fetchData();
-      } else if (responseCreate.data.status === 'NO') {
+      } else if (responseCreate.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal membuat data',
+          icon: "error",
+          title: "Gagal membuat data",
         });
       } else {
         throw new Error(responseCreate.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -308,67 +308,67 @@ const VisitorList = () => {
 
   // function untuk mengubah data
   const handleSubmitEditUser = async (params: any) => {
-    console.log(params, 'edit');
+    console.log(params, "edit");
     try {
       const responseEdit = await apiUpdateVisitor(params, token);
-      if (responseEdit.data.status === 'OK') {
+      if (responseEdit.data.status === "OK") {
         Alerts.fire({
-          icon: 'success',
-          title: 'Berhasil mengubah data',
+          icon: "success",
+          title: "Berhasil mengubah data",
         });
         setModalEditOpen(false);
         fetchData();
-      } else if (responseEdit.data.status === 'NO') {
+      } else if (responseEdit.data.status === "NO") {
         Alerts.fire({
-          icon: 'error',
-          title: 'Gagal mengubah data',
+          icon: "error",
+          title: "Gagal mengubah data",
         });
       } else {
         throw new Error(responseEdit.data.message);
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
   };
 
   useEffect(() => {
-    if (dataAdmin?.role_name === 'operator') {
+    if (dataAdmin?.role_name === "operator") {
       setIsOperator(true);
     } else {
       setIsOperator(false);
     }
 
-    console.log(isOperator, 'Operator');
+    console.log(isOperator, "Operator");
   }, [isOperator]);
 
   const exportToExcel = () => {
     const dataToExcel = [
       [
-        'Nama',
-        'NIK',
-        'tempat lahir',
-        'tanggal lahir',
-        'jenis kelamin',
-        'provinsi',
-        'kota',
-        'alamat',
-        'wbp yg di kunjungi',
-        'hubungan wbp',
+        "Nama",
+        "NIK",
+        "tempat lahir",
+        "tanggal lahir",
+        "jenis kelamin",
+        "provinsi",
+        "kota",
+        "alamat",
+        "wbp yg di kunjungi",
+        "hubungan wbp",
       ],
       ...data.map((item: any) => [
         item.nama,
         item.nik,
         item.tempat_lahir,
         item.tanggal_lahir,
-        item.jenis_kelamin === '1' ? 'Laki-laki' : 'Perempuan',
+        item.jenis_kelamin === "1" ? "Laki-laki" : "Perempuan",
         item.nama_provinsi,
         item.nama_kota,
         item.alamat,
@@ -379,10 +379,10 @@ const VisitorList = () => {
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
     xlsx.writeFile(
       wb,
-      `Data-Pengunjung ${dayjs(new Date()).format('DD-MM-YYYY HH.mm')}.xlsx`,
+      `Data-Pengunjung ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
     );
   };
 
@@ -550,8 +550,8 @@ const VisitorList = () => {
                         >
                           <p className="text-meta-3">
                             {parseInt(item.jenis_kelamin) === 0
-                              ? 'Laki-laki'
-                              : 'Perempuan'}
+                              ? "Laki-laki"
+                              : "Perempuan"}
                           </p>
                         </div>
 
@@ -599,8 +599,8 @@ const VisitorList = () => {
                         >
                           <p className="text-meta-3">
                             {parseInt(item.jenis_kelamin) === 0
-                              ? 'Laki-laki'
-                              : 'Perempuan'}
+                              ? "Laki-laki"
+                              : "Perempuan"}
                           </p>
                         </div>
 
