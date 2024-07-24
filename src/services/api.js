@@ -433,12 +433,12 @@ export async function apiVisitorWNAList(params) {
 			filters: {
 				must: params.name
 					? [
-							{
-								match: {
-									name: params.name,
-								},
+						{
+							match: {
+								name: params.name,
 							},
-					  ]
+						},
+					]
 					: [],
 				must_not: [
 					{

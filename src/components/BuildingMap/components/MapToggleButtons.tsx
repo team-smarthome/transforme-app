@@ -392,7 +392,7 @@ const MapToggleButtons = ({
             />
           </button>
           {isToggleWithDescription && (
-            <span className="text-white text-xs">Staff</span>
+            <span className="text-white text-xs">Pegawai</span>
           )}
           {hoveredButton === "Petugas" && petugasVisible && (
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-50">
@@ -403,7 +403,7 @@ const MapToggleButtons = ({
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Cari Staff</h5>
+                <h5 className="text-white text-sm">Cari Pegawai</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
@@ -412,7 +412,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Staff</h5>
+                <h5 className="text-white text-sm">Tambah Pegawai</h5>
               </div>
             </div>
           )}
