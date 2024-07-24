@@ -222,7 +222,7 @@ const coreRoutes = [
     component: LocationList,
   },
   {
-    path: "/dashboard/manajemen-pengguna",
+    path: "/dashboard/pengaturan-list/manajemen-pengguna",
     title: "UserList",
     component: UserList,
   },
@@ -255,7 +255,7 @@ const coreRoutes = [
     component: DatabaseSearch,
   },
   {
-    path: "/dashboard/peta",
+    path: "/peta",
     title: "Map",
     component: Map,
   },
@@ -443,7 +443,8 @@ const coreRoutes = [
     component: CameraDetail,
   },
   {
-    path: "/workstation/kamera-live",
+    // path: "/workstation/kamera-live",
+    path: "/dashboard/kamera-live",
     title: "CameraList",
     component: CameraList,
   },
@@ -491,7 +492,7 @@ const coreRoutes = [
     component: LiveChatList,
   },
   {
-    path: "/workstation/pengaturan-list",
+    path: "/dashboard/pengaturan-list",
     title: "setting",
     component: SettingList,
   },
@@ -526,19 +527,22 @@ const coreRoutes = [
     component: DeviceList,
   },
   {
-    path: "/workstation/pengaturan-list/perangkat/gateway",
+    // path: "/workstation/pengaturan-list/perangkat/gateway",
+    path: "/dashboard/pengaturan-list/perangkat/gateway",
     // path: '/device-gateway-list',
     title: "DeviceGatewayListWK",
     component: DeviceGatewayListWK,
   },
   {
-    path: "/workstation/pengaturan-list/perangkat/kamera",
+    // path: "/workstation/pengaturan-list/perangkat/kamera",
+    path: "/dashboard/pengaturan-list/perangkat/kamera",
     // path: '/device-camera-list',
     title: "DeviceCameraList",
     component: DeviceKameraList,
   },
   {
-    path: "/workstation/pengaturan-list/perangkat/gelang",
+    // path: "/workstation/pengaturan-list/perangkat/gelang",
+    path: "/dashboard/pengaturan-list/perangkat/gelang",
     // path: '/device-bracelet-list',
     title: "DeviceBraceletListWK",
     component: DeviceBraceletListWK,

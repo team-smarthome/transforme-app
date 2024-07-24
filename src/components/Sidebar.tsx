@@ -3,7 +3,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { selectedRoute } from "../utils/atomstates";
-import toast from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
+import { apiversion } from "../services/api";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -24,9 +25,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
-  const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
-  );
+  const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === "true");
 
   const handleNavLinkClick = () => {
     // Menutup sidebar saat NavLink diklik
@@ -60,15 +59,72 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   //     document.removeEventListener('mousedown', handleOutsideClick);
   //   };
   // }, [sidebarOpen]);
+  const handleClickVersion = async (e: any) => {
+    e.preventDefault();
+    try {
+      // Call the apiversion function to get the response
+      const response = await apiversion({
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      let versionName: any;
+      const version = response.data.records.map((a) => {
+        versionName = a.version_name;
+        return versionName;
+      });
+
+      // Update toast content with fetched data
+      toast(`This app version is ${version}.`, {
+        duration: 5000,
+      });
+
+      console.log(versionName, "versi");
+      if (versionName === version) {
+        toast.success(`This app version is up-to-date (Version ${version})`, {
+          duration: 5000,
+        });
+      } else {
+        toast((t) => (
+          <span
+            style={{
+              ...t.style,
+              animation: t.visible ? "custom-enter 1s ease" : "custom-exit 1s ease",
+            }}
+          >
+            There is an update from version {version} to version {versionName}{" "}
+            <a href={response.data.records.link} target="_blank" rel="noreferrer" className="text-blue-500 bold">
+              Download
+            </a>
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              style={{
+                border: "none",
+                position: "absolute",
+                right: "0.5rem",
+                top: "0.5rem",
+                cursor: "pointer",
+              }}
+            >
+              <b>X</b>
+            </button>
+          </span>
+        ));
+      }
+
+      console.log("Data:", response.data.records);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast("Error fetching data", { duration: 5000 });
+    }
+  };
 
   // close on click outside
   useEffect(() => {
     const clickHandler = (event: any) => {
-      if (
-        sidebar.current &&
-        !sidebar.current.contains(event.target) &&
-        !sidebarOpen
-      ) {
+      if (sidebar.current && !sidebar.current.contains(event.target) && !sidebarOpen) {
         setSidebarOpen(true);
       }
     };
@@ -89,12 +145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   return (
     <>
-      <aside
-        ref={sidebar}
-        className={`fixed top-0 z-40 h-screen  flex flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-dark2 translate-x-0  ${
-          sidebarOpen ? "w-0 translate-x-0" : "w-72.5 -translate-x-full"
-        }`}
-      >
+      <aside ref={sidebar} className={`fixed top-0 z-40 h-screen  flex flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-dark2 translate-x-0  ${sidebarOpen ? "w-0 translate-x-0" : "w-72.5 -translate-x-full"}`}>
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5"></div>
         {/* <!-- SIDEBAR HEADER --> */}
@@ -110,58 +161,35 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Aktifitas Pengunjung --> */}
                 <li>
                   <NavLink
-                    to="/workstation/pengunjung"
+                    to="/dashboard/staff"
                     onClick={handleNavLinkClick}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes("pengunjung") &&
-                      "bg-graydark dark:bg-meta-4"
+                      pathname.includes("pengunjung") && "bg-graydark dark:bg-meta-4"
                     }`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      width="20"
-                      height="20"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="20" height="20">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
                       />
                     </svg>
-                    Aktivitas Pengunjung
+                    Staff
                   </NavLink>
                 </li>
 
                 {/* <!-- Menu Item Kamera --> */}
                 <li>
                   <NavLink
-                    to="/workstation/kamera-live"
+                    to="/dashboard/kamera-live"
                     onClick={handleNavLinkClick}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname === "/workstation/kamera-live" &&
-                      "bg-graydark dark:bg-meta-4"
+                      pathname === "/dashboard/kamera-live" && "bg-graydark dark:bg-meta-4"
                     }`}
                   >
-                    <svg
-                      fill="#FFFFFF"
-                      height="18"
-                      width="18"
-                      version="1.1"
-                      id="Capa_1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 74.207 74.207"
-                      stroke="#FFFFFF"
-                    >
+                    <svg fill="#FFFFFF" height="18" width="18" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74.207 74.207" stroke="#FFFFFF">
                       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                      <g
-                        id="SVGRepo_tracerCarrier"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></g>
+                      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                       <g id="SVGRepo_iconCarrier">
                         {" "}
                         <g>
@@ -177,39 +205,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Kamera --> */}
 
                 {/* <!-- Menu Item Pengaturan --> */}
-                <SidebarLinkGroup
-                  activeCondition={
-                    pathname === "/workstation/pengaturan-list" ||
-                    pathname.includes("setting-list")
-                  }
-                >
+                <SidebarLinkGroup activeCondition={pathname === "/workstation/pengaturan-list" || pathname.includes("setting-list")}>
                   {(handleClick, open) => {
                     return (
                       <React.Fragment>
                         <NavLink
                           to="#"
                           className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            (pathname === "/workstation/pengaturan-list" ||
-                              pathname.includes("setting-list")) &&
-                            "bg-graydark dark:bg-meta-4"
+                            (pathname === "/workstation/pengaturan-list" || pathname.includes("setting-list")) && "bg-graydark dark:bg-meta-4"
                           }`}
                           onClick={(e) => {
                             e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
+                            sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                           }}
                         >
-                          <svg
-                            fill="none"
-                            width="18"
-                            height="18"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                          >
+                          <svg fill="none" width="18" height="18" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -217,16 +227,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             ></path>
                           </svg>
                           Pengaturan
-                          <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                              open && "rotate-180"
-                            }`}
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                          <svg className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                               fillRule="evenodd"
                               clipRule="evenodd"
@@ -236,21 +237,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </svg>
                         </NavLink>
                         {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && "hidden"
-                          }`}
-                        >
+                        <div className={`translate transform overflow-hidden ${!open && "hidden"}`}>
                           <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                             {isSuperAdmin && (
                               <li>
                                 <NavLink
-                                  to="/workstation/pengaturan-list/manajemen-pengguna"
+                                  to="/dashboard/pengaturan-list/manajemen-pengguna"
                                   onClick={handleNavLinkClick}
-                                  className={({ isActive }) =>
-                                    "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                    (isActive && "!text-white")
-                                  }
+                                  className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                                 >
                                   Manajemen Pengguna
                                 </NavLink>
@@ -258,36 +252,27 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             )}
                             <li>
                               <NavLink
-                                to="/workstation/pengaturan-list/perangkat/gelang"
+                                to="/dashboard/pengaturan-list/perangkat/gelang"
                                 onClick={handleNavLinkClick}
-                                className={({ isActive }) =>
-                                  "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                  (isActive && "!text-white")
-                                }
+                                className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                               >
                                 Gelang
                               </NavLink>
                             </li>
                             <li>
                               <NavLink
-                                to="/workstation/pengaturan-list/perangkat/kamera"
+                                to="/dashboard/pengaturan-list/perangkat/kamera"
                                 onClick={handleNavLinkClick}
-                                className={({ isActive }) =>
-                                  "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                  (isActive && "!text-white")
-                                }
+                                className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                               >
                                 Kamera
                               </NavLink>
                             </li>
                             <li>
                               <NavLink
-                                to="/workstation/pengaturan-list/perangkat/gateway"
+                                to="/dashboard/pengaturan-list/perangkat/gateway"
                                 onClick={handleNavLinkClick}
-                                className={({ isActive }) =>
-                                  "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                  (isActive && "!text-white")
-                                }
+                                className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                               >
                                 Gateway
                               </NavLink>
@@ -302,55 +287,25 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {/* <!-- Menu Item Pelacakan --> */}
 
                 {/* <!-- Menu Item Log Pengenalan Wajah --> */}
-                <SidebarLinkGroup
-                  activeCondition={
-                    pathname === "/workstation/log" || pathname.includes("log")
-                  }
-                >
+                <SidebarLinkGroup activeCondition={pathname === "/workstation/log" || pathname.includes("log")}>
                   {(handleClick, open) => {
                     return (
                       <React.Fragment>
                         <NavLink
                           to="#"
                           className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                            (pathname === "/workstation/log" ||
-                              pathname.includes("log")) &&
-                            "bg-graydark dark:bg-meta-4"
+                            (pathname === "/workstation/log" || pathname.includes("log")) && "bg-graydark dark:bg-meta-4"
                           }`}
                           onClick={(e) => {
                             e.preventDefault();
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true);
+                            sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                           }}
                         >
-                          <svg
-                            fill="none"
-                            width="18"
-                            height="18"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
-                            ></path>
+                          <svg fill="none" width="18" height="18" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"></path>
                           </svg>
                           Log
-                          <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                              open && "rotate-180"
-                            }`}
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                          <svg className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"}`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                               fillRule="evenodd"
                               clipRule="evenodd"
@@ -359,18 +314,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           </svg>
                         </NavLink>
-                        <div
-                          className={`translate transform overflow-hidden ${
-                            !open && "hidden"
-                          }`}
-                        >
+                        <div className={`translate transform overflow-hidden ${!open && "hidden"}`}>
                           <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                            <SidebarLinkGroup
-                              activeCondition={
-                                pathname === "/workstation/log" ||
-                                pathname.includes("log")
-                              }
-                            >
+                            <SidebarLinkGroup activeCondition={pathname === "/workstation/log" || pathname.includes("log")}>
                               {(handleClick, open) => {
                                 return (
                                   <React.Fragment>
@@ -426,10 +372,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                     <NavLink
                                       to="/workstation/log-riwayat/realtime"
                                       onClick={handleNavLinkClick}
-                                      className={({ isActive }) =>
-                                        "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                        (isActive && "!text-white")
-                                      }
+                                      className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                                     >
                                       Log Realtime
                                     </NavLink>
@@ -467,12 +410,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 );
                               }}
                             </SidebarLinkGroup>
-                            <SidebarLinkGroup
-                              activeCondition={
-                                pathname === "/workstation/log" ||
-                                pathname.includes("log")
-                              }
-                            >
+                            <SidebarLinkGroup activeCondition={pathname === "/workstation/log" || pathname.includes("log")}>
                               {(handleClick, open) => {
                                 return (
                                   <React.Fragment>
@@ -528,10 +466,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                     <NavLink
                                       to="/workstation/log-riwayat/gateway"
                                       onClick={handleNavLinkClick}
-                                      className={({ isActive }) =>
-                                        "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
-                                        (isActive && "!text-white")
-                                      }
+                                      className={({ isActive }) => "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " + (isActive && "!text-white")}
                                     >
                                       Log Gateway
                                     </NavLink>
@@ -858,97 +793,93 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Kamera Dev Test
                 </NavLink>
               </li> */}
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                />
                 <li>
                   <NavLink
                     to=""
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      try {
-                        // Call the apiversion function to get the response
-                        const response = await apiversion({
-                          method: "GET",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                        });
+                    // onClick={async (e) => {
+                    //   e.preventDefault();
+                    //   try {
+                    //     // Call the apiversion function to get the response
+                    //     const response = await apiversion({
+                    //       method: "GET",
+                    //       headers: {
+                    //         "Content-Type": "application/json",
+                    //       },
+                    //     });
 
-                        let versionName: string;
-                        const version = response.data.records.map((a) => {
-                          versionName = a.version_name;
-                          return versionName;
-                        });
+                    //     let versionName: string;
+                    //     const version = response.data.records.map((a) => {
+                    //       versionName = a.version_name;
+                    //       return versionName;
+                    //     });
 
-                        // Update toast content with fetched data
-                        // toast(
-                        //   `This app version is ${version}.`,
-                        //   {
-                        //     duration: 5000,
-                        //   }
-                        // );
+                    //     // Update toast content with fetched data
+                    //     // toast(
+                    //     //   `This app version is ${version}.`,
+                    //     //   {
+                    //     //     duration: 5000,
+                    //     //   }
+                    //     // );
 
-                        if (versionName == version) {
-                          toast.success(
-                            `This app version is up-to-date ( Version ${version} )`,
-                            {
-                              duration: 5000,
-                            }
-                          );
-                        } else {
-                          toast((t) => (
-                            <span
-                              style={{
-                                ...t.style,
-                                animation: t.visible
-                                  ? "custom-enter 1s ease"
-                                  : "custom-exit 1s ease",
-                              }}
-                            >
-                              There is an update from version {version} to
-                              version {versionName}{" "}
-                              <a
-                                href={response.data.records.link}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-blue-500 bold"
-                              >
-                                Download
-                              </a>
-                              <button
-                                onClick={() => toast.dismiss(t.id)}
-                                style={{
-                                  border: "none",
-                                  position: "absolute",
-                                  right: "0.5rem",
-                                  top: "0.5rem",
-                                  cursor: "pointer",
-                                }}
-                              >
-                                <b>X</b>
-                              </button>
-                            </span>
-                          ));
-                        }
+                    //     if (versionName == version) {
+                    //       toast.success(
+                    //         `This app version is up-to-date ( Version ${version} )`,
+                    //         {
+                    //           duration: 5000,
+                    //         }
+                    //       );
+                    //     } else {
+                    //       toast((t) => (
+                    //         <span
+                    //           style={{
+                    //             ...t.style,
+                    //             animation: t.visible
+                    //               ? "custom-enter 1s ease"
+                    //               : "custom-exit 1s ease",
+                    //           }}
+                    //         >
+                    //           There is an update from version {version} to
+                    //           version {versionName}{" "}
+                    //           <a
+                    //             href={response.data.records.link}
+                    //             target="_blank"
+                    //             rel="noreferrer"
+                    //             className="text-blue-500 bold"
+                    //           >
+                    //             Download
+                    //           </a>
+                    //           <button
+                    //             onClick={() => toast.dismiss(t.id)}
+                    //             style={{
+                    //               border: "none",
+                    //               position: "absolute",
+                    //               right: "0.5rem",
+                    //               top: "0.5rem",
+                    //               cursor: "pointer",
+                    //             }}
+                    //           >
+                    //             <b>X</b>
+                    //           </button>
+                    //         </span>
+                    //       ));
+                    //     }
 
-                        console.log("Data:", response.data.records);
-                      } catch (error) {
-                        console.error("Error fetching data:", error);
-                        toast("Error fetching data", { duration: 5000 });
-                      }
-                    }}
+                    //     console.log("Data:", response.data.records);
+                    //   } catch (error) {
+                    //     console.error("Error fetching data:", error);
+                    //     toast("Error fetching data", { duration: 5000 });
+                    //   }
+                    // }}
+                    onClick={handleClickVersion}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes("version") &&
-                      "bg-graydark dark:bg-meta-4"
+                      pathname.includes("version") && "bg-graydark dark:bg-meta-4"
                     }`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      width="18"
-                      height="18"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="18" height="18">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"

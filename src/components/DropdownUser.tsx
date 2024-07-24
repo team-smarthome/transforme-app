@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import UserOne from "../images/user/user-01.png";
 
@@ -124,6 +125,16 @@ const DropdownUser = () => {
           </svg>
           Keluar
         </button>
+        <div className="z-[999999] mt-11 fixed top-[30px] right-2 flex flex-col justify-start items-end">
+                <Toaster
+                    position="top-right"
+                    toastOptions={{
+                        style: {
+                            marginTop: '10px',
+                        },
+                    }}
+                />
+            </div>
       </div>
       {/* <!-- Dropdown End --> */}
     </div>
