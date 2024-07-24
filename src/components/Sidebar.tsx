@@ -163,7 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <>
       <aside
         ref={sidebar}
-        className={`fixed top-0 z-40 h-screen  flex flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-dark2 translate-x-0  ${
+        className={`fixed top-0 h-screen  flex flex-col overflow-y-hidden bg-black z-999 duration-300 ease-linear dark:bg-dark2 translate-x-0  ${
           sidebarOpen ? "w-0 translate-x-0" : "w-72.5 -translate-x-full"
         }`}
       >

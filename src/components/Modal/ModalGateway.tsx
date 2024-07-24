@@ -100,7 +100,7 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className="bg-boxdark w-full h-[150px] overflow-hidden flex justify-center items-center">
               <img
                 src={
-                  "https://images.pexels.com/photos/6069300/pexels-photo-6069300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  "https://static.tp-link.com/TL-MR3420_EU_5.0_01_large_1532514251543w.jpg"
                 }
                 alt="picture"
                 className="object-cover w-[150px] h-[150px] border border-slate-400"
@@ -109,9 +109,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">
-                  Kopral John Doe
+                  ARCHER AX50
                 </p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className="bg-boxdark w-full h-[150px] overflow-hidden flex justify-center items-center">
               <img
                 src={
-                  "https://images.pexels.com/photos/6069300/pexels-photo-6069300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  "https://static.tp-link.com/TL-MR3420_EU_5.0_01_large_1532514251543w.jpg"
                 }
                 alt="picture"
                 className="object-cover w-[150px] h-[150px] border border-slate-400"
@@ -148,9 +148,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">
-                  Kopral John Doe
+                  TP-LINK TL-WR841N
                 </p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -178,7 +178,7 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className="bg-boxdark w-full h-[150px] overflow-hidden flex justify-center items-center">
               <img
                 src={
-                  "https://images.pexels.com/photos/6069300/pexels-photo-6069300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  "https://static.tp-link.com/TL-MR3420_EU_5.0_01_large_1532514251543w.jpg"
                 }
                 alt="picture"
                 className="object-cover w-[150px] h-[150px] border border-slate-400"
@@ -187,9 +187,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">
-                  Kopral John Doe
+                  TP-LINK TL-930E
                 </p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -217,7 +217,7 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className="bg-boxdark w-full h-[150px] overflow-hidden flex justify-center items-center">
               <img
                 src={
-                  "https://images.pexels.com/photos/6069300/pexels-photo-6069300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  "https://static.tp-link.com/TL-MR3420_EU_5.0_01_large_1532514251543w.jpg"
                 }
                 alt="picture"
                 className="object-cover w-[150px] h-[150px] border border-slate-400"
@@ -226,9 +226,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">
-                  Kopral John Doe
+                TP-LINK TL-920F
                 </p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
