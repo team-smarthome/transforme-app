@@ -61,17 +61,17 @@ const SignUp = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img className="hidden dark:block w-30 h-30" src={Logo} alt="Logo" />
+                <img className="hidden dark:block w-99 h-30" src={Logo} alt="Logo" />
                 <img className="dark:hidden" src={LogoDark} alt="Logo" />
               </Link>
-              <p className="2xl:px-20 text-white font-bold text-xl">Sistem Informasi Perkara Militer</p>
+              <p className="2xl:px-20 text-white font-bold text-3xl">Transforme Monitoring System</p>
             </div>
           </div>
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2 xl:my-4">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">Sign Up to SIRAM Dashboard</h2>
+              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-lg">Sign Up to Transforme Monitoring System</h2>
 
               <form onSubmit={handleSubmit(handleRegistration)}>
                 <div className="mb-4">

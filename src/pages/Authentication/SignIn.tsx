@@ -28,7 +28,7 @@ const SignIn = () => {
     const paramsState = location.state;
     const forceLogout = paramsState && paramsState.forceLogout;
     if (ls_dataUser && !forceLogout) {
-      navigate("/");
+      navigate("/home");
     }
 
     if (forceLogout) {
