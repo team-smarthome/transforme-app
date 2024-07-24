@@ -96,7 +96,7 @@ const SignIn = () => {
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-1 inline-block" to="/">
                 <img
-                  className="hidden xl:block w-50 h-50 "
+                  className="hidden xl:block w-90 h-50"
                   src={Logo}
                   alt="Logo"
                 />
@@ -117,7 +117,7 @@ const SignIn = () => {
                 TRANSFORME
               </h2>
               <h2 className="text-center xl:text-left mb-9 text-xl font-bold text-white sm:text-title-xl2">
-                Monitori System
+                Monitoring System
               </h2>
 
               <p

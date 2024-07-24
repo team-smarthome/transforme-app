@@ -173,8 +173,11 @@ const Brecelet = () => {
         });
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/", {
-            state: { forceLogout: true, lastPage: location.pathname },
+          navigate("/auth/signin", {
+            state: {
+              forceLogout: true,
+              lastPage: location.pathname,
+            },
           });
         }
         Alerts.fire({
@@ -188,7 +191,7 @@ const Brecelet = () => {
     } else {
       localStorage.removeItem("dataUser");
       localStorage.removeItem("token");
-      navigate("/");
+      navigate("/auth/signin");
     }
   }, []);
   return (
@@ -202,7 +205,9 @@ const Brecelet = () => {
                 <h4 className="text-title-md font-bold text-black dark:text-white">
                   {gelang.prajuritBinaanAktif}
                 </h4>
-                <span className="text-sm font-medium">Gelang WBP Aktif</span>
+                <span className="text-sm font-medium">
+                  Smartwatch Pegawai Aktif
+                </span>
               </div>
             </div>
           </div>{" "}
@@ -215,7 +220,7 @@ const Brecelet = () => {
                   {gelang.prajuritLowPower}
                 </h4>
                 <span className="text-sm font-medium">
-                  Gelang WBP Low Power
+                  Smartwatch Pegawai Low Power
                 </span>
               </div>
             </div>
@@ -230,7 +235,9 @@ const Brecelet = () => {
                   {gelang.jumlah}
                 </h4>
               </div>
-              <span className="text-xl font-medium">Jumlah Gelang WBP</span>
+              <span className="text-xl font-medium">
+                Jumlah Smartwatch Pegawai
+              </span>
             </div>
           </div>{" "}
         </div>

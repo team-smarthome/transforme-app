@@ -374,12 +374,11 @@ const Tahanan = ({ defaultValue }: any) => {
     <>
       {/* <Breadcrumb url={window.location.href} pageName="Statistic"  /> */}
       <div className="mt-1 font-semibold text-2xl tracking-wider">
-        Statistik OTMIL {lokasi}
+        Statistik Transforme
         <button className="pl-5">
           <HiQuestionMarkCircle
             values={filter}
             aria-placeholder="Show tutorial"
-            // onChange={}
             onClick={handleClickTutorial}
           />
         </button>
@@ -413,7 +412,7 @@ const Tahanan = ({ defaultValue }: any) => {
               <h4 className="text-title-md font-bold text-black dark:text-white">
                 {tahananWbp}
               </h4>
-              <span className="text-sm font-medium ">Total Tahanan</span>
+              <span className="text-sm font-medium ">Total Pegawai</span>
             </div>
           </div>
           <div className="flex mt-3 items-end justify-center">
@@ -470,7 +469,7 @@ const Tahanan = ({ defaultValue }: any) => {
                   {tahananSakit}
                 </h4>
                 <span className="text-sm font-medium">
-                  Jumlah Tahanan Sakit
+                  Jumlah Pegawai Sakit
                 </span>
               </div>
             </div>
@@ -530,7 +529,7 @@ const Tahanan = ({ defaultValue }: any) => {
                   {tahananIsolasi}
                 </h4>
                 <span className="text-sm font-medium">
-                  Jumlah Tahanan Terisolasi
+                  Jumlah Pegawai Hadir
                 </span>
               </div>
             </div>
@@ -585,7 +584,7 @@ const Tahanan = ({ defaultValue }: any) => {
           <div className="w-full border bg-white shadow-default dark:border-2 dark:bg-boxdark ">
             <div className="flex ">
               <div className="w-28">
-                <h1 className="border-b-2 flex justify-center">No Tahanan</h1>
+                <h1 className="border-b-2 flex justify-center">No Pegawai</h1>
                 <div className="h-44  border-b-2">
                   {WPB.map((item: any) => {
                     return (
@@ -607,7 +606,7 @@ const Tahanan = ({ defaultValue }: any) => {
                 </div>
               </div>
               <div className="w-1/4">
-                <h1 className="border-b-2 pl-2">NRP</h1>
+                <h1 className="border-b-2 pl-2">NIP</h1>
                 <div className="h-44 pl-2">
                   {WPB.map((item: any) => {
                     return <h1 className="capitalize mb-1">{item.nrp}</h1>;
@@ -627,7 +626,7 @@ const Tahanan = ({ defaultValue }: any) => {
                 </div>
               </div>
               <div className="w-1/4">
-                <h1 className="border-b-2 border-l-2 pl-2">Tanggal Ditahan</h1>
+                <h1 className="border-b-2 border-l-2 pl-2">Tanggal Kontrak</h1>
                 <div className="h-44 border-l-2 pl-2">
                   {WPB.map((item: any) => {
                     return (
@@ -700,7 +699,7 @@ const Tahanan = ({ defaultValue }: any) => {
           <div className="w-full border bg-white shadow-default dark:border-2 dark:bg-boxdark ">
             <div className="flex ">
               <div className="w-28">
-                <h1 className="border-b-2 flex justify-center">No Tahanan</h1>
+                <h1 className="border-b-2 flex justify-center">No Pegawai</h1>
                 <div className="h-44  border-b-2">
                   {WPBSick.map((item: any) => {
                     return (

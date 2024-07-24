@@ -135,8 +135,11 @@ const ChartBar = () => {
         setMatra(dataMatra);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/", {
-            state: { forceLogout: true, lastPage: location.pathname },
+          navigate("/auth/signin", {
+            state: {
+              forceLogout: true,
+              lastPage: location.pathname,
+            },
           });
         }
         Alerts.fire({
@@ -148,7 +151,7 @@ const ChartBar = () => {
     if (token !== null) {
       data();
     } else {
-      navigate("/");
+      navigate("/auth/signin");
     }
   }, []);
   const namaMatra = matra
@@ -166,14 +169,14 @@ const ChartBar = () => {
   const jumlahMatra = propertiesAndValues?.map(
     ([property, value]: any, index) => parseInt(value)
   );
-
-  const colors = ["#008FFB", "#00E396", "#FEB019"];
+  console.log(jumlahMatra, "matra");
+  const colors = ["#00E396", "#FF0000", "#FEB019"];
 
   const options: ApexOptions = {
     chart: {
       height: 350,
       type: "bar",
-      width: 500,
+      width: 100,
     },
     colors: colors,
     plotOptions: {
@@ -199,7 +202,7 @@ const ChartBar = () => {
     },
     yaxis: {
       title: {
-        text: "Jumlah Tahanan",
+        text: "Jumlah Pegawai",
         style: {
           fontSize: "12px",
           color: "#fff",
@@ -223,7 +226,7 @@ const ChartBar = () => {
         breakpoint: 2600,
         options: {
           chart: {
-            width: 380,
+            width: 500,
           },
         },
       },
@@ -231,7 +234,7 @@ const ChartBar = () => {
         breakpoint: 640,
         options: {
           chart: {
-            width: 300,
+            width: 430,
           },
         },
       },
@@ -251,7 +254,7 @@ const ChartBar = () => {
     >
       <div className="mb-3 justify-between gap-4" id="bar">
         <h5 className="text-xl font-semibold text-black dark:text-white">
-          Analisa Kesatuan Tahanan
+          Analisa Pegawai
         </h5>
         <div className="flex justify-center mt-6">
           <ReactApexChart
