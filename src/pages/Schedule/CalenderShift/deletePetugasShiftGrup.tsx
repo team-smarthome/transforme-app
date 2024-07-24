@@ -1,20 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
-import { apiReadAllPetugasShift } from '../../../services/api';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'dayjs/locale/id';
-import { Alerts } from '../GrupShift/Alert';
-import dayjs from 'dayjs';
-import { BiLoaderAlt } from 'react-icons/bi';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Error403Message } from '../../../utils/constants';
+import { useEffect, useRef, useState } from "react";
+import { apiReadAllPetugasShift } from "../../../services/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "dayjs/locale/id";
+import { Alerts } from "../GrupShift/Alert";
+import dayjs from "dayjs";
+import { BiLoaderAlt } from "react-icons/bi";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Error403Message } from "../../../utils/constants";
 
 const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   //get Token
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   let tokens = tokenItem ? JSON.parse(tokenItem) : null;
   let token = tokens.token;
 
@@ -23,7 +23,7 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
   const [buttonLoad, setButtonLoad] = useState(false);
   const [dataPetugasShift, setDataPetugasShift] = useState([
     {
-      petugas_shift_id: '',
+      petugas_shift_id: "",
     },
   ]);
 
@@ -37,34 +37,34 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
         closeModal();
       }
     };
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [closeModal]);
 
   const tanggal = dayjs(
     `${defaultValue.tahun}-${defaultValue.bulan}-${defaultValue.tanggal}`,
     {
-      locale: 'id',
-    },
-  ).format('YYYY MM DD');
+      locale: "id",
+    }
+  ).format("YYYY MM DD");
 
   const [selectedDate, setSelectedDate] = useState(dayjs(tanggal));
   const [selectedEndDate, setSelectedEndDate] = useState(
-    dayjs(tanggal).add(4, 'day'),
+    dayjs(tanggal).add(4, "day")
   );
 
   const [startDate, setStartDate] = useState({
-    tanggal: parseInt(dayjs(selectedDate).format('D')),
-    bulan: parseInt(dayjs(selectedDate).format('M')),
-    tahun: parseInt(dayjs(selectedDate).format('YYYY')),
+    tanggal: parseInt(dayjs(selectedDate).format("D")),
+    bulan: parseInt(dayjs(selectedDate).format("M")),
+    tahun: parseInt(dayjs(selectedDate).format("YYYY")),
   });
-  console.log(defaultValue, 'defaultValue delete');
+  console.log(defaultValue, "defaultValue delete");
   const [endDate, setEndDate] = useState({
-    tanggal: parseInt(dayjs(selectedEndDate).format('D')),
-    bulan: parseInt(dayjs(selectedEndDate).format('M')),
-    tahun: parseInt(dayjs(selectedEndDate).format('YYYY')),
+    tanggal: parseInt(dayjs(selectedEndDate).format("D")),
+    bulan: parseInt(dayjs(selectedEndDate).format("M")),
+    tahun: parseInt(dayjs(selectedEndDate).format("YYYY")),
   });
 
   useEffect(() => {
@@ -84,40 +84,40 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
       try {
         const petugasShift = await apiReadAllPetugasShift(
           filterPetugasShift.filter,
-          token,
+          token
         );
         setDataPetugasShift(petugasShift.data.records);
         setIsLoading(false);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       }
     };
     fetchSchedule();
   }, []);
-  console.log('papap:', dataPetugasShift);
+  console.log("papap:", dataPetugasShift);
   const handleDateChange = (date: any) => {
-    const end = dayjs(date).add(4, 'day');
+    const end = dayjs(date).add(4, "day");
     setSelectedDate(dayjs(date));
     setStartDate({
       ...startDate,
-      tanggal: parseInt(dayjs(date).format('D')),
-      bulan: parseInt(dayjs(date).format('M')),
-      tahun: parseInt(dayjs(date).format('YYYY')),
+      tanggal: parseInt(dayjs(date).format("D")),
+      bulan: parseInt(dayjs(date).format("M")),
+      tahun: parseInt(dayjs(date).format("YYYY")),
     });
-    setSelectedEndDate(dayjs(date).add(4, 'day'));
+    setSelectedEndDate(dayjs(date).add(4, "day"));
     setEndDate({
       ...endDate,
-      tanggal: parseInt(dayjs(end).format('D')),
-      bulan: parseInt(dayjs(end).format('M')),
-      tahun: parseInt(dayjs(end).format('YYYY')),
+      tanggal: parseInt(dayjs(end).format("D")),
+      bulan: parseInt(dayjs(end).format("M")),
+      tahun: parseInt(dayjs(end).format("YYYY")),
     });
   };
 
@@ -125,19 +125,19 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
     setSelectedEndDate(dayjs(date));
     setEndDate({
       ...endDate,
-      tanggal: parseInt(dayjs(date).format('D')),
-      bulan: parseInt(dayjs(date).format('M')),
-      tahun: parseInt(dayjs(date).format('YYYY')),
+      tanggal: parseInt(dayjs(date).format("D")),
+      bulan: parseInt(dayjs(date).format("M")),
+      tahun: parseInt(dayjs(date).format("YYYY")),
     });
   };
-  console.log('1234:', dataPetugasShift);
+  console.log("1234:", dataPetugasShift);
 
   const handleSubmit = () => {
     const deleteData = dataPetugasShift?.map((item: any) => ({
       petugas_shift_id: [item.petugas_shift_id],
     }));
 
-    console.log('deleteData', deleteData);
+    console.log("deleteData", deleteData);
 
     setIsLoading(true);
     onSubmit(deleteData).then(() => setButtonLoad(false));
@@ -211,8 +211,8 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
                   dateFormat="dd MMMM yyyy"
                   placeholderText="Pilih tanggal"
                   locale="id"
-                  minDate={dayjs(selectedDate).endOf('day').toDate()} // Set minDate to the selected start date
-                  maxDate={dayjs(selectedDate).endOf('month').toDate()}
+                  minDate={dayjs(selectedDate).endOf("day").toDate()} // Set minDate to the selected start date
+                  maxDate={dayjs(selectedDate).endOf("month").toDate()}
                 />
               </div>
             </div>
@@ -230,7 +230,7 @@ const DeletePetugasShift = ({ closeModal, onSubmit, defaultValue }: any) => {
               <button
                 onClick={handleSubmit}
                 className={`btn hover:bg-blue-500 flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                  buttonLoad ? 'bg-slate-400' : ''
+                  buttonLoad ? "bg-slate-400" : ""
                 }`}
                 type="submit"
                 disabled={buttonLoad}

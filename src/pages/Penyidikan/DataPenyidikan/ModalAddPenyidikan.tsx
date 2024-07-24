@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AiOutlineLoading } from 'react-icons/ai';
-import Select from 'react-select';
-import { apiReadKasus, apiReadPenyidikan } from '../../../services/api';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import utc from 'dayjs/plugin/utc';
-import { useNavigate, useLocation } from 'react-router-dom';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { Alerts } from './AlertPenyidikan';
-import { Error403Message } from '../../../utils/constants';
-import { set } from 'react-hook-form';
+import React, { useEffect, useRef, useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
+import Select from "react-select";
+import { apiReadKasus, apiReadPenyidikan } from "../../../services/api";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import utc from "dayjs/plugin/utc";
+import { useNavigate, useLocation } from "react-router-dom";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Alerts } from "./AlertPenyidikan";
+import { Error403Message } from "../../../utils/constants";
+import { set } from "react-hook-form";
 
-dayjs.locale('id');
+dayjs.locale("id");
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -33,7 +33,7 @@ export const AddPenyidikanModal = ({
     nomor_penyidikan: defaultValue?.nomor_penyidikan,
     nama_kasus: defaultValue?.nama_kasus,
     agenda_penyidikan: defaultValue?.agenda_penyidikan,
-    // waktu_dimulai_penyidikan: dayjs().format('YYYY-MM-DDTHH:mm'), 
+    // waktu_dimulai_penyidikan: dayjs().format('YYYY-MM-DDTHH:mm'),
     // waktu_selesai_penyidikan: dayjs().format('YYYY-MM-DDTHH:mm'),
     waktu_dimulai_penyidikan: defaultValue?.waktu_dimulai_penyidikan,
     waktu_selesai_penyidikan: defaultValue?.waktu_selesai_penyidikan,
@@ -47,7 +47,7 @@ export const AddPenyidikanModal = ({
     zona_waktu: defaultValue?.zona_waktu,
   });
 
-  console.log(formState, 'formstate cuyy');
+  console.log(formState, "formstate cuyy");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,13 +57,13 @@ export const AddPenyidikanModal = ({
   const [errors, setErrors] = useState<string[]>([]);
   const modalContainerRef = useRef<HTMLDivElement>(null);
   const [dataKasus, setDataKasus] = useState<any[]>([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const getAllPenyidikan = async () => {
     try {
-      const params = { filter: ' ', page: 1, pageSize: 10000 };
+      const params = { filter: " ", page: 1, pageSize: 10000 };
       const response = await apiReadPenyidikan(params, token);
       // if (response.data.status !== 'OK') throw new Error(response.data.message);
       // const result = response.data.records;
@@ -73,20 +73,26 @@ export const AddPenyidikanModal = ({
       handleErrorResponse(error);
     }
   };
-  
+
   const fetchData = async () => {
     try {
       const params = { pageSize: Number.MAX_SAFE_INTEGER };
-      const paramsPenyidikan = { filter: ' ', page: 1, pageSize: 10000 };
+      const paramsPenyidikan = { filter: " ", page: 1, pageSize: 10000 };
       const kasus = await apiReadKasus(params, token);
       const penyidikan = await apiReadPenyidikan(paramsPenyidikan, token);
-      console.log(kasus, penyidikan, "dapet cok")
-      if (penyidikan.data.status !== 'OK') throw new Error(penyidikan.data.message);
-      if (kasus.data.status !== 'OK') throw new Error(kasus.data.message);
+      console.log(kasus, penyidikan, "dapet cok");
+      if (penyidikan.data.status !== "OK")
+        throw new Error(penyidikan.data.message);
+      if (kasus.data.status !== "OK") throw new Error(kasus.data.message);
       const resultPenyidikan = penyidikan.data.records;
       const resultKasus = kasus.data.records;
-      const filter = resultKasus.filter(data => !resultPenyidikan.some((dataresult: any) => dataresult.nomor_kasus === data.nomor_kasus));
-      console.log(filter, "dapet coy")
+      const filter = resultKasus.filter(
+        (data) =>
+          !resultPenyidikan.some(
+            (dataresult: any) => dataresult.nomor_kasus === data.nomor_kasus
+          )
+      );
+      console.log(filter, "dapet coy");
       setDataKasus(resultKasus);
       // setData
       handleTimeZone();
@@ -94,77 +100,87 @@ export const AddPenyidikanModal = ({
       handleErrorResponse(error);
     }
   };
-  
-  const handleErrorResponse = error => {
+
+  const handleErrorResponse = (error) => {
     setIsLoading(false);
-    const errorMessage = error.response.status === 403 ? Error403Message : error.message;
-    navigate('/auth/signin', {
-      state: { forceLogout: error.response.status === 403, lastPage: location.pathname },
+    const errorMessage =
+      error.response.status === 403 ? Error403Message : error.message;
+    navigate("/", {
+      state: {
+        forceLogout: error.response.status === 403,
+        lastPage: location.pathname,
+      },
     });
-    Alerts.fire({ icon: error.response.status === 403 ? 'warning' : 'error', title: errorMessage });
+    Alerts.fire({
+      icon: error.response.status === 403 ? "warning" : "error",
+      title: errorMessage,
+    });
   };
-  
+
   const handleTimeZone = () => {
     setIsLoading(false);
-    const timeZone = dayjs().format('Z');
+    const timeZone = dayjs().format("Z");
     let zonaWaktu;
     switch (timeZone) {
-      case '+07:00':
-        zonaWaktu = 'WIB'; break;
-      case '+08:00':
-        zonaWaktu = 'WITA'; break;
-      case '+09:00':
-        zonaWaktu = 'WIT'; break;
+      case "+07:00":
+        zonaWaktu = "WIB";
+        break;
+      case "+08:00":
+        zonaWaktu = "WITA";
+        break;
+      case "+09:00":
+        zonaWaktu = "WIT";
+        break;
       default:
-        zonaWaktu = 'Zona Waktu Tidak Dikenal';
+        zonaWaktu = "Zona Waktu Tidak Dikenal";
     }
     if (!formState?.zona_waktu) {
       setFormState({ ...formState, zona_waktu: zonaWaktu });
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   const timezone = dayjs();
-  console.log('timezone', timezone.format('Z'));
+  console.log("timezone", timezone.format("Z"));
 
   const validateForm = () => {
     let errorFields = [];
 
     // Validasi elemen Select
     if (!formState.wbp_profile_id && !formState.saksi_id) {
-        errorFields.push('pihak_terlibat');
+      errorFields.push("pihak_terlibat");
     }
 
     for (const [key, value] of Object.entries(formState)) {
-        if (
-            key !== 'wbp_profile_id' &&
-            key !== 'penyidikan_id' &&
-            key !== 'nrp' &&
-            key !== 'no_kasus' &&
-            key !== 'nomor_kasus' &&
-            key !== 'saksi_id' &&
-            key !== 'oditur_penyidik_id'
-        ) {
-            if (!value) {
-                errorFields.push(key);
-            }
+      if (
+        key !== "wbp_profile_id" &&
+        key !== "penyidikan_id" &&
+        key !== "nrp" &&
+        key !== "no_kasus" &&
+        key !== "nomor_kasus" &&
+        key !== "saksi_id" &&
+        key !== "oditur_penyidik_id"
+      ) {
+        if (!value) {
+          errorFields.push(key);
         }
+      }
     }
     if (errorFields.length > 0) {
-        console.log(errorFields);
-        setErrors(errorFields);
-        return false;
+      console.log(errorFields);
+      setErrors(errorFields);
+      return false;
     }
     setErrors([]);
     return true;
-};
+  };
 
   //select Penyidik
   const selectedKasus = dataKasus?.find(
-    (item: any) => item.kasus_id === formState.kasus_id,
+    (item: any) => item.kasus_id === formState.kasus_id
   );
 
   const penyidikOptions: any = selectedKasus
@@ -199,56 +215,60 @@ export const AddPenyidikanModal = ({
       ]
     : [];
 
-  const [terlibatOptionsState, setTerlibatOptionState] = useState([])
-    console.log(terlibatOptionsState, "terlibatOptionsState")
-  console.log(defaultValue, "terlibat defaul")
-  
+  const [terlibatOptionsState, setTerlibatOptionState] = useState([]);
+  console.log(terlibatOptionsState, "terlibatOptionsState");
+  console.log(defaultValue, "terlibat defaul");
+
   const dataSaksi = {
     value: defaultValue.saksi_id,
-    label: `${defaultValue.nama_saksi } (saksi)`
-  }
+    label: `${defaultValue.nama_saksi} (saksi)`,
+  };
 
   const dataWbp = {
     value: defaultValue.wbp_profile_id,
-    label: `${defaultValue.nama_wbp} (tersangka)`
-  }
+    label: `${defaultValue.nama_wbp} (tersangka)`,
+  };
 
-  const splitData: any = [dataSaksi, dataWbp]
+  const splitData: any = [dataSaksi, dataWbp];
   const terlibatOptionsValue = splitData;
 
   interface Option {
     value: string;
     label: string;
   }
-  
-  const handleSelectPihakTerlibat = (selectedOptions:any) => {
+
+  const handleSelectPihakTerlibat = (selectedOptions: any) => {
     if (selectedOptions && selectedOptions.length > 0) {
       let saksiCount = 0;
       let tersangkaCount = 0;
-  
+
       // Iterasi melalui opsi yang dipilih untuk menghitung jumlah saksi dan tersangka yang dipilih
-      selectedOptions.forEach(option => {
-        if (option.label.includes('(saksi)')) {
+      selectedOptions.forEach((option) => {
+        if (option.label.includes("(saksi)")) {
           saksiCount++;
         }
-        if (option.label.includes('(tersangka)')) {
+        if (option.label.includes("(tersangka)")) {
           tersangkaCount++;
         }
       });
-  
+
       // Jika jumlah saksi atau tersangka yang dipilih melebihi 1, batalkan pemilihan terakhir
       if (saksiCount > 1 || tersangkaCount > 1) {
         // Menghapus opsi terakhir dari yang dipilih
         selectedOptions.pop();
       }
-  
+
       // Setel form state dengan nilai yang ditemukan
       setFormState({
         ...formState,
-        saksi_id: selectedOptions.find(option => option.label.includes('(saksi)'))?.value || null,
-        wbp_profile_id: selectedOptions.find(option => option.label.includes('(tersangka)'))?.value || null,
+        saksi_id:
+          selectedOptions.find((option) => option.label.includes("(saksi)"))
+            ?.value || null,
+        wbp_profile_id:
+          selectedOptions.find((option) => option.label.includes("(tersangka)"))
+            ?.value || null,
         // Sesuaikan dengan cara Anda mendapatkan nilai nrp
-        nrp: '', 
+        nrp: "",
       });
     } else {
       // Reset form state jika tidak ada opsi yang dipilih
@@ -257,11 +277,11 @@ export const AddPenyidikanModal = ({
         saksi_id: null,
         wbp_profile_id: null,
         // Reset nilai nrp jika tidak ada opsi yang dipilih
-        nrp: '', 
+        nrp: "",
       });
     }
   };
-  
+
   // const handleSelectPihakTerlibat = (e: any) => {
   //   const selectedOption = terlibatOptions.find(
   //     (option) => option.value === e.value,
@@ -307,20 +327,20 @@ export const AddPenyidikanModal = ({
 
   const onChangeKasus = (e: any) => {
     const kasusFilter: any = dataKasus.find(
-      (item: any) => item.kasus_id === e?.value,
+      (item: any) => item.kasus_id === e?.value
     );
-    console.log(kasusFilter, "filter")
+    console.log(kasusFilter, "filter");
     const dataSaksi = {
       value: kasusFilter?.saksi[0]?.saksi_id,
-      label: `${kasusFilter?.saksi[0]?.nama_saksi } (saksi)`
-    }
+      label: `${kasusFilter?.saksi[0]?.nama_saksi} (saksi)`,
+    };
 
     const dataWbp = {
       value: kasusFilter?.wbp_profile[0]?.wbp_profile_id,
-      label: `${kasusFilter?.wbp_profile[0]?.nama} (tersangka)`
-    }
+      label: `${kasusFilter?.wbp_profile[0]?.nama} (tersangka)`,
+    };
 
-    const splitData: any = [dataSaksi, dataWbp]
+    const splitData: any = [dataSaksi, dataWbp];
     // const splitData: any = [ ...kasusFilter?.saksi?.map((item: any) => ({
     //   value: item.saksi_id,
     //   label: `${item.nama_saksi} (saksi)`,
@@ -329,75 +349,75 @@ export const AddPenyidikanModal = ({
     //   value: item.wbp_profile_id,
     //   label: `${item.nama} (tersangka)`,
     // }))]
-    setTerlibatOptionState(splitData)
+    setTerlibatOptionState(splitData);
     setDataKasusSelect(kasusFilter);
     setFormState({
       ...formState,
       kasus_id: e?.value,
-      nomor_kasus: kasusFilter ? kasusFilter.nomor_kasus : '',
-      nama_kasus: kasusFilter ? kasusFilter.nama_kasus : '',
-      nama_jenis_perkara: kasusFilter ? kasusFilter.nama_jenis_perkara : '',
+      nomor_kasus: kasusFilter ? kasusFilter.nomor_kasus : "",
+      nama_kasus: kasusFilter ? kasusFilter.nama_kasus : "",
+      nama_jenis_perkara: kasusFilter ? kasusFilter.nama_jenis_perkara : "",
       nama_kategori_perkara: kasusFilter
         ? kasusFilter.nama_kategori_perkara
-        : '',
+        : "",
       saksi_id: dataSaksi.value,
-      wbp_profile_id: dataWbp.value
+      wbp_profile_id: dataWbp.value,
     });
   };
 
   const handleChange = (e: any) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
-    console.log('3333', e.target.value);
+    console.log("3333", e.target.value);
   };
 
   const handleChangeWaktu = (e: any) => {
-    console.log('1213', e);
+    console.log("1213", e);
 
-    const timeZone = dayjs().format('Z');
+    const timeZone = dayjs().format("Z");
     let zonaWaktu;
     switch (timeZone) {
-      case '+07:00':
-        zonaWaktu = 'WIB';
+      case "+07:00":
+        zonaWaktu = "WIB";
         break;
-      case '+08:00':
-        zonaWaktu = 'WITA';
+      case "+08:00":
+        zonaWaktu = "WITA";
         break;
-      case '+09:00':
-        zonaWaktu = 'WIT';
+      case "+09:00":
+        zonaWaktu = "WIT";
         break;
       default:
-        zonaWaktu = 'Zona Waktu Tidak Dikenal';
+        zonaWaktu = "Zona Waktu Tidak Dikenal";
     }
     setFormState({
       ...formState,
-      waktu_dimulai_penyidikan: dayjs(e).format('YYYY-MM-DDTHH:mm'),
+      waktu_dimulai_penyidikan: dayjs(e).format("YYYY-MM-DDTHH:mm"),
       zona_waktu: zonaWaktu,
     });
   };
   const handleChangeWaktuSelesai = (e: any) => {
     try {
-      const timeZone = dayjs().format('Z');
+      const timeZone = dayjs().format("Z");
       let zonaWaktu;
       switch (timeZone) {
-        case '+07:00':
-          zonaWaktu = 'WIB';
+        case "+07:00":
+          zonaWaktu = "WIB";
           break;
-        case '+08:00':
-          zonaWaktu = 'WITA';
+        case "+08:00":
+          zonaWaktu = "WITA";
           break;
-        case '+09:00':
-          zonaWaktu = 'WIT';
+        case "+09:00":
+          zonaWaktu = "WIT";
           break;
         default:
-          zonaWaktu = 'Zona Waktu Tidak Dikenal';
+          zonaWaktu = "Zona Waktu Tidak Dikenal";
       }
       setFormState({
         ...formState,
-        waktu_selesai_penyidikan: dayjs(e).format('YYYY-MM-DDTHH:mm'),
+        waktu_selesai_penyidikan: dayjs(e).format("YYYY-MM-DDTHH:mm"),
         zona_waktu: zonaWaktu,
       });
     } catch (error) {
-      console.error('Terjadi kesalahan:', error);
+      console.error("Terjadi kesalahan:", error);
     }
   };
 
@@ -406,77 +426,79 @@ export const AddPenyidikanModal = ({
       showProgress: true,
       steps: [
         {
-          element: '.input-nomor',
+          element: ".input-nomor",
           popover: {
-            title: 'Nomor Penyidikan',
-            description: 'Isi nomor penyidikan',
+            title: "Nomor Penyidikan",
+            description: "Isi nomor penyidikan",
           },
         },
         {
-          element: '#p-kasus',
+          element: "#p-kasus",
           popover: {
-            title: 'Nomor Kasus',
-            description: 'Pilih nomor kasus yang diinginkan',
+            title: "Nomor Kasus",
+            description: "Pilih nomor kasus yang diinginkan",
           },
         },
         {
-          element: '.input-nama',
-          popover: { title: 'Nama Kasus', description: 'Isi nama kasus' },
+          element: ".input-nama",
+          popover: { title: "Nama Kasus", description: "Isi nama kasus" },
         },
         {
-          element: '.input-perkara',
+          element: ".input-perkara",
           popover: {
-            title: 'Jenis Perkara',
-            description: 'Isi jenis perkara',
+            title: "Jenis Perkara",
+            description: "Isi jenis perkara",
           },
         },
         {
-          element: '.input-kategori',
+          element: ".input-kategori",
           popover: {
-            title: 'Kategori Perkara',
-            description: 'Isi kategori perkara',
+            title: "Kategori Perkara",
+            description: "Isi kategori perkara",
           },
         },
         {
-          element: '#p-terlibat',
+          element: "#p-terlibat",
           popover: {
-            title: 'Pihak Terlibat',
-            description: 'Pilih pihak terlibat yang diinginkan',
+            title: "Pihak Terlibat",
+            description: "Pilih pihak terlibat yang diinginkan",
           },
         },
         {
-          element: '#p-penyidikan',
+          element: "#p-penyidikan",
           popover: {
-            title: 'Penyidikan',
-            description: 'Pilih penyidikan yang diinginkan',
+            title: "Penyidikan",
+            description: "Pilih penyidikan yang diinginkan",
           },
         },
         {
-          element: '.i-waktu',
+          element: ".i-waktu",
           popover: {
-            title: 'Waktu Mulai Penyidikan',
-            description: 'Menentukan tanggal waktu mulai penyidikan',
+            title: "Waktu Mulai Penyidikan",
+            description: "Menentukan tanggal waktu mulai penyidikan",
           },
         },
         {
-          element: '.i-selesai',
+          element: ".i-selesai",
           popover: {
-            title: 'Waktu Selesai Penyidikan',
-            description: 'Menentukan tanggal waktu selesai penyidikan',
+            title: "Waktu Selesai Penyidikan",
+            description: "Menentukan tanggal waktu selesai penyidikan",
           },
         },
         {
-          element: '.t-agenda',
+          element: ".t-agenda",
           popover: {
-            title: 'Agenda Penyidikan',
-            description: 'Isi agenda penyidikan dengan lengkap',
+            title: "Agenda Penyidikan",
+            description: "Isi agenda penyidikan dengan lengkap",
           },
         },
         {
-          element: `${isEdit ? '#b-ubah' : '#b-tambah'}`,
+          element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
-            title: `${isEdit ? 'Ubah' : 'Tambah'} Penyidikan`,
-            description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} penyidikan`,
+            title: `${isEdit ? "Ubah" : "Tambah"} Penyidikan`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } penyidikan`,
           },
         },
       ],
@@ -489,30 +511,30 @@ export const AddPenyidikanModal = ({
     e.preventDefault();
     if (!validateForm()) return;
     setButtonLoad(true);
-    onSubmit(formState).then(() => 
-      setButtonLoad(false),
+    onSubmit(formState).then(
+      () => setButtonLoad(false),
       setFormSubmitted(true)
     );
 
-    console.log(formState, 'HAHA BYE');
+    console.log(formState, "HAHA BYE");
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -521,95 +543,95 @@ export const AddPenyidikanModal = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
-      height: '35px',
+      color: "white",
+      height: "35px",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      fontSize: '16px',
-      color: 'grey',
+      fontSize: "16px",
+      color: "grey",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      fontSize: '16px',
-      color: 'white',
+      fontSize: "16px",
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
-  
+
   const ExampleCustomTimeInput = ({ date, value, onChange }: any) => (
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      style={{ border: 'solid 1px pink' }}
+      style={{ border: "solid 1px pink" }}
     />
   );
 
@@ -643,10 +665,10 @@ export const AddPenyidikanModal = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Data Penyidikan'
+                      ? "Detail Data Penyidikan"
                       : isEdit
-                        ? 'Edit Data Penyidikan'
-                        : 'Tambah Data Penyidikan'}
+                      ? "Edit Data Penyidikan"
+                      : "Tambah Data Penyidikan"}
                   </h3>
                 </div>
 
@@ -698,9 +720,9 @@ export const AddPenyidikanModal = ({
                     />
                     <p className="error-text">
                       {errors?.map((item) =>
-                        item === 'nomor_penyidikan'
-                          ? 'Masukan Nomor Penyidikan'
-                          : '',
+                        item === "nomor_penyidikan"
+                          ? "Masukan Nomor Penyidikan"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -722,7 +744,7 @@ export const AddPenyidikanModal = ({
                     />
                     <p className="error-text">
                       {errors?.map((item) =>
-                        item === 'kasus_id' ? 'Masukan Nomor Kasus' : '',
+                        item === "kasus_id" ? "Masukan Nomor Kasus" : ""
                       )}
                     </p>
                   </div>
@@ -805,34 +827,34 @@ export const AddPenyidikanModal = ({
                     >
                       Pihak Terlibat
                     </label>
-                      <Select
-                        isMulti
-                        className="capitalize"
-                        options={terlibatOptions}
-                        isDisabled={true}
-                        // defaultValue={isDetail || isEdit ? terlibatOptionsValue.map((data) => (
-                        //   {
-                        //     label: data.label,
-                        //     value: data.value
-                        //   }
-                        // )) : ''}
-                        value={isDetail || isEdit ? terlibatOptionsValue.map((data) => (
-                          {
-                            label: data.label,
-                            value: data.value
-                          }
-                        )) : terlibatOptionsState.map((data) => (
-                          {
-                            label: data.label,
-                            value: data.value
-                          }
-                        ))}
-                        onChange={handleSelectPihakTerlibat}
-                        placeholder="Pihak Terlibat"
-                        styles={customStyles}
-                        id="p-terlibat"
-                      />
-                        {/* {errors.includes('pihak_terlibat') && (
+                    <Select
+                      isMulti
+                      className="capitalize"
+                      options={terlibatOptions}
+                      isDisabled={true}
+                      // defaultValue={isDetail || isEdit ? terlibatOptionsValue.map((data) => (
+                      //   {
+                      //     label: data.label,
+                      //     value: data.value
+                      //   }
+                      // )) : ''}
+                      value={
+                        isDetail || isEdit
+                          ? terlibatOptionsValue.map((data) => ({
+                              label: data.label,
+                              value: data.value,
+                            }))
+                          : terlibatOptionsState.map((data) => ({
+                              label: data.label,
+                              value: data.value,
+                            }))
+                      }
+                      onChange={handleSelectPihakTerlibat}
+                      placeholder="Pihak Terlibat"
+                      styles={customStyles}
+                      id="p-terlibat"
+                    />
+                    {/* {errors.includes('pihak_terlibat') && (
                             <p className="error-text">Pilih salah satu pihak terlibat.</p>
                         )} */}
                   </div>
@@ -877,7 +899,7 @@ export const AddPenyidikanModal = ({
                   />
                   <p className="error-text">
                     {errors?.map((item) =>
-                      item === 'oditur_penyidik_id' ? 'Pilih Penyidik' : ''
+                      item === "oditur_penyidik_id" ? "Pilih Penyidik" : ""
                     )}
                   </p>
                 </div>
@@ -892,16 +914,16 @@ export const AddPenyidikanModal = ({
 
                     <div className="flex items-center justify-center i-waktu">
                       <DatePicker
-                        selected = {
+                        selected={
                           formState.waktu_dimulai_penyidikan
-                          ? dayjs(formState.waktu_dimulai_penyidikan).toDate()
-                          : dayjs().toDate()
+                            ? dayjs(formState.waktu_dimulai_penyidikan).toDate()
+                            : dayjs().toDate()
                         }
                         onChange={handleChangeWaktu}
                         dateFormat="dd/MM/yyyy HH:mm"
                         timeCaption="Pilih Waktu"
                         showTimeInput
-                        name='waktu_dimulai_penyidikan'
+                        name="waktu_dimulai_penyidikan"
                         timeInputLabel="Waktu"
                         timeFormat="HH:mm"
                         disabled={false}
@@ -924,7 +946,9 @@ export const AddPenyidikanModal = ({
                     </p> */}
                     <p className="error-text">
                       {errors?.map((item) =>
-                        item === 'waktu_dimulai_penyidikan' ? 'Pilih mulai penyidikan' : ''
+                        item === "waktu_dimulai_penyidikan"
+                          ? "Pilih mulai penyidikan"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -953,7 +977,7 @@ export const AddPenyidikanModal = ({
                         customTimeInput={<ExampleCustomTimeInput />}
                         className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
                         locale="id"
-                        name='waktu_selesai_penyidikan'
+                        name="waktu_selesai_penyidikan"
                       />
                       <input
                         type="text"
@@ -964,7 +988,9 @@ export const AddPenyidikanModal = ({
                     </div>
                     <p className="error-text">
                       {errors?.map((item) =>
-                        item === 'waktu_selesai_penyidikan' ? 'Pilih mulai penyidikan' : ''
+                        item === "waktu_selesai_penyidikan"
+                          ? "Pilih mulai penyidikan"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -989,19 +1015,19 @@ export const AddPenyidikanModal = ({
                     />
                     <p className="error-text absolute bottom-1">
                       {errors?.map((item) =>
-                        item === 'agenda_penyidikan'
-                          ? 'Masukan Agenda Penyidikan'
-                          : '',
+                        item === "agenda_penyidikan"
+                          ? "Masukan Agenda Penyidikan"
+                          : ""
                       )}
                     </p>
                   </div>
                 </div>
 
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -1029,14 +1055,14 @@ export const AddPenyidikanModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Penyidikan
                     </button>
                   ) : (
                     <button
                       className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -1064,22 +1090,22 @@ export const AddPenyidikanModal = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Penyidikan
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

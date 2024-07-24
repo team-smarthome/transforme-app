@@ -219,7 +219,7 @@ export const AddBAP = ({ namaDokumenBap, handleNext }: any) => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -252,7 +252,7 @@ export const AddBAP = ({ namaDokumenBap, handleNext }: any) => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -291,15 +291,15 @@ export const AddBAP = ({ namaDokumenBap, handleNext }: any) => {
         return;
       }
 
-      setFormState({ ...formState, link_dokumen_bap: file});
+      setFormState({ ...formState, link_dokumen_bap: file });
 
       // const reader = new FileReader();
 
       // reader.onloadend = async () => {
       //   await setFormState({ ...formState, link_dokumen_bap: reader.result });
-        // console.log(formState.pdf_file_base64, 'Preview');
-        // console.log(file, 'Preview');
-        // console.log(reader.result, 'Preview');
+      // console.log(formState.pdf_file_base64, 'Preview');
+      // console.log(file, 'Preview');
+      // console.log(reader.result, 'Preview');
       // };
 
       // reader.readAsDataURL(file);
@@ -374,7 +374,7 @@ export const AddBAP = ({ namaDokumenBap, handleNext }: any) => {
       setIsLoading(false);
       console.log(e.message);
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }

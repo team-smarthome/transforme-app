@@ -300,7 +300,13 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -362,7 +368,13 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
     });
   };
 
-  const ExampleCustomTimeInput = ({ date, value, onChange }: any) => <input value={value} onChange={(e) => onChange(e.target.value)} style={{ border: "solid 1px pink" }} />;
+  const ExampleCustomTimeInput = ({ date, value, onChange }: any) => (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      style={{ border: "solid 1px pink" }}
+    />
+  );
 
   const validateForm = () => {
     let errorFields: any = [];
@@ -432,27 +444,49 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
         continue;
       }
 
-      if (formState.status_wbp_kasus_id === "" || formState.status_wbp_kasus_id === null) {
+      if (
+        formState.status_wbp_kasus_id === "" ||
+        formState.status_wbp_kasus_id === null
+      ) {
         console.log("STATUS KOSONG");
-        if (key === "tanggal_penetapan_tersangka" || key === "tanggal_penetapan_terdakwa" || key === "tanggal_penetapan_terpidana") {
+        if (
+          key === "tanggal_penetapan_tersangka" ||
+          key === "tanggal_penetapan_terdakwa" ||
+          key === "tanggal_penetapan_terpidana"
+        ) {
           continue;
         }
-      } else if (formState.status_wbp_kasus_id === "55ae39b7-dbad-4c89-8968-6d1e2450c963") {
+      } else if (
+        formState.status_wbp_kasus_id === "55ae39b7-dbad-4c89-8968-6d1e2450c963"
+      ) {
         //terpidana
         console.log("STATUS terpidana");
-        if (key === "tanggal_penetapan_tersangka" || key === "tanggal_penetapan_terdakwa") {
+        if (
+          key === "tanggal_penetapan_tersangka" ||
+          key === "tanggal_penetapan_terdakwa"
+        ) {
           continue;
         }
-      } else if (formState.status_wbp_kasus_id === "ca91a6a8-4a1e-4bb3-a6bf-7a2e708a2064") {
+      } else if (
+        formState.status_wbp_kasus_id === "ca91a6a8-4a1e-4bb3-a6bf-7a2e708a2064"
+      ) {
         //terdakwa
         console.log("STATUS terdakwa");
-        if (key === "tanggal_penetapan_tersangka" || key === "tanggal_penetapan_terpidana") {
+        if (
+          key === "tanggal_penetapan_tersangka" ||
+          key === "tanggal_penetapan_terpidana"
+        ) {
           continue;
         }
-      } else if (formState.status_wbp_kasus_id === "e9e467a1-9132-4787-8938-7517da9ba964") {
+      } else if (
+        formState.status_wbp_kasus_id === "e9e467a1-9132-4787-8938-7517da9ba964"
+      ) {
         //tersangka
         console.log("STATUS tersangka");
-        if (key === "tanggal_penetapan_terdakwa" || key === "tanggal_penetapan_terpidana") {
+        if (
+          key === "tanggal_penetapan_terdakwa" ||
+          key === "tanggal_penetapan_terpidana"
+        ) {
           continue;
         }
       }
@@ -500,7 +534,9 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
     let updatedFormState;
 
     if (name === "gelang_id") {
-      const selectedGelang = gelang.find((item: any) => item.gelang_id === value);
+      const selectedGelang = gelang.find(
+        (item: any) => item.gelang_id === value
+      );
       updatedFormState = {
         ...formState,
         gelang_id: value,
@@ -533,7 +569,6 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
     }
   }, []);
 
-
   // const handleImageChange = (e: any) => {
   //   const file = e.target.files[0];
   //   if (file) {
@@ -554,23 +589,25 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-  
+
       reader.onloadend = () => {
         const updatedFormState = { ...formState, foto_wajah: reader.result };
-        
+
         // Simpan formState yang diperbarui ke localStorage
         localStorage.setItem("formState", JSON.stringify(updatedFormState));
-        
+
         setFormState(updatedFormState);
       };
-  
+
       reader.readAsDataURL(file);
     }
   };
 
   const handleRemoveFoto = () => {
     setFormState({ ...formState, foto_wajah: "" });
-    const inputElement = document.getElementById("image-upload") as HTMLInputElement;
+    const inputElement = document.getElementById(
+      "image-upload"
+    ) as HTMLInputElement;
     if (inputElement) {
       inputElement.value = "";
     }
@@ -586,7 +623,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -607,7 +644,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -629,11 +666,13 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
           value: item.wbp_profile_id,
           label: `${item.nama} (Tersangka)`,
         }));
-        setPihakTerlibat((prevPihakTerlibat) => prevPihakTerlibat.concat(tersangka));
+        setPihakTerlibat((prevPihakTerlibat) =>
+          prevPihakTerlibat.concat(tersangka)
+        );
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -661,7 +700,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -685,7 +724,9 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       if (responseRead.data.status === "OK") {
         let temp = responseRead.data.records;
         temp.forEach((obj: any) => {
-          obj.akses_ruangan_otmil_id = obj.akses_ruangan_otmil.map((item: any) => item.ruangan_otmil_id);
+          obj.akses_ruangan_otmil_id = obj.akses_ruangan_otmil.map(
+            (item: any) => item.ruangan_otmil_id
+          );
         });
         // setData(temp);
         // setPages(responseRead.data.pagination.totalPages);
@@ -701,7 +742,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -725,7 +766,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       }, token)
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -763,7 +804,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       // return true
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -812,7 +853,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -831,7 +872,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -852,7 +893,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -871,7 +912,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -889,7 +930,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -907,7 +948,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -925,7 +966,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -943,7 +984,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -961,7 +1002,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -979,7 +1020,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -997,7 +1038,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1020,7 +1061,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1044,7 +1085,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       }, token)
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1071,7 +1112,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1098,7 +1139,7 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -1293,8 +1334,12 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
 
   const handleSelectJenisPerkara = (e: any) => {
     const selectedId = e?.value;
-    const vonisFilter = jenisPerkara.find((item: any) => item.jenis_perkara_id === selectedId);
-    const kategoriPerkara: any = dataJenisPerkara.find((item: any) => item.jenis_perkara_id === e?.value);
+    const vonisFilter = jenisPerkara.find(
+      (item: any) => item.jenis_perkara_id === selectedId
+    );
+    const kategoriPerkara: any = dataJenisPerkara.find(
+      (item: any) => item.jenis_perkara_id === e?.value
+    );
     setFormState({
       ...formState,
       jenis_perkara_id: selectedId,
@@ -1302,10 +1347,16 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       vonis_bulan_perkara: vonisFilter ? vonisFilter.vonis_bulan_perkara : "",
       vonis_hari_perkara: vonisFilter ? vonisFilter.vonis_hari_perkara : "",
 
-      kategori_perkara_id: kategoriPerkara ? kategoriPerkara.kategori_perkara_id : "",
+      kategori_perkara_id: kategoriPerkara
+        ? kategoriPerkara.kategori_perkara_id
+        : "",
       jenis_pidana_id: kategoriPerkara ? kategoriPerkara.jenis_pidana_id : "",
-      nama_jenis_perkara: kategoriPerkara ? kategoriPerkara.nama_jenis_perkara : "",
-      nama_jenis_pidana: kategoriPerkara ? kategoriPerkara.nama_jenis_pidana : "",
+      nama_jenis_perkara: kategoriPerkara
+        ? kategoriPerkara.nama_jenis_perkara
+        : "",
+      nama_jenis_pidana: kategoriPerkara
+        ? kategoriPerkara.nama_jenis_pidana
+        : "",
     });
   };
 
@@ -1393,8 +1444,12 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
 
   const handleSelectJenisKasus = (selectedOption: any) => {
     if (selectedOption && selectedOption.value) {
-      const filterKasus = kasusData.find((item) => item.kasus_id == selectedOption.value);
-      const existingWbpId = filterKasus?.wbp_profile.map((item) => item.wbp_profile_id);
+      const filterKasus = kasusData.find(
+        (item) => item.kasus_id == selectedOption.value
+      );
+      const existingWbpId = filterKasus?.wbp_profile.map(
+        (item) => item.wbp_profile_id
+      );
       console.log(filterKasus, "INI HASIL FILTER");
       console.log(existingWbpId, "INI HASIL EXISTING");
       console.log(kasusData, "INI KASUS DATA");
@@ -1432,7 +1487,9 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
 
   //start handle zona
   const [zona, setZona] = useState<any>([]);
-  const [autocompleteDataZona, setAutocompleteDataZona]: any[] = useState([zona]);
+  const [autocompleteDataZona, setAutocompleteDataZona]: any[] = useState([
+    zona,
+  ]);
 
   // const handleAddZona = (zonaId: number, isPermitted: number) => {
   //   console.log('ZONA', zonaId, 'INPUT', isPermitted);
@@ -1502,15 +1559,23 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
       // Update formState
       const updatedFormState = {
         ...formState,
-        akses_ruangan_otmil_id: [...formState.akses_ruangan_otmil_id, objectZona],
+        akses_ruangan_otmil_id: [
+          ...formState.akses_ruangan_otmil_id,
+          objectZona,
+        ],
       };
       setFormState(updatedFormState);
 
       // Remove the selected zona from the autocomplete data
-      setAutocompleteDataZona((prevData: any) => prevData.filter((zonaItem: any) => zonaItem.ruangan_otmil_id !== zonaId));
+      setAutocompleteDataZona((prevData: any) =>
+        prevData.filter((zonaItem: any) => zonaItem.ruangan_otmil_id !== zonaId)
+      );
 
       // Simpan data yang diperbarui ke localStorage
-      localStorage.setItem("akses_ruangan_otmil_id", JSON.stringify(updatedFormState.akses_ruangan_otmil_id));
+      localStorage.setItem(
+        "akses_ruangan_otmil_id",
+        JSON.stringify(updatedFormState.akses_ruangan_otmil_id)
+      );
     }
   };
 
@@ -1553,15 +1618,23 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
     // Hapus zona dari selected input field
     const updatedFormState = {
       ...formState,
-      akses_ruangan_otmil_id: formState.akses_ruangan_otmil_id.filter((id: any) => id.id !== zonaId),
+      akses_ruangan_otmil_id: formState.akses_ruangan_otmil_id.filter(
+        (id: any) => id.id !== zonaId
+      ),
     };
     setFormState(updatedFormState);
 
     // Tambahkan zona yang dihapus kembali ke data autocomplete
-    setAutocompleteDataZona((prevData: any) => [...prevData, zona.find((zonaItem: any) => zonaItem.ruangan_otmil_id === zonaId)]);
+    setAutocompleteDataZona((prevData: any) => [
+      ...prevData,
+      zona.find((zonaItem: any) => zonaItem.ruangan_otmil_id === zonaId),
+    ]);
 
     // Simpan data yang diperbarui ke localStorage
-    localStorage.setItem("akses_ruangan_otmil_id", JSON.stringify(updatedFormState.akses_ruangan_otmil_id));
+    localStorage.setItem(
+      "akses_ruangan_otmil_id",
+      JSON.stringify(updatedFormState.akses_ruangan_otmil_id)
+    );
   };
 
   //end handle zona
@@ -1608,25 +1681,53 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
         <div className="bg-slate-600 w-full h-full p-6">
           <div className="form group w-full h-[360px]">
             <div className="mb-4">
-              <p className="text-center bg-slate-500 font-bold text-white rounded-md">Data Tersangka</p>
+              <p className="text-center bg-slate-500 font-bold text-white rounded-md">
+                Data Tersangka
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               {/* Foto Wajah */}
               <div className="mt-1 flex flex-col items-center h-65">
                 {formState.foto_wajah ? (
-                  <img className="object-contain w-[300px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md" src={formState.foto_wajah} alt="Image Preview" />
+                  <img
+                    className="object-contain w-[300px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                    src={formState.foto_wajah}
+                    alt="Image Preview"
+                  />
                 ) : (
-                  <img className="w-[300px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md" src="https://via.placeholder.com/300x300" alt="Placeholder" />
+                  <img
+                    className="w-[300px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                    src="https://via.placeholder.com/300x300"
+                    alt="Placeholder"
+                  />
                 )}
-                <input accept="image/*" type="file" id="image-upload" style={{ display: "none" }} onChange={handleImageChange} />
+                <input
+                  accept="image/*"
+                  type="file"
+                  id="image-upload"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
                 <div className="flex gap-2">
                   <label htmlFor="image-upload">
-                    <div className="f-unggah-gambar cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded">Unggah Gambar</div>
+                    <div className="f-unggah-gambar cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded">
+                      Unggah Gambar
+                    </div>
                   </label>
 
-                  <button onClick={handleRemoveFoto} className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                  <button
+                    onClick={handleRemoveFoto}
+                    className="t-remove-gambar cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -1635,13 +1736,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     </svg>
                   </button>
                 </div>
-                <p className="error-text">{errors.map((item) => (item === "foto_wajah" ? "Masukan foto" : ""))}</p>
+                <p className="error-text">
+                  {errors.map((item) =>
+                    item === "foto_wajah" ? "Masukan foto" : ""
+                  )}
+                </p>
               </div>
 
               <div className="flex flex-col gap-1">
                 {/* Nama */}
                 <div className="f-nama form-group w-full flex flex-col">
-                  <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                  <label
+                    className="  block text-sm font-medium text-black dark:text-white"
+                    htmlFor="id"
+                  >
                     Nama
                   </label>
                   <input
@@ -1651,12 +1759,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     onChange={handleChange}
                     value={formState.nama}
                   />
-                  <p className="error-text">{errors.map((item) => (item === "nama" ? "Masukan nama" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "nama" ? "Masukan nama" : ""
+                    )}
+                  </p>
                 </div>
 
                 {/* Pangkat */}
                 <div className="f-pangkat form-group w-full flex flex-col mt-3">
-                  <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                  <label
+                    className="  block text-sm font-medium text-black dark:text-white"
+                    htmlFor="id"
+                  >
                     Pangkat
                   </label>
                   <Select
@@ -1674,12 +1789,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     onChange={handleSelectPangkat}
                     defaultValue={formState.pangkat}
                   />
-                  <p className="error-text">{errors.map((item) => (item === "pangkat_id" ? "Pilih pangkat" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "pangkat_id" ? "Pilih pangkat" : ""
+                    )}
+                  </p>
                 </div>
 
                 {/* Matra */}
                 <div className="f-pangkat form-group w-full flex flex-col mt-3">
-                  <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                  <label
+                    className="  block text-sm font-medium text-black dark:text-white"
+                    htmlFor="id"
+                  >
                     Matra
                   </label>
                   <Select
@@ -1697,12 +1819,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     onChange={handleSelectMatra}
                     defaultValue={formState.matra}
                   />
-                  <p className="error-text">{errors.map((item) => (item === "matra_id" ? "Pilih matra" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "matra_id" ? "Pilih matra" : ""
+                    )}
+                  </p>
                 </div>
 
                 {/* NRP  */}
                 <div className="f-nrp form-group w-full flex flex-col mt-3">
-                  <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                  <label
+                    className="  block text-sm font-medium text-black dark:text-white"
+                    htmlFor="id"
+                  >
                     NRP
                   </label>
                   <input
@@ -1712,7 +1841,11 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     onChange={handleChange}
                     value={formState.nrp}
                   />
-                  <p className="error-text">{errors.map((item) => (item === "nrp" ? "Masukan nomor" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "nrp" ? "Masukan nomor" : ""
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
@@ -1721,7 +1854,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
           <div className="grid grid-cols-2 gap-2 mt-18">
             {/* Pendidikan*/}
             <div className="f-pendidikan form-group w-full flex flex-col ">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Pendidikan Militer
               </label>
               <Select
@@ -1739,12 +1875,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectPendidikan}
                 defaultValue={formState.pendidikan}
               />
-              <p className="error-text">{errors.map((item) => (item === "pendidikan_id" ? "Pilih pendidikan" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "pendidikan_id" ? "Pilih pendidikan" : ""
+                )}
+              </p>
             </div>
 
             {/* Kesatuan */}
             <div className="f-kesatuan form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Kesatuan
               </label>
 
@@ -1763,12 +1906,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectKesatuan}
                 defaultValue={formState.kesatuan}
               />
-              <p className="error-text">{errors.map((item) => (item === "kesatuan_id" ? "Pilih kesatuan" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "kesatuan_id" ? "Pilih kesatuan" : ""
+                )}
+              </p>
             </div>
 
             {/* Jenis Kelamin */}
             <div className="f-kelamin form-group w-full flex flex-col">
-              <label className=" block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className=" block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Jenis Kelamin
               </label>
               <select
@@ -1783,12 +1933,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 <option value="1">Laki-laki</option>
                 <option value="0">Perempuan</option>
               </select>
-              <p className="error-text">{errors.map((item) => (item === "jenis_kelamin" ? "Pilih jenis kelamin" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "jenis_kelamin" ? "Pilih jenis kelamin" : ""
+                )}
+              </p>
             </div>
 
             {/* Agama */}
             <div className="f-agama form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Agama
               </label>
               <Select
@@ -1806,12 +1963,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectAgama}
                 defaultValue={formState.agama}
               />
-              <p className="error-text">{errors.map((item) => (item === "agama_id" ? "Pilih agama" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "agama_id" ? "Pilih agama" : ""
+                )}
+              </p>
             </div>
 
             {/* Tempat Lahir */}
             <div className="f-tempat-lahir form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Tempat Lahir
               </label>
               <input
@@ -1821,12 +1985,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleChange}
                 value={formState.tempat_lahir}
               />
-              <p className="error-text">{errors.map((item) => (item === "tempat_lahir" ? "Masukan tempat_lahir" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "tempat_lahir" ? "Masukan tempat_lahir" : ""
+                )}
+              </p>
             </div>
 
             {/* Tanggal Lahir */}
             <div className="f-tanggal-lahir form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Tanggal Lahir
               </label>
               <input
@@ -1836,12 +2007,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleChange}
                 value={formState.tanggal_lahir}
               />
-              <p className="error-text">{errors.map((item) => (item === "tanggal_lahir" ? "Masukan tanggal lahir" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "tanggal_lahir" ? "Masukan tanggal lahir" : ""
+                )}
+              </p>
             </div>
 
             {/* Provinsi */}
             <div className="f-provinsi form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Provinsi
               </label>
               <Select
@@ -1859,12 +2037,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectProvinsi}
                 defaultValue={formState.provinsi}
               />
-              <p className="error-text">{errors.map((item) => (item === "provinsi_id" ? "Pilih provinsi" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "provinsi_id" ? "Pilih provinsi" : ""
+                )}
+              </p>
             </div>
 
             {/* Kota */}
             <div className="f-kota form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Kota
               </label>
               <Select
@@ -1886,13 +2071,18 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectKota}
                 defaultValue={formState.kota}
               />
-              <p className="error-text">{errors.map((item) => (item === "kota_id" ? "Pilih Kota" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) => (item === "kota_id" ? "Pilih Kota" : ""))}
+              </p>
             </div>
           </div>
 
           {/* Alamat */}
           <div className="f-alamat form-group w-full flex flex-col mt-3">
-            <label className=" block text-sm font-medium text-black dark:text-white" htmlFor="id">
+            <label
+              className=" block text-sm font-medium text-black dark:text-white"
+              htmlFor="id"
+            >
               Alamat
             </label>
             <textarea
@@ -1902,13 +2092,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
               onChange={handleChange}
               value={formState.alamat}
             />
-            <p className="error-text">{errors.map((item) => (item === "alamat" ? "Masukan alamat" : ""))}</p>
+            <p className="error-text">
+              {errors.map((item) =>
+                item === "alamat" ? "Masukan alamat" : ""
+              )}
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4 mt-4">
             {/* Status Kawin */}
             <div className="f-status-kawin form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Status Kawin
               </label>
 
@@ -1927,12 +2124,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectStatusKawin}
                 defaultValue={formState.status_kawin}
               />
-              <p className="error-text">{errors.map((item) => (item === "status_kawin_id" ? "Pilih status nikah" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "status_kawin_id" ? "Pilih status nikah" : ""
+                )}
+              </p>
             </div>
 
             {/* Kontak Keluarga Nama */}
             <div className="f-nama-keluarga form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Nama Keluarga
               </label>
               <input
@@ -1942,12 +2146,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleChange}
                 value={formState.nama_kontak_keluarga}
               />
-              <p className="error-text">{errors.map((item) => (item === "nama_kontak_keluarga" ? "Masukan nama keluarga" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "nama_kontak_keluarga" ? "Masukan nama keluarga" : ""
+                )}
+              </p>
             </div>
 
             {/* Status Keluarga */}
             <div className="f-status-keluarga form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Status Hubungan
               </label>
               <input
@@ -1958,12 +2169,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 value={formState.hubungan_kontak_keluarga}
               />
 
-              <p className="error-text">{errors.map((item) => (item === "hubungan_kontak_keluarga" ? "Pilih status hubungan" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "hubungan_kontak_keluarga"
+                    ? "Pilih status hubungan"
+                    : ""
+                )}
+              </p>
             </div>
 
             {/* Kontak Keluarga no HP */}
             <div className="f-kontak-keluarga form-group w-full flex flex-col">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Nomor Kontak Keluarga
               </label>
               <input
@@ -1973,12 +2193,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleChange}
                 value={formState.nomor_kontak_keluarga}
               />
-              <p className="error-text">{errors.map((item) => (item === "nomor_kontak_keluarga" ? "Masukan kontak keluarga" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "nomor_kontak_keluarga"
+                    ? "Masukan kontak keluarga"
+                    : ""
+                )}
+              </p>
             </div>
 
             {/* Keahlian */}
             <div className="f-keahlian form-group w-full ">
-              <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+              <label
+                className="  block text-sm font-medium text-black dark:text-white"
+                htmlFor="id"
+              >
                 Keahlian
               </label>
               <Select
@@ -1996,12 +2225,18 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 onChange={handleSelectBidangKeahlian}
                 defaultValue={formState.bidang_keahlian}
               />
-              <p className="error-text">{errors.map((item) => (item === "bidang_keahlian_id" ? "Pilih keahlian" : ""))}</p>
+              <p className="error-text">
+                {errors.map((item) =>
+                  item === "bidang_keahlian_id" ? "Pilih keahlian" : ""
+                )}
+              </p>
             </div>
           </div>
 
           <div className="mb-4 mt-4">
-            <p className="text-center bg-slate-500 font-bold text-white rounded-md">Data Perkara</p>
+            <p className="text-center bg-slate-500 font-bold text-white rounded-md">
+              Data Perkara
+            </p>
           </div>
 
           <div className="mt-4">
@@ -2009,7 +2244,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
               {/* buat kasus baru */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="form-group w-full">
-                  <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                  <label
+                    htmlFor="id"
+                    className="block text-sm font-medium text-black dark:text-white"
+                  >
                     Buat Kasus Baru (?)
                   </label>
                   <select
@@ -2023,10 +2261,15 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     <option value="false">Tidak</option>
                     <option value="true">Ya</option>
                   </select>
-                  <p className="error-text">{errors.map((item) => (item === "is_new_kasus" ? "Pilih Ya/Tidak" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "is_new_kasus" ? "Pilih Ya/Tidak" : ""
+                    )}
+                  </p>
                 </div>
               </div>
-              {formState.is_new_kasus == "" ? null : buatKasusBaru === "true" ? (
+              {formState.is_new_kasus == "" ? null : buatKasusBaru ===
+                "true" ? (
                 // Kasus Baru
                 <div className="grid grid-cols-1 gap-4">
                   {/* <div className="form-group w-full ">
@@ -2052,7 +2295,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                   </div> */}
 
                   <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Nama Kasus
                     </label>
                     <input
@@ -2063,19 +2309,34 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       // disabled={isDetail}
                     />
                     <div className="">
-                      <p className="error-text">{errors.map((item) => (item === "nama_kasus" ? "Masukkan Nama Kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "nama_kasus" ? "Masukkan Nama Kasus" : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   <div className="f-alamat form-group">
-                    <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                    <label
+                      htmlFor="id"
+                      className="block text-sm font-medium text-black dark:text-white"
+                    >
                       Jenis Perkara
                     </label>
                     <Select
                       className="basic-single p-gelang"
                       classNamePrefix="select"
                       styles={CustomStyles}
-                      defaultValue={formState.jenis_perkara_id ? jenisPerkara.find((item: any) => item.jenis_perkara_id === formState.jenis_perkara_id) : formState.jenis_perkara_id}
+                      defaultValue={
+                        formState.jenis_perkara_id
+                          ? jenisPerkara.find(
+                              (item: any) =>
+                                item.jenis_perkara_id ===
+                                formState.jenis_perkara_id
+                            )
+                          : formState.jenis_perkara_id
+                      }
                       placeholder={"Pilih Jenis Perkara"}
                       isSearchable={true}
                       isClearable={true}
@@ -2086,12 +2347,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       }))}
                       onChange={handleSelectJenisPerkara}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "jenis_perkara_id" ? "Pilih jenis perkara" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "jenis_perkara_id" ? "Pilih jenis perkara" : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
                     <div className="f-alamat form-group">
-                      <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                      <label
+                        htmlFor="id"
+                        className="block text-sm font-medium text-black dark:text-white"
+                      >
                         Vonis Tahun
                       </label>
                       <input
@@ -2101,11 +2369,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                         value={formState.vonis_tahun_perkara}
                         disabled
                       />
-                      <p className="error-text">{errors.map((item) => (item === "vonis_tahun_perkara" ? "Masukan tanggal masa penahanan" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "vonis_tahun_perkara"
+                            ? "Masukan tanggal masa penahanan"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     <div className="f-alamat form-group">
-                      <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                      <label
+                        htmlFor="id"
+                        className="block text-sm font-medium text-black dark:text-white"
+                      >
                         Vonis Bulan
                       </label>
                       <input
@@ -2118,7 +2395,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     </div>
 
                     <div className="f-alamat form-group">
-                      <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                      <label
+                        htmlFor="id"
+                        className="block text-sm font-medium text-black dark:text-white"
+                      >
                         Vonis Hari
                       </label>
                       <input
@@ -2132,7 +2412,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                   </div>
 
                   <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white pt-3" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white pt-3"
+                      htmlFor="id"
+                    >
                       Nama Jenis Pidana
                     </label>
                     <input
@@ -2144,12 +2427,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       disabled
                     />
                     <div className="h-2">
-                      <p className="error-text">{errors.map((item) => (item === "nama_jenis_pidana" ? "Masukan Nama Jenis Pidana" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "nama_jenis_pidana"
+                            ? "Masukan Nama Jenis Pidana"
+                            : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Lokasi Kasus
                     </label>
                     <input
@@ -2159,13 +2451,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleChange}
                     />
                     <div className="">
-                      <p className="error-text">{errors.map((item) => (item === "lokasi_kasus" ? "Masukan Lokasi Kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "lokasi_kasus" ? "Masukan Lokasi Kasus" : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2">
                     <div className="f-tanggal-lahir form-group w-full flex flex-col">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Tanggal Kejadian Kasus
                       </label>
                       <div className="flex">
@@ -2177,7 +2476,11 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           value={formState.waktu_kejadian}
                         /> */}
                         <DatePicker
-                          selected={formState.waktu_kejadian ? dayjs(formState.waktu_kejadian).toDate() : dayjs().toDate()}
+                          selected={
+                            formState.waktu_kejadian
+                              ? dayjs(formState.waktu_kejadian).toDate()
+                              : dayjs().toDate()
+                          }
                           showTimeInput
                           timeFormat="HH:mm"
                           onChange={handleWaktuKejadian}
@@ -2197,11 +2500,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "waktu_kejadian" ? "Masukan waktu kejadian" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "waktu_kejadian"
+                            ? "Masukan waktu kejadian"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     <div className="f-tanggal-lahir form-group w-full flex flex-col mb-5">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Tanggal Pelaporan Kasus
                       </label>
                       <div className="flex">
@@ -2220,11 +2532,20 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "waktu_pelaporan_kasus" ? "Masukan waktu pelaporan kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "waktu_pelaporan_kasus"
+                            ? "Masukan waktu pelaporan kasus"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     <div className="form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Tanggal Pelimpahan Kasus
                       </label>
                       <input
@@ -2236,7 +2557,13 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                         // disabled={isDetail}
                         max={maxDate}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "tanggal_pelimpahan_kasus" ? "Masukan Tanggal Pelimpahan Kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "tanggal_pelimpahan_kasus"
+                            ? "Masukan Tanggal Pelimpahan Kasus"
+                            : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
@@ -2266,34 +2593,85 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                   </div>
 
                   <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white pt-3" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white pt-3"
+                      htmlFor="id"
+                    >
                       Oditur Penyidik
                     </label>
-                    <Select className="capitalize text-white" isMulti placeholder="Pilih Oditur Penyidik" styles={customStyles} options={oditurPenyidikOptions} onChange={handleSelectOditurPenyidik} />
-                    <div className="h-2">
-                      <p className="error-text">{errors.map((item) => (item === "nama" ? "Masukan Tersangka" : ""))}</p>
-                    </div>
-                  </div>
-
-                  <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white pt-3" htmlFor="id">
-                      Ketua Oditur Penyidik
-                    </label>
-                    <Select className="capitalize" placeholder="Pilih Ketua Oditur" styles={customStyles} options={ketuaOditurPenyidik} onChange={handleSelectKetuaOditur} />
-                    <div className="h-2">
-                      <p className="error-text">{errors.map((item) => (item === "role_ketua_oditur_ids" ? "Pilih Ketua Oditur Penyidik" : ""))}</p>
-                    </div>
-                  </div>
-
-                  <div className="form-group w-full">
-                    <label className="block text-sm font-medium text-black dark:text-white pt-3" htmlFor="id">
-                      Pihak Terlibat
-                    </label>
-                    <Select className="capitalize" isMulti placeholder="Pihak Terlibat" styles={customStyles} options={pihakTerlibat} onChange={handleSelectPihakTerlibat} />
+                    <Select
+                      className="capitalize text-white"
+                      isMulti
+                      placeholder="Pilih Oditur Penyidik"
+                      styles={customStyles}
+                      options={oditurPenyidikOptions}
+                      onChange={handleSelectOditurPenyidik}
+                    />
                     <div className="h-2">
                       <p className="error-text">
-                        {errors.includes("saksi_id") || errors.includes("wbp_profile_ids")
-                          ? `${errors.includes("wbp_profile_ids") ? "Tersangka" : ""} ${errors.includes("saksi_id") && errors.includes("wbp_profiles_ids") ? "Dan" : ""} ${errors.includes("saksi_id") ? "Saksi" : ""} Belum di Pilih`
+                        {errors.map((item) =>
+                          item === "nama" ? "Masukan Tersangka" : ""
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="form-group w-full">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white pt-3"
+                      htmlFor="id"
+                    >
+                      Ketua Oditur Penyidik
+                    </label>
+                    <Select
+                      className="capitalize"
+                      placeholder="Pilih Ketua Oditur"
+                      styles={customStyles}
+                      options={ketuaOditurPenyidik}
+                      onChange={handleSelectKetuaOditur}
+                    />
+                    <div className="h-2">
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "role_ketua_oditur_ids"
+                            ? "Pilih Ketua Oditur Penyidik"
+                            : ""
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="form-group w-full">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white pt-3"
+                      htmlFor="id"
+                    >
+                      Pihak Terlibat
+                    </label>
+                    <Select
+                      className="capitalize"
+                      isMulti
+                      placeholder="Pihak Terlibat"
+                      styles={customStyles}
+                      options={pihakTerlibat}
+                      onChange={handleSelectPihakTerlibat}
+                    />
+                    <div className="h-2">
+                      <p className="error-text">
+                        {errors.includes("saksi_id") ||
+                        errors.includes("wbp_profile_ids")
+                          ? `${
+                              errors.includes("wbp_profile_ids")
+                                ? "Tersangka"
+                                : ""
+                            } ${
+                              errors.includes("saksi_id") &&
+                              errors.includes("wbp_profiles_ids")
+                                ? "Dan"
+                                : ""
+                            } ${
+                              errors.includes("saksi_id") ? "Saksi" : ""
+                            } Belum di Pilih`
                           : ""}
                       </p>
                     </div>
@@ -2301,19 +2679,28 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                   {selectTersangka.length === 0 ? null : (
                     <>
                       <div className="grid grid-rows-2">
-                        <label htmlFor="id" className="mt-4 block text-sm font-medium text-black dark:text-white">
+                        <label
+                          htmlFor="id"
+                          className="mt-4 block text-sm font-medium text-black dark:text-white"
+                        >
                           Tersangka
                         </label>
 
                         <div className="flex items-center mt-2 pl-4 bg-slate-700 rounded-t">
                           <div className="form-group w-2/6">
-                            <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                            <label
+                              htmlFor="id"
+                              className="block text-sm font-medium text-black dark:text-white"
+                            >
                               Nama Tersangka
                             </label>
                           </div>
 
                           <div className="form-group w-4/6">
-                            <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                            <label
+                              htmlFor="id"
+                              className="block text-sm font-medium text-black dark:text-white"
+                            >
                               Keterangan
                             </label>
                           </div>
@@ -2322,9 +2709,15 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                         <div className="h-32 overflow-y-auto bg-slate-800 rounded-b">
                           {selectTersangka.map((item: any, index: number) => {
                             return (
-                              <div className="flex items-center mt-2 bg-slate-800 py-2 pl-4" key={index}>
+                              <div
+                                className="flex items-center mt-2 bg-slate-800 py-2 pl-4"
+                                key={index}
+                              >
                                 <div className="form-group w-2/6">
-                                  <label htmlFor={`keterangans-${index}`} className="capitalize block text-sm font-medium text-black dark:text-white">
+                                  <label
+                                    htmlFor={`keterangans-${index}`}
+                                    className="capitalize block text-sm font-medium text-black dark:text-white"
+                                  >
                                     {item.label}
                                   </label>
                                 </div>
@@ -2333,8 +2726,14 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                                   <input
                                     id={`keterangans${index}`}
                                     className="w-full rounded border border-stroke py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                                    placeholder={`${errors.includes("keterangan") ? "Keterangan Belum Di Isi" : "Keterangan"}`}
-                                    onChange={(e) => handleChangeKeteranganTersangka(e, index)}
+                                    placeholder={`${
+                                      errors.includes("keterangan")
+                                        ? "Keterangan Belum Di Isi"
+                                        : "Keterangan"
+                                    }`}
+                                    onChange={(e) =>
+                                      handleChangeKeteranganTersangka(e, index)
+                                    }
                                     // disabled={isDetail}
                                   />
                                 </div>
@@ -2349,19 +2748,28 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                   {selectSaksi.length === 0 ? null : (
                     <>
                       <div className="grid grid-rows-2">
-                        <label htmlFor="id" className="mt-4 block text-sm font-medium text-black dark:text-white">
+                        <label
+                          htmlFor="id"
+                          className="mt-4 block text-sm font-medium text-black dark:text-white"
+                        >
                           Saksi
                         </label>
 
                         <div className="flex items-center mt-2 pl-4 bg-slate-700 rounded-t">
                           <div className="form-group w-2/6">
-                            <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                            <label
+                              htmlFor="id"
+                              className="block text-sm font-medium text-black dark:text-white"
+                            >
                               Nama Saksi
                             </label>
                           </div>
 
                           <div className="form-group w-4/6">
-                            <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                            <label
+                              htmlFor="id"
+                              className="block text-sm font-medium text-black dark:text-white"
+                            >
                               Keterangan Saksi
                             </label>
                           </div>
@@ -2370,9 +2778,15 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                         <div className="h-32 overflow-y-auto bg-slate-800 rounded-b">
                           {selectSaksi.map((item: any, index: number) => {
                             return (
-                              <div className="flex items-center mt-2 bg-slate-800 py-2 pl-4" key={index}>
+                              <div
+                                className="flex items-center mt-2 bg-slate-800 py-2 pl-4"
+                                key={index}
+                              >
                                 <div className="form-group w-2/6">
-                                  <label className="capitalize block text-sm font-medium text-black dark:text-white" htmlFor={`keterangan-${index}`}>
+                                  <label
+                                    className="capitalize block text-sm font-medium text-black dark:text-white"
+                                    htmlFor={`keterangan-${index}`}
+                                  >
                                     {item.label}
                                   </label>
                                 </div>
@@ -2381,8 +2795,14 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                                   <input
                                     id={`keterangan-${index}`}
                                     className="w-full rounded border border-stroke py-2 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                                    placeholder={`${errors.includes("keteranganSaksis") ? "Keterangan Belum Di Isi" : "Keterangan Saksi"}`}
-                                    onChange={(e) => handleChangeKeterangan(e, index)}
+                                    placeholder={`${
+                                      errors.includes("keteranganSaksis")
+                                        ? "Keterangan Belum Di Isi"
+                                        : "Keterangan Saksi"
+                                    }`}
+                                    onChange={(e) =>
+                                      handleChangeKeterangan(e, index)
+                                    }
                                     // disabled={isDetail}
                                   />
                                 </div>
@@ -2397,7 +2817,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
               ) : (
                 // Select Kasus
                 <div className="f-alamat form-group">
-                  <label htmlFor="id" className="block text-sm font-medium text-black dark:text-white">
+                  <label
+                    htmlFor="id"
+                    className="block text-sm font-medium text-black dark:text-white"
+                  >
                     Jenis Kasus
                   </label>
                   <Select
@@ -2424,7 +2847,11 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                     }))}
                     onChange={handleSelectJenisKasus}
                   />
-                  <p className="error-text">{errors.map((item) => (item === "kasus_id" ? "Pilih kasus" : ""))}</p>
+                  <p className="error-text">
+                    {errors.map((item) =>
+                      item === "kasus_id" ? "Pilih kasus" : ""
+                    )}
+                  </p>
                 </div>
               )}
 
@@ -2432,7 +2859,10 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 <div className="grid grid-cols-2 gap-4">
                   {/* Tanggal diTahan */}
                   <div className="f-tanggal-ditahan form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Tanggal Ditahan
                     </label>
                     <input
@@ -2442,12 +2872,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleChange}
                       value={formState.tanggal_ditahan_otmil}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "tanggal_ditahan_otmil" ? "Masukan tanggal ditahan" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "tanggal_ditahan_otmil"
+                          ? "Masukan tanggal ditahan"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Gelang */}
                   <div className="f-gelang form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Gelang
                     </label>
 
@@ -2467,12 +2906,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleSelectGelang}
                       defaultValue={formState.gelang}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "gelang_id" ? "Pilih gelang" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "gelang_id" ? "Pilih gelang" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* DMAC Gelang */}
                   <div className="f-dmac-gelang form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       DMAC Gelang
                     </label>
                     <input
@@ -2484,12 +2930,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       // onChange={handleChange}
                       value={formState.dmac}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "DMAC" ? "Pilih gelang dulu" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "DMAC" ? "Pilih gelang dulu" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Residivis */}
                   <div className="f-residivis form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Residivis
                     </label>
 
@@ -2506,12 +2959,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       <option value="0">Tidak</option>
                       <option value="1">Ya</option>
                     </select>
-                    <p className="error-text">{errors.map((item) => (item === "residivis" ? "Pilih Ya/Tidak" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "residivis" ? "Pilih Ya/Tidak" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Hunian Tahanan */}
                   <div className="f-hunian-tahanan form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Hunian Tahanan
                     </label>
                     <Select
@@ -2529,12 +2989,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleSelectHunianTahanan}
                       defaultValue={formState.hunian_wbp_otmil}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "hunian_wbp_otmil_id" ? "Pilih hunian" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "hunian_wbp_otmil_id" ? "Pilih hunian" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Nomor Tahanan*/}
                   <div className="f-nomor-tahanan form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Nomor Tahanan
                     </label>
                     <input
@@ -2545,12 +3012,19 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleChange}
                       value={formState.nomor_tahanan}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "nomor_tahanan" ? "Masukan nomor tahanan" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "nomor_tahanan" ? "Masukan nomor tahanan" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Terisolasi */}
                   <div className="f-status-terisolasi form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Terisolasi (?)
                     </label>
                     <select
@@ -2565,14 +3039,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       <option value="0">Tidak</option>
                       <option value="1">Ya</option>
                     </select>
-                    <p className="error-text">{errors.map((item) => (item === "is_isolated" ? "Pilih Ya/Tidak" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "is_isolated" ? "Pilih Ya/Tidak" : ""
+                      )}
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   {/* Status Wbp*/}
                   <div className="f-status-tersangka form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Status Tersangka
                     </label>
                     <Select
@@ -2591,14 +3072,29 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleSelectWbpStatus}
                       defaultValue={formState.status_wbp_kasus}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "status_wbp_kasus_id" ? "Pilih status" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "status_wbp_kasus_id" ? "Pilih status" : ""
+                      )}
+                    </p>
                   </div>
 
-                  {formState.status_wbp_kasus_id === "" || formState.status_wbp_kasus_id === null ? null : (
+                  {formState.status_wbp_kasus_id === "" ||
+                  formState.status_wbp_kasus_id === null ? null : (
                     <>
                       {/* Tanggal Penetapan Terpidana*/}
-                      <div className={`f-tanggal-terpidana form-group w-full  ${formState.status_wbp_kasus_id === "55ae39b7-dbad-4c89-8968-6d1e2450c963" ? "block" : "hidden"}`}>
-                        <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <div
+                        className={`f-tanggal-terpidana form-group w-full  ${
+                          formState.status_wbp_kasus_id ===
+                          "55ae39b7-dbad-4c89-8968-6d1e2450c963"
+                            ? "block"
+                            : "hidden"
+                        }`}
+                      >
+                        <label
+                          className="  block text-sm font-medium text-black dark:text-white"
+                          htmlFor="id"
+                        >
                           Tanggal penetapan terpidana
                         </label>
                         <input
@@ -2608,12 +3104,28 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           onChange={handleChange}
                           value={formState.tanggal_penetapan_terpidana}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "tanggal_penetapan_terpidana" ? "Masukan tanggal penetapan" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "tanggal_penetapan_terpidana"
+                              ? "Masukan tanggal penetapan"
+                              : ""
+                          )}
+                        </p>
                       </div>
 
                       {/* Tanggal Penetapan Terdakwa*/}
-                      <div className={`f-tanggal-terdakwa form-group w-full  ${formState.status_wbp_kasus_id === "ca91a6a8-4a1e-4bb3-a6bf-7a2e708a2064" ? "block" : "hidden"}`}>
-                        <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <div
+                        className={`f-tanggal-terdakwa form-group w-full  ${
+                          formState.status_wbp_kasus_id ===
+                          "ca91a6a8-4a1e-4bb3-a6bf-7a2e708a2064"
+                            ? "block"
+                            : "hidden"
+                        }`}
+                      >
+                        <label
+                          className="  block text-sm font-medium text-black dark:text-white"
+                          htmlFor="id"
+                        >
                           Tanggal penetapan terdakwa
                         </label>
                         <input
@@ -2623,12 +3135,28 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           onChange={handleChange}
                           value={formState.tanggal_penetapan_terdakwa}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "tanggal_penetapan_terdakwa" ? "Masukan tanggal penetapan" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "tanggal_penetapan_terdakwa"
+                              ? "Masukan tanggal penetapan"
+                              : ""
+                          )}
+                        </p>
                       </div>
 
                       {/* Tanggal Penetapan Tersangka*/}
-                      <div className={`f-tanggal-tersangka form-group w-full  ${formState.status_wbp_kasus_id === "e9e467a1-9132-4787-8938-7517da9ba964" ? "block" : "hidden"}`}>
-                        <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <div
+                        className={`f-tanggal-tersangka form-group w-full  ${
+                          formState.status_wbp_kasus_id ===
+                          "e9e467a1-9132-4787-8938-7517da9ba964"
+                            ? "block"
+                            : "hidden"
+                        }`}
+                      >
+                        <label
+                          className="  block text-sm font-medium text-black dark:text-white"
+                          htmlFor="id"
+                        >
                           Tanggal penetapan tersangka
                         </label>
                         <input
@@ -2638,14 +3166,23 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           onChange={handleChange}
                           value={formState.tanggal_penetapan_tersangka}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "tanggal_penetapan_tersangka" ? "Masukan tanggal penetapan" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "tanggal_penetapan_tersangka"
+                              ? "Masukan tanggal penetapan"
+                              : ""
+                          )}
+                        </p>
                       </div>
                     </>
                   )}
 
                   {/* Tanggal Masa Penahanan */}
                   <div className="f-tanggal-masa-penahanan form-group w-full ">
-                    <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="  block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Tanggal Masa Penahanan
                     </label>
                     <input
@@ -2655,21 +3192,32 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                       onChange={handleChange}
                       value={formState.tanggal_masa_penahanan_otmil}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "tanggal_masa_penahanan_otmil" ? "Masukan tanggal masa penahanan" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "tanggal_masa_penahanan_otmil"
+                          ? "Masukan tanggal masa penahanan"
+                          : ""
+                      )}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="mt-4">
-              <p className="mt-10 mb-3 text-center bg-slate-500 font-bold text-white rounded-md">Data Kesehatan</p>
+              <p className="mt-10 mb-3 text-center bg-slate-500 font-bold text-white rounded-md">
+                Data Kesehatan
+              </p>
 
               <div className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 gap-4">
                   <div className="grid grid-cols-2 gap-4">
                     {/* Penyakit */}
                     <div className="f-penyakit form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Penyakit (?)
                       </label>
                       <select
@@ -2685,13 +3233,21 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                         <option value="0">Tidak</option>
                         <option value="1">Ya</option>
                       </select>
-                      <p className="error-text">{errors.map((item) => (item === "is_sick" ? "Pilih Ya/Tidak" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "is_sick" ? "Pilih Ya/Tidak" : ""
+                        )}
+                      </p>
                     </div>
 
-                    {formState.is_sick === "0" || formState.is_sick === "" ? null : (
+                    {formState.is_sick === "0" ||
+                    formState.is_sick === "" ? null : (
                       <>
                         <div className="f-nama-penyakit form-group w-full flex flex-col">
-                          <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                          <label
+                            className="  block text-sm font-medium text-black dark:text-white"
+                            htmlFor="id"
+                          >
                             Nama Penyakit
                           </label>
                           <input
@@ -2701,7 +3257,13 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                             onChange={handleChange}
                             value={formState.wbp_sickness}
                           />
-                          <p className="error-text">{errors.map((item) => (item === "wbp_sickness" ? "Masukan nama penyakit" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "wbp_sickness"
+                                ? "Masukan nama penyakit"
+                                : ""
+                            )}
+                          </p>
                         </div>
                       </>
                     )}
@@ -2795,18 +3357,29 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                 {/*  Akses Zona  */}
                 <div className="grid grid-cols-3 gap-5 justify-normal pt-4">
                   <div className="w-full col-span-3">
-                    <h3 className="mt-10 mb-3 text-center bg-slate-500 font-bold text-white rounded-md">Akses Zona</h3>
+                    <h3 className="mt-10 mb-3 text-center bg-slate-500 font-bold text-white rounded-md">
+                      Akses Zona
+                    </h3>
 
                     <div className="border-slate-500 grid grid-cols-3 gap-5 p-2 border rounded-lg akses-zona">
                       {autocompleteDataZona?.map((zonaItem: any) => (
                         <div
                           key={zonaItem.ruangan_otmil_id}
                           className={`gap-2 py-2 word-wrap: break-word flex flex-col h-fit cursor-default items-center justify-between rounded-[16px] border-4 ${
-                            zonaItem.nama_zona === "Hijau" ? "border-green-500" : zonaItem.nama_zona === "Kuning" ? "border-yellow-400" : zonaItem.nama_zona === "Merah" ? "border-red-500" : "border-slate-500"
+                            zonaItem.nama_zona === "Hijau"
+                              ? "border-green-500"
+                              : zonaItem.nama_zona === "Kuning"
+                              ? "border-yellow-400"
+                              : zonaItem.nama_zona === "Merah"
+                              ? "border-red-500"
+                              : "border-slate-500"
                           } bg-slate-500 bg-[transparent] px-[12px] text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none dark:text-neutral-200`}
                           data-te-ripple-color="dark"
                         >
-                          <p className="text-xs text-white capitalize font-semibold"> {zonaItem.nama_ruangan_otmil}</p>
+                          <p className="text-xs text-white capitalize font-semibold">
+                            {" "}
+                            {zonaItem.nama_ruangan_otmil}
+                          </p>
                           <button
                             className="text-white w-full bg-green-500 border-white border-[1px] rounded-md font-bold text-[9px]"
                             onClick={(e) => {
@@ -2838,7 +3411,9 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
 
                     <div className="border-green-500 min-h-[10rem] flex gap-2 p-2 border flex-col rounded-lg items-stretch justify-start">
                       {localStorage.getItem("akses_ruangan_otmil_id") &&
-                        JSON.parse(localStorage.getItem("akses_ruangan_otmil_id"))
+                        JSON.parse(
+                          localStorage.getItem("akses_ruangan_otmil_id")
+                        )
                           .filter((data: any) => data.isPermitted === 1)
                           .map((zonaId: any) => (
                             <div
@@ -2850,14 +3425,37 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                               className="w-full [word-wrap: break-word] flex cursor-default items-center justify-between rounded-[16px] border border-green-400 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-green-500 hover:!shadow-none dark:text-neutral-200"
                               data-te-ripple-color="dark"
                             >
-                              <p className="capitalize text-center">{zona.find((zonaItem: any) => zonaItem.ruangan_otmil_id === zonaId.id)?.nama_ruangan_otmil}</p>
+                              <p className="capitalize text-center">
+                                {
+                                  zona.find(
+                                    (zonaItem: any) =>
+                                      zonaItem.ruangan_otmil_id === zonaId.id
+                                  )?.nama_ruangan_otmil
+                                }
+                              </p>
                               <span
                                 data-te-chip-close
-                                onClick={() => handleRemoveZona(zonaId.id, "akses_ruangan_otmil_id")}
+                                onClick={() =>
+                                  handleRemoveZona(
+                                    zonaId.id,
+                                    "akses_ruangan_otmil_id"
+                                  )
+                                }
                                 className="float-right w-4 cursor-pointer pl-[8px] text-[16px] text-[#afafaf] opacity-[.53] transition-all duration-200 ease-in-out hover:text-[#8b8b8b] dark:text-neutral-400 dark:hover:text-neutral-100"
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-3 w-3">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="h-3 w-3"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                  />
                                 </svg>
                               </span>
                             </div>
@@ -2913,7 +3511,9 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                           </div>
                         ))} */}
                       {localStorage.getItem("akses_ruangan_otmil_id") &&
-                        JSON.parse(localStorage.getItem("akses_ruangan_otmil_id"))
+                        JSON.parse(
+                          localStorage.getItem("akses_ruangan_otmil_id")
+                        )
                           .filter((data: any) => data.isPermitted === 0)
                           .map((zonaId: any) => (
                             <div
@@ -2925,14 +3525,37 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
                               className="w-full [word-wrap: break-word] flex cursor-default items-center justify-between rounded-[16px] border border-red-400 bg-[#eceff1] bg-[transparent] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:border-red-500 hover:!shadow-none dark:text-neutral-200"
                               data-te-ripple-color="dark"
                             >
-                              <p className="capitalize text-center">{zona.find((zonaItem: any) => zonaItem.ruangan_otmil_id === zonaId.id)?.nama_ruangan_otmil}</p>
+                              <p className="capitalize text-center">
+                                {
+                                  zona.find(
+                                    (zonaItem: any) =>
+                                      zonaItem.ruangan_otmil_id === zonaId.id
+                                  )?.nama_ruangan_otmil
+                                }
+                              </p>
                               <span
                                 data-te-chip-close
-                                onClick={() => handleRemoveZona(zonaId.id, "akses_ruangan_otmil_id")}
+                                onClick={() =>
+                                  handleRemoveZona(
+                                    zonaId.id,
+                                    "akses_ruangan_otmil_id"
+                                  )
+                                }
                                 className="float-right w-4 cursor-pointer pl-[8px] text-[16px] text-[#afafaf] opacity-[.53] transition-all duration-200 ease-in-out hover:text-[#8b8b8b] dark:text-neutral-400 dark:hover:text-neutral-100"
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-3 w-3">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="h-3 w-3"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M6 18L18 6M6 6l12 12"
+                                  />
                                 </svg>
                               </span>
                             </div>
@@ -2946,10 +3569,16 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
               </>
             </div>
           </div>
-          {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
+          {errors.filter((item: string) => item.startsWith("INVALID_ID"))
+            .length > 0 && (
             <>
               <br />
-              <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
+              <div className="error">
+                {errors
+                  .filter((item: string) => item.startsWith("INVALID_ID"))[0]
+                  .replace("INVALID_ID_", "")}{" "}
+                is not a valid bond
+              </div>
             </>
           )}
           {errors.length > 0 && (
@@ -2958,11 +3587,31 @@ export const WbpInsert = ({ handleNext, nomorKasus }: WBPProps) => {
             </div>
           )}
 
-          <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 mt-5`} type="submit" onClick={handleZona}>
+          <button
+            className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 mt-5`}
+            type="submit"
+            onClick={handleZona}
+          >
             {buttonLoad ? (
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
             ) : (
               ""

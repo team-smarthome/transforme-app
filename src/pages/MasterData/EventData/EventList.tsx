@@ -109,7 +109,7 @@ const EventList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -227,7 +227,7 @@ const EventList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -260,7 +260,7 @@ const EventList = () => {
   //     setIsLoading(false);
   //   } catch (e: any) {
   //     if (e.response.status === 403) {
-  //       navigate('/auth/signin', {
+  //       navigate('/', {
   //         state: { forceLogout: true, lastPage: location.pathname },
   //       });
   //     }
@@ -323,7 +323,7 @@ const EventList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -356,7 +356,7 @@ const EventList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -389,7 +389,7 @@ const EventList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -471,12 +471,14 @@ const EventList = () => {
               onClick={handleSearchClick}
               id="button-addon1"
               data-te-ripple-init
-              data-te-ripple-color="light">
+              data-te-ripple-color="light"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="h-5 w-5 text-black">
+                className="h-5 w-5 text-black"
+              >
                 <path
                   fillRule="evenodd"
                   d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
@@ -486,7 +488,8 @@ const EventList = () => {
             </button>
             <button
               onClick={exportToExcel}
-              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
             {/* <div className="w-10"> */}
@@ -508,7 +511,8 @@ const EventList = () => {
           {!isOperator && (
             <button
               onClick={() => setModalAddOpen(true)}
-              className="text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
+              className="text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
+            >
               Tambah
             </button>
           )}
@@ -598,38 +602,44 @@ const EventList = () => {
                       <>
                         <div
                           className="grid grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5 capitalize"
-                          key={item.nama_kegiatan}>
+                          key={item.nama_kegiatan}
+                        >
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5"
+                          >
                             <p className="hidden text-black dark:text-white sm:block">
                               {item.nama_kegiatan}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5"
+                          >
                             <p className="hidden text-black dark:text-white sm:block">
                               {item.status_kegiatan}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center p-2.5 xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {formatDate(item.waktu_mulai_kegiatan)}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5">
+                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {formatDate(item.waktu_selesai_kegiatan)}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5">
+                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {item.nama_ruangan_otmil}
                             </p>
@@ -641,45 +651,52 @@ const EventList = () => {
                       <>
                         <div
                           className="grid grid-cols-7 rounded-sm bg-gray-2 dark:bg-meta-4 capitalize"
-                          key={item.nama_jaksa}>
+                          key={item.nama_jaksa}
+                        >
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5"
+                          >
                             <p className="hidden text-black dark:text-white sm:block">
                               {item.nama_kegiatan}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center gap-3 p-2.5 xl:p-5"
+                          >
                             <p className="hidden text-black dark:text-white sm:block">
                               {item.status_kegiatan}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="flex cursor-pointer items-center justify-center p-2.5 xl:p-5">
+                            className="flex cursor-pointer items-center justify-center p-2.5 xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {formatDate(item.waktu_mulai_kegiatan)}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5">
+                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {formatDate(item.waktu_selesai_kegiatan)}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5">
+                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {item.nama_ruangan_otmil}
                             </p>
                           </div>
                           <div
                             onClick={() => handleDetailClick(item)}
-                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5">
+                            className="hidden cursor-pointer items-center justify-center p-2.5 sm:flex xl:p-5"
+                          >
                             <p className="text-black dark:text-white">
                               {/* {item.peserta.length} */}
                               {item.peserta.length > 0 &&
@@ -704,7 +721,8 @@ const EventList = () => {
                                 handleEditClick={() => handleEditClick(item)}
                                 handleDeleteClick={() =>
                                   handleDeleteClick(item)
-                                }></DropdownAction>
+                                }
+                              ></DropdownAction>
                             </div>
                           </div>
                         </div>
@@ -755,7 +773,8 @@ const EventList = () => {
               <select
                 value={pageSize}
                 onChange={handleChangePageSize}
-                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary">
+                className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary"
+              >
                 <option value="10">10</option>
                 <option value="50">50</option>
                 <option value="100">100</option>

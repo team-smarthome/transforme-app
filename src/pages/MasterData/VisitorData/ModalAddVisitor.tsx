@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  apiReadAllWBP, 
-  apiReadKota, 
-  apiReadProvinsi 
+  apiReadAllWBP,
+  apiReadKota,
+  apiReadProvinsi,
 } from "../../../services/api";
 import Select from "react-select";
 import { driver } from "driver.js";
@@ -35,7 +35,13 @@ interface namawbp {
   wbp_profile_id: string;
 }
 
-export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, onSubmit, defaultValue, isDetail, isEdit }) => {
+export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({
+  closeModal,
+  onSubmit,
+  defaultValue,
+  isDetail,
+  isEdit,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -204,7 +210,9 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
           element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
             title: `${isEdit ? "Ubah" : "Tambah"}`,
-            description: `Klik untuk ${isEdit ? "mengubah" : "menambahkan"} data pengunjung`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data pengunjung`,
           },
         },
       ],
@@ -290,14 +298,16 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
 
         const wbp = await apiReadAllWBP(paramsWbp, token);
 
-        const filteredWbp = wbp.data.records.filter((namaWbp: any) => namaWbp.nama != null && namaWbp.nama != "");
+        const filteredWbp = wbp.data.records.filter(
+          (namaWbp: any) => namaWbp.nama != null && namaWbp.nama != ""
+        );
 
         setnameWBP(filteredWbp);
 
         setIsLoading(false);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -337,7 +347,7 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
         }
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -374,7 +384,9 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
       foto_wajah: "",
     });
     setGambarVisitorPreview(null);
-    const inputElement = document.getElementById("image-upload") as HTMLInputElement;
+    const inputElement = document.getElementById(
+      "image-upload"
+    ) as HTMLInputElement;
     if (inputElement) {
       inputElement.value = "";
     }
@@ -423,7 +435,13 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -495,14 +513,33 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
           {isLoading ? (
             <div>
               <div className="flex flex-row-reverse pr-5 pt-3">
-                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer "
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
               <div className="h-[500px] justify-center flex items-center">
-                <svg className="animate-spin h-20 w-20 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin h-20 w-20 text-white "
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
               </div>
             </div>
@@ -510,7 +547,13 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
             <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
               <div className="w-full flex justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-black dark:text-white">{isDetail ? "Detail data Pengunjung" : isEdit ? "Edit data Pengunjung" : "Tambah data Pengunjung"}</h3>
+                  <h3 className="text-xl font-semibold text-black dark:text-white">
+                    {isDetail
+                      ? "Detail data Pengunjung"
+                      : isEdit
+                      ? "Edit data Pengunjung"
+                      : "Tambah data Pengunjung"}
+                  </h3>
                 </div>
 
                 {/* <div className="w-full"> */}
@@ -535,7 +578,10 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                 )}
                 {/* </div> */}
 
-                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer "
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
@@ -550,7 +596,10 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             {formState.foto_wajah && (
                               <img
                                 className="object-cover w-[200px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
-                                src={"https://dev-siram-workstation.transforme.co.id/storage/" + formState.foto_wajah}
+                                src={
+                                  "https://dev-siram-workstation.transforme.co.id/storage/" +
+                                  formState.foto_wajah
+                                }
                                 alt="Image Preview"
                               />
                             )}
@@ -570,40 +619,59 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             ) : (
                               <img className="w-[200px] h-[300px] mb-2 border-2 border-gray-200 border-dashed rounded-md" src="https://via.placeholder.com/200x300" alt="Placeholder" />
                             )} */}
-                          
-                          {formState.foto_wajah ? (
-                            typeof formState.foto_wajah === "string" ? (
+
+                            {formState.foto_wajah ? (
+                              typeof formState.foto_wajah === "string" ? (
                                 <img
-                                    className="object-contain w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
-                                    src={"https://dev-siram-workstation.transforme.co.id/storage/" + formState.foto_wajah}
-                                    alt="Image Preview"
+                                  className="object-contain w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                                  src={
+                                    "https://dev-siram-workstation.transforme.co.id/storage/" +
+                                    formState.foto_wajah
+                                  }
+                                  alt="Image Preview"
                                 />
+                              ) : (
+                                <img
+                                  className="object-contain w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                                  src={URL.createObjectURL(
+                                    formState.foto_wajah
+                                  )}
+                                  alt="Image Preview"
+                                />
+                              )
                             ) : (
-                                <img
-                                    className="object-contain w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
-                                    src={URL.createObjectURL(formState.foto_wajah)}
-                                    alt="Image Preview"
-                                />
-                            )
-                        ) : (
-                            <img
+                              <img
                                 className="w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
                                 src="https://via.placeholder.com/200x200"
                                 alt="Placeholder"
-                            />
-                        )}
+                              />
+                            )}
 
-
-                            <input accept="image/*" type="file" id="image-upload" 
-                              style={{ display: "none" }} 
-                              onChange={handleImageChange} 
+                            <input
+                              accept="image/*"
+                              type="file"
+                              id="image-upload"
+                              style={{ display: "none" }}
+                              onChange={handleImageChange}
                             />
                             <div className="flex gap-2">
                               <label htmlFor="image-upload">
-                                <div className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded b-edit">Edit Gambar</div>
+                                <div className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded b-edit">
+                                  Edit Gambar
+                                </div>
                               </label>
-                              <p onClick={handleRemoveFoto} className="cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded b-del">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                              <p
+                                onClick={handleRemoveFoto}
+                                className="cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded b-del"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
                                   <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -613,7 +681,11 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                               </p>
                             </div>
                           </div>
-                          <p className="error-text">{errors.map((item) => (item === "foto_wajah" ? "Masukan foto wbp" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "foto_wajah" ? "Masukan foto wbp" : ""
+                            )}
+                          </p>
                         </div>
                       )}
 
@@ -621,18 +693,44 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         <div className="form-group w-full h-[330px]  ">
                           <div className="mt-6 flex flex-col items-center">
                             {formState.foto_wajah ? (
-                              <img className="object-cover w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md" src={gambarVisitorPreview} alt="Image Preview" />
+                              <img
+                                className="object-cover w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                                src={gambarVisitorPreview}
+                                alt="Image Preview"
+                              />
                             ) : (
-                              <img className="w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md" src="https://via.placeholder.com/200x300" alt="Placeholder" />
+                              <img
+                                className="w-[200px] h-[200px] mb-2 border-2 border-gray-200 border-dashed rounded-md"
+                                src="https://via.placeholder.com/200x300"
+                                alt="Placeholder"
+                              />
                             )}
-                            <input accept="image/*" type="file" id="image-upload" style={{ display: "none" }} onChange={handleImageChange} />
+                            <input
+                              accept="image/*"
+                              type="file"
+                              id="image-upload"
+                              style={{ display: "none" }}
+                              onChange={handleImageChange}
+                            />
                             <div className="flex gap-2">
                               <label htmlFor="image-upload">
-                                <div className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded b-unggah">Unggah Gambar</div>
+                                <div className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-4 rounded b-unggah">
+                                  Unggah Gambar
+                                </div>
                               </label>
 
-                              <button onClick={handleRemoveFoto} className=" cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded b-del">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                              <button
+                                onClick={handleRemoveFoto}
+                                className=" cursor-pointer bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-1 px-2 rounded b-del"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  className="w-5 h-5"
+                                >
                                   <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -641,14 +739,21 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                                 </svg>
                               </button>
                             </div>
-                            <p className="error-text">{errors.map((item) => (item === "foto_wajah" ? "Masukan foto wbp" : ""))}</p>
+                            <p className="error-text">
+                              {errors.map((item) =>
+                                item === "foto_wajah" ? "Masukan foto wbp" : ""
+                              )}
+                            </p>
                           </div>
                         </div>
                       )}
 
                       <div className="flex flex-col ">
                         <div className="form-group h-22 w-full flex flex-col">
-                          <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                          <label
+                            className="  block text-sm font-medium text-black dark:text-white"
+                            htmlFor="id"
+                          >
                             Nama
                           </label>
                           <input
@@ -659,12 +764,19 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             placeholder="Nama Pengunjung"
                             disabled={isDetail}
                           />
-                          <p className="error-text">{errors.map((item) => (item === "nama" ? "Masukan nama" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "nama" ? "Masukan nama" : ""
+                            )}
+                          </p>
                         </div>
 
                         {/* jenis kelamin */}
                         <div className="form-group h-22 w-full flex flex-col">
-                          <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                          <label
+                            className="  block text-sm font-medium text-black dark:text-white"
+                            htmlFor="id"
+                          >
                             Jenis Kelamin
                           </label>
                           <select
@@ -680,12 +792,21 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             <option value="0">Laki-laki</option>
                             <option value="1">Perempuan</option>
                           </select>
-                          <p className="error-text">{errors.map((item) => (item === "jenis_kelamin" ? "Pilih Jenis Kelamin" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "jenis_kelamin"
+                                ? "Pilih Jenis Kelamin"
+                                : ""
+                            )}
+                          </p>
                         </div>
 
                         {/* nik */}
                         <div className="form-group h-22 w-full">
-                          <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                          <label
+                            className="block text-sm font-medium text-black dark:text-white"
+                            htmlFor="id"
+                          >
                             NIK
                           </label>
                           <input
@@ -697,12 +818,19 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             value={formState.nik}
                             disabled={isDetail}
                           />
-                          <p className="error-text">{errors.map((item) => (item === "nik" ? "Masukan NIK" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "nik" ? "Masukan NIK" : ""
+                            )}
+                          </p>
                         </div>
 
                         {/* Alamat */}
                         <div className="form-group h-30 w-full flex flex-col">
-                          <label className=" block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                          <label
+                            className=" block text-sm font-medium text-black dark:text-white"
+                            htmlFor="id"
+                          >
                             Alamat
                           </label>
                           <textarea
@@ -713,7 +841,11 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                             value={formState.alamat}
                             disabled={isDetail}
                           />
-                          <p className="error-text">{errors.map((item) => (item === "alamat" ? "Masukan Alamat" : ""))}</p>
+                          <p className="error-text">
+                            {errors.map((item) =>
+                              item === "alamat" ? "Masukan Alamat" : ""
+                            )}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -870,7 +1002,10 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
 
                     {/* Hubungan WBP */}
                     <div className="form-group h-22 w-full">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Hubungan WBP
                       </label>
                       <input
@@ -882,12 +1017,19 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         value={formState.hubungan_wbp}
                         disabled={isDetail}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "hubungan_wbp" ? "Masukan Hubungan" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "hubungan_wbp" ? "Masukan Hubungan" : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* wbp yg di kunjungi */}
                     <div className="form-group h-22 w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         WBP Yang DiKunjungi
                       </label>
                       <Select
@@ -913,12 +1055,21 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         }))}
                         onChange={handleSelectWBP}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "wbp_profile_id" ? "Pilih WBP Yang DiKunjungi" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "wbp_profile_id"
+                            ? "Pilih WBP Yang DiKunjungi"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* Provinsi */}
                     <div className="form-group h-22 w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Provinsi
                       </label>
 
@@ -961,11 +1112,18 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         }))}
                         onChange={handleSelectProvinsi}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "provinsi_id" ? "Pilih provinsi" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "provinsi_id" ? "Pilih provinsi" : ""
+                        )}
+                      </p>
                     </div>
                     {/* Kota */}
                     <div className="form-group h-22 w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Kota
                       </label>
 
@@ -1016,12 +1174,19 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                           }))}
                         onChange={handleSelectKota}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "kota_id" ? "Pilih kota" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "kota_id" ? "Pilih kota" : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* Tempat Lahir */}
                     <div className="form-group h-22 w-full">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Tempat Lahir
                       </label>
                       <input
@@ -1033,12 +1198,19 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         value={formState.tempat_lahir}
                         disabled={isDetail}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "tempat_lahir" ? "Masukan Tempat Lahir" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "tempat_lahir" ? "Masukan Tempat Lahir" : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* Tanggal Lahir */}
                     <div className="form-group h-22 w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Tanggal Lahir
                       </label>
                       <input
@@ -1049,18 +1221,45 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                         value={formState.tanggal_lahir}
                         disabled={isDetail}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "tanggal_lahir" ? "Pilih Tanggal Lahir" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "tanggal_lahir" ? "Pilih Tanggal Lahir" : ""
+                        )}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {isDetail ? null : isEdit ? (
-                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-ubah">
+                    <button
+                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                        buttonLoad ? "bg-slate-400" : ""
+                      }`}
+                      type="submit"
+                      disabled={buttonLoad}
+                      id="b-ubah"
+                    >
                       {buttonLoad ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                       ) : (
                         ""
@@ -1068,11 +1267,34 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                       Ubah Data Pengunjung
                     </button>
                   ) : (
-                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-tambah">
+                    <button
+                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                        buttonLoad ? "bg-slate-400" : ""
+                      }`}
+                      type="submit"
+                      disabled={buttonLoad}
+                      id="b-tambah"
+                    >
                       {buttonLoad ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                       ) : (
                         ""
@@ -1080,15 +1302,26 @@ export const AddVisitorModal: React.FC<AddVisitorModalProps> = ({ closeModal, on
                       Tambah Data Pengunjung
                     </button>
                   )}
-                  {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
+                  {errors.filter((item: string) =>
+                    item.startsWith("INVALID_ID")
+                  ).length > 0 && (
                     <>
                       <br />
-                      <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
+                      <div className="error">
+                        {errors
+                          .filter((item: string) =>
+                            item.startsWith("INVALID_ID")
+                          )[0]
+                          .replace("INVALID_ID_", "")}{" "}
+                        is not a valid bond
+                      </div>
                     </>
                   )}
                   {errors.length > 0 && (
                     <div className="error text-center">
-                      <p className="text-red-400">Ada data yang masih belum terisi !</p>
+                      <p className="text-red-400">
+                        Ada data yang masih belum terisi !
+                      </p>
                     </div>
                   )}
                 </div>

@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  apiReadAllRuanganOtmil,
-  apiReadAlllokasiOtmil,
-  apiReadZona,
-} from "../../../services/api";
+import { apiReadAllRuanganOtmil, apiReadAlllokasiOtmil, apiReadZona } from "../../../services/api";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import Select from "react-select";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alerts } from "./AlertGateway";
+import { Alerts } from "./AlertHelmet";
 import { Error403Message } from "../../../utils/constants";
 
 // interface
@@ -39,13 +35,7 @@ interface namazona {
   nama_zona: string;
 }
 
-export const AddGateway: React.FC<AddGatewayModalProps> = ({
-  closeModal,
-  onSubmit,
-  defaultValue,
-  isDetail,
-  isEdit,
-}) => {
+export const AddHelmet: React.FC<AddGatewayModalProps> = ({ closeModal, onSubmit, defaultValue, isDetail, isEdit }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -188,9 +178,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
           element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
             title: `${isEdit ? "Ubah" : "Tambah"}`,
-            description: `Klik untuk ${
-              isEdit ? "mengubah" : "menambahkan"
-            } data gateway`,
+            description: `Klik untuk ${isEdit ? "mengubah" : "menambahkan"} data gateway`,
           },
         },
       ],
@@ -199,11 +187,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
     driverObj.drive();
   };
 
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -223,9 +207,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
     const selectedRuangan = e.value;
 
     // Temukan data ruangan berdasarkan ID yang dipilih
-    const selectedData = ruanganotmil.find(
-      (item) => item.ruangan_otmil_id === selectedRuangan
-    );
+    const selectedData = ruanganotmil.find((item) => item.ruangan_otmil_id === selectedRuangan);
     if (selectedData) {
       setFormState({
         ...formState,
@@ -278,7 +260,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
         }, 300);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/", {
+          navigate("/auth/signin", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -353,13 +335,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled
-          ? undefined
-          : isSelected
-          ? ""
-          : isFocused
-          ? "rgb(51, 133, 255)"
-          : undefined,
+        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -410,33 +386,14 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
           {isLoading ? (
             <div>
               <div className="flex flex-row-reverse pr-5 pt-3">
-                <strong
-                  className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}
-                >
+                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
                   &times;
                 </strong>
               </div>
               <div className="h-[500px] justify-center flex items-center">
-                <svg
-                  className="animate-spin h-20 w-20 text-white "
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                <svg className="animate-spin h-20 w-20 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             </div>
@@ -444,13 +401,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
             <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
               <div className="w-full flex justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-black dark:text-white">
-                    {isDetail
-                      ? "Detail Data Gateway"
-                      : isEdit
-                      ? "Edit Data Gateway"
-                      : "Tambah Data Gateway"}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-black dark:text-white">{isDetail ? "Detail Data Helmet" : isEdit ? "Edit Data Helmet" : "Tambah Data Helmet"}</h3>
                 </div>
 
                 {/* <div className="w-5"> */}
@@ -475,42 +426,29 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                 )}
                 {/* </div> */}
 
-                <strong
-                  className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}
-                >
+                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
                   &times;
                 </strong>
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-1 justify-normal">
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
-                      Nama Gateway
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      Nama Helmet
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
                       name="nama_gateway"
-                      placeholder="Nama Gateway"
+                      placeholder="Nama Helmet"
                       onChange={handleChange}
                       value={formState.nama_gateway}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">
-                      {errors.map((item) =>
-                        item === "nama_gateway" ? "Pilih gateway" : ""
-                      )}
-                    </p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "nama_gateway" ? "Pilih Helmet" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
                       GMAC
                     </label>
                     <input
@@ -521,19 +459,12 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       value={formState.gmac}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">
-                      {errors.map((item) =>
-                        item === "gmac" ? "Pilih GMAC" : ""
-                      )}
-                    </p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "gmac" ? "Pilih GMAC" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label
-                      className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id"
-                    >
-                      Status Gateway
+                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      Status Helmet
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
@@ -549,11 +480,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       <option value="tidak">Tidak Aktif</option>
                       <option value="rusak">Rusak</option>
                     </select>
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "status_gateway" ? "Pilih Status Gateway" : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "status_gateway" ? "Pilih Status Helmet" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -593,11 +520,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                         </option>
                       ))}
                     </select> */}
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "ruangan_otmil_id" ? "Pilih Ruangan Otmil" : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "ruangan_otmil_id" ? "Pilih Ruangan Otmil" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -610,13 +533,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       value={formState.jenis_ruangan_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "jenis_ruangan_otmil"
-                          ? "Masukan Jenis Ruangan"
-                          : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "jenis_ruangan_otmil" ? "Masukan Jenis Ruangan" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -629,13 +546,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       value={formState.nama_lokasi_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === "nama_lokasi_otmil"
-                          ? "Masukan Nama Lokasi"
-                          : ""
-                      )}
-                    </p>
+                    <p className="error-text">{errors.map((item) => (item === "nama_lokasi_otmil" ? "Masukan Nama Lokasi" : ""))}</p>
                   </div>
                   {/* <div className="form-group w-full h-22">
                     <label htmlFor="nama_zona">Zona :</label>
@@ -660,34 +571,11 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                 <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {/* <br></br> */}
                   {isDetail ? null : isEdit ? (
-                    <button
-                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? "bg-slate-400" : ""
-                      }`}
-                      type="submit"
-                      disabled={buttonLoad}
-                      id="b-ubah"
-                    >
+                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-ubah">
                       {buttonLoad ? (
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       ) : (
                         ""
@@ -695,34 +583,11 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       Ubah Data Gateway
                     </button>
                   ) : (
-                    <button
-                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? "bg-slate-400" : ""
-                      }`}
-                      type="submit"
-                      disabled={buttonLoad}
-                      id="b-tambah"
-                    >
+                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-tambah">
                       {buttonLoad ? (
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       ) : (
                         ""
@@ -730,26 +595,15 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       Tambah Data Gateway
                     </button>
                   )}
-                  {errors.filter((item: string) =>
-                    item.startsWith("INVALID_ID")
-                  ).length > 0 && (
+                  {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
                     <>
                       <br />
-                      <div className="error">
-                        {errors
-                          .filter((item: string) =>
-                            item.startsWith("INVALID_ID")
-                          )[0]
-                          .replace("INVALID_ID_", "")}{" "}
-                        is not a valid bond
-                      </div>
+                      <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
                     </>
                   )}
                   {errors.length > 0 && (
                     <div className="error text-center">
-                      <p className="text-red-400">
-                        Ada data yang masih belum terisi !
-                      </p>
+                      <p className="text-red-400">Ada data yang masih belum terisi !</p>
                     </div>
                   )}
                 </div>

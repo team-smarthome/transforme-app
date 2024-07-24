@@ -1,17 +1,17 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from "react";
 
-import axios from 'axios';
-import { apiVisitorRealtimeLogList } from '../../../services/api';
+import axios from "axios";
+import { apiVisitorRealtimeLogList } from "../../../services/api";
 
-import { webserviceurl } from '../../../services/api';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from '../AlertLog';
-import { Error403Message } from '../../../utils/constants';
+import { webserviceurl } from "../../../services/api";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "../AlertLog";
+import { Error403Message } from "../../../utils/constants";
 
 const DataNotFoundModal = ({ open, onClose, message }) => {
   return (
     <div
-      className={`fixed ${open ? 'block' : 'hidden'} inset-0 overflow-y-auto`}
+      className={`fixed ${open ? "block" : "hidden"} inset-0 overflow-y-auto`}
     >
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -47,22 +47,22 @@ export default function DoorLog() {
   const location = useLocation();
 
   const [data, setData] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [selectedDevice, setSelectedDevice] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedAge, setSelectedAge] = useState('');
-  const [selectedName, setSelectedName] = useState('');
-  const [selectedAnalytics, setSelectedAnalytics] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedDevice, setSelectedDevice] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedAnalytics, setSelectedAnalytics] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
   const [jsonData, setJsonData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleLocationChange = (event) => {
     setSelectedLocation(event.target.value);
-    setSelectedDevice('');
+    setSelectedDevice("");
   };
 
   const handleDeviceChange = (event) => {
@@ -70,13 +70,13 @@ export default function DoorLog() {
   };
 
   const selectedLocationEntry = jsonData.find(
-    (entry) => entry.location === selectedLocation,
+    (entry) => entry.location === selectedLocation
   );
   const devices = selectedLocationEntry ? selectedLocationEntry.devices : [];
 
   function exportToCSV(data, filename) {
     const csvData = convertToCSV(data);
-    const csvBlob = new Blob([csvData], { type: 'text/csv' });
+    const csvBlob = new Blob([csvData], { type: "text/csv" });
     // Check if the browser supports the HTML5 "download" attribute
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
       // For IE browser
@@ -84,10 +84,10 @@ export default function DoorLog() {
     } else {
       // For other browsers
       const csvURL = URL.createObjectURL(csvBlob);
-      const tempLink = document.createElement('a');
+      const tempLink = document.createElement("a");
       tempLink.href = csvURL;
-      tempLink.setAttribute('download', filename);
-      tempLink.setAttribute('target', '_blank');
+      tempLink.setAttribute("download", filename);
+      tempLink.setAttribute("target", "_blank");
       document.body.appendChild(tempLink);
       tempLink.click();
       document.body.removeChild(tempLink);
@@ -96,33 +96,33 @@ export default function DoorLog() {
 
   const handleExportClick = () => {
     if (data && data.length > 0) {
-      exportToCSV(data, 'exported_data.csv');
+      exportToCSV(data, "exported_data.csv");
     } else {
       setShowModal(true);
-      setModalMessage('No data found to export.');
+      setModalMessage("No data found to export.");
     }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setModalMessage('');
+    setModalMessage("");
   };
 
   function convertToCSV(data) {
     const csvRows = [];
     const headers = Object.keys(data[0]);
 
-    csvRows.push(headers.join(','));
+    csvRows.push(headers.join(","));
 
     for (const row of data) {
       const values = headers.map((header) => {
         const escapedValue = String(row[header]).replace(/"/g, '\\"');
         return `"${escapedValue}"`;
       });
-      csvRows.push(values.join(','));
+      csvRows.push(values.join(","));
     }
 
-    return csvRows.join('\n');
+    return csvRows.join("\n");
   }
 
   function calculateAge(birthdate) {
@@ -165,12 +165,12 @@ export default function DoorLog() {
       console.log(data);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     }
@@ -189,7 +189,7 @@ export default function DoorLog() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.post(
-        webserviceurl + 'gema_admin_api/location/readOnline.php',
+        webserviceurl + "gema_admin_api/location/readOnline.php"
       );
       console.log(result.data.data.records);
       setJsonData(result.data.data.records);
@@ -232,7 +232,7 @@ export default function DoorLog() {
                 </select>
               </div>
             </div>
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="w-full">
                   <label
@@ -254,7 +254,7 @@ export default function DoorLog() {
               </div>
             )}
 
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="w-full">
                   <label
@@ -296,7 +296,7 @@ export default function DoorLog() {
               </select>
             </div>
           </div> */}
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="w-full">
                   <label
@@ -395,42 +395,42 @@ export default function DoorLog() {
           </div>
           <div className="py-2.5 text-center xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              No DMAC Gelang{' '}
+              No DMAC Gelang{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Baterai Gelang{' '}
+              Baterai Gelang{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Detak Jantung{' '}
+              Detak Jantung{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Suhu Tubuh{' '}
+              Suhu Tubuh{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Lokasi Ruangan{' '}
+              Lokasi Ruangan{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Zonasi Gateway{' '}
+              Zonasi Gateway{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Time Stamp{' '}
+              Time Stamp{" "}
             </h5>
           </div>
           <div className="hidden py-2.5 text-center sm:block xl:py-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Lokasi Gedung{' '}
+              Lokasi Gedung{" "}
             </h5>
           </div>
         </div>
@@ -440,16 +440,16 @@ export default function DoorLog() {
             <div className="grid grid-cols-9 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-9">
               <div className="flex items-center justify-center py-2.5 xl:py-5">
                 <p className="text-meta-2">
-                  {item.visitor_name == 'unrecognized'
-                    ? 'Tidak Dikenal'
+                  {item.visitor_name == "unrecognized"
+                    ? "Tidak Dikenal"
                     : item.visitor_name}
                 </p>
               </div>
               <div className="flex items-center justify-center py-2.5 xl:py-5">
                 <p className="text-meta-2">
-                  {item.visitor_name == 'unrecognized'
-                    ? 'DMAC 1234'
-                    : 'iDMAC 1234'}
+                  {item.visitor_name == "unrecognized"
+                    ? "DMAC 1234"
+                    : "iDMAC 1234"}
                 </p>
               </div>
 
@@ -475,17 +475,17 @@ export default function DoorLog() {
                 <p className="text-black dark:text-white">{item.device_name}</p>
               </div>
               <div className="hidden items-center justify-center py-2.5 sm:flex xl:py-5">
-                {item.visitor_name == 'unrecognized' ? (
+                {item.visitor_name == "unrecognized" ? (
                   <p className="text-red-500 dark:text-red-500">Zona Merah </p>
                 ) : item.isemployee == true ? (
                   <p className="text-yellow-500 dark:text-yellow-500">
-                    Zona Kuning{' '}
+                    Zona Kuning{" "}
                   </p>
                 ) : item.isdpo == true ? (
                   <p className="text-red-500 dark:text-red-500">Zona Merah </p>
                 ) : (
                   <p className="text-green-500 dark:text-green-500">
-                    Zona Hijau{' '}
+                    Zona Hijau{" "}
                   </p>
                 )}
               </div>

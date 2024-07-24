@@ -129,7 +129,7 @@ const ChartFive: React.FC = () => {
         setDataKasus(kasus);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -142,7 +142,7 @@ const ChartFive: React.FC = () => {
     if (token !== null) {
       fecthdata();
     } else {
-      navigate("/auth/signin");
+      navigate("/");
     }
   }, []);
 

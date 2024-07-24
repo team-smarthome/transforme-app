@@ -1,23 +1,23 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from "react";
 
-import axios from 'axios';
-import { apiVisitorRealtimeLogList } from '../../../services/api';
+import axios from "axios";
+import { apiVisitorRealtimeLogList } from "../../../services/api";
 
-import { webserviceurl } from '../../../services/api';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { Alerts } from '../AlertLog';
-import { Error403Message } from '../../../utils/constants';
-import * as xlsx from 'xlsx';
-import dayjs from 'dayjs';
-import { Breadcrumbs } from '../../../components/Breadcrumbs';
+import { webserviceurl } from "../../../services/api";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { Alerts } from "../AlertLog";
+import { Error403Message } from "../../../utils/constants";
+import * as xlsx from "xlsx";
+import dayjs from "dayjs";
+import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 const DataNotFoundModal = ({ open, onClose, message }) => {
   return (
     <div
-      className={`fixed ${open ? 'block' : 'hidden'} inset-0 overflow-y-auto`}
+      className={`fixed ${open ? "block" : "hidden"} inset-0 overflow-y-auto`}
     >
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -53,39 +53,40 @@ export default function Realtime() {
   const location = useLocation();
 
   const [data, setData] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [selectedDevice, setSelectedDevice] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [selectedAge, setSelectedAge] = useState('');
-  const [selectedName, setSelectedName] = useState('');
-  const [selectedAnalytics, setSelectedAnalytics] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedDevice, setSelectedDevice] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedAge, setSelectedAge] = useState("");
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedAnalytics, setSelectedAnalytics] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
   const [jsonData, setJsonData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [filter, setFilter] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
+  const [filter, setFilter] = useState("");
 
   const handleLocationChange = (event: any) => {
-    console.log(event.target.value, "val")
+    console.log(event.target.value, "val");
     setSelectedLocation(event.target.value);
-    setSelectedDevice('');
+    setSelectedDevice("");
   };
 
   const handleDeviceChange = (event: any) => {
-    console.log(event.target.value, "selected")
+    console.log(event.target.value, "selected");
     setSelectedDevice(event.target.value);
   };
 
   const selectedLocationEntry = jsonData.find(
-    (entry: {lokasi_otmil_id: string}) => entry?.lokasi_otmil_id === selectedLocation,
+    (entry: { lokasi_otmil_id: string }) =>
+      entry?.lokasi_otmil_id === selectedLocation
   );
   const devices = selectedLocationEntry ? selectedLocationEntry.kamera : [];
-  console.log(devices, "devices")
+  console.log(devices, "devices");
   function exportToCSV(data, filename) {
     const csvData = convertToCSV(data);
-    const csvBlob = new Blob([csvData], { type: 'text/csv' });
+    const csvBlob = new Blob([csvData], { type: "text/csv" });
     // Check if the browser supports the HTML5 "download" attribute
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
       // For IE browser
@@ -93,10 +94,10 @@ export default function Realtime() {
     } else {
       // For other browsers
       const csvURL = URL.createObjectURL(csvBlob);
-      const tempLink = document.createElement('a');
+      const tempLink = document.createElement("a");
       tempLink.href = csvURL;
-      tempLink.setAttribute('download', filename);
-      tempLink.setAttribute('target', '_blank');
+      tempLink.setAttribute("download", filename);
+      tempLink.setAttribute("target", "_blank");
       document.body.appendChild(tempLink);
       tempLink.click();
       document.body.removeChild(tempLink);
@@ -108,52 +109,52 @@ export default function Realtime() {
       showProgress: true,
       steps: [
         {
-          element: '.p-analitik',
+          element: ".p-analitik",
           popover: {
-            title: 'Pilih Analitik',
-            description: 'Pilih analitik yang diinginkan',
+            title: "Pilih Analitik",
+            description: "Pilih analitik yang diinginkan",
           },
         },
         {
-          element: '.i-nama',
+          element: ".i-nama",
           popover: {
-            title: 'Nama',
-            description: 'Isi nama',
+            title: "Nama",
+            description: "Isi nama",
           },
         },
         {
-          element: '.i-usia',
+          element: ".i-usia",
           popover: {
-            title: 'Usia',
-            description: 'Isi usia',
+            title: "Usia",
+            description: "Isi usia",
           },
         },
         {
-          element: '.p-gender',
+          element: ".p-gender",
           popover: {
-            title: 'Pilih Gender',
-            description: 'Pilih gender yang diinginkan',
+            title: "Pilih Gender",
+            description: "Pilih gender yang diinginkan",
           },
         },
         {
-          element: '.p-lokasi',
+          element: ".p-lokasi",
           popover: {
-            title: 'Pilih Lokasi',
-            description: 'Pilih lokasi yang diinginkan',
+            title: "Pilih Lokasi",
+            description: "Pilih lokasi yang diinginkan",
           },
         },
         {
-          element: '.p-kamera',
+          element: ".p-kamera",
           popover: {
-            title: 'Pilih Kamera',
-            description: 'Pilih kamera yang diinginkan',
+            title: "Pilih Kamera",
+            description: "Pilih kamera yang diinginkan",
           },
         },
         {
-          element: '.b-csv',
+          element: ".b-csv",
           popover: {
-            title: 'Export CSV',
-            description: 'Klik untuk mendapatkan file export csv',
+            title: "Export CSV",
+            description: "Klik untuk mendapatkan file export csv",
           },
         },
       ],
@@ -165,13 +166,13 @@ export default function Realtime() {
   const handleExportClick = () => {
     const dataToExcel = [
       [
-        'Nama',
-        'Gender',
-        'Usia',
-        'Status',
-        'Nama Kamera',
-        'Tipe Lokasi',
-        'Nama Lokasi',
+        "Nama",
+        "Gender",
+        "Usia",
+        "Status",
+        "Nama Kamera",
+        "Tipe Lokasi",
+        "Nama Lokasi",
       ],
       ...data.map((item: any) => [
         item.nama,
@@ -186,10 +187,10 @@ export default function Realtime() {
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
     xlsx.writeFile(
       wb,
-      `Data-LogRealTime ${dayjs(new Date()).format('DD-MM-YYYY HH.mm')}.xlsx`,
+      `Data-LogRealTime ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
     );
 
     // if (data && data.length > 0) {
@@ -202,24 +203,24 @@ export default function Realtime() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setModalMessage('');
+    setModalMessage("");
   };
 
   function convertToCSV(data: any) {
     const csvRows = [];
     const headers = Object.keys(data[0]);
 
-    csvRows.push(headers.join(','));
+    csvRows.push(headers.join(","));
 
     for (const row of data) {
       const values = headers.map((header) => {
         const escapedValue = String(row[header]).replace(/"/g, '\\"');
         return `"${escapedValue}"`;
       });
-      csvRows.push(values.join(','));
+      csvRows.push(values.join(","));
     }
 
-    return csvRows.join('\n');
+    return csvRows.join("\n");
   }
 
   function calculateAge(birthdate: any) {
@@ -260,12 +261,12 @@ export default function Realtime() {
       console.log(data);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate('/auth/signin', {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
       Alerts.fire({
-        icon: e.response.status === 403 ? 'warning' : 'error',
+        icon: e.response.status === 403 ? "warning" : "error",
         title: e.response.status === 403 ? Error403Message : e.message,
       });
     } finally {
@@ -285,10 +286,8 @@ export default function Realtime() {
   ]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-       'http://127.0.0.1:8000/api/kamera_lokasi',
-      );
-      console.log("result", result)
+      const result = await axios.get("http://127.0.0.1:8000/api/kamera_lokasi");
+      console.log("result", result);
       console.log(result.data.records, "sini");
       setJsonData(result.data.records);
     };
@@ -329,7 +328,7 @@ export default function Realtime() {
                 </select>
               </div>
             </div>
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="items-center">
                   <h1 className="w-full block text-sm font-medium text-gray-700">
@@ -348,7 +347,7 @@ export default function Realtime() {
               </div>
             )}
 
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="items-center">
                   <h1 className="block text-sm font-medium text-gray-700">
@@ -366,7 +365,7 @@ export default function Realtime() {
                 </div>
               </div>
             )}
-            
+
             {/* <div className="">
             <div className="w-full">
               <h1
@@ -388,7 +387,7 @@ export default function Realtime() {
               </select>
             </div>
           </div> */}
-            {selectedAnalytics !== 'unrecognized' && (
+            {selectedAnalytics !== "unrecognized" && (
               <div className="">
                 <div className="items-center">
                   <h1 className="block text-sm font-medium text-gray-700">
@@ -423,9 +422,11 @@ export default function Realtime() {
                 >
                   <option value="">Semua Lokasi</option>
                   {jsonData.map((entry) => (
-                    <option key={entry.lokasi_otmil_id} value={entry.lokasi_otmil_id}>
-                      {entry.nama_lokasi_otmil
-                      }
+                    <option
+                      key={entry.lokasi_otmil_id}
+                      value={entry.lokasi_otmil_id}
+                    >
+                      {entry.nama_lokasi_otmil}
                     </option>
                   ))}
                 </select>
@@ -454,20 +455,19 @@ export default function Realtime() {
             </div>
           </div>
           <div className="flex flex-col gap-5 pt-19">
-          <button
-            onClick={handleExportClick}
-            className="bg-blue-500 hover:bg-blue-700 col-span-1 text-white font-bold py-2 px-3 rounded b-csv h-fit"
-          >
-            Export CSV
-          </button>
-          
+            <button
+              onClick={handleExportClick}
+              className="bg-blue-500 hover:bg-blue-700 col-span-1 text-white font-bold py-2 px-3 rounded b-csv h-fit"
+            >
+              Export CSV
+            </button>
+
             {/* <button
             onClick={() => console.log("search")}
             className="bg-blue-300 hover:bg-blue-400 col-span-1 font-bold py-2 px-3 rounded b-csv h-fit text-black"
           >
             Search
           </button> */}
-          
           </div>
           <DataNotFoundModal
             open={showModal}
@@ -491,7 +491,7 @@ export default function Realtime() {
         </button>
       </div>
 
-      {selectedAnalytics == 'unrecognized' ? (
+      {selectedAnalytics == "unrecognized" ? (
         <div className="flex flex-col">
           <div className="grid grid-cols-5 rounded-t-md bg-gray-2 dark:bg-meta-4 dark:bg-slate-600 sm:grid-cols-5">
             <div className="p-2.5 xl:p-5">
@@ -502,24 +502,24 @@ export default function Realtime() {
 
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Nama{' '}
+                Nama{" "}
               </h5>
             </div>
 
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Usia{' '}
+                Usia{" "}
               </h5>
             </div>
 
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Kamera{' '}
+                Kamera{" "}
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Catatan Waktu{' '}
+                Catatan Waktu{" "}
               </h5>
             </div>
           </div>
@@ -531,10 +531,7 @@ export default function Realtime() {
                   {item.image ? (
                     <img
                       className="w-10 h-10 rounded-sm"
-                      src={
-                        'http://localhost:8000/storage/' +
-                        item.image
-                      }
+                      src={"http://localhost:8000/storage/" + item.image}
                       alt=""
                     />
                   ) : (
@@ -582,38 +579,38 @@ export default function Realtime() {
 
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Nama{' '}
+                Nama{" "}
               </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Gender{' '}
+                Gender{" "}
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Usia{' '}
+                Usia{" "}
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Status{' '}
+                Status{" "}
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Kamera{' '}
+                Kamera{" "}
               </h5>
             </div>
             <div className="hidden p-2.5 text-center sm:block xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Catatan Waktu{' '}
+                Catatan Waktu{" "}
               </h5>
             </div>
           </div>
 
           {data.map((item) => {
-            console.log(item, 'item');
+            console.log(item, "item");
             return (
               <div className="grid grid-cols-8 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-8">
                 <div className="flex items-center gap-3 p-2.5 xl:p-5">
@@ -621,7 +618,7 @@ export default function Realtime() {
                     <img
                       className="w-fit h-fit rounded-sm"
                       src={
-                        'http://dev.transforme.co.id/siram_admin_api' +
+                        "http://dev.transforme.co.id/siram_admin_api" +
                         item.image
                       }
                       alt=""
@@ -637,7 +634,7 @@ export default function Realtime() {
                     <img
                       className="w-10 h-10 rounded-sm"
                       src={
-                        'http://dev.transforme.co.id/siram_admin_api' +
+                        "http://dev.transforme.co.id/siram_admin_api" +
                         item.face_pics
                       }
                       alt=""
@@ -651,18 +648,18 @@ export default function Realtime() {
 
                 <div className="flex items-center justify-center p-2.5 xl:p-5">
                   <p className="text-meta-3">
-                    {item.visitor_name == 'unrecognized'
-                      ? 'Tidak Dikenal'
+                    {item.visitor_name == "unrecognized"
+                      ? "Tidak Dikenal"
                       : item.visitor_name}
                   </p>
                 </div>
                 <div className="flex items-center justify-center p-2.5 xl:p-5">
                   <p className="text-meta-3">
                     {item.gender == null
-                      ? 'Tidak Diketahui'
+                      ? "Tidak Diketahui"
                       : item.gender == true
-                        ? 'Pria'
-                        : 'Wanita'}
+                      ? "Pria"
+                      : "Wanita"}
                   </p>
                 </div>
                 <div className="flex items-center justify-center p-2.5 xl:p-5">
@@ -673,13 +670,13 @@ export default function Realtime() {
 
                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                   <p className="text-black dark:text-white">
-                    {item.visitor_name == 'unrecognized'
-                      ? 'Tidak Dikenal'
+                    {item.visitor_name == "unrecognized"
+                      ? "Tidak Dikenal"
                       : item.isemployee == true
-                        ? 'Petugas'
-                        : item.isdpo == true
-                          ? 'Binaan Watchlist'
-                          : 'Tentara Binaan'}
+                      ? "Petugas"
+                      : item.isdpo == true
+                      ? "Binaan Watchlist"
+                      : "Tentara Binaan"}
                   </p>
                 </div>
                 <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

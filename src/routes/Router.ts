@@ -1,15 +1,5 @@
 import { lazy } from "react";
 
-const Calendar = lazy(() => import("../pages/Calendar"));
-const Chart = lazy(() => import("../pages/Chart"));
-const FormElements = lazy(() => import("../pages/Form/FormElements"));
-const FormLayout = lazy(() => import("../pages/Form/FormLayout"));
-const Profile = lazy(() => import("../pages/Profile"));
-const Settings = lazy(() => import("../pages/Settings"));
-const Tables = lazy(() => import("../pages/Tables"));
-const Alerts = lazy(() => import("../pages/UiElements/Alerts"));
-const Buttons = lazy(() => import("../pages/UiElements/Buttons"));
-
 const Statistic = lazy(() => import("../pages/Statistic"));
 
 const StatisticLemasmil = lazy(
@@ -152,12 +142,15 @@ const DeviceKameraList = lazy(
   () => import("../pages/Device/Kamera/KameraList")
 );
 
-const DeviceBraceletListWK = lazy(
-  () => import("../pages/Device/Gelang/GelangList")
+const DeviceSmartwatchListWK = lazy(
+  () => import("../pages/Device/Smartwatch/SmartwatchList")
 );
 
 const DeviceGatewayListWK = lazy(
   () => import("../pages/Device/Gateway/GatewayListWK")
+);
+const DeviceHelmet = lazy(
+  () => import("../pages/Device/Helmet/HelmetList")
 );
 
 const LogListWK = lazy(() => import("../pages/LogPage/LogListWK"));
@@ -517,12 +510,13 @@ const coreRoutes = [
     component: DatabaseSearch,
   },
   {
-    path: "/workstation/pengaturan-list/manajemen-pengguna",
+    // path: "/workstation/pengaturan-list/manajemen-pengguna",
+    path: "/dashboard/pengaturan-list/manajemen-pengguna",
     title: "UserList",
     component: UserList,
   },
   {
-    path: "/workstation/pengaturan-list/perangkat",
+    path: "/dashboard/pengaturan-list/perangkat",
     title: "DeviceList",
     component: DeviceList,
   },
@@ -534,6 +528,11 @@ const coreRoutes = [
     component: DeviceGatewayListWK,
   },
   {
+    path: "/dashboard/pengaturan-list/perangkat/helmet",
+    title: "DeviceHelmet",
+    component: DeviceHelmet,
+  },
+  {
     // path: "/workstation/pengaturan-list/perangkat/kamera",
     path: "/dashboard/pengaturan-list/perangkat/kamera",
     // path: '/device-camera-list',
@@ -542,10 +541,10 @@ const coreRoutes = [
   },
   {
     // path: "/workstation/pengaturan-list/perangkat/gelang",
-    path: "/dashboard/pengaturan-list/perangkat/gelang",
+    path: "/dashboard/pengaturan-list/perangkat/smartwatch",
     // path: '/device-bracelet-list',
-    title: "DeviceBraceletListWK",
-    component: DeviceBraceletListWK,
+    title: "DeviceSmartwatchListWK",
+    component: DeviceSmartwatchListWK,
   },
 ];
 

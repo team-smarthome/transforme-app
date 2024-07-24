@@ -107,21 +107,24 @@ const Gateway = () => {
         element: "#kamera",
         popover: {
           title: "Kamera",
-          description: "Menampilkan data kamera aktif, kamera non-aktif, kamera rusak dan jumlah kamera",
+          description:
+            "Menampilkan data kamera aktif, kamera non-aktif, kamera rusak dan jumlah kamera",
         },
       },
       {
         element: "#gelang",
         popover: {
           title: "Gelang",
-          description: "Menampilkan data gelang WBP aktif, gelang WBP low power dan jumlah gelang WBP",
+          description:
+            "Menampilkan data gelang WBP aktif, gelang WBP low power dan jumlah gelang WBP",
         },
       },
       {
         element: "#gateway",
         popover: {
           title: "Gateway",
-          description: "Menampilkan data gateway aktif, zona hijau, zona kuning, zona merah, gateway rusak dan jumlah gateway",
+          description:
+            "Menampilkan data gateway aktif, zona hijau, zona kuning, zona merah, gateway rusak dan jumlah gateway",
         },
       },
     ],
@@ -151,7 +154,6 @@ const Gateway = () => {
     hijau: 0,
   });
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -178,7 +180,7 @@ const Gateway = () => {
         console.error("Error fetching data:", error);
         // Example: handle navigation or alerts
         // if (error.response.status === 403) {
-        //   navigate("/auth/signin", {
+        //   navigate("/", {
         //     state: { forceLogout: true, lastPage: location.pathname },
         //   });
         // }
@@ -194,19 +196,31 @@ const Gateway = () => {
     } else {
       localStorage.removeItem("dataUser");
       // localStorage.removeItem("token");
-      navigate("/auth/signin");
+      navigate("/");
     }
   }, []);
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mt-2" id="gateway">
+      <div
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 mt-2"
+        id="gateway"
+      >
         <div className="rounded-sm border col-span-2 border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="grid grid-cols-2 gap-2">
             <div className="grid gap-2">
               <div className="flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="flex h-11.5 w-11.5 items-center justify-center text-black rounded-full bg-slate-100 dark:bg-slate-200">
-                  <svg fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <svg
+                    fill="none"
+                    width="18"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -217,14 +231,25 @@ const Gateway = () => {
 
                 <div className="ml-4 flex items-end justify-between">
                   <div>
-                    <h4 className="text-title-md font-bold text-black dark:text-white">{gateway.aktif}</h4>
+                    <h4 className="text-title-md font-bold text-black dark:text-white">
+                      {gateway.aktif}
+                    </h4>
                     <span className="text-sm font-medium">Gateway Aktif</span>
                   </div>
                 </div>
               </div>{" "}
               <div className="flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="flex h-11.5 w-11.5 items-center justify-center text-black rounded-full bg-green-300 dark:bg-green-500">
-                  <svg fill="none" width="18" height="18" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <svg
+                    fill="none"
+                    width="18"
+                    height="18"
+                    stroke="white"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -235,7 +260,9 @@ const Gateway = () => {
 
                 <div className="ml-4 flex items-end justify-between">
                   <div>
-                    <h4 className="text-title-md font-bold text-black dark:text-white">{zona.hijau}</h4>
+                    <h4 className="text-title-md font-bold text-black dark:text-white">
+                      {zona.hijau}
+                    </h4>
                     <span className="text-sm font-medium">Zona Hijau</span>
                   </div>
                 </div>
@@ -244,7 +271,16 @@ const Gateway = () => {
             <div className="grid gap-2">
               <div className="flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="flex h-11.5 w-11.5 items-center text-black justify-center rounded-full bg-yellow-300 dark:bg-yellow-500">
-                  <svg fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <svg
+                    fill="none"
+                    width="18"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -255,14 +291,25 @@ const Gateway = () => {
 
                 <div className="ml-4 flex items-end justify-between">
                   <div>
-                    <h4 className="text-title-md font-bold text-black dark:text-white">{zona.kuning}</h4>
+                    <h4 className="text-title-md font-bold text-black dark:text-white">
+                      {zona.kuning}
+                    </h4>
                     <span className="text-sm font-medium">Zona Kuning</span>
                   </div>
                 </div>
               </div>{" "}
               <div className=" flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="flex h-11.5 w-11.5  items-center justify-center rounded-full bg-red-300 dark:bg-red-700">
-                  <svg fill="none" width="18" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <svg
+                    fill="none"
+                    width="18"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -273,7 +320,9 @@ const Gateway = () => {
 
                 <div className="ml-4 flex items-end justify-between">
                   <div>
-                    <h4 className="text-title-md font-bold text-black dark:text-white">{zona.merah}</h4>
+                    <h4 className="text-title-md font-bold text-black dark:text-white">
+                      {zona.merah}
+                    </h4>
                     <span className="text-sm font-medium">Zona Merah</span>
                   </div>
                 </div>
@@ -284,7 +333,16 @@ const Gateway = () => {
         <div className="grid gap-2">
           <div className="flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
-              <svg fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <svg
+                fill="none"
+                width="18"
+                height="18"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -295,14 +353,25 @@ const Gateway = () => {
 
             <div className="ml-4 flex items-end justify-between">
               <div>
-                <h4 className="text-title-md font-bold text-black dark:text-white">{gateway.rusak}</h4>
+                <h4 className="text-title-md font-bold text-black dark:text-white">
+                  {gateway.rusak}
+                </h4>
                 <span className="text-sm font-medium">Gateway Rusak</span>
               </div>
             </div>
           </div>{" "}
           <div className="flex items-center rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
-              <svg fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <svg
+                fill="none"
+                width="18"
+                height="18"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -313,7 +382,9 @@ const Gateway = () => {
 
             <div className="ml-4 flex items-end justify-between">
               <div>
-                <h4 className="text-title-md font-bold text-black dark:text-white">{gateway.jumlah}</h4>
+                <h4 className="text-title-md font-bold text-black dark:text-white">
+                  {gateway.jumlah}
+                </h4>
                 <span className="text-sm font-medium">Jumlah Gateway</span>
               </div>
             </div>

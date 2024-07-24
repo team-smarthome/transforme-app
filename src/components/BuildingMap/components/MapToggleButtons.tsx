@@ -5,11 +5,12 @@ import {
 } from "@heroicons/react/24/outline";
 import { LuScanFace } from "react-icons/lu";
 import { BiUser } from "react-icons/bi";
-import { BsDoorOpen } from "react-icons/bs";
+import { BsDoorOpen, BsSmartwatch } from "react-icons/bs";
 import { SlScreenDesktop } from "react-icons/sl";
 import { LuMonitorCheck } from "react-icons/lu";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { BsInboxes } from "react-icons/bs";
+import { GiMiningHelmet } from "react-icons/gi";
 import {
   MdOutlineStorage,
   MdPersonAddAlt1,
@@ -227,7 +228,7 @@ const MapToggleButtons = ({
   zoneVisible,
   isToggleWithDescription,
 }: MapToggleButtonsProps) => {
-  console.log(toggleCameraVisibility, 'sini')
+  console.log(toggleCameraVisibility, "sini");
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoute);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -260,46 +261,46 @@ const MapToggleButtons = ({
     let path = "";
     switch (name) {
       case "WBP":
-        path = "/workstation/master-data/tersangka";
+        path = "/dashboard/pengaturan-list/perangkat/smartwatch";
         break;
       case "Petugas":
-        path = "/workstation/master-data/petugas";
+        path = "/dashboard/staff";
         break;
       case "Pengunjung":
-        path = "/workstation/master-data/pengunjung";
+        path = "/dashboard/pengaturan-list/perangkat/helmet";
         break;
       case "Gateway":
-        path = "/workstation/pengaturan-list/perangkat/gateway";
+        path = "/dashboard/pengaturan-list/perangkat/gateway";
         break;
       case "PTP":
-        path = "/workstation/master-data/ptp/add";
+        path = "/peta";
         break;
       case "Camera":
-        path = "/workstation/pengaturan-list/perangkat/kamera";
+        path = "/dashboard/pengaturan-list/perangkat/kamera";
         break;
       case "Access":
-        path = "/workstation/master-data/access-door/add";
+        path = "/peta";
         break;
       case "Face":
-        path = "/workstation/master-data/face-recognition/add";
+        path = "/peta";
         break;
       case "Desktop":
-        path = "/workstation/master-data/desktop/add";
+        path = "/peta";
         break;
       case "TV":
-        path = "/workstation/master-data/tv/add";
+        path = "/peta";
         break;
       case "SelfReg":
-        path = "/workstation/master-data/self-registration/add";
+        path = "/peta";
         break;
       case "NVR":
-        path = "/workstation/master-data/nvr/add";
+        path = "/peta";
         break;
       case "NAS":
-        path = "/workstation/master-data/nas/add";
+        path = "/peta";
         break;
       case "Zone":
-        path = "/workstation/master-data/zone/add";
+        path = "/peta";
         break;
       default:
         break;
@@ -311,48 +312,53 @@ const MapToggleButtons = ({
     <nav className="flex justify-center items-center w-full p-1 gap-x-7">
       <div
         onMouseEnter={() => handleMouseEnter("WBP")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
           }
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-wbp ">
+          className="text-black flex flex-col items-center justify-center b-wbp "
+        >
           <button
             onClick={toggleWBPVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               WBPVisible
                 ? "bg-red-600 hover:bg-red-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
-            <BiUser
+            } `}
+          >
+            <BsSmartwatch
               className={`${
                 WBPVisible ? "text-white" : "text-slate-300"
               } w-5 h-5`}
             />
           </button>
           {isToggleWithDescription && (
-            <span className="text-white text-xs">WBP</span>
+            <span className="text-white text-xs">Smart Watch</span>
           )}
           {hoveredButton === "WBP" && WBPVisible && (
             <div className="absolute  ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38 ">
               <div
                 className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("WBP")}>
+                onClick={() => handleClick("WBP")}
+              >
                 <button style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                   {/* <IoSearchCircleOutline className="w-6 h-6" /> */}
                 </button>
-                <h5 className="text-white text-sm">Cari WBP</h5>
+                <h5 className="text-white text-sm">Cari Smart Watch</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("WBP")}>
+                onClick={() => handleNavigateAdd("WBP")}
+              >
                 <button style={{ color: "white" }} className="flex flex-row">
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah WBP</h5>
+                <h5 className="text-white text-sm">Tambah Smart Watch</h5>
               </div>
             </div>
           )}
@@ -360,7 +366,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Petugas")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -368,40 +375,44 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Petugas</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-petugas">
+          className="text-black flex flex-col items-center justify-center b-petugas"
+        >
           <button
             onClick={togglePetugasVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               petugasVisible
                 ? "bg-yellow-600 hover:bg-yellow-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
-            <GiPoliceOfficerHead
+            } `}
+          >
+            <BiUser
               className={`${
                 petugasVisible ? "text-white" : "text-slate-300"
               } w-5 h-5`}
             />
           </button>
           {isToggleWithDescription && (
-            <span className="text-white text-xs">Petugas</span>
+            <span className="text-white text-xs">Staff</span>
           )}
           {hoveredButton === "Petugas" && petugasVisible && (
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-50">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Petugas")}>
+                onClick={() => handleClick("Petugas")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Cari Petugas</h5>
+                <h5 className="text-white text-sm">Cari Staff</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("Petugas")}>
+                onClick={() => handleNavigateAdd("Petugas")}
+              >
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Petugas</h5>
+                <h5 className="text-white text-sm">Tambah Staff</h5>
               </div>
             </div>
           )}
@@ -409,7 +420,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Pengunjung")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -417,40 +429,44 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Pengunjung</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-pengunjung">
+          className="text-black flex flex-col items-center justify-center b-pengunjung"
+        >
           <button
             onClick={togglePengunjungVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               pengunjungVisible
                 ? "bg-teal-600 hover:bg-teal-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
-            <FaWalking
+            } `}
+          >
+            <GiMiningHelmet
               className={`${
                 pengunjungVisible ? "text-white" : "text-slate-300"
               } w-5 h-5`}
             />
           </button>
           {isToggleWithDescription && (
-            <span className="text-white text-xs">Pengunjung</span>
+            <span className="text-white text-xs">Helmet</span>
           )}
           {hoveredButton === "Pengunjung" && pengunjungVisible && (
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Pengunjung")}>
+                onClick={() => handleClick("Pengunjung")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Cari Pengunjung</h5>
+                <h5 className="text-white text-sm">Cari Helmet</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("Pengunjung")}>
+                onClick={() => handleNavigateAdd("Pengunjung")}
+              >
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Pengunjung</h5>
+                <h5 className="text-white text-sm">Tambah Helmet</h5>
               </div>
             </div>
           )}
@@ -458,7 +474,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Gateway")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -466,14 +483,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Gateway</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-gateway">
+          className="text-black flex flex-col items-center justify-center b-gateway"
+        >
           <button
             onClick={toggleGatewayVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               gatewayVisible
                 ? "bg-blue-600 hover:bg-blue-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <WifiIcon
               className={`${
                 gatewayVisible ? "text-white" : "text-slate-300"
@@ -487,7 +506,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Gateway")}>
+                onClick={() => handleClick("Gateway")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdWifiFind className="w-6 h-6" />
                 </button>
@@ -495,7 +515,8 @@ const MapToggleButtons = ({
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("Gateway")}>
+                onClick={() => handleNavigateAdd("Gateway")}
+              >
                 <button style={{ color: "white" }}>
                   <MdSignalWifiStatusbar3Bar className="w-6 h-6" />
                 </button>
@@ -507,7 +528,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("PTP")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -515,14 +537,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">PTP & AP</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-ptp">
+          className="text-black flex flex-col items-center justify-center b-ptp"
+        >
           <button
             onClick={toggleRouterVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               routerVisible
                 ? "bg-blue-600 hover:bg-blue-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <SignalIcon
               className={`${
                 routerVisible ? "text-white" : "text-slate-300"
@@ -536,7 +560,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("PTP & AP")}>
+                onClick={() => handleClick("PTP & AP")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -554,7 +579,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Camera")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -562,14 +588,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Camera</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-camera">
+          className="text-black flex flex-col items-center justify-center b-camera"
+        >
           <button
             onClick={toggleCameraVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               cameraVisible
                 ? "bg-violet-600 hover:bg-violet-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <VideoCameraIcon
               className={`${
                 cameraVisible ? "text-white" : "text-slate-300"
@@ -583,13 +611,17 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Camera")}>
+                onClick={() => handleClick("Camera")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <TbCameraSearch className="w-6 h-6" />
                 </button>
                 <h5 className="text-white text-sm">Cari Kamera</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md" onClick={() => handleNavigateAdd("Camera")}>
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("Camera")}
+              >
                 <button style={{ color: "white" }}>
                   <TbCameraPlus className="w-6 h-6" />
                 </button>
@@ -601,7 +633,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Access")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -609,14 +642,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Access Door</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-acces-door">
+          className="text-black flex flex-col items-center justify-center b-acces-door"
+        >
           <button
             onClick={toggleAccessDoorVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               accessDoorVisible
                 ? "bg-orange-600 hover:bg-orange-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <BsDoorOpen
               className={`${
                 accessDoorVisible ? "text-white" : "text-slate-300"
@@ -630,7 +665,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Access Door")}>
+                onClick={() => handleClick("Access Door")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -648,7 +684,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Face")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -656,14 +693,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Face Recognition</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-face-recognition">
+          className="text-black flex flex-col items-center justify-center b-face-recognition"
+        >
           <button
             onClick={toggleFaceRecognitionVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               faceRecognitionVisible
                 ? "bg-pink-600 hover:bg-pink-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <LuScanFace
               className={`${
                 faceRecognitionVisible ? "text-white" : "text-slate-300"
@@ -677,7 +716,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Face Recognition")}>
+                onClick={() => handleClick("Face Recognition")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -695,7 +735,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("Desktop")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -703,14 +744,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Interactive Desktop</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-interactive-desktop">
+          className="text-black flex flex-col items-center justify-center b-interactive-desktop"
+        >
           <button
             onClick={toggleInteractiveDesktopVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               interactiveDesktopVisible
                 ? "bg-lime-600 hover:bg-lime-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <SlScreenDesktop
               className={`${
                 interactiveDesktopVisible ? "text-white" : "text-slate-300"
@@ -724,7 +767,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Desktop")}>
+                onClick={() => handleClick("Desktop")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <TbDeviceDesktopSearch className="w-6 h-6" />
                 </button>
@@ -742,7 +786,8 @@ const MapToggleButtons = ({
       </div>
       <div
         onMouseEnter={() => handleMouseEnter("TV")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -750,14 +795,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Interactive TV</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-interactive-tv">
+          className="text-black flex flex-col items-center justify-center b-interactive-tv"
+        >
           <button
             onClick={toggleInteractiveTVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               interactiveTVisible
                 ? "bg-green-800 hover:bg-green-700 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <LuMonitorCheck
               className={`${
                 interactiveTVisible ? "text-white" : "text-slate-300"
@@ -771,7 +818,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("TV")}>
+                onClick={() => handleClick("TV")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <TbDeviceDesktopSearch className="w-6 h-6" />
                 </button>
@@ -790,7 +838,8 @@ const MapToggleButtons = ({
       <div
         className="pr-3"
         onMouseEnter={() => handleMouseEnter("M-Kiosk")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -798,14 +847,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Self Registration Kiosk</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-self-registration">
+          className="text-black flex flex-col items-center justify-center b-self-registration"
+        >
           <button
             onClick={toggleSelfRegKioskVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               selfRegKioskVisible
                 ? "bg-amber-600 hover:bg-amber-500 shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <PiDeviceTabletSpeakerLight
               className={`${
                 selfRegKioskVisible ? "text-white" : "text-slate-300"
@@ -819,7 +870,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("M-Kiosk")}>
+                onClick={() => handleClick("M-Kiosk")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -838,7 +890,8 @@ const MapToggleButtons = ({
       <div
         className="pr-3"
         onMouseEnter={() => handleMouseEnter("NVR")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -846,14 +899,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">NVR</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-nvr">
+          className="text-black flex flex-col items-center justify-center b-nvr"
+        >
           <button
             onClick={toggleNVRVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               NVRVisible
                 ? "bg-slate-100 hover:bg-white shadow-3 shadow-transparent-light"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <BsInboxes
               className={`${
                 NVRVisible ? "text-black" : "text-slate-300"
@@ -867,7 +922,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("NVR")}>
+                onClick={() => handleClick("NVR")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -886,7 +942,8 @@ const MapToggleButtons = ({
       <div
         className="pr-3"
         onMouseEnter={() => handleMouseEnter("NAS")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -894,14 +951,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">NAS</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-nas">
+          className="text-black flex flex-col items-center justify-center b-nas"
+        >
           <button
             onClick={toggleNASVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               NASVisible
                 ? "bg-slate-900 hover:bg-slate-800 shadow-3 shadow-transparent-light border border-slate-500"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <MdOutlineStorage
               className={`${
                 NASVisible ? "text-white" : "text-slate-300"
@@ -915,7 +974,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("NAS")}>
+                onClick={() => handleClick("NAS")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -934,7 +994,8 @@ const MapToggleButtons = ({
       <div
         className="pr-3"
         onMouseEnter={() => handleMouseEnter("Zona")}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+      >
         <Tooltip
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
@@ -942,14 +1003,16 @@ const MapToggleButtons = ({
           // title={<span className="text-black">NAS</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-nas">
+          className="text-black flex flex-col items-center justify-center b-nas"
+        >
           <button
             onClick={toggleZoneVisibility}
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-200 ${
               zoneVisible
                 ? "bg-green-500 hover:bg-green-400 shadow-3 shadow-transparent-light border border-slate-500"
                 : "bg-slate-600 hover:bg-slate-500"
-            } `}>
+            } `}
+          >
             <FaVectorSquare
               className={`${
                 zoneVisible ? "text-white" : "text-slate-300"
@@ -963,7 +1026,8 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Zona")}>
+                onClick={() => handleClick("Zona")}
+              >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
@@ -986,7 +1050,8 @@ const MapToggleButtons = ({
         // title={<span className="text-black">Lihat Semua</span>}
         placement="bottom"
         color="white"
-        className="text-black flex flex-col items-center justify-center b-lihat-semua">
+        className="text-black flex flex-col items-center justify-center b-lihat-semua"
+      >
         <button
           onClick={toggleAllVisibility}
           className={`flex text-white text-sm py-1 px-2 items-center justify-center rounded-full transition-colors duration-200 ${
@@ -1004,7 +1069,8 @@ const MapToggleButtons = ({
             zoneVisible
               ? "bg-sky-600 hover:bg-sky-500 shadow-3 shadow-transparent-light"
               : "bg-slate-600 hover:bg-slate-500"
-          } `}>
+          } `}
+        >
           {WBPVisible &&
           gatewayVisible &&
           routerVisible &&

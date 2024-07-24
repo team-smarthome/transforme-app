@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 // import Select from 'react-select/dist/declarations/src/Select';
-import Select from 'react-select';
-import { apiReadKategoriPerkara } from '../../../services/api';
-import { driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
-import { HiQuestionMarkCircle } from 'react-icons/hi2';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Alerts } from './AlertCaseType';
-import { Error403Message } from '../../../utils/constants';
-import { set } from 'react-hook-form';
+import Select from "react-select";
+import { apiReadKategoriPerkara } from "../../../services/api";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Alerts } from "./AlertCaseType";
+import { Error403Message } from "../../../utils/constants";
+import { set } from "react-hook-form";
 
 // interface
 interface AddCaseTypeModalProps {
@@ -35,14 +35,14 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_jenis_perkara: '',
-      pasal: '',
-      kategori_perkara_id: '',
-      nama_kategori_perkara: '',
+      nama_jenis_perkara: "",
+      pasal: "",
+      kategori_perkara_id: "",
+      nama_kategori_perkara: "",
       // vonis_bulan_perkara: '',
       // vonis_hari_perkara : '',
       // vonis_tahun_perkara: '',
-    },
+    }
   );
 
   //state
@@ -52,7 +52,7 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
   // const [buttonLoad, setButtonLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const tokenItem = localStorage.getItem('token');
+  const tokenItem = localStorage.getItem("token");
   const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
   const token = dataToken.token;
 
@@ -100,99 +100,99 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: '100%',
+      width: "100%",
     }),
     control: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: 'rgb(30 41 59)',
-      borderColor: 'rgb(30 41 59)',
-      color: 'white',
+      backgroundColor: "rgb(30 41 59)",
+      borderColor: "rgb(30 41 59)",
+      color: "white",
       paddingTop: 3,
       paddingBottom: 3,
       paddingLeft: 3,
       paddingRight: 4.5,
       borderRadius: 5,
 
-      '&:hover': {
-        borderColor: 'rgb(30 41 59)',
+      "&:hover": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:active': {
-        borderColor: 'rgb(30 41 59)',
+      "&:active": {
+        borderColor: "rgb(30 41 59)",
       },
-      '&:focus': {
-        borderColor: 'rgb(30 41 59)',
+      "&:focus": {
+        borderColor: "rgb(30 41 59)",
       },
     }),
     input: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     menu: (provided: any) => ({
       ...provided,
-      color: 'white',
-      paddingLeft: '5px',
-      paddingRight: '5px',
-      backgroundColor: 'rgb(30 41 59)',
+      color: "white",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      backgroundColor: "rgb(30 41 59)",
     }),
     option: (styles: any, { isDisabled, isFocused, isSelected }: any) => {
       return {
         ...styles,
-        borderRadius: '6px',
+        borderRadius: "6px",
 
         backgroundColor: isDisabled
           ? undefined
           : isSelected
-            ? ''
-            : isFocused
-              ? 'rgb(51, 133, 255)'
-              : undefined,
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
-        ':active': {
-          ...styles[':active'],
+        ":active": {
+          ...styles[":active"],
           backgroundColor: !isDisabled,
         },
       };
     },
     placeholder: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
 
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     clearIndicator: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: 'white',
+      color: "white",
     }),
     multiValue: (styles: any) => {
       return {
         ...styles,
-        backgroundColor: 'rgb(51, 133, 255)',
+        backgroundColor: "rgb(51, 133, 255)",
       };
     },
     multiValueLabel: (styles: any) => ({
       ...styles,
-      color: 'white',
+      color: "white",
     }),
   };
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
+      | React.ChangeEvent<HTMLSelectElement>
   ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formState, 'formState');
+    console.log(formState, "formState");
 
     if (!validateForm()) return;
     // setButtonLoad(true);
@@ -217,12 +217,12 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate('/auth/signin', {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
         Alerts.fire({
-          icon: e.response.status === 403 ? 'warning' : 'error',
+          icon: e.response.status === 403 ? "warning" : "error",
           title: e.response.status === 403 ? Error403Message : e.message,
         });
       });
@@ -243,7 +243,7 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
   //       }, 500);
   //     } catch (e: any) {
   //       if (e.response.status === 403) {
-  //         navigate('/auth/signin', {
+  //         navigate('/', {
   //           state: { forceLogout: true, lastPage: location.pathname },
   //         });
   //       }
@@ -258,20 +258,20 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -279,31 +279,33 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
   const handleClickTutorial = () => {
     const steps = [
       {
-        element: '.f-nama',
+        element: ".f-nama",
         popover: {
-          title: 'Nama perkara',
-          description: 'Isi nama perkara',
+          title: "Nama perkara",
+          description: "Isi nama perkara",
         },
       },
       {
-        element: '.f-pasal',
+        element: ".f-pasal",
         popover: {
-          title: 'Nomor pasal ',
-          description: 'Isi nomor pasal perkara',
+          title: "Nomor pasal ",
+          description: "Isi nomor pasal perkara",
         },
       },
       {
-        element: '.f-kategori',
+        element: ".f-kategori",
         popover: {
-          title: 'Kategori perkara',
-          description: 'Pilih kategori perkara',
+          title: "Kategori perkara",
+          description: "Pilih kategori perkara",
         },
       },
       {
-        element: `${isEdit ? '.b-ubah-modal' : '.b-tambah-modal'}`,
+        element: `${isEdit ? ".b-ubah-modal" : ".b-tambah-modal"}`,
         popover: {
-          title: `${isEdit ? 'Ubah' : 'Tambah'}`,
-          description: `Klik untuk ${isEdit ? 'mengubah' : 'menambahkan'} data perkara`,
+          title: `${isEdit ? "Ubah" : "Tambah"}`,
+          description: `Klik untuk ${
+            isEdit ? "mengubah" : "menambahkan"
+          } data perkara`,
         },
       },
     ];
@@ -355,10 +357,10 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
                     {isDetail
-                      ? 'Detail Jenis Perkara'
+                      ? "Detail Jenis Perkara"
                       : isEdit
-                        ? 'Edit Jenis Perkara'
-                        : 'Tambah Jenis Perkara'}
+                      ? "Edit Jenis Perkara"
+                      : "Tambah Jenis Perkara"}
                   </h3>
                 </div>
                 {!isDetail && (
@@ -397,9 +399,9 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'nama_jenis_perkara'
-                          ? 'Masukan Jenis Perkara'
-                          : '',
+                        item === "nama_jenis_perkara"
+                          ? "Masukan Jenis Perkara"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -421,7 +423,7 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'pasal' ? 'Masukan Pasal' : '',
+                        item === "pasal" ? "Masukan Pasal" : ""
                       )}
                     </p>
                   </div>
@@ -465,9 +467,9 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                     />
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === 'nama_kategori_perkara'
-                          ? 'Pilih Kategori Perkara'
-                          : '',
+                        item === "nama_kategori_perkara"
+                          ? "Pilih Kategori Perkara"
+                          : ""
                       )}
                     </p>
                   </div>
@@ -544,12 +546,12 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
               </div> */}
                 </div>
 
-                <div className={` ${isDetail ? 'h-auto' : 'h-15'}  mt-3`}>
+                <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {/* <br></br> */}
                   {isDetail ? null : isEdit ? (
                     <button
                       className={`b-ubah-modal items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -576,14 +578,14 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Ubah Jenis Perkara
                     </button>
                   ) : (
                     <button
                       className={`b-tambah-modal items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
-                        buttonLoad ? 'bg-slate-400' : ''
+                        buttonLoad ? "bg-slate-400" : ""
                       }`}
                       type="submit"
                       disabled={buttonLoad}
@@ -610,22 +612,22 @@ export const AddCaseTypeModal: React.FC<AddCaseTypeModalProps> = ({
                           ></path>
                         </svg>
                       ) : (
-                        ''
+                        ""
                       )}
                       Tambah Jenis Perkara
                     </button>
                   )}
                   {errors.filter((item: string) =>
-                    item.startsWith('INVALID_ID'),
+                    item.startsWith("INVALID_ID")
                   ).length > 0 && (
                     <>
                       <br />
                       <div className="error">
                         {errors
                           .filter((item: string) =>
-                            item.startsWith('INVALID_ID'),
+                            item.startsWith("INVALID_ID")
                           )[0]
-                          .replace('INVALID_ID_', '')}{' '}
+                          .replace("INVALID_ID_", "")}{" "}
                         is not a valid bond
                       </div>
                     </>

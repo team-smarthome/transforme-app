@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal, { ModalWBP } from "../../Modal";
 import { BiUser } from "react-icons/bi";
+import { BsSmartwatch } from "react-icons/bs";
 
 interface WBPProps {
   item: any;
@@ -50,7 +51,7 @@ function WBP({
             type="button"
             className="w-4 h-4 flex items-center justify-center rounded-full transition-colors duration-200 bg-map-gateway bg-red-600 hover:bg-red-400 shadow-3 shadow-transparent-light"
           >
-            <BiUser
+            <BsSmartwatch
               className={`${
                 size === "base" ? "w-4 h-4" : size === "small" ? "w-4 h-4" : ""
               } text-white z-[83] p-[2px]`}

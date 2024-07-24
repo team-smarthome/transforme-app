@@ -483,7 +483,7 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
         }, 500);
       } catch (e: any) {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -509,7 +509,7 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -530,7 +530,7 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
       })
       .catch((e: any) => {
         if (e.response.status === 403) {
-          navigate("/auth/signin", {
+          navigate("/", {
             state: { forceLogout: true, lastPage: location.pathname },
           });
         }
@@ -581,7 +581,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
       <div
         ref={modalContainerRef}
         style={modalStyles.modalContainer}
-        className="modal-container fixed z-[999] flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[85vh] w-1/2 overflow-y-scroll bg-slate-600 border border-slate-800 rounded-md">
+        className="modal-container fixed z-[999] flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[85vh] w-1/2 overflow-y-scroll bg-slate-600 border border-slate-800 rounded-md"
+      >
         <div className="modal rounded-sm w-full">
           {isLoading ? (
             <div className="h-[500px] justify-center flex items-center">
@@ -589,18 +590,21 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                 className="animate-spin h-30 w-30 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24">
+                viewBox="0 0 24 24"
+              >
                 <circle
                   className="opacity-25"
                   cx="12"
                   cy="12"
                   r="10"
                   stroke="currentColor"
-                  strokeWidth="4"></circle>
+                  strokeWidth="4"
+                ></circle>
                 <path
                   className="opacity-75"
                   fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
             </div>
           ) : (
@@ -640,7 +644,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
 
                 <strong
                   className="text-xl align-center cursor-pointer "
-                  onClick={closeModal}>
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
@@ -649,7 +654,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                   <div className="form-group w-full">
                     <label
                       className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id">
+                      htmlFor="id"
+                    >
                       Nama Kegiatan
                     </label>
                     <input
@@ -672,7 +678,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                   <div className="form-group w-full">
                     <label
                       className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id">
+                      htmlFor="id"
+                    >
                       Waktu Mulai Kegiatan
                     </label>
 
@@ -725,7 +732,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                   <div className="form-group w-full">
                     <label
                       className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id">
+                      htmlFor="id"
+                    >
                       Waktu Akhir Kegiatan
                     </label>
 
@@ -779,7 +787,8 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                   <div className="form-group w-full">
                     <label
                       className="block text-sm font-medium text-black dark:text-white"
-                      htmlFor="id">
+                      htmlFor="id"
+                    >
                       Status Kegiatan
                     </label>
 
@@ -947,24 +956,28 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                     }`}
                     type="submit"
                     disabled={buttonLoad}
-                    id="b-ubah">
+                    id="b-ubah"
+                  >
                     {buttonLoad ? (
                       <svg
                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24">
+                        viewBox="0 0 24 24"
+                      >
                         <circle
                           className="opacity-25"
                           cx="12"
                           cy="12"
                           r="10"
                           stroke="currentColor"
-                          strokeWidth="4"></circle>
+                          strokeWidth="4"
+                        ></circle>
                         <path
                           className="opacity-75"
                           fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""
@@ -978,24 +991,28 @@ export const AddEventModal: React.FC<AddVisitorModalProps> = ({
                     }`}
                     type="submit"
                     disabled={buttonLoad}
-                    id="b-tambah">
+                    id="b-tambah"
+                  >
                     {buttonLoad ? (
                       <svg
                         className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24">
+                        viewBox="0 0 24 24"
+                      >
                         <circle
                           className="opacity-25"
                           cx="12"
                           cy="12"
                           r="10"
                           stroke="currentColor"
-                          strokeWidth="4"></circle>
+                          strokeWidth="4"
+                        ></circle>
                         <path
                           className="opacity-75"
                           fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""

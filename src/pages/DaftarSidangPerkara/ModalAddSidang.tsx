@@ -1,5 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { apiAhliRead, apiHakimRead, apiJaksaRead, apiJenisSidangRead, apiKasusRead, apiPengadilanMiliterRead, apiReadAllRole, apiReadAllStaff, apiReadAllUser, apiReadAllWBP, apiReadJaksapenuntut, apiReadSaksi } from "../../services/api";
+import {
+  apiAhliRead,
+  apiHakimRead,
+  apiJaksaRead,
+  apiJenisSidangRead,
+  apiKasusRead,
+  apiPengadilanMiliterRead,
+  apiReadAllRole,
+  apiReadAllStaff,
+  apiReadAllUser,
+  apiReadAllWBP,
+  apiReadJaksapenuntut,
+  apiReadSaksi,
+} from "../../services/api";
 import Select from "react-select";
 import { Alerts } from "./AlertSidang";
 import { CiGlass } from "react-icons/ci";
@@ -27,7 +40,14 @@ interface AddSidangModalProps {
 const dataUserItem = localStorage.getItem("dataUser");
 const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
-export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSubmit, defaultValue, isDetail, isEdit, token }) => {
+export const AddSidangModal: React.FC<AddSidangModalProps> = ({
+  closeModal,
+  onSubmit,
+  defaultValue,
+  isDetail,
+  isEdit,
+  token,
+}) => {
   const [formState, setFormState] = useState(
     defaultValue || {
       waktu_mulai_sidang: "",
@@ -92,9 +112,15 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
   const [pengacaraField, setPengacaraField] = useState("");
   const [filter, setFilter] = useState("");
   const [file, setFile] = useState(null);
-  const [pdfUrl, setPdftUrl] = useState(`https://dev.transforme.co.id${formState.link_dokumen_persidangan}`);
-  const [selectedAnggotaOditur, setSelectedAnggotaOditur] = useState(formState?.oditur_penuntut_id || []);
-  const [selectedKetuaOditur, setSelectedKetuaOditur] = useState(formState?.role_ketua_oditur_holder?.oditur_penuntut_id || null);
+  const [pdfUrl, setPdftUrl] = useState(
+    `https://dev.transforme.co.id${formState.link_dokumen_persidangan}`
+  );
+  const [selectedAnggotaOditur, setSelectedAnggotaOditur] = useState(
+    formState?.oditur_penuntut_id || []
+  );
+  const [selectedKetuaOditur, setSelectedKetuaOditur] = useState(
+    formState?.role_ketua_oditur_holder?.oditur_penuntut_id || null
+  );
 
   console.log(formState.wbpHolder, "testing");
 
@@ -121,7 +147,17 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
   }, []);
 
   useEffect(() => {
-    Promise.all([getTimeZone(), getAllJenisSidang(), getAllJaksaPenuntut(), getAllHakim(), getAllKasus(), getAllPengadilanMiliter(), getAllWbp(), getAllAhli(), getAllSaksi()]).then(() => setIsLoading(false));
+    Promise.all([
+      getTimeZone(),
+      getAllJenisSidang(),
+      getAllJaksaPenuntut(),
+      getAllHakim(),
+      getAllKasus(),
+      getAllPengadilanMiliter(),
+      getAllWbp(),
+      getAllAhli(),
+      getAllSaksi(),
+    ]).then(() => setIsLoading(false));
   }, []);
 
   // useEffect untuk mengambil data dari api
@@ -153,9 +189,15 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
         if (
           !value ||
           // (key === 'hakim_id' && Array.isArray(value) && value.length === 0) ||
-          (key === "jaksa_penuntut_id" && Array.isArray(value) && value.length === 0) ||
-          (key === "oditur_penuntut_id" && Array.isArray(value) && value.length === 0) ||
-          (key === "wbp_profile" && Array.isArray(value) && value.length === 0) ||
+          (key === "jaksa_penuntut_id" &&
+            Array.isArray(value) &&
+            value.length === 0) ||
+          (key === "oditur_penuntut_id" &&
+            Array.isArray(value) &&
+            value.length === 0) ||
+          (key === "wbp_profile" &&
+            Array.isArray(value) &&
+            value.length === 0) ||
           (key === "ahli" && Array.isArray(value) && value.length === 0) ||
           (key === "saksi" && Array.isArray(value) && value.length === 0) ||
           (key === "pengacara" && Array.isArray(value) && value.length === 0)
@@ -361,7 +403,9 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
           element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
             title: `${isEdit ? "Ubah" : "Tambah"}`,
-            description: `Klik untuk ${isEdit ? "mengubah" : "menambahkan"} data sidang`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data sidang`,
           },
         },
       ],
@@ -568,7 +612,9 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       link_dokumen_persidangan: "",
       // pdf_file_base64: '',
     });
-    const inputElement = document.getElementById("fileUpload") as HTMLInputElement;
+    const inputElement = document.getElementById(
+      "fileUpload"
+    ) as HTMLInputElement;
     if (inputElement) {
       inputElement.value = "";
     }
@@ -590,7 +636,9 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
         kasus_id: selectedKasusId,
       }));
 
-      const selectedKasus = kasus.find((item: any) => item.kasus_id === selectedKasusId);
+      const selectedKasus = kasus.find(
+        (item: any) => item.kasus_id === selectedKasusId
+      );
 
       if (selectedKasus) {
         const saksiMap = selectedKasus.saksi.map((item: any) => ({
@@ -816,7 +864,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       console.log("uniq", uniqueData);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -839,7 +887,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       // console.log('JAKSA', response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -860,7 +908,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       setHakim(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -878,12 +926,14 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
     };
     try {
       const response = await apiKasusRead(params, token);
-      const filteredKasus = response.data.records.filter((kasus: any) => kasus.nama_kasus != null && kasus.nama_kasus != "");
+      const filteredKasus = response.data.records.filter(
+        (kasus: any) => kasus.nama_kasus != null && kasus.nama_kasus != ""
+      );
 
       setKasus(filteredKasus);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -904,7 +954,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       setPengadilanMiliter(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -925,7 +975,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       setWbp(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -946,7 +996,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       setAhli(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -967,7 +1017,7 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
       setSaksi(response.data.records);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/auth/signin", {
+        navigate("/", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -997,7 +1047,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
     },
   };
 
-  const ExampleCustomTimeInput = ({ date, value, onChange }: any) => <input value={value} onChange={(e) => onChange(e.target.value)} style={{ border: "solid 1px pink" }} />;
+  const ExampleCustomTimeInput = ({ date, value, onChange }: any) => (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      style={{ border: "solid 1px pink" }}
+    />
+  );
 
   const customStyles = {
     container: (provided: any) => ({
@@ -1041,7 +1097,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -1117,9 +1179,18 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
     //   .catch((error) => {
     //     console.error('Gagal mengunduh file:', error);
     //   });
-    window.open(`https://dev.transforme.co.id${formState.link_dokumen_persidangan}`, "_blank");
+    window.open(
+      `https://dev.transforme.co.id${formState.link_dokumen_persidangan}`,
+      "_blank"
+    );
 
-    const ExampleCustomTimeInput = ({ date, value, onChange }: any) => <input value={value} onChange={(e) => onChange(e.target.value)} style={{ border: "solid 1px pink" }} />;
+    const ExampleCustomTimeInput = ({ date, value, onChange }: any) => (
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{ border: "solid 1px pink" }}
+      />
+    );
   };
 
   const checkFileType = (file: any) => {
@@ -1146,14 +1217,33 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
           {isLoading ? (
             <div>
               <div className="flex flex-row-reverse pr-5 pt-3">
-                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer "
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
               <div className="h-[500px] justify-center flex items-center">
-                <svg className="animate-spin h-20 w-20 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin h-20 w-20 text-white "
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
               </div>
             </div>
@@ -1161,7 +1251,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
             <div className="border-b border-stroke py-4 px-7 dark:border-strokedark">
               <div className="w-full flex justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold text-black dark:text-white">{isDetail ? "Detail Data Sidang" : isEdit ? "Edit Data Sidang" : "Tambah Data Sidang"}</h3>
+                  <h3 className="text-xl font-semibold text-black dark:text-white">
+                    {isDetail
+                      ? "Detail Data Sidang"
+                      : isEdit
+                      ? "Edit Data Sidang"
+                      : "Tambah Data Sidang"}
+                  </h3>
                 </div>
 
                 {/* <div className="w-10"> */}
@@ -1186,7 +1282,10 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                 )}
                 {/* </div> */}
 
-                <strong className="text-xl align-center cursor-pointer  " onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer  "
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
@@ -1195,7 +1294,10 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                   <div className="grid grid-cols-2 gap-4 justify-normal">
                     {/* Nama sidang */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Nama sidang
                       </label>
 
@@ -1215,11 +1317,18 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         <option value="Tahap Ketiga">Tahap Ketiga</option>
                       </select>
 
-                      <p className="error-text">{errors.map((item) => (item === "nama_sidang" ? "Pilih nama sidang" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "nama_sidang" ? "Pilih nama sidang" : ""
+                        )}
+                      </p>
                     </div>
 
                     <div className="form-group w-full">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Pilih Jenis Sidang
                       </label>
                       <Select
@@ -1244,13 +1353,22 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         }))}
                         onChange={handleJenisPersidangan}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "jenis_persidangan_id" ? "Pilih jenis sidang" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "jenis_persidangan_id"
+                            ? "Pilih jenis sidang"
+                            : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   {/* anggota Jaksa Penuntut */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Anggota Oditur Penuntut
                     </label>
                     <Select
@@ -1266,7 +1384,10 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           : isEdit
                           ? formState?.oditur_penuntut_id?.map((item) => ({
                               value: item,
-                              label: jaksa.find((jaksaItem) => jaksaItem.oditur_penuntut_id === item)?.nama_oditur,
+                              label: jaksa.find(
+                                (jaksaItem) =>
+                                  jaksaItem.oditur_penuntut_id === item
+                              )?.nama_oditur,
                             }))
                           : ""
                       }
@@ -1282,13 +1403,22 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       }))}
                       onChange={handleSelectJaksa}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "oditur_penuntut_id" ? "Pilih oditur penuntut" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "oditur_penuntut_id"
+                          ? "Pilih oditur penuntut"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     {/* Ketua Jaksa */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Ketua Oditur
                       </label>
                       <Select
@@ -1297,8 +1427,12 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         defaultValue={
                           isEdit || isDetail
                             ? {
-                                value: formState.role_ketua_oditur_holder?.oditur_penuntut_id,
-                                label: formState.role_ketua_oditur_holder?.nama_oditur,
+                                value:
+                                  formState.role_ketua_oditur_holder
+                                    ?.oditur_penuntut_id,
+                                label:
+                                  formState.role_ketua_oditur_holder
+                                    ?.nama_oditur,
                               }
                             : selectedKetuaOditur
                         }
@@ -1309,19 +1443,32 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         name="oditur_penuntut_id"
                         styles={customStyles}
                         options={jaksa
-                          .filter((item) => selectedAnggotaOditur.includes(item.oditur_penuntut_id))
+                          .filter((item) =>
+                            selectedAnggotaOditur.includes(
+                              item.oditur_penuntut_id
+                            )
+                          )
                           .map((item) => ({
                             value: item.oditur_penuntut_id,
                             label: item.nama_oditur,
                           }))}
                         onChange={handleSelectKetuaJaksa}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "oditur_penuntut_id" ? "Pilih ketua oditur" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "oditur_penuntut_id"
+                            ? "Pilih ketua oditur"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* kasus sidang */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Kasus
                       </label>
                       <Select
@@ -1347,14 +1494,21 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         }))}
                         onChange={handleKasus}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "kasus_id" ? "Pilih kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "kasus_id" ? "Pilih kasus" : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 justify-normal">
                     {/* nomor kasus */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Nomor Kasus
                       </label>
                       <input
@@ -1365,12 +1519,19 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         value={formState?.nomor_kasus}
                         disabled
                       />
-                      <p className="error-text">{errors.map((item) => (item === "nomor_kasus" ? "Masukan nomor kasus" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "nomor_kasus" ? "Masukan nomor kasus" : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* pengadilan militer */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Pengadilan militer
                       </label>
                       <Select
@@ -1397,12 +1558,21 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         }))}
                         onChange={handlePenadilanMiliter}
                       />
-                      <p className="error-text">{errors.map((item) => (item === "pengadilan_militer_id" ? "Pilih pengadilan militer" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "pengadilan_militer_id"
+                            ? "Pilih pengadilan militer"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* Pengawas Peradilan */}
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Juru Sita
                       </label>
                       <input
@@ -1414,10 +1584,17 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         disabled={isDetail}
                       />
 
-                      <p className="error-text">{errors.map((item) => (item === "juru_sita" ? "Masukan Juru Sita" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "juru_sita" ? "Masukan Juru Sita" : ""
+                        )}
+                      </p>
                     </div>
                     <div className="form-group w-full ">
-                      <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Pengawas peradilan militer
                       </label>
                       <input
@@ -1429,13 +1606,22 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         disabled={isDetail}
                       />
 
-                      <p className="error-text">{errors.map((item) => (item === "pengawas_peradilan_militer" ? "Masukan pengawas" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "pengawas_peradilan_militer"
+                            ? "Masukan pengawas"
+                            : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   {/* agenda sidang */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Agenda sidang
                     </label>
                     <input
@@ -1446,11 +1632,18 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       value={formState.agenda_sidang}
                       disabled={isDetail}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "agenda_sidang" ? "Masukan agenda sidang" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "agenda_sidang" ? "Masukan agenda sidang" : ""
+                      )}
+                    </p>
                   </div>
                   {/* hasil kepusutan sidang */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Hasil keputusan sidang
                     </label>
                     <input
@@ -1461,18 +1654,31 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       value={formState.hasil_keputusan_sidang}
                       disabled={isDetail}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "hasil_keputusan_sidang" ? "Masukan hasil keputusan sidang" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "hasil_keputusan_sidang"
+                          ? "Masukan hasil keputusan sidang"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* jadwal sidang */}
                   <div className="grid grid-cols-2 gap-4 justify-normal">
                     <div className="form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Jadwal sidang
                       </label>
                       <div className="flex flex-row input-jadwal">
                         <DatePicker
-                          selected={formState.jadwal_sidang ? dayjs(formState.jadwal_sidang).toDate() : dayjs().toDate()}
+                          selected={
+                            formState.jadwal_sidang
+                              ? dayjs(formState.jadwal_sidang).toDate()
+                              : dayjs().toDate()
+                          }
                           onChange={handleJadwalSidang}
                           showTimeSelect
                           timeFormat="HH:mm"
@@ -1492,17 +1698,32 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "jadwal_sidang" ? "Masukan jadwal sidang" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "jadwal_sidang"
+                            ? "Masukan jadwal sidang"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* perubahan jadwal sidang*/}
                     <div className="form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Perubahan jadwal sidang
                       </label>
                       <div className="flex flex-row input-perubahan">
                         <DatePicker
-                          selected={formState.perubahan_jadwal_sidang ? dayjs(formState.perubahan_jadwal_sidang).toDate() : dayjs().toDate()}
+                          selected={
+                            formState.perubahan_jadwal_sidang
+                              ? dayjs(
+                                  formState.perubahan_jadwal_sidang
+                                ).toDate()
+                              : dayjs().toDate()
+                          }
                           onChange={handlePerubahanJadwal}
                           showTimeSelect
                           timeFormat="HH:mm"
@@ -1521,17 +1742,30 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "perubahan_jadwal_sidang" ? "Masukan perubahan jadwal" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "perubahan_jadwal_sidang"
+                            ? "Masukan perubahan jadwal"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* waktu mulai */}
                     <div className="form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Waktu mulai
                       </label>
                       <div className="flex flex-row input-waktu">
                         <DatePicker
-                          selected={formState.waktu_mulai_sidang ? dayjs(formState.waktu_mulai_sidang).toDate() : dayjs().toDate()}
+                          selected={
+                            formState.waktu_mulai_sidang
+                              ? dayjs(formState.waktu_mulai_sidang).toDate()
+                              : dayjs().toDate()
+                          }
                           onChange={handleWaktuMulai}
                           showTimeSelect
                           timeFormat="HH:mm"
@@ -1550,17 +1784,30 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "waktu_mulai_sidang" ? "Masukan tanggal mulai" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "waktu_mulai_sidang"
+                            ? "Masukan tanggal mulai"
+                            : ""
+                        )}
+                      </p>
                     </div>
 
                     {/* waktu selesai */}
                     <div className="form-group w-full ">
-                      <label className="  block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                      <label
+                        className="  block text-sm font-medium text-black dark:text-white"
+                        htmlFor="id"
+                      >
                         Waktu selesai
                       </label>
                       <div className="flex flex-row input-selesai">
                         <DatePicker
-                          selected={formState.waktu_selesai_sidang ? dayjs(formState.waktu_selesai_sidang).toDate() : dayjs().toDate()}
+                          selected={
+                            formState.waktu_selesai_sidang
+                              ? dayjs(formState.waktu_selesai_sidang).toDate()
+                              : dayjs().toDate()
+                          }
                           onChange={handleWaktuSelesai}
                           showTimeSelect
                           timeFormat="HH:mm"
@@ -1579,13 +1826,22 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           disabled
                         />
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "waktu_selesai_sidang" ? "Masukan tanggal selesai" : ""))}</p>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "waktu_selesai_sidang"
+                            ? "Masukan tanggal selesai"
+                            : ""
+                        )}
+                      </p>
                     </div>
                   </div>
 
                   {/* WBP */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       WBP
                     </label>
                     <Select
@@ -1618,7 +1874,10 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
 
                   {/* Ahli */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Ahli
                     </label>
                     <Select
@@ -1629,7 +1888,12 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                         isEdit || isDetail
                           ? formState.ahliHolder.map((item: any) => ({
                               value: item.ahli_id,
-                              label: item.nama_ahli + " " + "(" + item.bidang_ahli + ")",
+                              label:
+                                item.nama_ahli +
+                                " " +
+                                "(" +
+                                item.bidang_ahli +
+                                ")",
                             }))
                           : formState.ahli_id
                       }
@@ -1641,16 +1905,24 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       styles={customStyles}
                       options={ahli.map((item: any) => ({
                         value: item.ahli_id,
-                        label: item.nama_ahli + " " + "(" + item.bidang_ahli + ")",
+                        label:
+                          item.nama_ahli + " " + "(" + item.bidang_ahli + ")",
                       }))}
                       onChange={handleSelectAhli}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "ahli" ? "Pilih ahli" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "ahli" ? "Pilih ahli" : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Saksi */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Saksi
                     </label>
                     <Select
@@ -1680,10 +1952,19 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                   <div className="">
                     <div className="flex items-center">
                       <p className="text-white">Pengacara</p>
-                      <p className={`${pengacaraEror ? "block" : "hidden"} ml-4 text-red-400 text-sm`}>Masukan nama pengacara</p>
+                      <p
+                        className={`${
+                          pengacaraEror ? "block" : "hidden"
+                        } ml-4 text-red-400 text-sm`}
+                      >
+                        Masukan nama pengacara
+                      </p>
                     </div>
 
-                    <div className="border-[1px] border-blue-500 rounded-md p-2" id="a-pengacara">
+                    <div
+                      className="border-[1px] border-blue-500 rounded-md p-2"
+                      id="a-pengacara"
+                    >
                       <div className="flex flex-row gap-2">
                         {!isDetail && (
                           <>
@@ -1700,22 +1981,65 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                               className="w-full rounded border border-stroke  dark:bg-slate-800 py-3 pl-3 pr-4.5 text-white focus:border-primary focus-visible:outline-none dark:border-strokedark dark:focus:border-primary"
                             />
 
-                            <button onClick={handlePengacara} type="button" className="py-3 px-3 rounded-md bg-blue-500">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-white">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            <button
+                              onClick={handlePengacara}
+                              type="button"
+                              className="py-3 px-3 rounded-md bg-blue-500"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6 text-white"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M12 4.5v15m7.5-7.5h-15"
+                                />
                               </svg>
                             </button>
                           </>
                         )}
                       </div>
-                      <p className="error-text">{errors.map((item) => (item === "pengacara" ? "Tambahkan pengacara" : ""))}</p>
-                      <div className={`mt-2 flex flex-col overflow-hidden gap-2 ${formState.pengacara?.length === 0 ? "hidden" : "block"}`}>
+                      <p className="error-text">
+                        {errors.map((item) =>
+                          item === "pengacara" ? "Tambahkan pengacara" : ""
+                        )}
+                      </p>
+                      <div
+                        className={`mt-2 flex flex-col overflow-hidden gap-2 ${
+                          formState.pengacara?.length === 0 ? "hidden" : "block"
+                        }`}
+                      >
                         {formState.pengacara?.map((item: any, index: any) => (
-                          <div className="flex flex-row items-center" key={index}>
-                            <p className="capitalize px-3 py-1 truncate w-full rounded-md bg-boxdark border-[1px] border-slate-500 text-white">{item}</p>
-                            <button className={`${isDetail ? "hidden" : "block"}`} type="button" onClick={() => handleRemovePengacara(index)}>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          <div
+                            className="flex flex-row items-center"
+                            key={index}
+                          >
+                            <p className="capitalize px-3 py-1 truncate w-full rounded-md bg-boxdark border-[1px] border-slate-500 text-white">
+                              {item}
+                            </p>
+                            <button
+                              className={`${isDetail ? "hidden" : "block"}`}
+                              type="button"
+                              onClick={() => handleRemovePengacara(index)}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
                               </svg>
                             </button>
                           </div>
@@ -1738,7 +2062,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           value={formState.masa_tahanan_tahun}
                           disabled={isDetail}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "masa_tahanan_tahun" ? "Masukan vonis tahun" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "masa_tahanan_tahun"
+                              ? "Masukan vonis tahun"
+                              : ""
+                          )}
+                        </p>
                       </div>
                       {/* Vonis bulan */}
                       <div className="form-group w-full ">
@@ -1750,7 +2080,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           value={formState.masa_tahanan_bulan}
                           disabled={isDetail}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "masa_tahanan_bulan" ? "Masukan vonis bulan" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "masa_tahanan_bulan"
+                              ? "Masukan vonis bulan"
+                              : ""
+                          )}
+                        </p>
                       </div>
                       {/* Vonis hari */}
                       <div className="form-group w-full ">
@@ -1762,14 +2098,23 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                           value={formState.masa_tahanan_hari}
                           disabled={isDetail}
                         />
-                        <p className="error-text">{errors.map((item) => (item === "masa_tahanan_hari" ? "Masukan vonis hari" : ""))}</p>
+                        <p className="error-text">
+                          {errors.map((item) =>
+                            item === "masa_tahanan_hari"
+                              ? "Masukan vonis hari"
+                              : ""
+                          )}
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   {/* Nama Dokument */}
                   <div className="form-group w-full ">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Nama Dokumen
                     </label>
                     <input
@@ -1780,7 +2125,13 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       value={formState.nama_dokumen_persidangan}
                       disabled={isDetail}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "nama_dokumen_persidangan" ? "Masukan nama dokumen" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "nama_dokumen_persidangan"
+                          ? "Masukan nama dokumen"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Dokumentasi */}
@@ -1789,14 +2140,35 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       // id="FileUpload"
                       className="relative  block w-full appearance-none overflow-hidden rounded border border-blue-500 bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5 p-unggah"
                     >
-                      <input type="file" id="fileUpload" accept=".pdf, .doc, .docx" onChange={handleUpload} className="hidden" />
+                      <input
+                        type="file"
+                        id="fileUpload"
+                        accept=".pdf, .doc, .docx"
+                        onChange={handleUpload}
+                        className="hidden"
+                      />
                       {formState.link_dokumen_persidangan ? (
-                        (console.log(formState.link_dokumen_persidangan, "pdf_file_base64"),
+                        (console.log(
+                          formState.link_dokumen_persidangan,
+                          "pdf_file_base64"
+                        ),
                         (
                           <div className="grid grid-cols-1">
-                            <div className={`absolute top-0 right-0  bg-red-500 flex items-center  rounded-bl  ${isDetail ? "hidden" : "block"}`}>
-                              <button className="p-[2px]" onClick={handleRemoveDoc}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20">
+                            <div
+                              className={`absolute top-0 right-0  bg-red-500 flex items-center  rounded-bl  ${
+                                isDetail ? "hidden" : "block"
+                              }`}
+                            >
+                              <button
+                                className="p-[2px]"
+                                onClick={handleRemoveDoc}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  width="20"
+                                >
                                   <path
                                     fillRule="evenodd"
                                     d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
@@ -1822,7 +2194,12 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                                           className="border-0 text-center justify-center"
                                         />
                                       ) : file === "docx" || file === "doc" ? (
-                                        <iframe src={`https://view.officeapps.live.com/op/embed.aspx?src=https://dev.transforme.co.id${formState.link_dokumen_persidangan}`} title="docx" width="100%" height="600px" />
+                                        <iframe
+                                          src={`https://view.officeapps.live.com/op/embed.aspx?src=https://dev.transforme.co.id${formState.link_dokumen_persidangan}`}
+                                          title="docx"
+                                          width="100%"
+                                          height="600px"
+                                        />
                                       ) : null
                                       // : (
                                       //   <p>Ekstensi file tidak didukung</p>
@@ -1832,9 +2209,19 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                                 )}
                               </div>
                             </div>
-                            <p className="text-center text-sm text-blue-500">Dokumen terupload !</p>
-                            <div className={`flex justify-center mt-3 ${isDetail ? "block" : "hidden"}`}>
-                              <button type="button" onClick={handleDownloadDoc} className="bg-blue-500 px-3 py-1 rounded-xl text-white duration-300 ease-in-out  hover:scale-105 ">
+                            <p className="text-center text-sm text-blue-500">
+                              Dokumen terupload !
+                            </p>
+                            <div
+                              className={`flex justify-center mt-3 ${
+                                isDetail ? "block" : "hidden"
+                              }`}
+                            >
+                              <button
+                                type="button"
+                                onClick={handleDownloadDoc}
+                                className="bg-blue-500 px-3 py-1 rounded-xl text-white duration-300 ease-in-out  hover:scale-105 "
+                              >
                                 Unduh Dokumen
                               </button>
                             </div>
@@ -1843,7 +2230,14 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       ) : (
                         <div className="flex flex-col items-center justify-center space-y-3">
                           <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" className="text-blue-500" xmlns="http://www.w3.org/2000/svg">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="currentColor"
+                              className="text-blue-500"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
                               <path
                                 fillRule="evenodd"
                                 clipRule="evenodd"
@@ -1864,19 +2258,33 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                               />
                             </svg>
                           </span>
-                          <label htmlFor="fileUpload" className="cursor-pointer">
-                            <span className="text-blue-500 underline">Klik untuk unggah</span>
+                          <label
+                            htmlFor="fileUpload"
+                            className="cursor-pointer"
+                          >
+                            <span className="text-blue-500 underline">
+                              Klik untuk unggah
+                            </span>
                           </label>
                           <p className="mt-1.5">Pdf,doc dan docx </p>
                         </div>
                       )}
                     </div>
-                    <p className="error-text">{errors.map((item) => (item === "link_dokumen_persidangan" ? "Masukan dokumen sidang" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "link_dokumen_persidangan"
+                          ? "Masukan dokumen sidang"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   {/* Hasil vonis */}
                   <div className="form-group w-full flex flex-col">
-                    <label className=" block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className=" block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Hasil vonis
                     </label>
                     <textarea
@@ -1887,23 +2295,58 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                       value={formState.hasil_vonis}
                       disabled={isDetail}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "hasil_vonis" ? "Masukan hasil vonis" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "hasil_vonis" ? "Masukan hasil vonis" : ""
+                      )}
+                    </p>
                   </div>
                 </div>
 
-                {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
+                {errors.filter((item: string) => item.startsWith("INVALID_ID"))
+                  .length > 0 && (
                   <>
                     <br />
-                    <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
+                    <div className="error">
+                      {errors
+                        .filter((item: string) =>
+                          item.startsWith("INVALID_ID")
+                        )[0]
+                        .replace("INVALID_ID_", "")}{" "}
+                      is not a valid bond
+                    </div>
                   </>
                 )}
                 <br></br>
                 {isDetail ? null : isEdit ? (
-                  <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-ubah">
+                  <button
+                    className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                      buttonLoad ? "bg-slate-400" : ""
+                    }`}
+                    type="submit"
+                    disabled={buttonLoad}
+                    id="b-ubah"
+                  >
                     {buttonLoad ? (
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""
@@ -1911,11 +2354,34 @@ export const AddSidangModal: React.FC<AddSidangModalProps> = ({ closeModal, onSu
                     Ubah Data Sidang
                   </button>
                 ) : (
-                  <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-tambah">
+                  <button
+                    className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                      buttonLoad ? "bg-slate-400" : ""
+                    }`}
+                    type="submit"
+                    disabled={buttonLoad}
+                    id="b-tambah"
+                  >
                     {buttonLoad ? (
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                     ) : (
                       ""

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../common/Loader";
-import { AddGateway } from "./ModalAddGateway";
-import { DeleteGatewayModal } from "./ModalDeleteGateway";
-import { Alerts } from "./AlertGateway";
-import {
-  apiReadGateway,
-  apiDeleteGateway,
-  apiCreateGateway,
-  apiUpdateGateway,
-} from "../../../services/api";
+import { AddGateway } from "./ModalAddHelmet";
+import { DeleteGatewayModal } from "./ModalDeleteHelmet";
+import { Alerts } from "./AlertHelmet";
+import { apiReadGateway, apiDeleteGateway, apiCreateGateway, apiUpdateGateway } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
 import * as xlsx from "xlsx";
@@ -156,7 +151,7 @@ const GatewayList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/", {
+        navigate("/auth/signin", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -208,7 +203,7 @@ const GatewayList = () => {
       setIsLoading(false);
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/", {
+        navigate("/auth/signin", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -272,7 +267,7 @@ const GatewayList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/", {
+        navigate("/auth/signin", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -305,7 +300,7 @@ const GatewayList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/", {
+        navigate("/auth/signin", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -338,7 +333,7 @@ const GatewayList = () => {
       }
     } catch (e: any) {
       if (e.response.status === 403) {
-        navigate("/", {
+        navigate("/auth/signin", {
           state: { forceLogout: true, lastPage: location.pathname },
         });
       }
@@ -361,14 +356,7 @@ const GatewayList = () => {
 
   const exportToExcel = async () => {
     const dataToExcel = [
-      [
-        "Nama Gateway",
-        "GMAC",
-        "status gateway",
-        "Nama Lokasi Otmil",
-        "Nama Ruangan Otmil",
-        "Zona",
-      ],
+      ["Nama Gateway", "GMAC", "status gateway", "Nama Lokasi Otmil", "Nama Ruangan Otmil", "Zona"],
       ...data.map((item: any) => [
         item.nama_gateway,
         item.gmac,
@@ -383,10 +371,7 @@ const GatewayList = () => {
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
-    xlsx.writeFile(
-      wb,
-      `Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
-    );
+    xlsx.writeFile(wb, `Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`);
   };
 
   useEffect(() => {
@@ -432,32 +417,13 @@ const GatewayList = () => {
                 <option value="rusak">Rusak</option>
               </select>
             </div>
-            <button
-              className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
-              type="button"
-              onClick={handleSearchClick}
-              id="button-addon1"
-              data-te-ripple-init
-              data-te-ripple-color="light"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="h-5 w-5 text-black"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                  clipRule="evenodd"
-                />
+            <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search" type="button" onClick={handleSearchClick} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
+                <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
               </svg>
             </button>
 
-            <button
-              onClick={exportToExcel}
-              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
-            >
+            <button onClick={exportToExcel} className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
               Export&nbsp;Excel
             </button>
 
@@ -474,143 +440,74 @@ const GatewayList = () => {
           </div>
         </div>
         <div className="flex justify-between items-center mb-3">
-          <h4 className="ext-xl font-semibold text-black dark:text-white">
-            Data Perangkat Gateway
-          </h4>
+          <h4 className="ext-xl font-semibold text-black dark:text-white">Data Perangkat Gateway</h4>
           {!isOperator && (
-            <button
-              onClick={() => setModalAddOpen(true)}
-              className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
-            >
+            <button onClick={() => setModalAddOpen(true)} className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
               Tambah
             </button>
           )}
         </div>
 
         <div className="flex flex-col">
-          <div
-            className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${
-              isOperator ? "grid-cols-5" : "grid-cols-6"
-            }`}
-          >
+          <div className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${isOperator ? "grid-cols-5" : "grid-cols-6"}`}>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Nama Gateway
-              </h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Gateway</h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                GMAC
-              </h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">GMAC</h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Status
-              </h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Status</h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Ruangan
-              </h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Ruangan</h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Zona
-              </h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Zona</h5>
             </div>
-            <div
-              className={` ${
-                isOperator ? "hidden" : "sm:block"
-              } hidden p-2.5 text-center xl:p-5`}
-            >
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Aksi
-              </h5>
+            <div className={` ${isOperator ? "hidden" : "sm:block"} hidden p-2.5 text-center xl:p-5`}>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Aksi</h5>
             </div>
           </div>
 
           {data.map((item: any) => {
             return (
               <div>
-                <div
-                  className={`grid ${
-                    isOperator ? "grid-cols-5" : "grid-cols-6"
-                  } rounded-sm bg-gray-2 dark:bg-meta-4`}
-                >
-                  <div
-                    onClick={() => handleDetailClick(item)}
-                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-                  >
-                    <p className="text-black dark:text-white">
-                      {item.nama_gateway}
-                    </p>
+                <div className={`grid ${isOperator ? "grid-cols-5" : "grid-cols-6"} rounded-sm bg-gray-2 dark:bg-meta-4`}>
+                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                    <p className="text-black dark:text-white">{item.nama_gateway}</p>
                   </div>
-                  <div
-                    onClick={() => handleDetailClick(item)}
-                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-                  >
+                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                     <p className="text-black dark:text-white">{item.gmac}</p>
                   </div>
-                  <div
-                    onClick={() => handleDetailClick(item)}
-                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-                  >
+                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                     {item.status_gateway === "aktif" ? (
-                      <p className="text-green-500 dark:text-green-300">
-                        Aktif
-                      </p>
+                      <p className="text-green-500 dark:text-green-300">Aktif</p>
                     ) : item.status_gateway === "tidak" ? (
-                      <p className="text-red-500 dark:text-red-300">
-                        Tidak Aktif
-                      </p>
+                      <p className="text-red-500 dark:text-red-300">Tidak Aktif</p>
                     ) : item.status_gateway === "rusak" ? (
-                      <p className="text-yellow-500 dark:text-yellow-300">
-                        Rusak
-                      </p>
+                      <p className="text-yellow-500 dark:text-yellow-300">Rusak</p>
                     ) : (
-                      <p className="text-black dark:text-white">
-                        Status Tidak Dikenali
-                      </p>
+                      <p className="text-black dark:text-white">Status Tidak Dikenali</p>
                     )}
                   </div>
-                  <div
-                    onClick={() => handleDetailClick(item)}
-                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-                  >
-                    <p className="text-black dark:text-white">
-                      {item.nama_ruangan_otmil}
-                    </p>
+                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                    <p className="text-black dark:text-white">{item.nama_ruangan_otmil}</p>
                   </div>
-                  <div
-                    onClick={() => handleDetailClick(item)}
-                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-                  >
+                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                     {item.status_zona_ruangan_otmil === "Hijau" ? (
-                      <p className="text-green-500 dark:text-green-300">
-                        Hijau
-                      </p>
+                      <p className="text-green-500 dark:text-green-300">Hijau</p>
                     ) : item.status_zona_ruangan_otmil === "Merah" ? (
                       <p className="text-red-500 dark:text-red-300">Merah</p>
                     ) : item.status_zona_ruangan_otmil === "Kuning" ? (
-                      <p className="text-yellow-500 dark:text-yellow-300">
-                        Kuning
-                      </p>
+                      <p className="text-yellow-500 dark:text-yellow-300">Kuning</p>
                     ) : (
-                      <p className="text-black dark:text-white">
-                        Status Tidak Dikenali
-                      </p>
+                      <p className="text-black dark:text-white">Status Tidak Dikenali</p>
                     )}
                   </div>
-                  <div
-                    className={`hidden items-center ${
-                      isOperator ? "hidden" : "block sm:flex"
-                    } justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}
-                  >
+                  <div className={`hidden items-center ${isOperator ? "hidden" : "block sm:flex"} justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}>
                     <div className="relative">
-                      <DropdownAction
-                        handleEditClick={() => handleEditClick(item)}
-                        handleDeleteClick={() => handleDeleteClick(item)}
-                      ></DropdownAction>
+                      <DropdownAction handleEditClick={() => handleEditClick(item)} handleDeleteClick={() => handleDeleteClick(item)}></DropdownAction>
                     </div>
                   </div>
                 </div>
@@ -618,35 +515,10 @@ const GatewayList = () => {
               </div>
             );
           })}
-          {modalDetailOpen && (
-            <AddGateway
-              closeModal={() => setModalDetailOpen(false)}
-              onSubmit={handleSubmitAdd}
-              defaultValue={detailData}
-              isDetail={true}
-            />
-          )}
-          {modalEditOpen && (
-            <AddGateway
-              closeModal={handleCloseEditModal}
-              onSubmit={handleSubmitEdit}
-              defaultValue={editData}
-              isEdit={true}
-            />
-          )}
-          {modalAddOpen && (
-            <AddGateway
-              closeModal={handleCloseAddModal}
-              onSubmit={handleSubmitAdd}
-            />
-          )}
-          {modalDeleteOpen && (
-            <DeleteGatewayModal
-              closeModal={handleCloseDeleteModal}
-              onSubmit={handleSubmitDelete}
-              defaultValue={deleteData}
-            />
-          )}
+          {modalDetailOpen && <AddGateway closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAdd} defaultValue={detailData} isDetail={true} />}
+          {modalEditOpen && <AddGateway closeModal={handleCloseEditModal} onSubmit={handleSubmitEdit} defaultValue={editData} isEdit={true} />}
+          {modalAddOpen && <AddGateway closeModal={handleCloseAddModal} onSubmit={handleSubmitAdd} />}
+          {modalDeleteOpen && <DeleteGatewayModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
         </div>
 
         {data.length === 0 ? null : (
@@ -666,11 +538,7 @@ const GatewayList = () => {
                 <option value="1000">1000</option>
               </select>
             </div>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={pages}
-              onChangePage={handleChagePage}
-            />
+            <Pagination currentPage={currentPage} totalPages={pages} onChangePage={handleChagePage} />
           </div>
         )}
       </div>
