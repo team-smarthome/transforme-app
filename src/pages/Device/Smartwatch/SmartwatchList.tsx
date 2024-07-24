@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../common/Loader";
-import { AddGelang } from "./ModalAddGelang";
-import { DeleteGelangModal } from "./ModalDeleteGelang";
-import { Alerts } from "./AlertGelang";
+import { AddSmartwatch } from "./ModalAddSmartwatch";
+import { DeleteSmartwatchModal } from "./ModalDeleteSmartwatch";
+import { Alerts } from "./AlertSmartwatch";
 import { apiReadGelang, apiDeleteGelang, apiCreateGelang, apiUpdateGelang } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
@@ -30,7 +30,7 @@ interface Item {
   nama_ruangan_otmil: string;
 }
 
-const GelangList = () => {
+const SmartwatchList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -140,7 +140,7 @@ const GelangList = () => {
           element: ".search",
           popover: {
             title: "Search",
-            description: "Mencari nama gelang",
+            description: "Mencari nama Smartwatch",
           },
         },
         {
@@ -154,7 +154,7 @@ const GelangList = () => {
           element: ".b-search",
           popover: {
             title: "Button Search",
-            description: "Click button untuk mencari nama gelang dan nomor DMAC",
+            description: "Click button untuk mencari nama smartwatch dan nomor DMAC",
           },
         },
         {
@@ -165,7 +165,7 @@ const GelangList = () => {
           element: ".b-tambah",
           popover: {
             title: "Tambah",
-            description: "Menambahkan data perangkat gelang",
+            description: "Menambahkan data perangkat smartwatch",
           },
         },
       ],
@@ -372,7 +372,7 @@ const GelangList = () => {
 
   const exportToExcel = async () => {
     const dataToExcel = [
-      ["Nama Gelang", "DMAC", "Tanggal Pasang", "Tanggal aktivasi", "Baterai", "Nama Lokasi", "Nama Ruangan"],
+      ["Nama Smartwatch", "DMAC", "Tanggal Pasang", "Tanggal aktivasi", "Baterai", "Nama Lokasi", "Nama Ruangan"],
       ...data.map((item: any) => [item.nama_gelang, item.dmac, item.tanggal_pasang, item.tanggal_aktivasi, item.baterai, item.nama_lokasi_otmil, item.nama_ruangan_otmil]),
     ];
 
@@ -403,7 +403,7 @@ const GelangList = () => {
         <div className="flex justify-center w-full">
           <div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
             <div className="flex w-full search">
-              <SearchInputButton value={filter} placehorder="Cari nama Gelang" onChange={handleFilterChange} />
+              <SearchInputButton value={filter} placehorder="Cari nama Smartwatch" onChange={handleFilterChange} />
               {/* <select
             className="w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
             name="status_gateway"
@@ -418,11 +418,7 @@ const GelangList = () => {
             </div>
             <div className="flex w-full i-search">
               {/* <SearchInputButton value={searchData.dmac} placehorder="Cari Nomor DMAC" onChange={(e) => setSearchData({ ...searchData, dmac: e.target.value })} /> */}
-              <SearchInputButton 
-                value={filterDmac} 
-                placehorder="Cari Nomor DMAC" 
-                onChange={handleFilterChangeDmac} 
-              />
+              <SearchInputButton value={filterDmac} placehorder="Cari Nomor DMAC" onChange={handleFilterChangeDmac} />
             </div>
             <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search" type="button" onClick={handleSearchClick} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
@@ -447,7 +443,7 @@ const GelangList = () => {
           </div>
         </div>
         <div className="flex justify-between items-center mb-3">
-          <h4 className="ext-xl font-semibold text-black dark:text-white capitalize">data perangkat gelang</h4>
+          <h4 className="ext-xl font-semibold text-black dark:text-white capitalize">data perangkat Smartwatch</h4>
           {!isOperator && (
             <button onClick={() => setModalAddOpen(true)} className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
               Tambah
@@ -457,8 +453,8 @@ const GelangList = () => {
 
         <div className="flex flex-col">
           <div className={`grid ${isOperator ? "grid-cols-6" : "grid-cols-7"} rounded-t-md capitalize bg-gray-2 dark:bg-slate-600 `}>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Gelang</h5>
+            <div className="p-2.5 text-center xl:py-5">
+              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama Smartwatch</h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">DMAC</h5>
@@ -513,10 +509,10 @@ const GelangList = () => {
               </div>
             );
           })}
-          {modalDetailOpen && <AddGelang closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAdd} defaultValue={detailData} isDetail={true} />}
-          {modalEditOpen && <AddGelang closeModal={handleCloseEditModal} onSubmit={handleSubmitEdit} defaultValue={editData} isEdit={true} />}
-          {modalAddOpen && <AddGelang closeModal={handleCloseAddModal} onSubmit={handleSubmitAdd} />}
-          {modalDeleteOpen && <DeleteGelangModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
+          {modalDetailOpen && <AddSmartwatch closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAdd} defaultValue={detailData} isDetail={true} />}
+          {modalEditOpen && <AddSmartwatch closeModal={handleCloseEditModal} onSubmit={handleSubmitEdit} defaultValue={editData} isEdit={true} />}
+          {modalAddOpen && <AddSmartwatch closeModal={handleCloseAddModal} onSubmit={handleSubmitAdd} />}
+          {modalDeleteOpen && <DeleteSmartwatchModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
         </div>
         {data.length === 0 ? null : (
           <div className="mt-5">
@@ -543,4 +539,4 @@ const GelangList = () => {
   );
 };
 
-export default GelangList;
+export default SmartwatchList;

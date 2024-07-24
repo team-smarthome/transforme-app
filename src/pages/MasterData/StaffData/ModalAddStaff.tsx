@@ -1132,7 +1132,7 @@ export const AddStaffModal = ({
 												<input
 													className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nrp"
 													name="nrp"
-													placeholder="NRP"
+													placeholder="NIK"
 													onChange={handleChange}
 													value={formState.nrp}
 													disabled={isDetail}
@@ -1140,7 +1140,7 @@ export const AddStaffModal = ({
 												<p className="error-text">
 													{errors.map((item) =>
 														item === "nrp"
-															? "Masukan nrp"
+															? "Masukan NIK"
 															: ""
 													)}
 												</p>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
-export const DeleteStaffModal = ({
+export const DeleteHelmetModal = ({
   closeModal,
   onSubmit,
   defaultValue,
@@ -29,27 +29,27 @@ export const DeleteStaffModal = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setButtonLoad(true);
-    console.log(formState, "formState");
+    console.log(formState, 'formState');
 
     onSubmit(formState).then(() => setButtonLoad(false));
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: "fixed",
+      position: 'fixed',
       top: 0,
       left: 0,
-      width: "100%",
-      height: "100%",
-      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
-      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
+      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
       // Add your other modal styles here
     },
   };
@@ -78,13 +78,13 @@ export const DeleteStaffModal = ({
               </strong>
             </div>
             <div className="pt-6">
-              <p className="text-sm te  xt-black dark:text-white max-w-md">
+              <p className="text-sm text-center text-black dark:text-white max-w-md">
                 Apakah Anda yakin ingin menghapus data ini?
               </p>
-              <p className="text-sm text-black dark:text-white">
-                Nama staff{" "}
-                <span className="text-red-400">{formState.nama}</span> akan
-                dihapus
+              <p className="text-sm text-center text-black dark:text-white">
+                Nama helmet{' '}
+                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                akan dihapus
               </p>
             </div>
 
@@ -101,8 +101,8 @@ export const DeleteStaffModal = ({
               <button
                 className={`btn flex justify-center rounded py-2 px-6 font-medium text-white  ${
                   buttonLoad
-                    ? "bg-slate-400 hover:bg-none"
-                    : "hover:bg-red-400 bg-red-500 "
+                    ? 'bg-slate-400 hover:bg-none'
+                    : 'hover:bg-red-400 bg-red-500 '
                 }`}
                 type="submit"
                 disabled={buttonLoad}
@@ -130,7 +130,7 @@ export const DeleteStaffModal = ({
                     ></path>
                   </svg>
                 ) : (
-                  ""
+                  ''
                 )}
                 Hapus
               </button>

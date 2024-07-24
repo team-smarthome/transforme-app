@@ -17,7 +17,7 @@ export function Breadcrumbs({ url }) {
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={index} className="flex items-center pr-2">
           <Link
-            to={`/${breadcrumbs.slice(1, index + 1).join('/')}`}
+            to={`/dashboard/${breadcrumbs.slice(1, index + 1).join('/')}`}
             className="hover:text-white duration-200 pr-2"
           >
             {convertToTitleCase(breadcrumb)}
