@@ -7,6 +7,7 @@ import {
   CameraIcon,
   PengaturanIcon,
   LogIcon,
+  LogIcons,
   DaftarInventarisIcon,
   Pengunjung,
 } from "../components/Icons";
@@ -137,7 +138,7 @@ const MainMenuWorkstation = () => {
             style={{ backgroundColor: "rgba(32,33,35, 0.7)" }}
           >
             <div className="flex h-32 w-full items-center justify-center rounded-lg  bg-meta-4 text-white">
-              {LogIcon}
+              {LogIcons}
             </div>
 
             <div className="mt-4 flex items-end justify-between">

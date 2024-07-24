@@ -383,6 +383,7 @@ const ChatIcon = (
     ></path>
   </svg>
 );
+
 const LogIcon = (
   <svg
     fill="none"
@@ -399,6 +400,37 @@ const LogIcon = (
       stroke-linejoin="round"
       d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"
     ></path>
+  </svg>
+);
+
+const LogIcons = (
+  <svg
+    fill="none"
+    width="100"
+    height="80"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="10.5"
+      stroke="currentColor"
+      stroke-width="1.5"
+      fill="none"
+    ></circle>
+    <text
+      x="12"
+      y="16"
+      font-size="12"
+      font-family="Arial, sans-serif"
+      text-anchor="middle"
+      fill="currentColor"
+      stroke-width="0"
+    >
+      i
+    </text>
   </svg>
 );
 
@@ -506,6 +538,7 @@ export {
   ChatIcon,
   PengaturanIcon,
   LogIcon,
+  LogIcons,
   ShiftIcon,
   BAPIcon,
   DaftarInventarisIcon,
