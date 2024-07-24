@@ -72,7 +72,7 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
     <div className="w-full text-white">
       <section className="w-full flex px-4 py-4 justify-between">
         <button type="button" onClick={handleClose}>
-          <p className="font-semibold text-lg">Petugas</p>
+          <p className="font-semibold text-lg">Pegawai</p>
         </button>
         <button type="button" onClick={handleClose}>
           <XMarkIcon className="w-6 h-6" />
@@ -126,7 +126,7 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
           </div>
           <div className="flex gap-x-3">
             <div className="flex-1">
-              <p className="font-semibold text-sm">NRP</p>
+              <p className="font-semibold text-sm">NIK</p>
             </div>
             <div className="flex-2 flex items-center gap-x-2">
               <p className="text-sm">{nrp}</p>
@@ -137,7 +137,7 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
           </div>
           <div className="flex gap-x-3">
             <div className="flex-1">
-              <p className="font-semibold text-sm">No. Petugas</p>
+              <p className="font-semibold text-sm">ID Staff</p>
             </div>
             <div className="flex-2 flex items-center gap-x-2">
               <p className="text-sm">{nomor_petugas}</p>
@@ -151,28 +151,18 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
           </div>
           <div className="flex gap-x-3">
             <div className="flex-1">
-              <p className="font-semibold text-sm">Matra</p>
+              <p className="font-semibold text-sm">Divisi</p>
             </div>
             <div className="flex-2">
-              <p className="text-sm">{nama_matra}</p>
+              <p className="text-sm">IT</p>
             </div>
           </div>
           <div className="flex gap-x-3">
             <div className="flex-1">
-              <p className="font-semibold text-sm">Pangkat</p>
+              <p className="font-semibold text-sm">JABATAN</p>
             </div>
             <div className="flex-2">
-              <p className="text-sm">{nama_pangkat}</p>
-            </div>
-          </div>
-          <div className="flex gap-x-3">
-            <div className="flex-1">
-              <p className="font-semibold text-sm">Kesatuan</p>
-            </div>
-            <div className="flex-2">
-              <p className="text-sm">
-                {nama_kesatuan}, {nama_lokasi_kesatuan}
-              </p>
+              <p className="text-sm">Staff</p>
             </div>
           </div>
           <div className="flex gap-x-3">
@@ -224,7 +214,9 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">{nama}</p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -261,7 +253,9 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">{nama}</p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -298,7 +292,9 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">{nama}</p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -335,7 +331,9 @@ function ModalPetugas({ handleClose, item }: ModalPetugasProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">{nama}</p>
-                <p className="text-xs font-base text-slate-500">Otmil Cimahi</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
