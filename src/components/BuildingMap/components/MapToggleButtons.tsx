@@ -261,46 +261,46 @@ const MapToggleButtons = ({
     let path = "";
     switch (name) {
       case "WBP":
-        path = "/workstation/master-data/tersangka";
+        path = "/dashboard/pengaturan-list/perangkat/smartwatch";
         break;
       case "Petugas":
-        path = "/workstation/master-data/petugas";
+        path = "/dashboard/staff";
         break;
       case "Pengunjung":
-        path = "/workstation/master-data/pengunjung";
+        path = "/dashboard/pengaturan-list/perangkat/helmet";
         break;
       case "Gateway":
-        path = "/workstation/pengaturan-list/perangkat/gateway";
+        path = "/dashboard/pengaturan-list/perangkat/gateway";
         break;
       case "PTP":
-        path = "/workstation/master-data/ptp/add";
+        path = "/peta";
         break;
       case "Camera":
-        path = "/workstation/pengaturan-list/perangkat/kamera";
+        path = "/dashboard/pengaturan-list/perangkat/kamera";
         break;
       case "Access":
-        path = "/workstation/master-data/access-door/add";
+        path = "/peta";
         break;
       case "Face":
-        path = "/workstation/master-data/face-recognition/add";
+        path = "/peta";
         break;
       case "Desktop":
-        path = "/workstation/master-data/desktop/add";
+        path = "/peta";
         break;
       case "TV":
-        path = "/workstation/master-data/tv/add";
+        path = "/peta";
         break;
       case "SelfReg":
-        path = "/workstation/master-data/self-registration/add";
+        path = "/peta";
         break;
       case "NVR":
-        path = "/workstation/master-data/nvr/add";
+        path = "/peta";
         break;
       case "NAS":
-        path = "/workstation/master-data/nas/add";
+        path = "/peta";
         break;
       case "Zone":
-        path = "/workstation/master-data/zone/add";
+        path = "/peta";
         break;
       default:
         break;
@@ -349,7 +349,7 @@ const MapToggleButtons = ({
                   <MdPersonSearch className="w-6 h-6" />
                   {/* <IoSearchCircleOutline className="w-6 h-6" /> */}
                 </button>
-                <h5 className="text-white text-sm">Cari WBP</h5>
+                <h5 className="text-white text-sm">Cari Smart Watch</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
@@ -358,7 +358,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }} className="flex flex-row">
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah WBP</h5>
+                <h5 className="text-white text-sm">Tambah Smart Watch</h5>
               </div>
             </div>
           )}
@@ -403,7 +403,7 @@ const MapToggleButtons = ({
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Cari Petugas</h5>
+                <h5 className="text-white text-sm">Cari Staff</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
@@ -412,7 +412,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Petugas</h5>
+                <h5 className="text-white text-sm">Tambah Staff</h5>
               </div>
             </div>
           )}
@@ -457,7 +457,7 @@ const MapToggleButtons = ({
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Cari Pengunjung</h5>
+                <h5 className="text-white text-sm">Cari Helmet</h5>
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
@@ -466,7 +466,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Pengunjung</h5>
+                <h5 className="text-white text-sm">Tambah Helmet</h5>
               </div>
             </div>
           )}
