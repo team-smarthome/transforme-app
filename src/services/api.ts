@@ -137,7 +137,21 @@ export function apiUserRegister(params: any) {
 //     throw error;
 //   }
 // }
-
+export async function apiLocationDeviceStatusTotalSummary() {
+	try {
+	  const response = await axios({
+		method: 'post',
+		url:
+		  'https://dev.transforme.co.id/siram_admin_api/gema_admin_api/location/locationDeviceStatusTotalSummary.php',
+		// data: params,
+	  });
+	  console.log(response.data);
+	  return response.data;
+	} catch (error) {
+	  console.log(error);
+	  throw error;
+	}
+  }
 export async function apiDashboard(token: any) {
 	try {
 		const requestData = {

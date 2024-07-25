@@ -87,6 +87,7 @@ function removeBase64Prefix(base64String) {
 	return base64String;
 }
 
+
 export function apiUserLogin(params) {
 	console.log("urlLogin", newWebservice);
 	try {
@@ -433,12 +434,12 @@ export async function apiVisitorWNAList(params) {
 			filters: {
 				must: params.name
 					? [
-							{
-								match: {
-									name: params.name,
-								},
+						{
+							match: {
+								name: params.name,
 							},
-					  ]
+						},
+					]
 					: [],
 				must_not: [
 					{

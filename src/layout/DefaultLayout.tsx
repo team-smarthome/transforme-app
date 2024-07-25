@@ -98,7 +98,7 @@ const DefaultLayout = () => {
 
                 {/* <!-- ===== Main Content Start ===== --> */}
                 <main>
-                  <div className="mx-auto max-w-screen-2xl">
+                  <div className="mx-auto max-w-screen-2xl  p-4">
                     <Outlet />
                   </div>
                 </main>
@@ -159,7 +159,7 @@ const DefaultLayout = () => {
                   {/* <!-- ===== Main Content Start ===== --> */}
                   <main>
                     <div
-                      className={`max-w-screen-2xl ${
+                      className={`max-w-screen-2xl  p-4 ${
                         sidebarNotifOpen ? "w-[100vw]" : "w-[80vw]"
                       }`}
                     >

@@ -577,7 +577,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       </svg>
                                     </NavLink> */}
                                       <NavLink
-                                        to="/workstation/log-riwayat/realtime"
+                                        to="/dashboard/log-realtime"
+                                        // to="/workstation/log-riwayat/realtime"
                                         onClick={handleNavLinkClick}
                                         className={({ isActive }) =>
                                           "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
@@ -679,14 +680,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       </svg>
                                     </NavLink> */}
                                       <NavLink
-                                        to="/workstation/log-riwayat/gateway"
+                                        to="/dashboard/staff-log"
                                         onClick={handleNavLinkClick}
                                         className={({ isActive }) =>
                                           "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                           (isActive && "!text-white")
                                         }
                                       >
-                                        Log Gateway
+                                        Log Staff
                                       </NavLink>
                                       {/* <div
                                       className={`translate transform overflow-hidden ${

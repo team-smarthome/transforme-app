@@ -275,7 +275,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
             <img
               src={satelit ? Satelit : Lapisan}
               alt=""
-              className="mt-2 w-15 border-2 border-black rounded-md hover:brightness-80 cursor-pointer hover:border-4"
+              className="mt-2 w-15 border-2 border-black rounded-md hover:brightness-80 cursor-pointer hover:border-4 z-1"
               onClick={handleSelectedSatelit}
             />
             <Breadcrumb url={window.location.href} pageName="Statistic" />

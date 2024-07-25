@@ -183,10 +183,15 @@ const coreRoutes = [
     component: RealtimeLog,
   },
   {
-    path: "/dashboard/inmate-log",
+    path: "/dashboard/staff-log",
     title: "InmateLog",
     component: InmateLog,
   },
+  // {
+  //   path: "/dashboard/inmate-log",
+  //   title: "InmateLog",
+  //   component: InmateLog,
+  // },
   {
     path: "/dashboard/log-riwayat",
     title: "LogList",
