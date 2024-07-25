@@ -4,7 +4,7 @@ const DeviceList = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-        <NavLink to="/inmate-log">
+        <NavLink to="/dashboard/staff-realtime">
           <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
               <svg
@@ -28,15 +28,15 @@ const DeviceList = () => {
             <div className="mt-4 flex items-end justify-between">
               <div>
                 <h4 className="text-title-md font-bold text-black dark:text-white">
-                  Log Tentara Binaan
+                  Log Staff
                 </h4>
-                <span className="text-sm font-medium"> Log Tentara Binaan</span>
+                <span className="text-sm font-medium"> Log Staff</span>
               </div>
             </div>
           </div>{' '}
         </NavLink>
 
-        <NavLink to="/log-realtime">
+        <NavLink to="/dashboard/log-realtime">
           <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
               <svg
