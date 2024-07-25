@@ -141,7 +141,7 @@ const MapPage: React.FC<MapPageProps> = (props) => {
   ];
 
   return (
-    <div className=" py-[6px]  w-full absolute left-0 top-0">
+    <div className="   w-[100%] absolute left-0 top-0">
       {/* <div>
         <h3 className="text-lg font-semibold">Peta Lokasi</h3>
       </div> */}
@@ -150,7 +150,7 @@ const MapPage: React.FC<MapPageProps> = (props) => {
           <div xs={12}>
             <div
               style={{
-                width: "100%",
+                width: "90%",
                 minHeight: "80vh",
               }}
             >
