@@ -5,7 +5,7 @@ import DropdownNotification from "../components/DropdownNotification";
 import { useAtom } from "jotai";
 import { Toaster } from "react-hot-toast";
 import { Outlet, useNavigate } from "react-router-dom";
-import { selectedRoute } from "../utils/atomstates";
+import { selectedRoutess } from "../utils/atomstates";
 
 import {
   isFullScreenAtom,
@@ -17,11 +17,11 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import BackgroundSecurityImage from "../images/security-background.jpg";
 
 const DefaultLayout = () => {
-  const [appMode] = useAtom(selectedRoute);
+  const [appMode] = useAtom(selectedRoutess);
 
   const dataAppMoede = localStorage.getItem("appMode");
   console.log("dataAppMode", dataAppMoede);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   let [isFullScreen, setIsFullScreen] = useAtom(isFullScreenAtom);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [isworkstation, setIsworkstation] = useState<boolean>(false);
@@ -58,9 +58,11 @@ const DefaultLayout = () => {
     console.log(appMode, "appModeSaatIni");
     if (dataAppMoede === "workstation" || appMode === "workstation") {
       setIsworkstation(true);
+      setSidebarNotifOpen(true);
       // document.querySelector('body')?.classList.add('admin');
     } else {
       setIsworkstation(false);
+      setSidebarNotifOpen(false);
       // document.querySelector('body')?.classList.remove('admin');
     }
   }, [appMode]);

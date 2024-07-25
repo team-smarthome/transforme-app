@@ -2,9 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import { selectedRoute } from "../utils/atomstates";
+import {
+  selectedRoutess,
+  isSidebarNotifOpen,
+  NotificationAtom,
+  checkState,
+} from "../utils/atomstates";
 import toast, { Toaster } from "react-hot-toast";
 import { apiversion } from "../services/api";
+import { useAtom } from "jotai";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -12,9 +18,13 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const [isNotification, setIsNotification] = useAtom(NotificationAtom);
+  const [sidebarNotifOpen, setSidebarNotifOpen] = useAtom(isSidebarNotifOpen);
   const [open, setOpen] = useState(false);
   const dataAppMoede = localStorage.getItem("appMode");
   console.log("dataAppMode", dataAppMoede);
+  const [selectedMenu, setSelectedMenu] = useAtom(selectedRoutess);
+  const [selectCheck, setSelectCheck] = useAtom(checkState);
 
   const location = useLocation();
   const { pathname } = location;
@@ -32,9 +42,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
-  const handleNavLinkClick = () => {
-    // Menutup sidebar saat NavLink diklik
-    setSidebarOpen(!sidebarOpen);
+  const handleNavLinkClick = (name: string) => {
+    console.log(name, "pathname");
+    if (name === "peta") {
+      localStorage.setItem("appMode", "dashboard");
+      setSelectedMenu("dashboard");
+      if (selectCheck) {
+        setSidebarNotifOpen(true);
+      } else {
+        setSidebarNotifOpen(true);
+      }
+    } else {
+      localStorage.setItem("appMode", "workstation");
+      setSelectedMenu("workstation");
+      setSidebarNotifOpen(true);
+    }
   };
 
   //handleadminrole
@@ -251,7 +273,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <li>
                     <NavLink
                       to="/dashboard/staff"
-                      onClick={handleNavLinkClick}
+                      onClick={() => handleNavLinkClick("petas")}
                       className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                         pathname.includes("staff") &&
                         "bg-graydark dark:bg-meta-4"
@@ -280,7 +302,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <li>
                     <NavLink
                       to="/dashboard/kamera-live"
-                      onClick={handleNavLinkClick}
+                      onClick={() => handleNavLinkClick("petas")}
                       className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                         pathname === "/dashboard/kamera-live" &&
                         "bg-graydark dark:bg-meta-4"
@@ -386,7 +408,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 <li>
                                   <NavLink
                                     to="/dashboard/pengaturan-list/manajemen-pengguna"
-                                    onClick={handleNavLinkClick}
+                                    onClick={() => handleNavLinkClick("petas")}
                                     className={({ isActive }) =>
                                       "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                       (isActive && "!text-white")
@@ -399,7 +421,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <li>
                                 <NavLink
                                   to="/dashboard/pengaturan-list/perangkat/smartwatch"
-                                  onClick={handleNavLinkClick}
+                                  onClick={() => handleNavLinkClick("petas")}
                                   className={({ isActive }) =>
                                     "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                     (isActive && "!text-white")
@@ -411,7 +433,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <li>
                                 <NavLink
                                   to="/dashboard/pengaturan-list/perangkat/kamera"
-                                  onClick={handleNavLinkClick}
+                                  onClick={() => handleNavLinkClick("petas")}
                                   className={({ isActive }) =>
                                     "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                     (isActive && "!text-white")
@@ -423,7 +445,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <li>
                                 <NavLink
                                   to="/dashboard/pengaturan-list/perangkat/gateway"
-                                  onClick={handleNavLinkClick}
+                                  onClick={() => handleNavLinkClick("petas")}
                                   className={({ isActive }) =>
                                     "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                     (isActive && "!text-white")
@@ -435,7 +457,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               <li>
                                 <NavLink
                                   to="/dashboard/pengaturan-list/perangkat/helmet"
-                                  onClick={handleNavLinkClick}
+                                  onClick={() => handleNavLinkClick("petas")}
                                   className={({ isActive }) =>
                                     "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                     (isActive && "!text-white")
@@ -579,7 +601,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       <NavLink
                                         to="/dashboard/log-realtime"
                                         // to="/workstation/log-riwayat/realtime"
-                                        onClick={handleNavLinkClick}
+                                        onClick={() =>
+                                          handleNavLinkClick("petas")
+                                        }
                                         className={({ isActive }) =>
                                           "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                           (isActive && "!text-white")
@@ -681,7 +705,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                     </NavLink> */}
                                       <NavLink
                                         to="/dashboard/staff-log"
-                                        onClick={handleNavLinkClick}
+                                        onClick={() =>
+                                          handleNavLinkClick("petas")
+                                        }
                                         className={({ isActive }) =>
                                           "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
                                           (isActive && "!text-white")
@@ -875,7 +901,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   {/* <li>
                 <NavLink
                   to="/pencatatan-bap"
-                  onClick={handleNavLinkClick}
+                   onClick={() => handleNavLinkClick("petas")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('pencatatan-bap') &&
                     'bg-graydark dark:bg-meta-4'
@@ -903,7 +929,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/daftar-sidang"
-                  onClick={handleNavLinkClick}
+                   onClick={() => handleNavLinkClick("petas")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('daftar-sidang') &&
                     'bg-graydark dark:bg-meta-4'
@@ -931,7 +957,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/daftar-inventaris"
-                  onClick={handleNavLinkClick}
+                   onClick={() => handleNavLinkClick("petas")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('daftar-inventaris') &&
                     'bg-graydark dark:bg-meta-4'
@@ -960,7 +986,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/pengaturan-list/manajemen-pengguna"
-                    onClick={handleNavLinkClick}
+                     onClick={() => handleNavLinkClick("petas")}
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                       pathname.includes('manajemen-pengguna') &&
                       'bg-graydark dark:bg-meta-4'
@@ -988,7 +1014,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   {/* <li>
                 <NavLink
                   to="/kamera-live"
-                  onClick={handleNavLinkClick}
+                   onClick={() => handleNavLinkClick("petas")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('kamera-dev-test') &&
                     'bg-graydark dark:bg-meta-4'
@@ -1136,7 +1162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/peta"
-                  onClick={handleNavLinkClick}
+                  onClick={() => handleNavLinkClick("peta")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname === "/peta" && "bg-graydark dark:bg-meta-4"
                   }`}
@@ -1174,7 +1200,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/dashboard/statistic"
-                  onClick={handleNavLinkClick}
+                  onClick={() => handleNavLinkClick("petas")}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname === "/dashboard/statistic" &&
                     "bg-graydark dark:bg-meta-4"

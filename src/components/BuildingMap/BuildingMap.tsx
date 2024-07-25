@@ -31,8 +31,12 @@ import {
   isToggleWithDescriptionAtom,
   zoneVisibleAtom,
   isSateliteView,
+  selectedRoutess,
+  isSidebarNotifOpen,
+  checkState,
 } from "../../utils/atomstates";
 import Breadcrumb from "../../components/Breadcrumb";
+import { FaBullseye } from "react-icons/fa6";
 
 interface BuildingProps {
   buildingOpen: boolean;
@@ -40,6 +44,12 @@ interface BuildingProps {
 }
 
 function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
+  const [selectCheck, setSelectCheck] = useAtom(checkState);
+  // const isFirstRender = useRef(true);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+  const [checkStateBoy] = useAtom(checkState);
+  let [sidebarNotifOpen, setSidebarNotifOpen] = useAtom(isSidebarNotifOpen);
+  const [selectedMenu, setSelectedMenu] = useAtom(selectedRoutess);
   const navigate = useNavigate();
   const [satelit, setSatelit] = useAtom(isSateliteView);
   const [open, setOpen] = useState(false);
@@ -78,6 +88,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
   const dropdown = useRef<any>(null);
 
   useEffect(() => {
+    setSelectedMenu("dashboard");
     const clickHandler = (e: any) => {
       if (
         dropdown.current &&
@@ -92,6 +103,19 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
 
     return () => document.removeEventListener("click", clickHandler);
   }, [buildingOpen]);
+
+  // useEffect(() => {
+  //   console.log(sidebarNotifOpen, "nilaisidebarnyaNotif");
+  //   if (checkStateBoy === true) {
+  //     setSidebarNotifOpen(true);
+  //     setSelectCheck(true);
+  //   } else if (checkStateBoy === false) {
+  //     setSidebarNotifOpen(false);
+  //     setSelectCheck(false);
+  //   }
+
+  //   setSelectedMenu("dashboard");
+  // }, []);
 
   const handleClose = () => {
     setOpen(false);

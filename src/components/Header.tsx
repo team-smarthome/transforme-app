@@ -23,13 +23,14 @@ import {
   isFullScreenAtom,
   NotificationAtom,
   isSidebarNotifOpen,
+  checkState,
 } from "../utils/atomstates";
 
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Toast } from "react-toastify/dist/components";
-import { selectedRoute } from "../utils/atomstates";
+import { selectedRoutess } from "../utils/atomstates";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -41,6 +42,7 @@ const Header = (props: {
 }) => {
   let [isFullScreen, setIsFullScreen] = useAtom(isFullScreenAtom);
   let [sidebarNotifOpen, setSidebarNotifOpen] = useAtom(isSidebarNotifOpen);
+  const [selectCheck, setSelectCheck] = useAtom(checkState);
 
   const location = useLocation();
   const [isStatistic, setIsStatistic] = useAtom(TutorialStatistic);
@@ -54,7 +56,7 @@ const Header = (props: {
     e.stopPropagation();
     setIsNotification(!isNotification);
   };
-  const [appMode] = useAtom(selectedRoute);
+  const [appMode] = useAtom(selectedRoutess);
 
   const dataAppMoede = localStorage.getItem("appMode");
   console.log("dataAppMode", dataAppMoede);
@@ -115,11 +117,12 @@ const Header = (props: {
   // };
 
   useEffect(() => {
-    console.log(appMode, "appModeSaatIni");
+    console.log(dataAppMoede, "appModeSaatIni");
     if (dataAppMoede === "workstation" || appMode === "workstation") {
       setIsworkstation(true);
+
       // document.querySelector('body')?.classList.add('admin');
-    } else {
+    } else if (appMode === "dashboard" || dataAppMoede === "dashboard") {
       setIsworkstation(false);
       // document.querySelector('body')?.classList.remove('admin');
     }
@@ -404,9 +407,15 @@ const Header = (props: {
                       if (props.setNotificationOpen) {
                         props.setNotificationOpen(!props.notificationOpen);
                         setSidebarNotifOpen(!sidebarNotifOpen);
+                        setSelectCheck(true);
+                        console.log(sidebarNotifOpen, "nilaisidebarnya");
+                        console.log("MASUKPAKEKO");
                       } else {
                         props.setBuildingOpen(!props.buildingOpen);
                         setSidebarNotifOpen(!sidebarNotifOpen);
+                        console.log("MASUKPAKEKO2");
+                        console.log("NotifClickedClosed");
+                        // setSelectCheck(false);
                       }
                     }}
                     className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white b-notif"
