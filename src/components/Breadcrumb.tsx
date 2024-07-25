@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { IoChevronForwardOutline } from 'react-icons/io5';
+import { Link } from "react-router-dom";
+import { IoChevronForwardOutline } from "react-icons/io5";
 
 interface BreadcrumbProps {
   pageName?: string;
@@ -28,27 +28,28 @@ interface BreadcrumbProps {
 
 function convertToTitleCase(text: string) {
   return text
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 const Breadcrumb = ({ pageName, url }: BreadcrumbProps) => {
   // Parse the URL to extract breadcrumb items
-  const breadcrumbs = url.split('/').filter(Boolean).slice(3);
+  const breadcrumbs = url.split("/").filter(Boolean).slice(3);
 
   return (
     <nav className="flex text-zinc-600">
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={index} className="flex items-center pr-2">
           {/* Render the text directly */}
-          {index === 0 ? 'OTMIL Cimahi' : convertToTitleCase(breadcrumb)}
+          {index === 0
+            ? "PT Transfrome Indonesia"
+            : convertToTitleCase(breadcrumb)}
           {index !== breadcrumbs.length - 1 && <IoChevronForwardOutline />}
         </div>
       ))}
     </nav>
   );
-}
+};
 
-
-export default Breadcrumb
+export default Breadcrumb;

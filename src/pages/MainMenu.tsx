@@ -1,15 +1,19 @@
+import { useAtom } from "jotai";
 import { DashboardIcon, PetaIcon } from "../components/Icons";
 import MenuItem from "../components/MenuItem";
 
 import Logo from "../images/logo/logo.png";
 import "tailwindcss/tailwind.css";
 import { useNavigate } from "react-router-dom";
+import { selectedRoutess } from "../utils/atomstates";
 
 const MainMenu = () => {
   const navigate = useNavigate();
+  const [selectedMenu, setSelectedMenu] = useAtom(selectedRoutess);
 
   const handleSelectMap = (data: string, link: string) => {
     navigate(`${link}`);
+    setSelectedMenu(data);
     localStorage.setItem("appMode", data);
   };
 

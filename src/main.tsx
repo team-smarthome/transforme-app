@@ -8,7 +8,7 @@ import "./satoshi.css";
 const RootComponent = () => {
   return (
     <React.StrictMode>
-      <Router>
+      <Router basename="/transforme-monitoring-system">
         <App />
       </Router>
     </React.StrictMode>

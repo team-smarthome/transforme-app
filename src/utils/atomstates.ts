@@ -100,3 +100,7 @@ export const accordionWbpAtom = atom({
 export const modeNotificationDropdown = atom<string>("notification");
 
 export const isSateliteView = atom<boolean>(false);
+
+export const selectedRoutess = atom<string>("workstation");
+
+export const checkState = atom<boolean>(false);
