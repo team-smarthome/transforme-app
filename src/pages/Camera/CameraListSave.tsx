@@ -34,7 +34,7 @@ const CameraListSave = () => {
 	const id = useParams().id;
 	const camerasPerPage = columns * rows;
 	const webSocketFirst = "ws://192.168.1.111:5000";
-	const webSocketSecond = "ws://100.81.142.71:5000";
+	const webSocketSecond = "ws://10.34.7.43:5000";
 	const fetchData = async (id: any) => {
 		const params = id ? { id } : {};
 		try {
