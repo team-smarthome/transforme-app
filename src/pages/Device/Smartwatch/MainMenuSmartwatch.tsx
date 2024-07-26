@@ -60,6 +60,7 @@ const routes = [
 		link: "/peta",
 		icon: PetaIcon,
 	},
+	
 ];
 
 export default MainMenu;
