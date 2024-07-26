@@ -332,7 +332,7 @@ const DropdownNotification = ({
                             clip-rule="evenodd"
                           ></path>
                         </svg>{" "}
-                        Pegawai{" "}
+                        Smartwatch{" "}
                       </span>
                       <svg
                         data-accordion-icon

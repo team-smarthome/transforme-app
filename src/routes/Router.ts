@@ -149,6 +149,9 @@ const DeviceKameraList = lazy(
 const DeviceSmartwatchListWK = lazy(
 	() => import("../pages/Device/Smartwatch/Device/SmartwatchList")
 );
+const DeviceGelangList = lazy(
+	() => import("../pages/Device/Gelang/GelangList")
+);
 const MainMenuSmartwatch = lazy(
 	() => import("../pages/Device/Smartwatch/MainMenuSmartwatch")
 );
@@ -553,8 +556,8 @@ const coreRoutes = [
 		// path: "/workstation/pengaturan-list/perangkat/gelang",
 		path: "/dashboard/pengaturan-list/perangkat/gelang",
 		// path: '/device-bracelet-list',
-		title: "DeviceSmartwatchListWK",
-		component: DeviceSmartwatchListWK,
+		title: "DeviceGelangList",
+		component: DeviceGelangList,
 	},
 	{
 		// path: "/workstation/pengaturan-list/perangkat/gelang",

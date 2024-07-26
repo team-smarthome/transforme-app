@@ -180,40 +180,40 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   const handleSearchClick = () => {
     switch (hoverData) {
-      case "WBP":
+      case "Smartwatch":
         let paramsName: any[] = [];
         selectedList.map((item: any) => {
           // const formattedNama = item.nama.replace(/\s/g, "%20");
           const formattedNama = item.nama;
           paramsName.push(formattedNama);
         });
-        setSelectedTypeData("WBP");
+        setSelectedTypeData("Smartwatch");
         setDataParams({
           nama: paramsName,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
         break;
-      case "Petugas":
+      case "Pegawai":
         let paramsNamePetugas: any[] = [];
         selectedListPetugas.map((item: any) => {
           const formattedNama = item.nama;
           paramsNamePetugas.push(formattedNama);
         });
-        setSelectedTypeData("Petugas");
+        setSelectedTypeData("Pegawai");
         setDataParams({
           nama: paramsNamePetugas,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
         break;
-      case "Pengunjung":
+      case "Helmet":
         let paramsNamePengunjung: any[] = [];
         selectedListPengunjung.map((item: any) => {
           const formattedNama = item.nama;
           paramsNamePengunjung.push(formattedNama);
         });
-        setSelectedTypeData("Pengunjung");
+        setSelectedTypeData("Helmet");
         setDataParams({
           nama: paramsNamePengunjung,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
@@ -360,17 +360,17 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   const handleSelectItem = (item: any) => {
     switch (hoverData) {
-      case "WBP":
+      case "Smartwatch":
         setSelectedList([...selectedList, item]);
         setFilteredData(filteredData.filter((data: any) => data !== item));
         break;
-      case "Petugas":
+      case "Pegawai":
         setSelectedListPetugas([...selectedListPetugas, item]);
         setFilteredDataPetugas(
           filteredDataPetugas.filter((data: any) => data !== item)
         );
         break;
-      case "Pengunjung":
+      case "Helmet":
         setSelectedListPengunjung([...selectedListPengunjung, item]);
         setFilteredDataPengunjung(
           filteredDataPengunjung.filter((data: any) => data !== item)
@@ -441,19 +441,19 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   const handleRemoveItem = (index: any) => {
     switch (hoverData) {
-      case "WBP":
+      case "Smartwatch":
         const itemToRemove = selectedList[index];
         setSelectedList(selectedList.filter((_, i) => i !== index));
         setFilteredData([...filteredData, itemToRemove]);
         break;
-      case "Petugas":
+      case "Pegawai":
         const itemToRemovePetugas = selectedListPetugas[index];
         setSelectedListPetugas(
           selectedListPetugas.filter((_, i) => i !== index)
         );
         setFilteredDataPetugas([...filteredDataPetugas, itemToRemovePetugas]);
         break;
-      case "Pengunjung":
+      case "Helmet":
         const itemToRemovePengunjung = selectedListPengunjung[index];
         setSelectedListPengunjung(
           selectedListPengunjung.filter((_, i) => i !== index)
@@ -533,7 +533,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   useEffect(() => {
     switch (hoverData) {
-      case "WBP":
+      case "Smartwatch":
         const filtered = datawbpSearch.filter((data: any) =>
           data.nama.toLowerCase().includes(dataSearch.toLowerCase())
         );
@@ -541,7 +541,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           filtered.filter((data: any) => !selectedList.includes(data))
         );
         break;
-      case "Petugas":
+      case "Pegawai":
         const filteredPetugas = datapetugasSearch.filter((data: any) =>
           data.nama.toLowerCase().includes(dataSearch.toLowerCase())
         );
@@ -551,7 +551,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           )
         );
         break;
-      case "Pengunjung":
+      case "Helmet":
         const filteredPengunjung = datapengunjungSearch.filter((data: any) =>
           data.nama.toLowerCase().includes(dataSearch.toLowerCase())
         );
@@ -698,7 +698,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         </button>
       </div>
 
-      {hoverData === "WBP" ? (
+      {hoverData === "Smartwatch" ? (
         <div className="flex flex-wrap w-[84%]">
           {selectedList.map((item: any, index: any) => (
             <div className="mt-3 pl-1 flex" key={index}>
@@ -712,7 +712,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             </div>
           ))}
         </div>
-      ) : hoverData === "Petugas" ? (
+      ) : hoverData === "Pegawai" ? (
         <>
           <div className="flex flex-wrap w-[84%]">
             {selectedListPetugas.map((item: any, index: any) => (
@@ -728,7 +728,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             ))}
           </div>
         </>
-      ) : hoverData === "Pengunjung" ? (
+      ) : hoverData === "Helmet" ? (
         <>
           <div className="flex flex-wrap w-[84%]">
             {selectedListPengunjung.map((item: any, index: any) => (
@@ -913,7 +913,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       )}
 
       {dataSearch &&
-        hoverData === "WBP" &&
+        hoverData === "Smartwatch" &&
         filteredData.length > 0 &&
         filteredData.slice(0, 5).map((data: any, index: any) => (
           <div
@@ -928,7 +928,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         ))}
 
       {dataSearch &&
-        hoverData === "Petugas" &&
+        hoverData === "Pegawai" &&
         filteredDataPetugas.length > 0 &&
         filteredDataPetugas.slice(0, 5).map((data: any, index: any) => (
           <div
@@ -943,7 +943,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         ))}
 
       {dataSearch &&
-        hoverData === "Pengunjung" &&
+        hoverData === "Helmet" &&
         filteredDataPengunjung.length > 0 &&
         filteredDataPengunjung.slice(0, 5).map((data: any, index: any) => (
           <div
