@@ -41,8 +41,10 @@ import Modal from "../../Modal";
 import { Tooltip } from "antd";
 import ModalSearch from "../../Modal/ModalSearch";
 import { useNavigate } from "react-router-dom";
-import { selectedRoute } from "../../../utils/atomstates";
 import { useAtom } from "jotai";
+import { selectedRoute, loadingAtom } from "../../../utils/atomstates";
+import { Toast } from "react-toastify/dist/components";
+import Swal from "sweetalert2";
 
 const handleClickTutorial = () => {
   const driverObj = driver({
@@ -228,6 +230,7 @@ const MapToggleButtons = ({
   zoneVisible,
   isToggleWithDescription,
 }: MapToggleButtonsProps) => {
+  const [atomLoading] = useAtom(loadingAtom);
   console.log(toggleCameraVisibility, "sini");
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoute);
@@ -241,8 +244,17 @@ const MapToggleButtons = ({
   };
 
   const handleClick = (data: string) => {
-    setHoverData(data);
-    setOpen(true);
+    if (atomLoading === true) {
+      Swal.fire({
+        icon: "error",
+        title: "Maaf, sedang dalam proses loading",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      setHoverData(data);
+      setOpen(true);
+    }
   };
 
   const handleMouseEnter = (button: string) => {

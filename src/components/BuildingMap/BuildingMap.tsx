@@ -4,7 +4,12 @@ import {
   WifiIcon,
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useRef, useState } from "react";
-import { GateArea, BuildingArea, BuildingStaticFromImage , GMap} from "./components";
+import {
+  GateArea,
+  BuildingArea,
+  BuildingStaticFromImage,
+  GMap,
+} from "./components";
 import Modal, { ModalBuildingMap } from "../Modal";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useNavigate } from "react-router-dom";
@@ -39,6 +44,7 @@ import {
 } from "../../utils/atomstates";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaBullseye } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 interface BuildingProps {
   buildingOpen: boolean;
@@ -124,20 +130,29 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     setOpen(false);
   };
 
-  const handleClick = (arr: any, id: any, data: any, indormapData: any) => {
+  const handleClick = (arr: any, id: any, data: any) => {
     console.log(arr, "arr");
     console.log(id, "id");
     console.log(data, "dataTestingBro");
     const filteredData = arr.find((data: any) => data.id == id);
     console.log(filteredData, "filteredData");
     if (filteredData.lantai && filteredData.lantai.length > 0) {
-      navigate(`/dashboard/peta/${filteredData?.pathname}`, {
-        state: { data: filteredData, data2: data, dataindormap: indormapData },
+      // console.log("masuk_sini_pada_tahap_ini");
+      // console.log("FilterdData", filteredData);
+      // console.log("FilterdData2", data);
+      // console.log("FilterdData3", indormapData);
+      navigate(`/peta/${filteredData?.pathname}`, {
+        state: { data: filteredData, data2: data },
       });
     } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Data Ruangan Ditemukan!",
+      });
       console.log("gk_ada_cuy");
     }
-    setOpen(true);
+    // setOpen(true);
     console.log(filteredData, "filteredData");
     setDetailDataGedung(filteredData);
   };
@@ -281,44 +296,44 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
   };
   return (
     <section className="w-full  ">
-      {
-selectedMode == "Denah" &&
-      <MapToggleButtons
-        allVisible={allVisible}
-        toggleAllVisibility={toggleAllVisibility}
-        toggleWBPVisibility={toggleWBPVisibility}
-        WBPVisible={WBPVisible}
-        togglePetugasVisibility={togglePetugasVisibility}
-        petugasVisible={petugasVisible}
-        togglePengunjungVisibility={togglePengunjungVisibility}
-        pengunjungVisible={pengunjungVisible}
-        toggleGatewayVisibility={toggleGatewayVisibility}
-        gatewayVisible={gatewayVisible}
-        toggleRouterVisibility={toggleRouterVisibility}
-        routerVisible={routerVisible}
-        toggleCameraVisibility={toggleCameraVisibility}
-        cameraVisible={cameraVisible}
-        toggleAccessDoorVisibility={toggleAccessDoorVisibility}
-        accessDoorVisible={accessDoorVisible}
-        toggleFaceRecognitionVisibility={toggleFaceRecognitionVisibility}
-        faceRecognitionVisible={faceRecognitionVisible}
-        toggleInteractiveDesktopVisibility={toggleInteractiveDesktopVisibility}
-        interactiveDesktopVisible={interactiveDesktopVisible}
-        toggleInteractiveTVisibility={toggleInteractiveTVisibility}
-        interactiveTVisible={interactiveTVisible}
-        toggleSelfRegKioskVisibility={toggleSelfRegKioskVisibility}
-        selfRegKioskVisible={selfRegKioskVisible}
-        toggleNVRVisibility={toggleNVRVisibility}
-        NVRVisible={NVRVisible}
-        toggleNASVisibility={toggleNASVisibility}
-        toggleZoneVisibility={toggleZoneVisibility}
-        NASVisible={NASVisible}
-        zoneVisible={zoneVisible}
-        toggleWithDescription={toggleWithDescription}
-        isToggleWithDescription={isToggleWithDescription}
-        
-      />
-      }
+      {selectedMode == "Denah" && (
+        <MapToggleButtons
+          allVisible={allVisible}
+          toggleAllVisibility={toggleAllVisibility}
+          toggleWBPVisibility={toggleWBPVisibility}
+          WBPVisible={WBPVisible}
+          togglePetugasVisibility={togglePetugasVisibility}
+          petugasVisible={petugasVisible}
+          togglePengunjungVisibility={togglePengunjungVisibility}
+          pengunjungVisible={pengunjungVisible}
+          toggleGatewayVisibility={toggleGatewayVisibility}
+          gatewayVisible={gatewayVisible}
+          toggleRouterVisibility={toggleRouterVisibility}
+          routerVisible={routerVisible}
+          toggleCameraVisibility={toggleCameraVisibility}
+          cameraVisible={cameraVisible}
+          toggleAccessDoorVisibility={toggleAccessDoorVisibility}
+          accessDoorVisible={accessDoorVisible}
+          toggleFaceRecognitionVisibility={toggleFaceRecognitionVisibility}
+          faceRecognitionVisible={faceRecognitionVisible}
+          toggleInteractiveDesktopVisibility={
+            toggleInteractiveDesktopVisibility
+          }
+          interactiveDesktopVisible={interactiveDesktopVisible}
+          toggleInteractiveTVisibility={toggleInteractiveTVisibility}
+          interactiveTVisible={interactiveTVisible}
+          toggleSelfRegKioskVisibility={toggleSelfRegKioskVisibility}
+          selfRegKioskVisible={selfRegKioskVisible}
+          toggleNVRVisibility={toggleNVRVisibility}
+          NVRVisible={NVRVisible}
+          toggleNASVisibility={toggleNASVisibility}
+          toggleZoneVisibility={toggleZoneVisibility}
+          NASVisible={NASVisible}
+          zoneVisible={zoneVisible}
+          toggleWithDescription={toggleWithDescription}
+          isToggleWithDescription={isToggleWithDescription}
+        />
+      )}
 
       <aside ref={dropdown} className={`${buildingOpen ? "w-200" : "w-full"}`}>
         <div className="bg-map-outdoor relative w-full px-20 pt-5 pb-10 flex items-center bg-zinc-50 h-[82vh]  justify-center animate-popupin">
@@ -365,15 +380,11 @@ selectedMode == "Denah" &&
           </div>
           {selectedMode == "Satelit" ? (
             <>
-            
-            <BuildingStaticFromImage handleClickBuilding={handleClick} />
+              <BuildingStaticFromImage handleClickBuilding={handleClick} />
             </>
-          ) : 
-          selectedMode == "Google Map" ? (
-            <GMap  />
-          ) : 
-          
-          (
+          ) : selectedMode == "Google Map" ? (
+            <GMap />
+          ) : (
             <>
               <GateArea handleClickBuilding={handleClick} />
               <div className="w-[8%] -ml-5 h-10 border-y border-black bg-zinc-50 opacity-0"></div>
