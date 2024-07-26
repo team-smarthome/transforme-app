@@ -3,7 +3,8 @@ import VerticalBuilding from "./VerticalBuilding";
 
 import GateArea from "./GateArea";
 import BuildingArea from "./BuildingArea";
-import BuildingAreaStatic from "./BuildingAreaStatic";
+import BuildingStaticFromImage from "./BuildingStaticFromImage";
+import GMap from "./GMap";
 
 import Gateway from "./Gateway";
 import Router from "./Router";
@@ -15,5 +16,6 @@ export {
   BuildingArea,
   Gateway,
   Router,
-  BuildingAreaStatic
+  GMap,
+  BuildingStaticFromImage
 };

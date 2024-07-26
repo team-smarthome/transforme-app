@@ -139,19 +139,18 @@ export function apiUserRegister(params: any) {
 // }
 export async function apiLocationDeviceStatusTotalSummary() {
 	try {
-	  const response = await axios({
-		method: 'post',
-		url:
-		  'https://dev.transforme.co.id/siram_admin_api/gema_admin_api/location/locationDeviceStatusTotalSummary.php',
-		// data: params,
-	  });
-	  console.log(response.data);
-	  return response.data;
+		const response = await axios({
+			method: "post",
+			url: "https://dev.transforme.co.id/siram_admin_api/gema_admin_api/location/locationDeviceStatusTotalSummary.php",
+			// data: params,
+		});
+		console.log(response.data);
+		return response.data;
 	} catch (error) {
-	  console.log(error);
-	  throw error;
+		console.log(error);
+		throw error;
 	}
-  }
+}
 export async function apiDashboard(token: any) {
 	try {
 		const requestData = {
@@ -5054,6 +5053,26 @@ export function apiIndoorMapVVIP() {
 		console.log("inidariapi", response);
 		return response;
 	} catch (error) {
+		throw error;
+	}
+}
+
+export async function apiReadSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
 		throw error;
 	}
 }
