@@ -4944,7 +4944,8 @@ export function apiIndoorMapVVIP() {
 	try {
 		const response = axios({
 			method: "get",
-			url: "http://localhost:8000/api/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
+			url: `${newBaseUrl}/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25`,
+			// url: "http://localhost:8000/api/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:
