@@ -69,9 +69,9 @@ const MapPage: React.FC<MapPageProps> = (props) => {
   };
 
   const mapStyles = {
-    position: "relative",
-    width: "96%",
-    height: "100%",
+    // position: "relative",
+    // width: "96%",
+    // height: "100%",
   };
 
   const jabodetabekBounds = {
@@ -141,11 +141,11 @@ const MapPage: React.FC<MapPageProps> = (props) => {
   ];
 
   return (
-    <div className="   w-[100%] absolute left-0 top-0">
+    <div className="   w-[100%] absolute h-[100%] left-0 top-0">
       {/* <div>
         <h3 className="text-lg font-semibold">Peta Lokasi</h3>
       </div> */}
-      <div className="h-[100%]">
+      <div >
         <div>
           <div xs={12}>
             <div

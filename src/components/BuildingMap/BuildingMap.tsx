@@ -4,13 +4,14 @@ import {
   WifiIcon,
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useRef, useState } from "react";
-import { GateArea, BuildingArea, BuildingAreaStatic } from "./components";
+import { GateArea, BuildingArea, BuildingStaticFromImage , GMap} from "./components";
 import Modal, { ModalBuildingMap } from "../Modal";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import Lapisan from "../../../assets/lapisan.jpg";
-import Satelit from "../../../assets/satelit.jpg";
+import Lapisan from "../../../assets/lapisan.png";
+import Gmap from "../../../assets/gmap.png";
+import Satelit from "../../../assets/satelit.png";
 import gambarmap from "../../../assets/indormaps.jpeg";
 import {
   allVisibleAtom,
@@ -34,6 +35,7 @@ import {
   selectedRoutess,
   isSidebarNotifOpen,
   checkState,
+  modeMap,
 } from "../../utils/atomstates";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaBullseye } from "react-icons/fa6";
@@ -52,6 +54,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoutess);
   const navigate = useNavigate();
   const [satelit, setSatelit] = useAtom(isSateliteView);
+  const [selectedMode, setSelectedMode] = useAtom(modeMap);
   const [open, setOpen] = useState(false);
   const [allVisible, setAllVisible] = useAtom(allVisibleAtom);
   const [gatewayVisible, setGatewayVisible] = useAtom(gatewayVisibleAtom);
@@ -256,8 +259,30 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     setSatelit((prev) => !prev);
   };
 
+  let dataModeMap = [
+    {
+      id: 1,
+      name: "Satelit",
+      image: Satelit,
+    },
+    {
+      id: 2,
+      name: "Denah",
+      image: Lapisan,
+    },
+    {
+      id: 3,
+      name: "Google Map",
+      image: Gmap,
+    },
+  ];
+  const handleSelectedMode = (name) => {
+    setSelectedMode(name);
+  };
   return (
     <section className="w-full  ">
+      {
+selectedMode == "Denah" &&
       <MapToggleButtons
         allVisible={allVisible}
         toggleAllVisibility={toggleAllVisibility}
@@ -291,22 +316,64 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
         zoneVisible={zoneVisible}
         toggleWithDescription={toggleWithDescription}
         isToggleWithDescription={isToggleWithDescription}
+        
       />
+      }
 
       <aside ref={dropdown} className={`${buildingOpen ? "w-200" : "w-full"}`}>
         <div className="bg-map-outdoor relative w-full px-20 pt-5 pb-10 flex items-center bg-zinc-50 h-[82vh]  justify-center animate-popupin">
           <div className="absolute top-0 z-80  flex flex-row-reverse w-full justify-between px-2">
-            <img
-              src={satelit ? Satelit : Lapisan}
-              alt=""
-              className="mt-2 w-15 border-2 border-black rounded-md hover:brightness-80 cursor-pointer hover:border-4 z-1"
-              onClick={handleSelectedSatelit}
-            />
+            <div className="relative group z-1">
+              <img
+                src={
+                  dataModeMap.find((item) => item.name === selectedMode).image
+                }
+                alt=""
+                className="mt-2 w-15 border-2 border-black rounded-md hover:brightness-80  cursor-pointer hover:border-4 z-1"
+                // onClick={() =>
+                //   handleSelectedMode(
+                //     selectedMode === "Satelit" ? "Lapisan" : "Satelit"
+                //   )
+                // }
+              />
+              <div className="absolute text-[8px] p-[1px] bg-black bottom-0 right-0">
+                {selectedMode}
+              </div>
+
+              <div className="absolute gap-1 mt-1 w-15 top-full left-0 space-y-2 opacity-0 transform -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                {dataModeMap
+                  .filter((item) => item.name !== selectedMode)
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className="w-15 aspect-1 bg-gray-200 rounded-md  relative items-center justify-center"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-15 border-2 border-black rounded-md hover:brightness-80 cursor-pointer hover:border-4 z-1"
+                        onClick={() => handleSelectedMode(item.name)}
+                      />
+                      <div className="absolute text-[8px] p-[1px] bg-black bottom-0 right-0">
+                        {item.name}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
             <Breadcrumb url={window.location.href} pageName="Statistic" />
           </div>
-          {satelit ? (
-            <BuildingAreaStatic handleClickBuilding={handleClick} />
-          ) : (
+          {selectedMode == "Satelit" ? (
+            <>
+            
+            <BuildingStaticFromImage handleClickBuilding={handleClick} />
+            </>
+          ) : 
+          selectedMode == "Google Map" ? (
+            <GMap  />
+          ) : 
+          
+          (
             <>
               <GateArea handleClickBuilding={handleClick} />
               <div className="w-[8%] -ml-5 h-10 border-y border-black bg-zinc-50 opacity-0"></div>
