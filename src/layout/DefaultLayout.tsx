@@ -21,10 +21,10 @@ const DefaultLayout = () => {
 
   const dataAppMoede = localStorage.getItem("appMode");
   console.log("dataAppMode", dataAppMoede);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   let [isFullScreen, setIsFullScreen] = useAtom(isFullScreenAtom);
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const [isworkstation, setIsworkstation] = useState<boolean>(false);
+  const [isworkstation, setIsworkstation] = useState<boolean>(true);
 
   const [sidebarNotifOpen, setSidebarNotifOpen] = useAtom(isSidebarNotifOpen);
   const [buildingOpen, setBuildingOpen] = useState(true);
@@ -93,8 +93,12 @@ const DefaultLayout = () => {
               <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                 {/* <!-- ===== Header Start ===== --> */}
                 <Header
-                  sidebarOpen={sidebarOpen}
-                  setSidebarOpen={setSidebarOpen}
+sidebarOpen={sidebarOpen}
+setSidebarOpen={setSidebarOpen}
+notificationOpen={notificationOpen}
+setNotificationOpen={setNotificationOpen}
+buildingOpen={buildingOpen}
+setBuildingOpen={setBuildingOpen}
                 />
                 {/* <!-- ===== Header End ===== --> */}
 

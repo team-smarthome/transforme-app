@@ -106,3 +106,5 @@ export const modeMap = atom<string>("Denah");
 export const selectedRoutess = atom<string>("workstation");
 
 export const checkState = atom<boolean>(false);
+
+export const sideBarLeftExpanded = atom<boolean>(false);

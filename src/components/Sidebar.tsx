@@ -37,7 +37,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 	const dataUserItem = localStorage.getItem("dataUser");
 	const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
-	const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
+	const storedSidebarExpanded = null
 	const [sidebarExpanded, setSidebarExpanded] = useState(
 		storedSidebarExpanded === null
 			? false
