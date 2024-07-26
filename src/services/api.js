@@ -87,7 +87,6 @@ function removeBase64Prefix(base64String) {
 	return base64String;
 }
 
-
 export function apiUserLogin(params) {
 	console.log("urlLogin", newWebservice);
 	try {
@@ -434,12 +433,12 @@ export async function apiVisitorWNAList(params) {
 			filters: {
 				must: params.name
 					? [
-						{
-							match: {
-								name: params.name,
+							{
+								match: {
+									name: params.name,
+								},
 							},
-						},
-					]
+					  ]
 					: [],
 				must_not: [
 					{
@@ -4944,7 +4943,8 @@ export function apiIndoorMapVVIP() {
 	try {
 		const response = axios({
 			method: "get",
-			url: "http://localhost:8000/api/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
+			url: `${newBaseUrl}/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25`,
+			// url: "http://localhost:8000/api/indoor_mapV3?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:
@@ -4954,6 +4954,143 @@ export function apiIndoorMapVVIP() {
 		console.log("INIDARIAPI", response);
 		return response;
 	} catch (error) {
+		throw error;
+	}
+}
+
+export async function apiReadSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://192.168.18.26:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiReadPlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/platform",
+			// url: newwebserviceurl + "platform",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadDeviceType(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device_type",
+			// url: newwebserviceurl + "device_type",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiReadManufacture(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/manufacture",
+			// url: newwebserviceurl + "manufacture",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadDeviceModel(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device_model",
+			// url: newwebserviceurl + "device_model",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadFirmware(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/firmware",
+			// url: newwebserviceurl + "firmware",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
 		throw error;
 	}
 }

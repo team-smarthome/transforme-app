@@ -15,6 +15,7 @@ import WBP from "./WBP";
 import Petugas from "./Petugas";
 import Pengunjung from "./Pengunjung";
 import InteractiveTV from "./InteractiveTV";
+import Swal from "sweetalert2";
 
 import {
   WBPDummy,
@@ -66,6 +67,7 @@ import {
   dataNVRearch,
   dataNasSearch,
   isSateliteView,
+  loadingAtom,
 } from "../../../utils/atomstates";
 import { selectedRoute } from "../../../utils/atomstates";
 import { set } from "react-hook-form";
@@ -137,6 +139,7 @@ function BuildingArea({
 
   const [dataParams] = useAtom(selectedParamsSearchDashboard);
   const [selectedTypeData] = useAtom(selectedType);
+  const [loadingAtomState, setLoadingAtomState] = useAtom(loadingAtom);
   const [datawbpSearch, setDatawbpSearch] = useAtom(dataWBPSearch);
   const [datapetugasSearch, setDatapetugasSearch] = useAtom(
     dataUserPetugasSearch
@@ -249,6 +252,7 @@ function BuildingArea({
   const [datanvrDashboard, setDatanvrDashboard] = useState([]);
   const [datanasDashboard, setDatanasDashboard] = useState([]);
   const [accordionWbp, setAccordionWbp] = useAtom(accordionWbpAtom);
+  const [loading, setLoading] = useState(false);
   // console.log(yourLayer, "yourLayer")
   const { data: dynamicData, isLoading } = useQuery({
     queryKey: ["mapdata"],
@@ -306,7 +310,7 @@ function BuildingArea({
       if ((responseData.status = "OK")) {
         console.log(responseData.records, "petugas");
         setDatapetugas(responseData.records);
-        setAccordionWbp({...accordionWbp, petugas: responseData.records})
+        setAccordionWbp({ ...accordionWbp, petugas: responseData.records });
       }
     } catch (error) {
       console.log(error);
@@ -344,7 +348,7 @@ function BuildingArea({
       const responseData = responseWbp.data;
       if ((responseData.status = "OK")) {
         console.log(responseWbp, "data_wbp");
-        setAccordionWbp({...accordionWbp, wbp: responseData.records})
+        setAccordionWbp({ ...accordionWbp, wbp: responseData.records });
         setDataWbp(responseData.records);
       }
     } catch (error) {
@@ -376,8 +380,8 @@ function BuildingArea({
       const responsePengunjung = await apiReadVisitor(paramsSend, token);
       const responseData = responsePengunjung.data;
       if ((responseData.status = "OK")) {
-        console.log(responseData.records, "pengunjung")
-        setAccordionWbp({...accordionWbp, pengunjung: responseData.records})
+        console.log(responseData.records, "pengunjung");
+        setAccordionWbp({ ...accordionWbp, pengunjung: responseData.records });
         setDatapengunjungDasboard(responseData.records);
       }
     } catch (error) {
@@ -804,6 +808,7 @@ function BuildingArea({
   }, []);
 
   const dataWbpSearch = async () => {
+    // setLoadingAtomState(true);
     console.log("masuksini");
     const tokenItem = localStorage.getItem("token");
     const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
@@ -826,14 +831,17 @@ function BuildingArea({
       const responseData = responseWbp.data;
       if ((responseData.status = "OK")) {
         setDatawbpSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
   /*----Data Petugas Search-----*/
   const dataPetugasSearch = async () => {
+    setLoadingAtomState(true);
     const tokenItem = localStorage.getItem("token");
     const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
     const token = dataToken?.token ? dataToken.token : null;
@@ -851,17 +859,52 @@ function BuildingArea({
     try {
       const responsePetugas = await apiReadAllStaffDashboard(paramsSend, token);
       const responseData = responsePetugas.data;
+      console.log(responsePetugas, "apasihiniresponsenya");
       if ((responseData.status = "OK")) {
         setDatapetugasSearch(responseData.records);
+        setLoadingAtomState(false);
+      } else if ((responseData.status = "error") || responseData.code === 403) {
+        setLoadingAtomState(false);
+        Swal.fire({
+          icon: "error",
+          title: "Token Invalid",
+          text: "Mohon Login Kembali",
+        });
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.href = "/";
+        }, 2000);
       }
     } catch (error) {
-      console.log(error);
+      setLoadingAtomState(false);
+      Swal.fire({
+        icon: "error",
+        title: "Token Invalid",
+        text: "Mohon Login Kembali",
+      });
+      setTimeout(() => {
+        localStorage.clear();
+        window.location.href = "/";
+      }, 2000);
+      // console.log(error, "errornya_apa");
+      // setLoadingAtomState(false);
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Token Invalid",
+      //   text: "Mohon Login Kembali",
+      // });
+      // setTimeout(() => {
+      //   localStorage.clear();
+      //   window.location.href = "/";
+      // }, 2000);
+      // setLoadingAtomState(false);
     }
   };
 
   /*----Data Pengunjung Search-----*/
 
   const dataPengunjungSearchMap = async () => {
+    // setLoadingAtomState(true);
     const tokenItem = localStorage.getItem("token");
     const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
     const token = dataToken?.token ? dataToken.token : null;
@@ -881,14 +924,17 @@ function BuildingArea({
       const responseData = responseGateway.data;
       if ((responseData.status = "OK")) {
         setDatapengunjungSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
   /*----Data Gateway Search-----*/
   const dataGatewaySearchMap = async () => {
+    // setLoadingAtomState(true);
     const tokenItem = localStorage.getItem("token");
     const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
     const token = dataToken?.token ? dataToken.token : null;
@@ -908,9 +954,11 @@ function BuildingArea({
       const responseData = responseGateway.data;
       if ((responseData.status = "OK")) {
         setDatagatewaysSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -931,13 +979,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseCamera = await apiReadCameraDashboard(paramsSend, token);
       const responseData = responseCamera.data;
       if ((responseData.status = "OK")) {
         setDatacameraSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -958,13 +1009,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseRoutes = await apiReadRoutesDashboard(paramsSend, token);
       const responseData = responseRoutes.data;
       if ((responseData.status = "OK")) {
         setDataroutesSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -985,6 +1039,7 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseAccessDoor = await apiReadAccessDoorDashboard(
         paramsSend,
         token
@@ -992,9 +1047,11 @@ function BuildingArea({
       const responseData = responseAccessDoor.data;
       if ((responseData.status = "OK")) {
         setDataaccessDoorSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -1015,13 +1072,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseFaceRec = await apiReadFaceRecDashboard(paramsSend, token);
       const responseData = responseFaceRec.data;
       if ((responseData.status = "OK")) {
         setDatafaceRecSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -1042,13 +1102,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseDesktop = await apiReadDesktopDashboard(paramsSend, token);
       const responseData = responseDesktop.data;
       if ((responseData.status = "OK")) {
         setDatadesktopSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -1069,10 +1132,12 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseTV = await apiReadTVDashboard(paramsSend, token);
       const responseData = responseTV.data;
       if ((responseData.status = "OK")) {
         setDatatvSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
@@ -1096,13 +1161,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseSelfRec = await apiReadSelfDashboard(paramsSend, token);
       const responseData = responseSelfRec.data;
       if ((responseData.status = "OK")) {
         setDataselfRecSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -1123,13 +1191,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseNVR = await apiReadNVRDashboard(paramsSend, token);
       const responseData = responseNVR.data;
       if ((responseData.status = "OK")) {
         setDatanvrSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 
@@ -1150,13 +1221,16 @@ function BuildingArea({
         break;
     }
     try {
+      // setLoadingAtomState(true);
       const responseNAS = await apiReadNASDashboard(paramsSend, token);
       const responseData = responseNAS.data;
       if ((responseData.status = "OK")) {
         setDatanasSearch(responseData.records);
+        // setLoadingAtomState(false);
       }
     } catch (error) {
       console.log(error);
+      // setLoadingAtomState(false);
     }
   };
 

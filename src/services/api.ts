@@ -5076,3 +5076,121 @@ export async function apiReadSmartwatch(params, token) {
 		throw error;
 	}
 }
+
+export async function apiCreateSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://192.168.18.26:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiReadPlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/platform",
+			// url: newwebserviceurl + "platform",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadDeviceType(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device_type",
+			// url: newwebserviceurl + "platform",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiReadManufacture(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/manufacture",
+			// url: newwebserviceurl + "manufacture",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadDeviceModel(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/device_model",
+			// url: newwebserviceurl + "device_model",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadFirmware(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://192.168.18.26:8000/api/firmware",
+			// url: newwebserviceurl + "firmware",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
