@@ -4,10 +4,10 @@ import { AddSmartwatch } from "./ModalAddSmartwatch";
 import { DeleteSmartwatchModal } from "./ModalDeleteSmartwatch";
 import { Alerts } from "./AlertSmartwatch";
 import {
-	apiReadGelang,
 	apiDeleteGelang,
-	apiCreateGelang,
+	apiCreateSmartwatch,
 	apiUpdateGelang,
+	apiReadSmartwatch,
 } from "../../../../services/api";
 import Pagination from "../../../../components/Pagination";
 import SearchInputButton from "../../Search";
@@ -21,18 +21,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Error403Message } from "../../../../utils/constants";
 import { Breadcrumbs } from "../../../../components/Breadcrumbs";
 
-// Interface untuk objek 'params' dan 'item'
 interface Item {
-	dmac: string;
-	nama_gelang: string;
-	tanggal_pasang: Date;
-	tanggal_aktivasi: Date;
-	baterai: string;
-	lokasi_otmil_id: string;
-	nama_lokasi_otmil: string;
-	ruangan_otmil_id: string;
-	jenis_ruangan_otmil: string;
-	nama_ruangan_otmil: string;
+	device_id: string;
+	imei: string;
+	wearer_name: string;
+	health_data_periodic: string;
+	status: string;
+	is_used: boolean;
+	device_type_id: string;
+	device_model_id: string;
+	manufacturer_id: string;
+	firmware_version_id: string;
+	platform_id: string;
 }
 
 const SmartwatchList = () => {
@@ -61,7 +61,7 @@ const SmartwatchList = () => {
 	const [isOperator, setIsOperator] = useState<boolean>();
 	const [searchData, setSearchData] = useState({
 		dmac: "",
-		nama_gelang: "",
+		wearer_name: "",
 	});
 
 	const tokenItem = localStorage.getItem("token");
@@ -90,32 +90,20 @@ const SmartwatchList = () => {
 		// }
 	};
 
-	const handleFilterChangeDmac = async (e: any) => {
+	const handleFilterChangeImei = async (e: any) => {
 		const newFilter = e.target.value;
 		setFilterDmac(newFilter);
 	};
 
 	const handleSearchClick = async () => {
-		// let params = {
-		//   filter: {
-		//     nama_gelang: searchData.nama_gelang,
-		//     dmac: searchData.dmac,
-		//     // nama_lokasi_otmil: 'Cimahi',
-		//     lokasi_otmil_id: '1tcb4qwu-tkxh-lgfb-9e6f-xm1k3zcu0vot',
-		//   },
-		//   page: currentPage,
-		//   pageSize: pageSize,
-		// };
 		let params = {
-			nama_gelang: filter,
-			dmac: filterDmac,
-
-			lokasi_otmil_id: "1tcb4qwu-tkxh-lgfb-9e6f-xm1k3zcu0vot",
+			wearer_name: filter,
+			imei: filterDmac,
 			page: currentPage,
 			pageSize: pageSize,
 		};
 		try {
-			const response = await apiReadGelang(params, token);
+			const response = await apiReadSmartwatch(params, token);
 			if (response.status === 200) {
 				const result = response.data;
 				setData(result.records);
@@ -207,21 +195,16 @@ const SmartwatchList = () => {
 
 	const fetchData = async () => {
 		let params = {
-			filter: {
-				// nama_lokasi_otmil: 'Cimahi',
-				lokasi_otmil_id: "1tcb4qwu-tkxh-lgfb-9e6f-xm1k3zcu0vot",
-			},
 			page: currentPage,
 			pageSize: pageSize,
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadGelang(params, token);
+			const response = await apiReadSmartwatch(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
 			const result = response.data.records;
-			console.log(result, "data gelang");
 			setData(result);
 			setPages(response.data.pagination.totalPages);
 			setRows(response.data.pagination.totalRecords);
@@ -305,9 +288,8 @@ const SmartwatchList = () => {
 
 	// function untuk menambah data
 	const handleSubmitAdd = async (params: any) => {
-		console.log("DATA DARI LIST", params);
 		try {
-			const responseCreate = await apiCreateGelang(params, token);
+			const responseCreate = await apiCreateSmartwatch(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -391,7 +373,7 @@ const SmartwatchList = () => {
 				"Nama Ruangan",
 			],
 			...data.map((item: any) => [
-				item.nama_gelang,
+				item.wearer_name,
 				item.dmac,
 				item.tanggal_pasang,
 				item.tanggal_aktivasi,
@@ -430,30 +412,18 @@ const SmartwatchList = () => {
 			<div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
 				<div className="flex justify-center w-full">
 					<div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
+						<div className="flex w-full i-search">
+							<SearchInputButton
+								value={filterDmac}
+								placehorder="Cari Nomor IMEI"
+								onChange={handleFilterChangeImei}
+							/>
+						</div>
 						<div className="flex w-full search">
 							<SearchInputButton
 								value={filter}
-								placehorder="Cari nama Smartwatch"
+								placehorder="Cari nama Pengguna"
 								onChange={handleFilterChange}
-							/>
-							{/* <select
-            className="w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-            name="status_gateway"
-            value={filter.status_gateway}
-            onChange={handleFilterChange}
-          >
-            <option value="">Semua Status</option>
-            <option value="aktif">Aktif</option>
-            <option value="tidak-aktif">tidak aktif</option>
-            <option value="rusak">Rusak</option>
-          </select> */}
-						</div>
-						<div className="flex w-full i-search">
-							{/* <SearchInputButton value={searchData.dmac} placehorder="Cari Nomor DMAC" onChange={(e) => setSearchData({ ...searchData, dmac: e.target.value })} /> */}
-							<SearchInputButton
-								value={filterDmac}
-								placehorder="Cari Nomor DMAC"
-								onChange={handleFilterChangeDmac}
 							/>
 						</div>
 						<button
@@ -514,37 +484,17 @@ const SmartwatchList = () => {
 				<div className="flex flex-col">
 					<div
 						className={`grid ${
-							isOperator ? "grid-cols-6" : "grid-cols-7"
+							isOperator ? "grid-cols-2" : "grid-cols-3"
 						} rounded-t-md capitalize bg-gray-2 dark:bg-slate-600 `}
 					>
 						<div className="p-2.5 text-center xl:py-5">
 							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								Nama Smartwatch
+								IMEI
 							</h5>
 						</div>
 						<div className="p-2.5 text-center xl:p-5">
 							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								DMAC
-							</h5>
-						</div>
-						<div className="p-2.5 text-center xl:py-5">
-							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								Tanggal Pasang
-							</h5>
-						</div>
-						<div className="p-2.5 text-center xl:py-5">
-							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								tanggal aktivasi
-							</h5>
-						</div>
-						<div className="p-2.5 text-center xl:p-5">
-							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								baterai
-							</h5>
-						</div>
-						<div className="p-2.5 text-center xl:p-5">
-							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								Nama Lokasi
+								Nama Pengguna
 							</h5>
 						</div>
 						<div
@@ -564,8 +514,8 @@ const SmartwatchList = () => {
 								<div
 									className={`grid ${
 										isOperator
-											? "grid-cols-6"
-											: "grid-cols-7"
+											? "grid-cols-2"
+											: "grid-cols-3"
 									} rounded-sm bg-gray-2 dark:bg-meta-4`}
 								>
 									<div
@@ -573,7 +523,7 @@ const SmartwatchList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black truncate dark:text-white">
-											{item.nama_gelang}
+											{item.imei}
 										</p>
 									</div>
 									<div
@@ -581,39 +531,7 @@ const SmartwatchList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black truncate dark:text-white">
-											{item.dmac}
-										</p>
-									</div>
-									<div
-										onClick={() => handleDetailClick(item)}
-										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-									>
-										<p className="text-black truncate dark:text-white">
-											{item.tanggal_pasang}
-										</p>
-									</div>
-									<div
-										onClick={() => handleDetailClick(item)}
-										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-									>
-										<p className="text-black truncate dark:text-white">
-											{item.tanggal_aktivasi}
-										</p>
-									</div>
-									<div
-										onClick={() => handleDetailClick(item)}
-										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-									>
-										<p className="text-black truncate dark:text-white">
-											{item.baterai}
-										</p>
-									</div>
-									<div
-										onClick={() => handleDetailClick(item)}
-										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-									>
-										<p className="text-black truncate dark:text-white">
-											{item.nama_lokasi_otmil}
+											{item.wearer_name}
 										</p>
 									</div>
 

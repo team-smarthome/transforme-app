@@ -1,10 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-	apiReadAllRuanganOtmil,
-	apiReadAllWBP,
-	apiReadAlllokasiOtmil,
-	apiReadZona,
-} from "../../../../services/api";
 import { webpack } from "webpack";
 import Select from "react-select";
 import { driver } from "driver.js";
@@ -14,9 +8,32 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Alerts } from "./AlertSmartwatch";
 import { Error403Message } from "../../../../utils/constants";
 import { Label } from "@windmill/react-ui";
+import {
+	apiReadDeviceModel,
+	apiReadDeviceType,
+	apiReadManufacture,
+	apiReadPlatform,
+} from "../../../../services/api";
 
 // interface
-interface AddGelangModalProps {
+interface platform {
+	platform_id: string;
+	nama_platform: string;
+}
+interface deviceType {
+	device_type_id: string;
+	type: string;
+}
+interface deviceModel {
+	device_model_id: string;
+	model: string;
+}
+
+interface manufacture {
+	manufacturer_id: string;
+	manufacture: string;
+}
+interface AddSmartwatchModalProps {
 	closeModal: () => void;
 	onSubmit: (params: any) => void;
 	defaultValue?: any;
@@ -24,25 +41,7 @@ interface AddGelangModalProps {
 	isEdit?: boolean;
 }
 
-interface ruangan {
-	ruangan_otmil_id: string;
-	lokasi_otmil_id: string;
-	nama_ruangan_otmil: string;
-	jenis_ruangan_otmil: string;
-	nama_lokasi_otmil: string;
-	zona_id: string;
-	nama_zona: string;
-}
-interface lokasi {
-	nama_lokasi_otmil: string;
-}
-
-interface namazona {
-	zona_id: string;
-	nama_zona: string;
-}
-
-export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
+export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 	closeModal,
 	onSubmit,
 	defaultValue,
@@ -54,24 +53,16 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 
 	const [formState, setFormState] = useState(
 		defaultValue || {
-			wearer_name: "",
 			imei: "",
-			tanggal_pasang: "",
-			tanggal_aktivasi: "",
-			baterai: "",
-			lokasi_otmil_id: "",
-			nama_lokasi_otmil: "",
-			ruangan_otmil_id: "",
-			jenis_ruangan_otmil: "",
-			nama_ruangan_otmil: "",
-			zona_id: "",
-			nama_zona: defaultValue?.status_zona_ruangan_otmil ?? "",
-			wbp: [],
-
-			// nama_ruangan_lemasmil: '',
-			// jenis_ruangan_lemasmil: '',
-			// lokasi_lemasmil_id: '',
-			// ruangan_lemasmil_id: '',
+			wearer_name: "",
+			health_data_periodic: "",
+			is_used: 0,
+			status: "INACTIVE",
+			device_type_id: "",
+			device_model_id: "",
+			manufacturer_id: "",
+			firmware_version_id: "9c406729-91ce-4b72-bd72-33e665746629",
+			platform_id: "",
 		}
 	);
 
@@ -79,11 +70,11 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 	const [errors, setErrors] = useState<string[]>([]);
 	const modalContainerRef = useRef<HTMLDivElement>(null);
 	const [buttonLoad, setButtonLoad] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
-	const [NamaZona, setNamaZona] = useState<namazona[]>([]);
-	const [ruanganotmil, setruanganotmil] = useState<ruangan[]>([]);
-	const [lokasiotmil, setlokasiotmil] = useState<lokasi[]>([]);
-	const [namaWBP, setnamaWBP] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [platform, setPlatform] = useState<platform[]>([]);
+	const [deviceType, setDeviceType] = useState<deviceType[]>([]);
+	const [deviceModel, setDeviceModel] = useState<deviceModel[]>([]);
+	const [manufacture, setManufacture] = useState<manufacture[]>([]);
 	const [filter, setFilter] = useState("");
 
 	const tokenItem = localStorage.getItem("token");
@@ -93,36 +84,58 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 	const dataUserItem = localStorage.getItem("dataUser");
 	const dataAdmin = dataUserItem ? JSON.parse(dataUserItem) : null;
 
-	//useEffect untuk menambahkan event listener  ke elemen dokumen
-	// useEffect(() => {
-	//   const handleOutsideClick = (e: MouseEvent) => {
-	//     if (
-	//       modalContainerRef.current &&
-	//       !modalContainerRef.current.contains(e.target as Node)
-	//     ) {
-	//       closeModal();
-	//     }
-	//   };
-	//   document.addEventListener('mousedown', handleOutsideClick);
-	//   return () => {
-	//     document.removeEventListener('mousedown', handleOutsideClick);
-	//   };
-	// }, [closeModal]);
+	useEffect(() => {
+		const fetchData = async () => {
+			let params = {
+				pageSize: 1000,
+			};
+			try {
+				const platform = await apiReadPlatform(params, token);
+				const platforms = platform.data.records;
+				setPlatform(platforms);
 
+				const deviceType = await apiReadDeviceType(params, token);
+				const deviceTypes = deviceType.data.records;
+				setDeviceType(deviceTypes);
+
+				const deviceModel = await apiReadDeviceModel(params, token);
+				const deviceModels = deviceModel.data.records;
+				setDeviceModel(deviceModels);
+
+				const manufacture = await apiReadManufacture(params, token);
+				const manufacturers = manufacture.data.records;
+				setManufacture(manufacturers);
+				setTimeout(() => {
+					setIsLoading(false);
+				}, 300);
+			} catch (e: any) {
+				if (e.response.status === 403) {
+					navigate("/auth/signin", {
+						state: {
+							forceLogout: true,
+							lastPage: location.pathname,
+						},
+					});
+				}
+				Alerts.fire({
+					icon: e.response.status === 403 ? "warning" : "error",
+					title:
+						e.response.status === 403 ? Error403Message : e.message,
+				});
+			}
+		};
+		fetchData();
+	}, []);
+	console.log(deviceType, "deviceType");
 	// function
 	const validateForm = () => {
 		let errorFields = [];
 
 		for (const [key, value] of Object.entries(formState)) {
 			if (
-				key !== "lokasi_lemasmil_id" &&
-				key !== "nama_lokasi_lemasmil" &&
-				key !== "nama_ruangan_lemasmil" &&
-				key !== "jenis_ruangan_lemasmil" &&
-				key !== "zona_id_lemasmil" &&
-				key !== "status_zona_ruangan_lemasmil" &&
-				key !== "wbp" &&
-				key !== "ruangan_lemasmil_id"
+				key !== "status" &&
+				key !== "is_used" &&
+				key !== "health_data_periodic"
 			) {
 				if (!value) {
 					errorFields.push(key);
@@ -130,7 +143,7 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 			}
 		}
 		if (errorFields.length > 0) {
-			console.log(errorFields);
+			console.log(errorFields, "eeee");
 			setErrors(errorFields);
 			return false;
 		}
@@ -310,9 +323,70 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 		setFormState({ ...formState, [e.target.name]: e.target.value });
 	};
 
+	const handleDeviceType = (selectedOption: any) => {
+		if (selectedOption) {
+			setFormState({
+				...formState,
+				device_type_id: selectedOption.value,
+				type: selectedOption.label,
+			});
+		} else {
+			setFormState({
+				...formState,
+				device_type_id: "",
+				type: "",
+			});
+		}
+	};
+	const handleChangePlatform = (selectedOption: any) => {
+		if (selectedOption) {
+			setFormState({
+				...formState,
+				platform_id: selectedOption.value,
+				nama_platform: selectedOption.label,
+			});
+		} else {
+			setFormState({
+				...formState,
+				platform_id: "",
+				nama_platform: "",
+			});
+		}
+	};
+
+	const handleChangeManufacture = (selectedOption: any) => {
+		if (selectedOption) {
+			setFormState({
+				...formState,
+				manufacturer_id: selectedOption.value,
+				manufacture: selectedOption.label,
+			});
+		} else {
+			setFormState({
+				...formState,
+				manufacturer_id: "",
+				manufacture: "",
+			});
+		}
+	};
+
+	const handleChangeDeviceModel = (selectedOption: any) => {
+		if (selectedOption) {
+			setFormState({
+				...formState,
+				device_model_id: selectedOption.value,
+				model: selectedOption.label,
+			});
+		} else {
+			setFormState({
+				...formState,
+				device_model_id: "",
+				model: "",
+			});
+		}
+	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(formState, "formState");
 
 		if (!validateForm()) return;
 		setButtonLoad(true);
@@ -321,92 +395,9 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 		// closeModal();
 	};
 
-	const handleRuanganChange = (e: any) => {
-		// console.log('12345', e);
-
-		const selectedRuangan = e.value;
-		// console.log('selectedData');
-
-		// Temukan data ruangan berdasarkan ID yang dipilih
-		const selectedData = ruanganotmil.find(
-			(item) => item.ruangan_otmil_id === selectedRuangan
-		);
-
-		if (selectedData) {
-			setFormState({
-				...formState,
-				ruangan_otmil_id: selectedData.ruangan_otmil_id,
-				nama_ruangan_otmil: selectedData.nama_ruangan_otmil,
-				jenis_ruangan_otmil: selectedData.jenis_ruangan_otmil,
-				lokasi_otmil_id: selectedData.lokasi_otmil_id,
-				nama_lokasi_otmil: selectedData.nama_lokasi_otmil,
-				zona_id: selectedData.zona_id,
-				nama_zona: selectedData.nama_zona,
-			});
-		} else {
-			setFormState({
-				...formState,
-				ruangan_otmil_id: "",
-				nama_ruangan_otmil: "",
-				jenis_ruangan_otmil: "",
-				lokasi_otmil_id: "",
-				nama_lokasi_otmil: "",
-				zona_id: "",
-				nama_zona: "",
-			});
-		}
-	};
-
-	// fetch data
-	useEffect(() => {
-		const fetchData = async () => {
-			let params = {
-				pageSize: 1000,
-				filter: {
-					nama_lokasi_otmil: "Cimahi",
-				},
-			};
-			try {
-				const ruangan = await apiReadAllRuanganOtmil(params, token);
-				const ruanganlem = ruangan.data.records;
-				setruanganotmil(ruanganlem);
-
-				const lokasi = await apiReadAlllokasiOtmil(params, token);
-				const lokasilem = lokasi.data.records;
-				setlokasiotmil(lokasilem);
-
-				const zone = await apiReadZona(token);
-				const zona = zone.data.records;
-				setNamaZona(zona);
-
-				const wbp = await apiReadAllWBP(params, token);
-				setnamaWBP(wbp.data.records);
-
-				setTimeout(() => {
-					setIsLoading(false);
-				}, 300);
-			} catch (e: any) {
-				if (e.response.status === 403) {
-					navigate("/auth/signin", {
-						state: {
-							forceLogout: true,
-							lastPage: location.pathname,
-						},
-					});
-				}
-				Alerts.fire({
-					icon: e.response.status === 403 ? "warning" : "error",
-					title:
-						e.response.status === 403 ? Error403Message : e.message,
-				});
-			}
-		};
-		fetchData();
-	}, []);
-
-	const [inputValue, setInputValue] = useState(
-		formState.wbp[0]?.nama_wbp || ""
-	);
+	// const [inputValue, setInputValue] = useState(
+	// 	formState.wbp[0]?.nama_wbp || ""
+	// );
 
 	const modalStyles: any = {
 		backdrop: {
@@ -427,7 +418,7 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 			// Add your other modal styles here
 		},
 	};
-
+	console.log(formState, "formState");
 	//return
 	return (
 		<div>
@@ -518,30 +509,6 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 								<div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-1 justify-normal">
 									<div className="form-group w-full h-22">
 										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Nama Pengguna
-										</label>
-										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="wearer_name"
-											placeholder="Nama Pengguna"
-											onChange={handleChange}
-											value={formState.wearer_name}
-											disabled={isDetail}
-										/>
-										<p className="error-text p-0 m-0">
-											{errors.map((item) =>
-												item === "wearer_name"
-													? "nama Pengguna Wajib Diisi"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label
 											className="capitalize block text-sm font-medium text-black dark:text-white"
 											htmlFor="id"
 										>
@@ -563,9 +530,104 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 											)}
 										</p>
 									</div>
+									<div className="form-group w-full h-22">
+										<label
+											className="block text-sm font-medium text-black dark:text-white"
+											htmlFor="id"
+										>
+											Nama Pengguna
+										</label>
+										<input
+											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
+											name="wearer_name"
+											placeholder="Nama Pengguna"
+											onChange={handleChange}
+											value={formState.wearer_name}
+											disabled={isDetail}
+										/>
+										<p className="error-text p-0 m-0">
+											{errors.map((item) =>
+												item === "wearer_name"
+													? "nama Pengguna Wajib Diisi"
+													: ""
+											)}
+										</p>
+									</div>
+									<div className="form-group w-full h-22">
+										<label htmlFor="firmeware_id">
+											Platform
+										</label>
+										<Select
+											className="basic-single p-otmil"
+											classNamePrefix="select"
+											isSearchable
+											isClearable={true}
+											defaultValue={
+												isDetail || isEdit
+													? {
+															value: formState.platform_id,
+															label: formState.nama_platform,
+													  }
+													: formState.platform_id
+											}
+											isDisabled={isDetail}
+											styles={customStyles}
+											name="platform_id"
+											options={platform.map(
+												(item: platform) => ({
+													value: item.platform_id,
+													label: item.nama_platform,
+												})
+											)}
+											onChange={handleChangePlatform}
+										/>
+										<p className="error-text">
+											{errors.map((item) =>
+												item === "firmeware_id"
+													? "Pilih Tipe Device"
+													: ""
+											)}
+										</p>
+									</div>
 
 									<div className="form-group w-full h-22">
-										<label htmlFor="ruangan_otmil_id">
+										<label htmlFor="firmeware_id">
+											Device Model
+										</label>
+										<Select
+											className="basic-single p-otmil"
+											classNamePrefix="select"
+											isSearchable
+											isClearable={true}
+											defaultValue={
+												isDetail || isEdit
+													? {
+															value: formState.device_model_id,
+															label: formState.model,
+													  }
+													: formState.device_model_id
+											}
+											isDisabled={isDetail}
+											styles={customStyles}
+											name="device_model_id"
+											options={deviceModel.map(
+												(item: deviceModel) => ({
+													value: item.device_model_id,
+													label: item.model,
+												})
+											)}
+											onChange={handleChangeDeviceModel}
+										/>
+										<p className="error-text">
+											{errors.map((item) =>
+												item === "device_model_id"
+													? "Pilih Device Model"
+													: ""
+											)}
+										</p>
+									</div>
+									<div className="form-group w-full h-22">
+										<label htmlFor="firmeware_id">
 											Versi Firmware
 										</label>
 										<Select
@@ -576,32 +638,33 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 											defaultValue={
 												isDetail || isEdit
 													? {
-															value: formState.ruangan_otmil_id,
-															label: formState.nama_ruangan_otmil,
+															value: formState.firmeware_id,
+															label: formState.nama_firmware,
 													  }
-													: formState.ruangan_otmil_id
+													: formState.firmeware_id
 											}
 											isDisabled={isDetail}
 											styles={customStyles}
-											name="ruangan_otmil_id"
-											options={ruanganotmil.map(
-												(item) => ({
-													value: item.ruangan_otmil_id,
-													label: item.nama_ruangan_otmil,
-												})
-											)}
-											onChange={handleRuanganChange}
+											name="firmeware_id"
+											// options={ruanganotmil.map(
+											// 	(item) => ({
+											// 		value: item.firmeware_id,
+											// 		label: item.nama_firmware,
+											// 	})
+											// )}
+											// onChange={handleRuanganChange}
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "ruangan_otmil_id"
+												item === "firmeware_id"
 													? "Pilih Ruangan"
 													: ""
 											)}
 										</p>
 									</div>
+
 									<div className="form-group w-full h-22">
-										<label htmlFor="ruangan_otmil_id">
+										<label htmlFor="firmeware_id">
 											Tipe
 										</label>
 										<Select
@@ -612,33 +675,34 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 											defaultValue={
 												isDetail || isEdit
 													? {
-															value: formState.ruangan_otmil_id,
-															label: formState.nama_ruangan_otmil,
+															value: formState.device_type_id,
+															label: formState.type,
 													  }
-													: formState.ruangan_otmil_id
+													: formState.device_type_id
 											}
 											isDisabled={isDetail}
 											styles={customStyles}
-											name="ruangan_otmil_id"
-											options={ruanganotmil.map(
-												(item) => ({
-													value: item.ruangan_otmil_id,
-													label: item.nama_ruangan_otmil,
+											name="firmeware_id"
+											options={deviceType.map(
+												(item: deviceType) => ({
+													value: item.device_type_id,
+													label: item.type,
 												})
 											)}
-											onChange={handleRuanganChange}
+											onChange={handleDeviceType}
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "ruangan_otmil_id"
-													? "Pilih Ruangan"
+												item === "firmeware_id"
+													? "Pilih Tipe Device"
 													: ""
 											)}
 										</p>
 									</div>
+
 									<div className="form-group w-full h-22">
-										<label htmlFor="ruangan_otmil_id">
-											Pilih Ruangan:
+										<label htmlFor="firmeware_id">
+											Manufacture
 										</label>
 										<Select
 											className="basic-single p-otmil"
@@ -648,240 +712,56 @@ export const AddSmartwatch: React.FC<AddGelangModalProps> = ({
 											defaultValue={
 												isDetail || isEdit
 													? {
-															value: formState.ruangan_otmil_id,
-															label: formState.nama_ruangan_otmil,
+															value: formState.manufacturer_id,
+															label: formState.manufacture,
 													  }
-													: formState.ruangan_otmil_id
+													: formState.manufacturer_id
 											}
 											isDisabled={isDetail}
 											styles={customStyles}
-											name="ruangan_otmil_id"
-											options={ruanganotmil.map(
-												(item) => ({
-													value: item.ruangan_otmil_id,
-													label: item.nama_ruangan_otmil,
+											name="manufacturer_id"
+											options={manufacture.map(
+												(item: manufacture) => ({
+													value: item.manufacturer_id,
+													label: item.manufacture,
 												})
 											)}
-											onChange={handleRuanganChange}
+											onChange={handleChangeManufacture}
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "ruangan_otmil_id"
-													? "Pilih Ruangan"
+												item === "manufacturer_id"
+													? "Pilih Manufacture"
 													: ""
 											)}
 										</p>
 									</div>
 									<div className="form-group w-full h-22">
 										<label
-											className="capitalize block text-sm font-medium text-black dark:text-white"
+											className="block text-sm font-medium text-black dark:text-white"
 											htmlFor="id"
 										>
-											baterai
+											Health Data Period
 										</label>
 										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-baterai"
-											name="baterai"
-											placeholder="baterai"
+											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
+											name="health_data_periodic"
+											placeholder="health data period"
 											onChange={handleChange}
-											value={formState.baterai}
+											value={
+												formState.health_data_periodic
+											}
 											disabled={isDetail}
+											type="number"
 										/>
 										<p className="error-text p-0 m-0">
 											{errors.map((item) =>
-												item === "baterai"
-													? "Pilih baterai"
+												item === "health_data_periodic"
+													? "Health Data Periode Diisi"
 													: ""
 											)}
 										</p>
 									</div>
-
-									{/* Tanggal Pasang */}
-									<div className="form-group w-full h-22">
-										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Tanggal Pasang
-										</label>
-										<input
-											type="date"
-											className="w-full rounded border border-stroke   py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-pasang"
-											name="tanggal_pasang"
-											onChange={handleChange}
-											value={formState.tanggal_pasang}
-											disabled={isDetail}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "tanggal_pasang"
-													? "Pilih Tanggal Pasang"
-													: ""
-											)}
-										</p>
-									</div>
-
-									{/* Tanggal Aktivasi */}
-									<div className="form-group w-full h-22">
-										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Tanggal Aktivasi
-										</label>
-										<input
-											type="date"
-											className="w-full rounded border border-stroke   py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-aktivasi"
-											name="tanggal_aktivasi"
-											onChange={handleChange}
-											value={formState.tanggal_aktivasi}
-											disabled={isDetail}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "tanggal_aktivasi"
-													? "Pilih Tanggal Aktivasi"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="ruangan_otmil_id">
-											Pilih Ruangan:
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.ruangan_otmil_id,
-															label: formState.nama_ruangan_otmil,
-													  }
-													: formState.ruangan_otmil_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="ruangan_otmil_id"
-											options={ruanganotmil.map(
-												(item) => ({
-													value: item.ruangan_otmil_id,
-													label: item.nama_ruangan_otmil,
-												})
-											)}
-											onChange={handleRuanganChange}
-										/>
-										{/* <select
-                      id="ruangan_otmil_id"
-                      name="ruangan_otmil_id"
-                      className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                      value={formState.ruangan_otmil_id}
-                      onChange={handleRuanganChange}
-                      disabled={isDetail}
-                    >
-                      <option value="">Pilih Ruangan</option>
-                      {ruanganotmil.map((item) => (
-                        <option
-                          key={item.ruangan_otmil_id}
-                          value={item.ruangan_otmil_id}
-                        >
-                          {item.nama_ruangan_otmil}
-                        </option>
-                      ))}
-                    </select> */}
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "ruangan_otmil_id"
-													? "Pilih Ruangan"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="jenis_ruangan_otmil">
-											Jenis Ruangan:
-										</label>
-										<input
-											type="text"
-											id="jenis_ruangan_otmil"
-											className="w-full rounded border border-stroke py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-jenis"
-											name="jenis_ruangan_otmil"
-											value={
-												formState.jenis_ruangan_otmil
-											}
-											disabled={isDetail || isEdit}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "jenis_ruangan_otmil"
-													? "Masukan Jenis Ruangan"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="nama_lokasi_otmil">
-											Nama Lokasi:
-										</label>
-										<input
-											type="text"
-											id="nama_lokasi_otmil"
-											className="w-full rounded border border-stroke py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-lokasi"
-											name="nama_lokasi_otmil"
-											value={formState.nama_lokasi_otmil}
-											disabled={isDetail || isEdit}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "nama_lokasi_otmil"
-													? "Masukan Nama Lokasi"
-													: ""
-											)}
-										</p>
-									</div>
-									{/* <div className="form-group w-full h-22">
-                    <label htmlFor="nama_zona">Zona :</label>
-                    <input
-                      type="text"
-                      id="nama_zona"
-                      className="w-full rounded border border-stroke py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-zona"
-                      name="nama_zona"
-                      onChange={handleChange}
-                      defaultValue={formState.status_zona_ruangan_otmil}
-                      value={formState.nama_zona}
-                      disabled={isDetail || isEdit}
-                    />
-                    <p className="error-text">
-                      {errors.map((item) =>
-                        item === 'nama_zona' ? 'Masukan Zona' : '',
-                      )}
-                    </p>
-                  </div> */}
-
-									{/* {isDetail && (
-                    <div className="form-group w-full h-22">
-                      <label
-                        className="block text-sm font-medium text-black dark:text-white"
-                        htmlFor="id"
-                      >
-                        nama wbp
-                      </label>
-                      <input
-                        className="w-full rounded border border-stroke py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                        name="wbp"
-                        placeholder="Nama WBP"
-                        onChange={handleChange}
-                        value={inputValue}
-                        defaultValue={formState.wbp.nama_wbp}
-                        disabled={isDetail}
-                      />
-                    </div>
-                  )} */}
 								</div>
 
 								<div
