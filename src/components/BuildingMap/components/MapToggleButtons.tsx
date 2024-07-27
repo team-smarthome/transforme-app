@@ -19,6 +19,7 @@ import {
     MdPersonSearch,
     MdSignalWifiStatusbar3Bar,
     MdWifiFind,
+    MdMap
 } from "react-icons/md";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { SlScreenDesktop } from "react-icons/sl";
@@ -32,7 +33,8 @@ import {
     TbDeviceDesktopSearch,
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { selectedRoute } from "../../../utils/atomstates";
+import { selectedRoute,  modeMap,
+} from "../../../utils/atomstates";
 import Modal from "../../Modal";
 import ModalSearch from "../../Modal/ModalSearch";
 
@@ -223,6 +225,7 @@ const MapToggleButtons = ({
   console.log(toggleCameraVisibility, "sini");
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoute);
+  const [selectedMode, setSelectedMode] = useAtom(modeMap);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [hoverData, setHoverData] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -332,7 +335,17 @@ const MapToggleButtons = ({
             <span className="text-white text-xs">Smart Watch</span>
           )}
           {hoveredButton === "WBP" && WBPVisible && (
-            <div className="absolute  ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38 ">
+            <div className="absolute  ml-25 mt-54 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38 ">
+              <div
+                className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => setSelectedMode("Smartwatch Map")}
+              >
+                <button style={{ color: "white" }}>
+                  <MdMap className="w-6 h-6" />
+                  {/* <IoSearchCircleOutline className="w-6 h-6" /> */}
+                </button>
+                <h5 className="text-white text-sm">Tampilkan di Map</h5>
+              </div>
               <div
                 className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleClick("WBP")}

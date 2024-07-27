@@ -265,7 +265,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     },
     {
       id: 3,
-      name: "Google Map",
+      name: "Smartwatch Map",
       image: Gmap,
     },
   ];
@@ -362,7 +362,7 @@ selectedMode == "Denah" &&
             <BuildingStaticFromImage handleClickBuilding={handleClick} />
             </>
           ) : 
-          selectedMode == "Google Map" ? (
+          selectedMode == "Smartwatch Map" ? (
             <GMap  />
           ) : 
           
