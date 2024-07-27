@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
-import ProgressBar from '../../components/ProgressBar';
 import { useNavigate } from 'react-router-dom';
-import DetailKasus from './DetailKasus';
-import BarangBukti from './BarangBukti';
-import AddSidang from './AddSidang';
+import ProgressBar from '../../components/ProgressBar';
 import AddBAP from './AddBAP';
 import AddPenyidikan from './AddPenyidikan';
+import AddSidang from './AddSidang';
+import BarangBukti from './BarangBukti';
+import DetailKasus from './DetailKasus';
 
-import { WbpInsert } from './WbpInsert';
-import { apiReadKasus } from '../../services/api';
-import { apiReadPenyidikan, apiReadBAP } from '../../services/api';
 import dayjs from 'dayjs';
+import { apiReadBAP, apiReadKasus, apiReadPenyidikan } from '../../services/api';
+import { WbpInsert } from './WbpInsert';
 const EntryData = () => {
   const navigate = useNavigate();
   const [currentForm, setCurrentForm] = useState(0);
@@ -245,7 +244,7 @@ console.log(nomorPenyidikan, "ada nomor gk")
 
   function handleNext() {
     if (currentForm + 1 == formList.length) {
-      return navigate('/workstation/master-data/tersangka');
+      return navigate('/master-data/tersangka');
     }
     setCurrentForm(currentForm + 1);
     console.log(currentForm, "page")

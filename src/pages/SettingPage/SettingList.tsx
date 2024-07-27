@@ -1,19 +1,18 @@
+import { AiOutlineCamera, AiOutlineUserSwitch } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
-import { AiOutlineCamera } from "react-icons/ai";
-import { AiOutlineUserSwitch } from "react-icons/ai";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 
 const routeSettingList = [
   {
     id: 1,
     name: "Manajement Pengguna",
-    link: "/dashboard/pengaturan-list/manajemen-pengguna",
+    link: "/pengaturan-list/manajemen-pengguna",
     icon: <AiOutlineUserSwitch size={25} />,
   },
   {
     id: 2,
     name: "Perangkat",
-    link: "/dashboard/pengaturan-list/perangkat",
+    link: "/pengaturan-list/perangkat",
     icon: <AiOutlineCamera size={25} />,
   },
 ];

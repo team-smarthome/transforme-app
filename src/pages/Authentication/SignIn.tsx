@@ -96,27 +96,27 @@ const SignIn = () => {
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-1 inline-block" to="/">
                 <img
-                  className="hidden xl:block w-[610px] h-[125px]"
+                  className="hidden xl:block w-[40vw] "
                   src={Logo}
                   alt="Logo"
                 />
               </Link>
 
-              <p className="2xl:px-20 text-white font-bold text-[40px]">
+              {/* <p className="2xl:px-20 text-white font-bold text-[30px]">
                 TRANSFORME
               </p>
               <p className="2xl:px-20 text-white opacity-80 font-bold text-[20px]">
                 Sistem Informasi Staff
-              </p>
+              </p> */}
             </div>
           </div>
 
           <div className="w-full border-strokedark xl:w-1/2 xl:border-l-2 xl:mt-20">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="text-center xl:text-left mb-2 text-2xl font-bold text-white sm:text-title-xl2">
+              <h2 className="text-center xl:text-left mb-2 text-xl font-bold text-white sm:text-title-xl2">
                 TRANSFORME
               </h2>
-              <h2 className="text-center xl:text-left mb-9 text-xl font-bold text-white sm:text-title-xl2">
+              <h2 className="text-center xl:text-left mb-9 text-md font-bold text-white sm:text-title-xl3">
                 Monitoring System
               </h2>
 

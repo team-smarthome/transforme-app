@@ -1,14 +1,11 @@
-import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
+    XMarkIcon
 } from "@heroicons/react/24/outline";
-import { setZonaColor } from "../../utils/globalFunctions";
-import ReactPlayer from "react-player";
-import { apiReadOneKamera } from "../../services/api";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
+import { apiReadOneKamera } from "../../services/api";
+import { setZonaColor } from "../../utils/globalFunctions";
 
 interface ModalCameraProps {
   name: string;
@@ -99,7 +96,7 @@ function ModalCamera({ name, handleClose }: ModalCameraProps) {
               hover:bg-sky-400 hover:text-neutral-950
               "
               onClick={() => {
-                navigate("/dashboard/daftar-inventaris");
+                navigate("/daftar-inventaris");
               }}
             >
               Ke Halaman Inventori

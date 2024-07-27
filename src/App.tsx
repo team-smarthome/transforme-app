@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
 
-import MainMenu from "./pages/MainMenu";
+import Map from "./pages/Map/Map";
 import SignIn from "./pages/Authentication/SignIn";
 import SignUp from "./pages/Authentication/SignUp";
 import Loader from "./common/Loader";
@@ -28,9 +28,9 @@ function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/" element={<SignIn />} />
           <Route path="/auth/signup" element={<SignUp />} />
-          <Route path="/home" element={<MainMenu />} />
           <Route path="/dashboard" element={<MainMenuWorkstation />} />
           <Route element={<DefaultLayout />}>
+          <Route path="/home" element={<Map />} />
             {routes.map(({ path, component: Component }) => (
               <Route
                 key={path}

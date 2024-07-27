@@ -1,17 +1,13 @@
-import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
+    XMarkIcon
 } from "@heroicons/react/24/outline";
-import { setZonaColor } from "../../utils/globalFunctions";
+import { useNavigate } from "react-router-dom";
 
 interface ModalNASProps {
   name: string;
   ruangan: string;
   handleClose: any;
 }
-import { useNavigate } from "react-router-dom";
 
 function ModalNAS({ name, ruangan, handleClose }: ModalNASProps) {
   let navigate = useNavigate();
@@ -84,7 +80,7 @@ function ModalNAS({ name, ruangan, handleClose }: ModalNASProps) {
           hover:bg-sky-400 hover:text-neutral-950
           "
               onClick={() => {
-                navigate("/dashboard/daftar-inventaris");
+                navigate("/daftar-inventaris");
               }}
             >
               Ke Halaman Inventori

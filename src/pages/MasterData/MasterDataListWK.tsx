@@ -1,14 +1,14 @@
-import { NavLink } from "react-router-dom";
 import { BiCategory, BiHighlight } from "react-icons/bi";
-import { ImHammer2 } from "react-icons/im";
 import { FaBuildingColumns } from "react-icons/fa6";
+import { ImHammer2 } from "react-icons/im";
+import { NavLink } from "react-router-dom";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 
 const routeMasterData = [
   {
     id: 1,
     name: "Data Tersangka",
-    link: "/workstation/master-data/tersangka",
+    link: "/master-data/tersangka",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@ const routeMasterData = [
   {
     id: 2,
     name: "Data Petugas",
-    link: "/workstation/master-data/petugas",
+    link: "/master-data/petugas",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ const routeMasterData = [
   {
     id: 3,
     name: "Data Pengunjung",
-    link: "/workstation/master-data/pengunjung",
+    link: "/master-data/pengunjung",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ const routeMasterData = [
   {
     id: 5,
     name: "Data Jenis Perkara",
-    link: "/workstation/master-data/jenis-perkara",
+    link: "/master-data/jenis-perkara",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -96,13 +96,13 @@ const routeMasterData = [
   {
     id: 7,
     name: "Data Kategori Perkara",
-    link: "/workstation/master-data/kategori-perkara",
+    link: "/master-data/kategori-perkara",
     icon: <BiCategory size={25} />,
   },
   {
     id: 8,
     name: "Data Ruangan",
-    link: "/workstation/master-data/ruangan",
+    link: "/master-data/ruangan",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ const routeMasterData = [
   {
     id: 9,
     name: "Data Tipe Aset",
-    link: "/workstation/master-data/tipe-asset",
+    link: "/master-data/tipe-asset",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -168,19 +168,19 @@ const routeMasterData = [
   {
     id: 11,
     name: "Data Oditur",
-    link: "/workstation/master-data/oditur",
+    link: "/master-data/oditur",
     icon: <ImHammer2 size={25} />,
   },
   {
     id: 11,
     name: "Data Saksi",
-    link: "/workstation/master-data/saksi",
+    link: "/master-data/saksi",
     icon: <BiHighlight size={25} />,
   },
   {
     id: 11,
     name: "Data Ahli",
-    link: "/workstation/master-data/ahli",
+    link: "/master-data/ahli",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +202,7 @@ const routeMasterData = [
   {
     id: 11,
     name: "Data Jenis Sidang",
-    link: "/workstation/master-data/jenis-sidang",
+    link: "/master-data/jenis-sidang",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,7 @@ const routeMasterData = [
   {
     id: 12,
     name: "Data Barang Bukti",
-    link: "/workstation/master-data/barang-bukti",
+    link: "/master-data/barang-bukti",
     icon: <BiCategory size={25} />,
   },
   // {
@@ -252,19 +252,19 @@ const routeMasterData = [
   {
     id: 13,
     name: "Pengadilan Militer",
-    link: "/workstation/master-data/pengadilan-militer",
+    link: "/master-data/pengadilan-militer",
     icon: <FaBuildingColumns size={25} />,
   },
   {
     id: 14,
     name: "Data Gedung",
-    link: "/workstation/master-data/gedung",
+    link: "/master-data/gedung",
     icon: <FaBuildingColumns size={25} />,
   },
   {
     id: 15,
     name: "Data Lantai",
-    link: "/workstation/master-data/data-lantai",
+    link: "/master-data/data-lantai",
     icon: <FaBuildingColumns size={25} />,
   },
 ];

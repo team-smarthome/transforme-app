@@ -184,6 +184,7 @@ const Header = (props: {
                   onClick={(e) => {
                     e.stopPropagation();
                     props.setSidebarOpen(!props.sidebarOpen);
+                    
                   }}
                   className="z-[9999] block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark "
                 >
@@ -276,6 +277,9 @@ const Header = (props: {
                   onClick={(e) => {
                     e.stopPropagation();
                     props.setSidebarOpen(!props.sidebarOpen);
+                    console.log('====================================');
+                    console.log("DATASIDEBAR", props.sidebarOpen);
+                    console.log('====================================');
                   }}
                   className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark "
                   // className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"

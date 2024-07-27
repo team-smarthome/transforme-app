@@ -14,37 +14,42 @@ import Modal, { ModalBuildingMap } from "../Modal";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import Lapisan from "../../../assets/lapisan.png";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Gmap from "../../../assets/gmap.png";
+import Lapisan from "../../../assets/lapisan.png";
 import Satelit from "../../../assets/satelit.png";
-import gambarmap from "../../../assets/indormaps.jpeg";
+import Breadcrumb from "../../components/Breadcrumb";
 import {
-  allVisibleAtom,
   NASVisibleAtom,
   NVRVisibleAtom,
+  NotificationAtom,
   accessDoorVisibleAtom,
+  allVisibleAtom,
   cameraVisibleAtom,
+  checkState,
   faceRecognitionVisibleAtom,
   gatewayVisibleAtom,
   interactiveDesktopVisibleAtom,
   interactiveTVisibleAtom,
+  isSateliteView,
+  isSidebarNotifOpen,
+  isToggleWithDescriptionAtom,
+  modeMap,
+  pengunjungVisibleAtom,
+  petugasVisibleAtom,
   routerVisibleAtom,
+  selectedRoutess,
   selfRegKioskVisibleAtom,
   wbpVisibleAtom,
-  petugasVisibleAtom,
-  pengunjungVisibleAtom,
-  NotificationAtom,
-  isToggleWithDescriptionAtom,
   zoneVisibleAtom,
-  isSateliteView,
-  selectedRoutess,
-  isSidebarNotifOpen,
-  checkState,
-  modeMap,
 } from "../../utils/atomstates";
 import Breadcrumb from "../../components/Breadcrumb";
 import { FaBullseye } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import Modal, { ModalBuildingMap } from "../Modal";
+import { BuildingArea, BuildingStaticFromImage, GMap, GateArea } from "./components";
+import MapToggleButtons from "./components/MapToggleButtons";
 
 interface BuildingProps {
   buildingOpen: boolean;
@@ -287,7 +292,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     },
     {
       id: 3,
-      name: "Google Map",
+      name: "Smartwatch Map",
       image: Gmap,
     },
   ];
@@ -382,9 +387,11 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
             <>
               <BuildingStaticFromImage handleClickBuilding={handleClick} />
             </>
-          ) : selectedMode == "Google Map" ? (
-            <GMap />
-          ) : (
+          ) : 
+          selectedMode == "Smartwatch Map" ? (
+            <GMap  />
+          ) :      
+          (
             <>
               <GateArea handleClickBuilding={handleClick} />
               <div className="w-[8%] -ml-5 h-10 border-y border-black bg-zinc-50 opacity-0"></div>

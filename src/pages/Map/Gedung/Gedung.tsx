@@ -1,52 +1,28 @@
+import { useQuery } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { dataGedung } from "../../../utils/constants";
-import MapToggleButtons from "../../../components/BuildingMap/components/MapToggleButtons";
-import { useAtom } from "jotai";
-import { HiExclamationCircle } from "react-icons/hi2";
 import Breadcrumb from "../../../components/Breadcrumb";
-import {
-  NASVisibleAtom,
-  NVRVisibleAtom,
-  accessDoorVisibleAtom,
-  allVisibleAtom,
-  cameraVisibleAtom,
-  faceRecognitionVisibleAtom,
-  gatewayVisibleAtom,
-  interactiveDesktopVisibleAtom,
-  interactiveTVisibleAtom,
-  routerVisibleAtom,
-  selfRegKioskVisibleAtom,
-  wbpVisibleAtom,
-  NotificationAtom,
-  petugasVisibleAtom,
-  pengunjungVisibleAtom,
-  CurrentLayerAtom,
-  isToggleWithDescriptionAtom,
-} from "../../../utils/atomstates";
 import { Gateway } from "../../../components/BuildingMap/components";
-import Camera from "../../../components/BuildingMap/components/Camera";
 import AccessDoor from "../../../components/BuildingMap/components/AccessDoor";
+import Camera from "../../../components/BuildingMap/components/Camera";
 import FaceRecognition from "../../../components/BuildingMap/components/FaceRecognition";
 import InteractiveDesktop from "../../../components/BuildingMap/components/InteractiveDesktop";
 import InteractiveTV from "../../../components/BuildingMap/components/InteractiveTV";
-import SelfRegKiosk from "../../../components/BuildingMap/components/SelfRegKiosk";
-import NVR from "../../../components/BuildingMap/components/NVR";
+import MapToggleButtons from "../../../components/BuildingMap/components/MapToggleButtons";
 import NAS from "../../../components/BuildingMap/components/NAS";
-import DropdownNotification from "../../../components/DropdownNotification";
-import WBP from "../../../components/BuildingMap/components/WBP";
-import Petugas from "../../../components/BuildingMap/components/Petugas";
+import NVR from "../../../components/BuildingMap/components/NVR";
 import Pengunjung from "../../../components/BuildingMap/components/Pengunjung";
+import Petugas from "../../../components/BuildingMap/components/Petugas";
+import SelfRegKiosk from "../../../components/BuildingMap/components/SelfRegKiosk";
+import WBP from "../../../components/BuildingMap/components/WBP";
 import {
-  apiIndoorMap,
-  apiIndoorMapV2,
-  apiIndoorMapVVIP,
-  apiPeopleDummy,
+    apiIndoorMapVVIP,
+    apiPeopleDummy
 } from "../../../services/api";
 import { useQuery } from "@tanstack/react-query";
 import { ids } from "webpack";
 import LoadingSpinner from "../../../components/BuildingMap/components/LoadingSpinner";
-
 const Gedung = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataIndormap, setDataIndormap] = useState(null);
@@ -367,7 +343,7 @@ const Gedung = () => {
     console.log(i, "siniMase"),
       // console.log(getRoomIndex, "sini");
       navigate(
-        `/dashboard/peta/${filteredDataLayerTwo?.pathname}/${getRoomIndex.pathname}`,
+        `/peta/${filteredDataLayerTwo?.pathname}/${getRoomIndex.pathname}`,
         {
           state: {
             data: getRoomIndex,

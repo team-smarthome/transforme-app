@@ -1,12 +1,11 @@
 import { useAtom } from "jotai";
 
-import Logo from "../../../images/logo/logo.png";
-import "tailwindcss/tailwind.css";
 import { useNavigate } from "react-router-dom";
+import "tailwindcss/tailwind.css";
 
+import { selectedRoutess } from "../../../utils/atomstates";
 import { DeviceIcon, PetaIcon } from "./IconMenuSmartwatch";
 import MenuItem from "./MenuItemSmartwatch";
-import { selectedRoutess } from "../../../utils/atomstates";
 
 const MainMenu = () => {
 	const navigate = useNavigate();
@@ -50,7 +49,7 @@ const routes = [
 		id: 1,
 		name: "Device",
 		mode: "workstation",
-		link: "/dashboard/pengaturan-list/perangkat/smartwatch-list",
+		link: "/pengaturan-list/perangkat/smartwatch-list",
 		icon: DeviceIcon,
 	},
 	{

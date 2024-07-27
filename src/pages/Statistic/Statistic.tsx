@@ -1,19 +1,14 @@
-import ChartFive from "../../components/ChardKasus";
-import Tahanan from "./tahanan";
+import { useState } from "react";
+import { MdOutlineAddCircleOutline } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../../common/Loader";
+import ChartBar from "../../components/chardWBP";
 import Kegiatan from "./event";
-import Kamera from "./kamera";
 import Gateway from "./gateway";
 import Brecelet from "./gelang";
-import ChartBar from "../../components/chardWBP";
-import { useEffect, useState } from "react";
-import Loader from "../../common/Loader";
-import { apiDashboard } from "../../services/api";
-import { Alerts } from "./Alert";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Error403Message } from "../../utils/constants";
-import { useAtom } from "jotai";
-import { MdOutlineAddCircleOutline } from "react-icons/md";
 import Helmet from "./Helmet";
+import Kamera from "./kamera";
+import Tahanan from "./tahanan";
 
 const Statistic = () => {
 	const navigate = useNavigate();
@@ -43,7 +38,7 @@ const Statistic = () => {
 					<MdOutlineAddCircleOutline
 						className="mr-2 hover:cursor-pointer hover:text-slate-400"
 						size={35}
-						onClick={() => navigate("/workstation/kegiatan")}
+						onClick={() => navigate("/kegiatan")}
 					/>
 				</div>
 				<div className="flex items-center justify-center">
@@ -57,7 +52,7 @@ const Statistic = () => {
 				<MdOutlineAddCircleOutline
 					className="mt-8 mr-2 hover:cursor-pointer hover:text-slate-400"
 					size={35}
-					onClick={() => navigate("/workstation/daftar-kasus")}
+					onClick={() => navigate("/daftar-kasus")}
 				/>
 			</div>
 
@@ -78,7 +73,7 @@ const Statistic = () => {
 							size={35}
 							onClick={() =>
 								navigate(
-									"/workstation/pengaturan-list/perangkat/kamera"
+									"/pengaturan-list/perangkat/kamera"
 								)
 							}
 						/>
@@ -96,7 +91,7 @@ const Statistic = () => {
 							size={35}
 							onClick={() =>
 								navigate(
-									"/dashboard/pengaturan-list/perangkat/smartwatch"
+									"/pengaturan-list/perangkat/smartwatch"
 								)
 							}
 						/>
@@ -117,7 +112,7 @@ const Statistic = () => {
 						size={35}
 						onClick={() =>
 							navigate(
-								"/workstation/pengaturan-list/perangkat/gateway"
+								"/pengaturan-list/perangkat/gateway"
 							)
 						}
 					/>
@@ -135,7 +130,7 @@ const Statistic = () => {
 							size={35}
 							onClick={() =>
 								navigate(
-									"/dashboard/pengaturan-list/perangkat/helmet"
+									"/pengaturan-list/perangkat/helmet"
 								)
 							}
 						/>

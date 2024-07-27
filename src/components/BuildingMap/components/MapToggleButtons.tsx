@@ -1,44 +1,41 @@
 import {
-  SignalIcon,
-  VideoCameraIcon,
-  WifiIcon,
+    SignalIcon,
+    VideoCameraIcon,
+    WifiIcon,
 } from "@heroicons/react/24/outline";
-import { LuScanFace } from "react-icons/lu";
-import { BiUser } from "react-icons/bi";
-import { BsDoorOpen, BsSmartwatch } from "react-icons/bs";
-import { SlScreenDesktop } from "react-icons/sl";
-import { LuMonitorCheck } from "react-icons/lu";
-import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
-import { BsInboxes } from "react-icons/bs";
-import { GiMiningHelmet } from "react-icons/gi";
-import {
-  MdOutlineStorage,
-  MdPersonAddAlt1,
-  MdPersonSearch,
-  MdWifiFind,
-  MdSignalWifiStatusbar3Bar,
-} from "react-icons/md";
-import { GiPoliceOfficerHead } from "react-icons/gi";
-import { FaWalking } from "react-icons/fa";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useState } from "react";
+import { BiUser } from "react-icons/bi";
+import { BsDoorOpen, BsInboxes, BsSmartwatch } from "react-icons/bs";
 import { FaVectorSquare } from "react-icons/fa";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { IoSearchCircleOutline } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
-import { ImSearch } from "react-icons/im";
-import { ImPlus } from "react-icons/im";
-
+import { GiMiningHelmet } from "react-icons/gi";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { ImPlus, ImSearch } from "react-icons/im";
+import { LuMonitorCheck, LuScanFace } from "react-icons/lu";
 import {
-  TbDeviceDesktopPlus,
-  TbDeviceDesktopSearch,
-  TbCameraSearch,
-  TbCameraPlus,
-} from "react-icons/tb";
-import Modal from "../../Modal";
+    MdOutlineStorage,
+    MdPersonAddAlt1,
+    MdPersonSearch,
+    MdSignalWifiStatusbar3Bar,
+    MdWifiFind,
+    MdMap
+} from "react-icons/md";
+import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
+import { SlScreenDesktop } from "react-icons/sl";
+
 import { Tooltip } from "antd";
+import { useAtom } from "jotai";
+import {
+    TbCameraPlus,
+    TbCameraSearch,
+    TbDeviceDesktopPlus,
+    TbDeviceDesktopSearch,
+} from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
+import { selectedRoute,  modeMap,
+} from "../../../utils/atomstates";
+import Modal from "../../Modal";
 import ModalSearch from "../../Modal/ModalSearch";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
@@ -234,6 +231,7 @@ const MapToggleButtons = ({
   console.log(toggleCameraVisibility, "sini");
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoute);
+  const [selectedMode, setSelectedMode] = useAtom(modeMap);
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [hoverData, setHoverData] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -273,22 +271,22 @@ const MapToggleButtons = ({
     let path = "";
     switch (name) {
       case "Smartwatch":
-        path = "/dashboard/pengaturan-list/perangkat/smartwatch-list";
+        path = "/smartwatch-list";
         break;
       case "Pegawai":
-        path = "/dashboard/staff";
+        path = "/staff";
         break;
       case "Helmet":
-        path = "/dashboard/pengaturan-list/perangkat/helmet";
+        path = "/helmet";
         break;
       case "Gateway":
-        path = "/dashboard/pengaturan-list/perangkat/gateway";
+        path = "/gateway";
         break;
       case "PTP":
         path = "/peta";
         break;
       case "Camera":
-        path = "/dashboard/pengaturan-list/perangkat/kamera";
+        path = "/kamera";
         break;
       case "Access":
         path = "/peta";
@@ -351,8 +349,18 @@ const MapToggleButtons = ({
           {isToggleWithDescription && (
             <span className="text-white text-xs">Smart Watch</span>
           )}
-          {hoveredButton === "Smartwatch" && WBPVisible && (
-            <div className="absolute  ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38 ">
+          {hoveredButton === "WBP" && WBPVisible && (
+            <div className="absolute  ml-25 mt-54 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38 ">
+              <div
+                className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => setSelectedMode("Smartwatch Map")}
+              >
+                <button style={{ color: "white" }}>
+                  <MdMap className="w-6 h-6" />
+                  {/* <IoSearchCircleOutline className="w-6 h-6" /> */}
+                </button>
+                <h5 className="text-white text-sm">Tampilkan di Map</h5>
+              </div>
               <div
                 className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleClick("Smartwatch")}
