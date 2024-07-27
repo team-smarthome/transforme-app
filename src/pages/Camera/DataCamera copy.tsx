@@ -45,8 +45,8 @@ const DataCamera = (props) => {
 
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const client = useRef(new W3CWebSocket("ws://100.81.142.71:5000"));
-  const clientFR = useRef(new W3CWebSocket("ws://100.81.142.71:5000"));
+  const client = useRef(new W3CWebSocket("ws://10.34.7.43:5000"));
+  const clientFR = useRef(new W3CWebSocket("ws://10.34.7.43:5000"));
 
   useEffect(() => {
     client.current.onopen = () => {
@@ -250,7 +250,7 @@ const DataCamera = (props) => {
             <div className="player-wrapper">
               <ReactPlayer
                 className="react-player"
-                url="http://100.81.142.71:5000/stream/100.81.142.71_.m3u8"
+                url="http://10.34.7.43:5000/stream/100.81.142.71_.m3u8"
                 width="100%"
                 height="100%"
                 playing={true}

@@ -37,6 +37,11 @@ import { selectedRoute,  modeMap,
 } from "../../../utils/atomstates";
 import Modal from "../../Modal";
 import ModalSearch from "../../Modal/ModalSearch";
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { selectedRoute, loadingAtom } from "../../../utils/atomstates";
+import { Toast } from "react-toastify/dist/components";
+import Swal from "sweetalert2";
 
 const handleClickTutorial = () => {
   const driverObj = driver({
@@ -46,24 +51,24 @@ const handleClickTutorial = () => {
     showProgress: true,
     steps: [
       {
-        element: ".b-wbp",
+        element: ".b-smartwatch",
         popover: {
-          title: "WBP",
-          description: "Tombol untuk menampilkan/menyembunyikan WBP",
+          title: "Smart Watch",
+          description: "Tombol untuk menampilkan/menyembunyikan Smart Watch",
         },
       },
       {
-        element: ".b-petugas",
+        element: ".b-pegawai",
         popover: {
-          title: "Petugas",
-          description: "Tombol untuk menampilkan/menyembunyikan petugas",
+          title: "Pegawai",
+          description: "Tombol untuk menampilkan/menyembunyikan Pegawai",
         },
       },
       {
-        element: ".b-pengunjung",
+        element: ".b-helmet",
         popover: {
-          title: "Pengunjung",
-          description: "Tombol untuk menampilkan/menyembunyikan pengunjung",
+          title: "Pe",
+          description: "Tombol untuk menampilkan/menyembunyikan Pe",
         },
       },
       {
@@ -222,6 +227,7 @@ const MapToggleButtons = ({
   zoneVisible,
   isToggleWithDescription,
 }: MapToggleButtonsProps) => {
+  const [atomLoading] = useAtom(loadingAtom);
   console.log(toggleCameraVisibility, "sini");
   const navigate = useNavigate();
   const [selectedMenu, setSelectedMenu] = useAtom(selectedRoute);
@@ -236,8 +242,17 @@ const MapToggleButtons = ({
   };
 
   const handleClick = (data: string) => {
-    setHoverData(data);
-    setOpen(true);
+    if (atomLoading === true) {
+      Swal.fire({
+        icon: "error",
+        title: "Maaf, sedang dalam proses loading",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      setHoverData(data);
+      setOpen(true);
+    }
   };
 
   const handleMouseEnter = (button: string) => {
@@ -255,23 +270,23 @@ const MapToggleButtons = ({
     setSelectedMenu("workstation");
     let path = "";
     switch (name) {
-      case "WBP":
-        path = "/pengaturan-list/perangkat/smartwatch";
+      case "Smartwatch":
+        path = "/smartwatch-list";
         break;
-      case "Petugas":
+      case "Pegawai":
         path = "/staff";
         break;
-      case "Pengunjung":
-        path = "/pengaturan-list/perangkat/helmet";
+      case "Helmet":
+        path = "/helmet";
         break;
       case "Gateway":
-        path = "/pengaturan-list/perangkat/gateway";
+        path = "/gateway";
         break;
       case "PTP":
         path = "/peta";
         break;
       case "Camera":
-        path = "/pengaturan-list/perangkat/kamera";
+        path = "/kamera";
         break;
       case "Access":
         path = "/peta";
@@ -306,7 +321,7 @@ const MapToggleButtons = ({
   return (
     <nav className="flex justify-center items-center w-full p-1 gap-x-7">
       <div
-        onMouseEnter={() => handleMouseEnter("WBP")}
+        onMouseEnter={() => handleMouseEnter("Smartwatch")}
         onMouseLeave={handleMouseLeave}
       >
         <Tooltip
@@ -315,7 +330,7 @@ const MapToggleButtons = ({
           }
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-wbp "
+          className="text-black flex flex-col items-center justify-center b-smartwatch "
         >
           <button
             onClick={toggleWBPVisibility}
@@ -348,7 +363,7 @@ const MapToggleButtons = ({
               </div>
               <div
                 className="flex flex-row mb-2 gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("WBP")}
+                onClick={() => handleClick("Smartwatch")}
               >
                 <button style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
@@ -358,7 +373,7 @@ const MapToggleButtons = ({
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("WBP")}
+                onClick={() => handleNavigateAdd("Smartwatch")}
               >
                 <button style={{ color: "white" }} className="flex flex-row">
                   <MdPersonAddAlt1 className="w-6 h-6" />
@@ -370,7 +385,7 @@ const MapToggleButtons = ({
         </Tooltip>
       </div>
       <div
-        onMouseEnter={() => handleMouseEnter("Petugas")}
+        onMouseEnter={() => handleMouseEnter("Pegawai")}
         onMouseLeave={handleMouseLeave}
       >
         <Tooltip
@@ -380,7 +395,7 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Petugas</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-petugas"
+          className="text-black flex flex-col items-center justify-center b-pegawai"
         >
           <button
             onClick={togglePetugasVisibility}
@@ -399,11 +414,11 @@ const MapToggleButtons = ({
           {isToggleWithDescription && (
             <span className="text-white text-xs">Pegawai</span>
           )}
-          {hoveredButton === "Petugas" && petugasVisible && (
+          {hoveredButton === "Pegawai" && petugasVisible && (
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-50">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Petugas")}
+                onClick={() => handleClick("Pegawai")}
               >
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
@@ -412,7 +427,7 @@ const MapToggleButtons = ({
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("Petugas")}
+                onClick={() => handleNavigateAdd("Pegawai")}
               >
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
@@ -424,7 +439,7 @@ const MapToggleButtons = ({
         </Tooltip>
       </div>
       <div
-        onMouseEnter={() => handleMouseEnter("Pengunjung")}
+        onMouseEnter={() => handleMouseEnter("Helmet")}
         onMouseLeave={handleMouseLeave}
       >
         <Tooltip
@@ -434,7 +449,7 @@ const MapToggleButtons = ({
           // title={<span className="text-black">Pengunjung</span>}
           placement="bottom"
           color="white"
-          className="text-black flex flex-col items-center justify-center b-pengunjung"
+          className="text-black flex flex-col items-center justify-center b-helmet"
         >
           <button
             onClick={togglePengunjungVisibility}
@@ -453,11 +468,11 @@ const MapToggleButtons = ({
           {isToggleWithDescription && (
             <span className="text-white text-xs">Helmet</span>
           )}
-          {hoveredButton === "Pengunjung" && pengunjungVisible && (
+          {hoveredButton === "Helmet" && pengunjungVisible && (
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Pengunjung")}
+                onClick={() => handleClick("Helmet")}
               >
                 <button className="mb-1" style={{ color: "white" }}>
                   <MdPersonSearch className="w-6 h-6" />
@@ -466,7 +481,7 @@ const MapToggleButtons = ({
               </div>
               <div
                 className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleNavigateAdd("Pengunjung")}
+                onClick={() => handleNavigateAdd("Helmet")}
               >
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
