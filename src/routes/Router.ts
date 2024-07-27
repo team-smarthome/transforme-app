@@ -168,7 +168,7 @@ const GatewayLogWK = lazy(
 
 const coreRoutes = [
 	{
-		path: "/dashboard/statistic",
+		path: "/statistic",
 		title: "Statistic",
 		component: Statistic,
 	},
@@ -183,12 +183,12 @@ const coreRoutes = [
 	//   component: Calendar,
 	// },
 	{
-		path: "/dashboard/log-realtime",
+		path: "/log-realtime",
 		title: "RealtimeLog",
 		component: RealtimeLog,
 	},
 	{
-		path: "/dashboard/staff-log",
+		path: "/staff-log",
 		title: "InmateLog",
 		component: InmateLog,
 	},
@@ -258,7 +258,7 @@ const coreRoutes = [
 		component: DatabaseSearch,
 	},
 	{
-		path: "/peta",
+		path: "/home",
 		title: "Map",
 		component: Map,
 	},
@@ -309,7 +309,7 @@ const coreRoutes = [
 		component: DaftarKasus,
 	},
 	{
-		path: "/dashboard/staff",
+		path: "/staff",
 		title: "MasterDataStaff",
 		component: MasterDataStaff,
 	},
@@ -447,7 +447,7 @@ const coreRoutes = [
 	},
 	{
 		// path: "/workstation/kamera-live",
-		path: "/dashboard/kamera-live",
+		path: "/kamera-live",
 		title: "CameraList",
 		component: CameraList,
 	},
@@ -521,7 +521,7 @@ const coreRoutes = [
 	},
 	{
 		// path: "/workstation/pengaturan-list/manajemen-pengguna",
-		path: "/dashboard/pengaturan-list/manajemen-pengguna",
+		path: "/manajemen-pengguna",
 		title: "UserList",
 		component: UserList,
 	},
@@ -532,33 +532,33 @@ const coreRoutes = [
 	},
 	{
 		// path: "/workstation/pengaturan-list/perangkat/gateway",
-		path: "/dashboard/pengaturan-list/perangkat/gateway",
+		path: "/gateway",
 		// path: '/device-gateway-list',
 		title: "DeviceGatewayListWK",
 		component: DeviceGatewayListWK,
 	},
 	{
-		path: "/dashboard/pengaturan-list/perangkat/helmet",
+		path: "/helmet",
 		title: "DeviceHelmet",
 		component: DeviceHelmet,
 	},
 	{
 		// path: "/workstation/pengaturan-list/perangkat/kamera",
-		path: "/dashboard/pengaturan-list/perangkat/kamera",
+		path: "/kamera",
 		// path: '/device-camera-list',
 		title: "DeviceCameraList",
 		component: DeviceKameraList,
 	},
 	{
 		// path: "/workstation/pengaturan-list/perangkat/gelang",
-		path: "/dashboard/pengaturan-list/perangkat/gelang",
+		path: "/gelang",
 		// path: '/device-bracelet-list',
 		title: "DeviceSmartwatchListWK",
 		component: DeviceSmartwatchListWK,
 	},
 	{
 		// path: "/workstation/pengaturan-list/perangkat/gelang",
-		path: "/dashboard/pengaturan-list/perangkat/smartwatch-list",
+		path: "/smartwatch",
 		// path: '/device-bracelet-list',
 		title: "DeviceSmartwatchListWK",
 		component: DeviceSmartwatchListWK,
