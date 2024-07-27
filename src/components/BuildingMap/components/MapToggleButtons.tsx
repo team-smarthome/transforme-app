@@ -33,13 +33,10 @@ import {
     TbDeviceDesktopSearch,
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { selectedRoute,  modeMap,
-} from "../../../utils/atomstates";
+
 import Modal from "../../Modal";
 import ModalSearch from "../../Modal/ModalSearch";
-import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { selectedRoute, loadingAtom } from "../../../utils/atomstates";
+import { selectedRoute, loadingAtom, modeMap } from "../../../utils/atomstates";
 import { Toast } from "react-toastify/dist/components";
 import Swal from "sweetalert2";
 
