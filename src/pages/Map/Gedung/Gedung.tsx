@@ -20,7 +20,6 @@ import {
     apiIndoorMapVVIP,
     apiPeopleDummy
 } from "../../../services/api";
-import { useQuery } from "@tanstack/react-query";
 import { ids } from "webpack";
 import LoadingSpinner from "../../../components/BuildingMap/components/LoadingSpinner";
 const Gedung = () => {
