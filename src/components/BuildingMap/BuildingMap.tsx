@@ -3,16 +3,13 @@ import {
   VideoCameraIcon,
   WifiIcon,
 } from "@heroicons/react/24/outline";
-import React, { useEffect, useRef, useState } from "react";
 import {
   GateArea,
   BuildingArea,
   BuildingStaticFromImage,
   GMap,
 } from "./components";
-import Modal, { ModalBuildingMap } from "../Modal";
 import MapToggleButtons from "./components/MapToggleButtons";
-import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import Gmap from "../../../assets/gmap.png";
 import Lapisan from "../../../assets/lapisan.png";
