@@ -17,6 +17,24 @@ import Petugas from "../../../components/BuildingMap/components/Petugas";
 import SelfRegKiosk from "../../../components/BuildingMap/components/SelfRegKiosk";
 import WBP from "../../../components/BuildingMap/components/WBP";
 import {
+  accessDoorVisibleAtom,
+  allVisibleAtom,
+  cameraVisibleAtom,
+  faceRecognitionVisibleAtom,
+  gatewayVisibleAtom,
+  interactiveDesktopVisibleAtom,
+  interactiveTVisibleAtom,
+  isToggleWithDescriptionAtom,
+  NASVisibleAtom,
+  NVRVisibleAtom,
+  NotificationAtom,
+  pengunjungVisibleAtom,
+  petugasVisibleAtom,
+  routerVisibleAtom,
+  selfRegKioskVisibleAtom,
+  wbpVisibleAtom,
+} from "../../../utils/atomstates";
+import {
     apiIndoorMapVVIP,
     apiPeopleDummy
 } from "../../../services/api";
