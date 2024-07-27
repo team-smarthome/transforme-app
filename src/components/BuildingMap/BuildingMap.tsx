@@ -3,16 +3,13 @@ import {
   VideoCameraIcon,
   WifiIcon,
 } from "@heroicons/react/24/outline";
-import React, { useEffect, useRef, useState } from "react";
 import {
   GateArea,
   BuildingArea,
   BuildingStaticFromImage,
   GMap,
 } from "./components";
-import Modal, { ModalBuildingMap } from "../Modal";
 import MapToggleButtons from "./components/MapToggleButtons";
-import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -44,12 +41,9 @@ import {
   wbpVisibleAtom,
   zoneVisibleAtom,
 } from "../../utils/atomstates";
-import Breadcrumb from "../../components/Breadcrumb";
 import { FaBullseye } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Modal, { ModalBuildingMap } from "../Modal";
-import { BuildingArea, BuildingStaticFromImage, GMap, GateArea } from "./components";
-import MapToggleButtons from "./components/MapToggleButtons";
 
 interface BuildingProps {
   buildingOpen: boolean;
