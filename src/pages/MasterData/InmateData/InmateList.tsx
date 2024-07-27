@@ -1,31 +1,29 @@
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import {
-  apiReadAllWBP,
-  apiCreateWBP,
-  apiUpdateWBP,
-  apiDeleteAllWBP,
-  apiReadAllKategoriJahat,
-  apiReadAllHunian,
-} from "../../../services/api";
-import { AddInmateModal } from "./ModalAddInmate";
-import { Alerts } from "./AlertInmate";
-import { DeleteInmateModal } from "./ModalDeleteInmate";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../../common/Loader";
-import SearchInputButton from "../Search";
 import Pagination from "../../../components/Pagination";
-import { HiDotsVertical, HiPencilAlt, HiOutlineTrash } from "react-icons/hi";
+import {
+    apiCreateWBP,
+    apiDeleteAllWBP,
+    apiReadAllHunian,
+    apiReadAllKategoriJahat,
+    apiReadAllWBP,
+    apiUpdateWBP,
+} from "../../../services/api";
+import SearchInputButton from "../Search";
+import { Alerts } from "./AlertInmate";
+import { AddInmateModal } from "./ModalAddInmate";
+import { DeleteInmateModal } from "./ModalDeleteInmate";
 
-import * as xlsx from "xlsx";
-import ToolsTip from "../../../components/ToolsTip";
-import DropdownAction from "../../../components/DropdownAction";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
+import * as xlsx from "xlsx";
+import DropdownAction from "../../../components/DropdownAction";
 
 import dayjs from "dayjs";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
-import { Error403Message } from "../../../utils/constants";
 import { Breadcrumbs } from "../../../components/Breadcrumbs";
+import { Error403Message } from "../../../utils/constants";
 
 const InmateList = () => {
   const navigate = useNavigate();
@@ -763,7 +761,7 @@ const InmateList = () => {
             <div>
               <button
                 className="text-black rounded-md font-semibold py-2 px-3 bg-green-600 b-kasus"
-                onClick={() => navigate("/workstation/daftar-kasus")}
+                onClick={() => navigate("/daftar-kasus")}
               >
                 Daftar Kasus
               </button>

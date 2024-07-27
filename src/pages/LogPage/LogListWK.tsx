@@ -5,7 +5,7 @@ const routeLogList = [
   {
     id: 1,
     name: "Log Realtime",
-    link: "/workstation/log-riwayat/realtime",
+    link: "/log-riwayat/realtime",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ const routeLogList = [
   {
     id: 2,
     name: "Log Gateway",
-    link: "/workstation/log-riwayat/gateway",
+    link: "/log-riwayat/gateway",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

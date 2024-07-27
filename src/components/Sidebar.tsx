@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { HiOutlineDocumentSearch } from "react-icons/hi";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import {
-  selectedRoutess,
-  isSidebarNotifOpen,
-  NotificationAtom,
-  checkState,
-} from "../utils/atomstates";
-import toast, { Toaster } from "react-hot-toast";
-import { apiversion } from "../services/api";
 import { useAtom } from "jotai";
+import React, { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { NavLink, useLocation } from "react-router-dom";
+import { apiversion } from "../services/api";
+import {
+	checkState,
+	isSidebarNotifOpen,
+	NotificationAtom,
+	selectedRoutess,
+} from "../utils/atomstates";
+import SidebarLinkGroup from "./SidebarLinkGroup";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -366,7 +365,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Pengaturan --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/workstation/pengaturan-list" ||
+                  pathname === "/pengaturan-list" ||
                   pathname.includes("setting-list")
                 }
               >
@@ -376,7 +375,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/workstation/pengaturan-list" ||
+                          (pathname === "/pengaturan-list" ||
                             pathname.includes("setting-list")) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
@@ -524,7 +523,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          (pathname === "/workstation/log" ||
+                          (pathname === "/log" ||
                             pathname.includes("log")) &&
                           "bg-graydark dark:bg-meta-4"
                         }`}
@@ -578,7 +577,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
                           <SidebarLinkGroup
                             activeCondition={
-                              pathname === "/workstation/log" ||
+                              pathname === "/log" ||
                               pathname.includes("log")
                             }
                           >
@@ -636,7 +635,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                     </NavLink> */}
                                   <NavLink
                                     to="/log-realtime"
-                                    // to="/workstation/log-riwayat/realtime"
+                                    // to="/log-riwayat/realtime"
                                     onClick={() => handleNavLinkClick("petas")}
                                     className={({ isActive }) =>
                                       "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
@@ -681,7 +680,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </SidebarLinkGroup>
                           <SidebarLinkGroup
                             activeCondition={
-                              pathname === "/workstation/log" ||
+                              pathname === "/log" ||
                               pathname.includes("log")
                             }
                           >

@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { BiCategory } from "react-icons/bi";
 import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 const routeMasterData = [
   {
     id: 1,
     name: "Data Oditur Penyidik",
-    link: "/workstation/master-data/oditur/penyidik",
+    link: "/master-data/oditur/penyidik",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +27,7 @@ const routeMasterData = [
   {
     id: 2,
     name: "Data Oditur Penuntut",
-    link: "/workstation/master-data/oditur/penuntut",
+    link: "/master-data/oditur/penuntut",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { IoAdd } from "react-icons/io5";
-import { ModalAddCameraSave } from "./ModalAddCameraSave";
-import {
-	apiCreateKameraTersimpan,
-	apiDeleteKameraTersimpan,
-	apiReadKameraTersimpan,
-	apiUpdateKameraTersimpan,
-} from "../../services/api";
 import { SlOptionsVertical } from "react-icons/sl";
-import MenuItemComponent from "../../components/MenuItemCameraSave";
-import { Alerts } from "./AlertCamera";
-import { DeleteKameraModalSave } from "./ModalDeleteKameraSave";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loader from "../../common/Loader";
+import MenuItemComponent from "../../components/MenuItemCameraSave";
+import {
+    apiCreateKameraTersimpan,
+    apiDeleteKameraTersimpan,
+    apiReadKameraTersimpan,
+    apiUpdateKameraTersimpan,
+} from "../../services/api";
+import { Alerts } from "./AlertCamera";
+import { ModalAddCameraSave } from "./ModalAddCameraSave";
+import { DeleteKameraModalSave } from "./ModalDeleteKameraSave";
 
 interface Item {
 	id: string;
@@ -147,7 +147,7 @@ const CameraSave = () => {
 		setModalDeleteOpen(true);
 	};
 	const handleDetailClick = (item: Item) => {
-		navigate(`/workstation/kamera-tersimpan/list/${item?.id}`);
+		navigate(`/kamera-tersimpan/list/${item?.id}`);
 	};
 
 	// const handleSubmitEdit = async (params: any) => {

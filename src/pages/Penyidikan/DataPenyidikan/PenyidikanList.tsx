@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
-import { Alerts } from "./AlertPenyidikan";
-import {
-  apiReadPenyidikan,
-  apiDeletePenyidikan,
-  apiCreatePenyidikan,
-  apiUpdatePenyidikan,
-} from "../../../services/api";
-import { AddPenyidikanModal } from "./ModalAddPenyidikan";
-import { DeletePenyidikanModal } from "./ModalDeletePenyidikan";
-import * as xlsx from "xlsx";
-import SearchInputButton from "../../MasterData/Search";
 import dayjs from "dayjs";
-import Pagination from "../../../components/Pagination";
-import DropdownAction from "../../../components/DropdownAction";
-import Loader from "../../../common/Loader";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
-import { IoChevronForwardOutline } from "react-icons/io5";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Error403Message } from "../../../utils/constants";
+import { useEffect, useState } from "react";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as xlsx from "xlsx";
+import Loader from "../../../common/Loader";
 import { Breadcrumbs } from "../../../components/Breadcrumbs";
+import DropdownAction from "../../../components/DropdownAction";
+import Pagination from "../../../components/Pagination";
+import {
+    apiCreatePenyidikan,
+    apiDeletePenyidikan,
+    apiReadPenyidikan,
+    apiUpdatePenyidikan,
+} from "../../../services/api";
+import { Error403Message } from "../../../utils/constants";
+import SearchInputButton from "../../MasterData/Search";
+import { Alerts } from "./AlertPenyidikan";
+import { AddPenyidikanModal } from "./ModalAddPenyidikan";
+import { DeletePenyidikanModal } from "./ModalDeletePenyidikan";
 
 // Interface untuk objek 'params' dan 'item'
 interface Item {
@@ -532,7 +531,7 @@ const PenyidikanList = () => {
           <div className="flex gap-3">
             <button
               className="text-black rounded-md font-semibold py-2 px-3 bg-green-500 b-bap"
-              onClick={() => navigate("/workstation/pencatatan-bap")}
+              onClick={() => navigate("/pencatatan-bap")}
             >
               BAP
             </button>

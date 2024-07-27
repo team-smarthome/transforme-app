@@ -77,7 +77,7 @@ function ModalRouter({ name, handleClose }: ModalRouterProps) {
               hover:bg-sky-400 hover:text-neutral-950
               "
               onClick={() => {
-                navigate("/dashboard/daftar-inventaris");
+                navigate("/daftar-inventaris");
               }}
             >
               Ke Halaman Inventori

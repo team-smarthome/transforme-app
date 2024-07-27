@@ -1,10 +1,6 @@
-import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
+    XMarkIcon
 } from "@heroicons/react/24/outline";
-import { setZonaColor } from "../../utils/globalFunctions";
 import { useNavigate } from "react-router-dom";
 
 interface ModalNVRProps {
@@ -83,7 +79,7 @@ function ModalNVR({ name, handleClose }: ModalNVRProps) {
           hover:bg-sky-400 hover:text-neutral-950
           "
               onClick={() => {
-                navigate("/dashboard/daftar-inventaris");
+                navigate("/daftar-inventaris");
               }}
             >
               Ke Halaman Inventori

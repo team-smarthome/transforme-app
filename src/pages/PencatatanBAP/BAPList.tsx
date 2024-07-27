@@ -1,26 +1,25 @@
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import {
-  apiChangePassword,
-  apiCreateBAP,
-  apiUpdateBAP,
-  apiDeleteBAP,
-  apiReadBAP,
-} from "../../services/api";
-import { AddBAPModal } from "./ModalAddBAP";
-import { Alerts } from "./AlertBAP";
-import Loader from "../../common/Loader";
-import { DeleteBAPModal } from "./ModalDeleteBAP";
-import * as xlsx from "xlsx";
-import SearchInputButton from "../MasterData/Search";
 import dayjs from "dayjs";
-import Pagination from "../../components/Pagination";
-import DropdownAction from "../../components/DropdownAction";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { Error403Message } from "../../utils/constants";
+import { useEffect, useState } from "react";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as xlsx from "xlsx";
+import Loader from "../../common/Loader";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
+import DropdownAction from "../../components/DropdownAction";
+import Pagination from "../../components/Pagination";
+import {
+    apiCreateBAP,
+    apiDeleteBAP,
+    apiReadBAP,
+    apiUpdateBAP
+} from "../../services/api";
+import { Error403Message } from "../../utils/constants";
+import SearchInputButton from "../MasterData/Search";
+import { Alerts } from "./AlertBAP";
+import { AddBAPModal } from "./ModalAddBAP";
+import { DeleteBAPModal } from "./ModalDeleteBAP";
 
 // interface Item {
 //   nama_dokumen_bap: string;
@@ -620,7 +619,7 @@ const BAPList = () => {
           <div className="flex gap-3">
             <button
               className="text-black rounded-md font-semibold w-20 h-10 bg-green-500 b-sidang"
-              onClick={() => navigate("/workstation/daftar-sidang")}
+              onClick={() => navigate("/daftar-sidang")}
             >
               Sidang
             </button>

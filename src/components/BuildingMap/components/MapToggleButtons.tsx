@@ -1,48 +1,40 @@
 import {
-  SignalIcon,
-  VideoCameraIcon,
-  WifiIcon,
+    SignalIcon,
+    VideoCameraIcon,
+    WifiIcon,
 } from "@heroicons/react/24/outline";
-import { LuScanFace } from "react-icons/lu";
-import { BiUser } from "react-icons/bi";
-import { BsDoorOpen, BsSmartwatch } from "react-icons/bs";
-import { SlScreenDesktop } from "react-icons/sl";
-import { LuMonitorCheck } from "react-icons/lu";
-import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
-import { BsInboxes } from "react-icons/bs";
-import { GiMiningHelmet } from "react-icons/gi";
-import {
-  MdOutlineStorage,
-  MdPersonAddAlt1,
-  MdPersonSearch,
-  MdWifiFind,
-  MdSignalWifiStatusbar3Bar,
-} from "react-icons/md";
-import { GiPoliceOfficerHead } from "react-icons/gi";
-import { FaWalking } from "react-icons/fa";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useState } from "react";
+import { BiUser } from "react-icons/bi";
+import { BsDoorOpen, BsInboxes, BsSmartwatch } from "react-icons/bs";
 import { FaVectorSquare } from "react-icons/fa";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { IoSearchCircleOutline } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
-import { ImSearch } from "react-icons/im";
-import { ImPlus } from "react-icons/im";
-
+import { GiMiningHelmet } from "react-icons/gi";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { ImPlus, ImSearch } from "react-icons/im";
+import { LuMonitorCheck, LuScanFace } from "react-icons/lu";
 import {
-  TbDeviceDesktopPlus,
-  TbDeviceDesktopSearch,
-  TbCameraSearch,
-  TbCameraPlus,
-} from "react-icons/tb";
-import Modal from "../../Modal";
+    MdOutlineStorage,
+    MdPersonAddAlt1,
+    MdPersonSearch,
+    MdSignalWifiStatusbar3Bar,
+    MdWifiFind,
+} from "react-icons/md";
+import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
+import { SlScreenDesktop } from "react-icons/sl";
+
 import { Tooltip } from "antd";
-import ModalSearch from "../../Modal/ModalSearch";
+import { useAtom } from "jotai";
+import {
+    TbCameraPlus,
+    TbCameraSearch,
+    TbDeviceDesktopPlus,
+    TbDeviceDesktopSearch,
+} from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { selectedRoute } from "../../../utils/atomstates";
-import { useAtom } from "jotai";
+import Modal from "../../Modal";
+import ModalSearch from "../../Modal/ModalSearch";
 
 const handleClickTutorial = () => {
   const driverObj = driver({
@@ -261,22 +253,22 @@ const MapToggleButtons = ({
     let path = "";
     switch (name) {
       case "WBP":
-        path = "/dashboard/pengaturan-list/perangkat/smartwatch";
+        path = "/pengaturan-list/perangkat/smartwatch";
         break;
       case "Petugas":
-        path = "/dashboard/staff";
+        path = "/staff";
         break;
       case "Pengunjung":
-        path = "/dashboard/pengaturan-list/perangkat/helmet";
+        path = "/pengaturan-list/perangkat/helmet";
         break;
       case "Gateway":
-        path = "/dashboard/pengaturan-list/perangkat/gateway";
+        path = "/pengaturan-list/perangkat/gateway";
         break;
       case "PTP":
         path = "/peta";
         break;
       case "Camera":
-        path = "/dashboard/pengaturan-list/perangkat/kamera";
+        path = "/pengaturan-list/perangkat/kamera";
         break;
       case "Access":
         path = "/peta";

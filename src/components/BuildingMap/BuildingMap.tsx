@@ -1,44 +1,37 @@
-import {
-  SignalIcon,
-  VideoCameraIcon,
-  WifiIcon,
-} from "@heroicons/react/24/outline";
-import React, { useEffect, useRef, useState } from "react";
-import { GateArea, BuildingArea, BuildingStaticFromImage , GMap} from "./components";
-import Modal, { ModalBuildingMap } from "../Modal";
-import MapToggleButtons from "./components/MapToggleButtons";
-import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import Lapisan from "../../../assets/lapisan.png";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Gmap from "../../../assets/gmap.png";
+import Lapisan from "../../../assets/lapisan.png";
 import Satelit from "../../../assets/satelit.png";
-import gambarmap from "../../../assets/indormaps.jpeg";
+import Breadcrumb from "../../components/Breadcrumb";
 import {
-  allVisibleAtom,
   NASVisibleAtom,
   NVRVisibleAtom,
+  NotificationAtom,
   accessDoorVisibleAtom,
+  allVisibleAtom,
   cameraVisibleAtom,
+  checkState,
   faceRecognitionVisibleAtom,
   gatewayVisibleAtom,
   interactiveDesktopVisibleAtom,
   interactiveTVisibleAtom,
+  isSateliteView,
+  isSidebarNotifOpen,
+  isToggleWithDescriptionAtom,
+  modeMap,
+  pengunjungVisibleAtom,
+  petugasVisibleAtom,
   routerVisibleAtom,
+  selectedRoutess,
   selfRegKioskVisibleAtom,
   wbpVisibleAtom,
-  petugasVisibleAtom,
-  pengunjungVisibleAtom,
-  NotificationAtom,
-  isToggleWithDescriptionAtom,
   zoneVisibleAtom,
-  isSateliteView,
-  selectedRoutess,
-  isSidebarNotifOpen,
-  checkState,
-  modeMap,
 } from "../../utils/atomstates";
-import Breadcrumb from "../../components/Breadcrumb";
-import { FaBullseye } from "react-icons/fa6";
+import Modal, { ModalBuildingMap } from "../Modal";
+import { BuildingArea, BuildingStaticFromImage, GMap, GateArea } from "./components";
+import MapToggleButtons from "./components/MapToggleButtons";
 
 interface BuildingProps {
   buildingOpen: boolean;
@@ -131,7 +124,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     const filteredData = arr.find((data: any) => data.id == id);
     console.log(filteredData, "filteredData");
     if (filteredData.lantai && filteredData.lantai.length > 0) {
-      navigate(`/dashboard/peta/${filteredData?.pathname}`, {
+      navigate(`/peta/${filteredData?.pathname}`, {
         state: { data: filteredData, data2: data, dataindormap: indormapData },
       });
     } else {

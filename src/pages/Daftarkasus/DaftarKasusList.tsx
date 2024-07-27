@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import Loader from "../../common/Loader";
-import { Alerts } from "./AlertDaftarKasus";
-import {
-  apiCreateDaftarKasus,
-  apiReadDaftarKasus,
-  apiUpdateDaftarKasus,
-  apiDeleteDaftarKasus,
-  apiCreateBarangBukti,
-  apiJenisPidanaRead,
-} from "../../services/api";
-import { AddDaftarKasusModal } from "./ModalAddDaftarKasus";
-import { DeleteDaftarKasusModal } from "./ModalDeleteDaftarKasus";
-import Pagination from "../../components/Pagination";
-import * as xlsx from "xlsx";
-import SearchInputButton from "../Device/Search";
-import DropdownAction from "../../components/DropdownAction";
 import dayjs from "dayjs";
-import { EditDaftarKasusModal } from "./modalEditdaftarKasus";
-import { AddBarangBuktiModal } from "../MasterData/BarangBukti/ModalAddBarangBukti";
-import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { Error403Message } from "../../utils/constants";
-import DetailPerkara from "./DetailPerkara";
+import { useEffect, useState } from "react";
+import { HiQuestionMarkCircle } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as xlsx from "xlsx";
+import Loader from "../../common/Loader";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
-import DetailKasus from "../EntryData/DetailKasus";
+import DropdownAction from "../../components/DropdownAction";
+import Pagination from "../../components/Pagination";
+import {
+    apiCreateBarangBukti,
+    apiCreateDaftarKasus,
+    apiDeleteDaftarKasus,
+    apiJenisPidanaRead,
+    apiReadDaftarKasus,
+    apiUpdateDaftarKasus,
+} from "../../services/api";
+import { Error403Message } from "../../utils/constants";
+import SearchInputButton from "../Device/Search";
+import { AddBarangBuktiModal } from "../MasterData/BarangBukti/ModalAddBarangBukti";
+import { Alerts } from "./AlertDaftarKasus";
+import { AddDaftarKasusModal } from "./ModalAddDaftarKasus";
+import { DeleteDaftarKasusModal } from "./ModalDeleteDaftarKasus";
+import { EditDaftarKasusModal } from "./modalEditdaftarKasus";
 
 interface Item {
   nama_kasus: string;
@@ -676,7 +674,7 @@ const DaftarKasus = () => {
     }
   };
   const getDetailData = (datanya: any) => {
-    return navigate("/workstation/detail-perkara", {
+    return navigate("/detail-perkara", {
       state: { data: datanya },
     });
   };
@@ -784,7 +782,7 @@ const DaftarKasus = () => {
             <div>
               <button
                 className="text-black rounded-md font-semibold py-2 px-3 bg-green-600 b-penyidikan"
-                onClick={() => navigate("/workstation/penyidikan")}
+                onClick={() => navigate("/penyidikan")}
               >
                 Penyidikan
               </button>

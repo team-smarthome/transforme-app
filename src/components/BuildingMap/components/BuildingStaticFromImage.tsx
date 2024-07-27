@@ -1,12 +1,8 @@
-import { IoLocation } from "react-icons/io5";
-import { IoArrowRedoOutline } from "react-icons/io5";
 import { useState } from "react";
+import { IoArrowRedoOutline, IoLocation } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import gambarMaps from "../../../../assets/cimahi_map.jpeg";
 import LapanganBola from "../../../../assets/lapangan_bola.jpg";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { apiIndoorMap, apiIndoorMapV2 } from "../../../services/api";
-import BuildingTemplate from "./BuildingTemplate";
 
 const areaData = [
   {
@@ -481,7 +477,7 @@ function BuildingStaticFromImage({ handleClickBuilding }: BuildingAreaProps) {
                     }
                     // onClick={() =>
                     //   navigate(
-                    //     `/dashboard/peta/${area.nama
+                    //     `/peta/${area.nama
                     //       .replace(/\s/g, "-")
                     //       .toLowerCase()}`
                     //   )

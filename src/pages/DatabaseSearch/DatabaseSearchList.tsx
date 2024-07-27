@@ -6,7 +6,7 @@ const routeSearchList = [
   {
     id: 1,
     name: "Cari Tentara Binaan",
-    link: "/workstation/pelacakan-wajah-prajurit",
+    link: "/pelacakan-wajah-prajurit",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ const routeSearchList = [
   {
     id: 2,
     name: "Cari Dari Gambar",
-    link: "/workstation/pelacakan-dengan-gambar",
+    link: "/pelacakan-dengan-gambar",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

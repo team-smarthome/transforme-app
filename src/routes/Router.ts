@@ -1,11 +1,11 @@
 import { lazy } from "react";
+import CameraDetail from "../pages/Camera/CameraDetail";
 
 const Statistic = lazy(() => import("../pages/Statistic"));
 
 const StatisticLemasmil = lazy(
 	() => import("../pages/DashboardLemasmil/statistic")
 );
-import CameraDetail from "../pages/Camera/CameraDetail";
 const CameraList = lazy(() => import("../pages/Camera/CameraList"));
 // const CameraDetail = lazy(() => import('../pages/Camera/CameraDetail'));
 const Map = lazy(() => import("../pages/Map/Map"));
@@ -37,7 +37,7 @@ const DaftarInventaris = lazy(
 	() => import("../pages/DaftarInventaris/InventarisList")
 );
 
-/* -----------WORKSTATION-----------------*/
+/* ---------------------------*/
 const EntryData = lazy(() => import("../pages/EntryData/Index"));
 const Penyidikan = lazy(
 	() => import("../pages/Penyidikan/DataPenyidikan/PenyidikanList")
@@ -173,7 +173,7 @@ const coreRoutes = [
 		component: Statistic,
 	},
 	{
-		path: "/dashboard/statisticLemasmil",
+		path: "/statisticLemasmil",
 		title: "StatisticLemasmil",
 		component: StatisticLemasmil,
 	},
@@ -193,67 +193,67 @@ const coreRoutes = [
 		component: InmateLog,
 	},
 	// {
-	//   path: "/dashboard/inmate-log",
+	//   path: "/inmate-log",
 	//   title: "InmateLog",
 	//   component: InmateLog,
 	// },
 	{
-		path: "/dashboard/log-riwayat",
+		path: "/log-riwayat",
 		title: "LogList",
 		component: LogList,
 	},
 	{
-		path: "/dashboard/pelacakan-wajah-petugas",
+		path: "/pelacakan-wajah-petugas",
 		// path: '/db-employee-search-by-name',
 		title: "EmployeeDatabaseSearchByName",
 		component: EmployeeDatabaseSearchByName,
 	},
 	{
-		path: "/dashboard/pelacakan-wajah-prajurit",
+		path: "/pelacakan-wajah-prajurit",
 		// path: '/db-inmate-search-by-name',
 		title: "InmateDatabaseSearchByName",
 		component: InmateDatabaseSearchByName,
 	},
 	{
-		path: "/dashboard/db-search-list",
+		path: "/db-search-list",
 		title: "DatabaseSearchList",
 		component: DatabaseSearchList,
 	},
 	{
-		path: "/dashboard/lokasi",
+		path: "/lokasi",
 		title: "LocationList",
 		component: LocationList,
 	},
 	{
-		path: "/dashboard/pengaturan-list/manajemen-pengguna",
+		path: "/pengaturan-list/manajemen-pengguna",
 		title: "UserList",
 		component: UserList,
 	},
 	{
-		path: "/dashboard/perangkat-gateway",
+		path: "/perangkat-gateway",
 		// path: '/device-gateway-list',
 		title: "DeviceGatewayList",
 		component: DeviceGatewayList,
 	},
 	{
-		path: "/dashboard/perangkat-kamera",
+		path: "/perangkat-kamera",
 		// path: '/device-camera-list',
 		title: "DeviceCameraList",
 		component: DeviceCameraList,
 	},
 	{
-		path: "/dashboard/perangkat-gelang",
+		path: "/perangkat-gelang",
 		// path: '/device-bracelet-list',
 		title: "DeviceBraceletList",
 		component: DeviceBraceletList,
 	},
 	{
-		path: "/dashboard/device-list",
+		path: "/device-list",
 		title: "DeviceList",
 		component: DeviceList,
 	},
 	{
-		path: "/dashboard/pelacakan-dengan-gambar",
+		path: "/pelacakan-dengan-gambar",
 		title: "DatabaseSearch",
 		component: DatabaseSearch,
 	},
@@ -263,48 +263,48 @@ const coreRoutes = [
 		component: Map,
 	},
 	{
-		path: "/dashboard/peta/:gedung",
+		path: "/peta/:gedung",
 		title: "Gedung",
 		component: Gedung,
 	},
 	{
-		path: "/dashboard/peta/:gedung/:ruangan",
+		path: "/peta/:gedung/:ruangan",
 		title: "Room",
 		component: Room,
 	},
 	{
-		path: "/dashboard/live-chat-list",
+		path: "/live-chat-list",
 		title: "LiveChatList",
 		component: LiveChatList,
 	},
 	{
-		path: "/dashboard/daftar-inventaris",
+		path: "/daftar-inventaris",
 		title: "daftar inventaris",
 		component: DaftarInventaris,
 	},
-	/* -------------WORKSTATION-----------------*/
+	/* -----------------------------*/
 	{
-		path: "/workstation/entry-data",
+		path: "/entry-data",
 		title: "Entry Data",
 		component: EntryData,
 	},
 	{
-		path: "/workstation/penyidikan",
+		path: "/penyidikan",
 		title: "penyidikan",
 		component: Penyidikan,
 	},
 	{
-		path: "/workstation/pencatatan-bap",
+		path: "/pencatatan-bap",
 		title: "pencatatan bap",
 		component: PencatatanBAP,
 	},
 	{
-		path: "/workstation/daftar-sidang",
+		path: "/daftar-sidang",
 		title: "daftar sidang",
 		component: DaftarSidang,
 	},
 	{
-		path: "/workstation/daftar-kasus",
+		path: "/daftar-kasus",
 		title: "daftar kasus",
 		component: DaftarKasus,
 	},
@@ -314,224 +314,224 @@ const coreRoutes = [
 		component: MasterDataStaff,
 	},
 	{
-		path: "/workstation/kegiatan",
+		path: "/kegiatan",
 		title: "MasterDataEvent",
 		component: MasterDataEvent,
 	},
 
 	{
-		path: "/workstation/shift-jaga",
+		path: "/shift-jaga",
 		title: "Shift Jaga",
 		component: ShiftJaga,
 	},
 	{
-		path: "/workstation/shift-jaga/calendar-shift",
+		path: "/shift-jaga/calendar-shift",
 		title: "Calendar Shift",
 		component: CalendarShift,
 	},
 	{
-		path: "/workstation/shift-jaga/group-shift",
+		path: "/shift-jaga/group-shift",
 		title: "GroupShift",
 		component: GroupShift,
 	},
 	{
-		path: "/workstation/shift-jaga/penugasan",
+		path: "/shift-jaga/penugasan",
 		title: "Penugasan",
 		component: Penugasan,
 	},
 	{
-		path: "/workstation/shift-jaga/data-schedule-shift",
+		path: "/shift-jaga/data-schedule-shift",
 		title: "DataSceduleShift",
 		component: DataSceduleShift,
 	},
 
 	{
-		path: "/workstation/master-data",
+		path: "/master-data",
 		title: "MasterDataList",
 		component: MasterDataList,
 	},
 	{
-		path: "/workstation/master-data/tersangka",
+		path: "/master-data/tersangka",
 		title: "MasterDataInmate",
 		component: MasterDataInmate,
 	},
 	{
-		path: "/workstation/master-data/petugas",
+		path: "/master-data/petugas",
 		title: "MasterDataStaff",
 		component: MasterDataStaff,
 	},
 	{
-		path: "/workstation/master-data/pengunjung",
+		path: "/master-data/pengunjung",
 		title: "MasterDataVisitor",
 		component: MasterDataVisitor,
 	},
 	{
-		path: "/workstation/master-data/jenis-perkara",
+		path: "/master-data/jenis-perkara",
 		title: "MasterDataCaseType",
 		component: MasterDataCaseType,
 	},
 	{
-		path: "/workstation/master-data/kategori-perkara",
+		path: "/master-data/kategori-perkara",
 		title: "kategori perkara",
 		component: MasterDataKategoriPerkara,
 	},
 	{
-		path: "/workstation/master-data/ruangan",
+		path: "/master-data/ruangan",
 		title: "MasterDataRoom",
 		component: MasterDataRoom,
 	},
 	{
-		path: "/workstation/master-data/tipe-asset",
+		path: "/master-data/tipe-asset",
 		title: "tipe asset data",
 		component: DaftarTipeAsset,
 	},
 	{
-		path: "/workstation/master-data/oditur",
+		path: "/master-data/oditur",
 		title: "daftar jaksa",
 		component: DaftarJaksa,
 	},
 	{
-		path: "/workstation/master-data/oditur/penyidik",
+		path: "/master-data/oditur/penyidik",
 		title: "oditur penyidik data",
 		component: DaftarJaksaPenyidik,
 	},
 	{
-		path: "/workstation/master-data/oditur/penuntut",
+		path: "/master-data/oditur/penuntut",
 		title: "oditur penuntut data",
 		component: DaftarJaksaPenuntut,
 	},
 	{
-		path: "/workstation/master-data/saksi",
+		path: "/master-data/saksi",
 		title: "saksi data",
 		component: DaftarSaksi,
 	},
 	{
-		path: "/workstation/master-data/ahli",
+		path: "/master-data/ahli",
 		title: "ahli data",
 		component: DaftarAhli,
 	},
 	{
-		path: "/workstation/master-data/jenis-sidang",
+		path: "/master-data/jenis-sidang",
 		title: "jenis persidangan data",
 		component: DaftarJenisPersidangan,
 	},
 	{
-		path: "/workstation/master-data/barang-bukti",
+		path: "/master-data/barang-bukti",
 		title: "barang bukti",
 		component: BarangBukti,
 	},
 	{
-		path: "/workstation/master-data/pengadilan-militer",
+		path: "/master-data/pengadilan-militer",
 		title: "pengadilan militer",
 		component: PengadilanMiliter,
 	},
 	{
-		path: "/workstation/master-data/gedung",
+		path: "/master-data/gedung",
 		title: "Data Gedung",
 		component: DaftarGedung,
 	},
 	{
-		path: "/workstation/master-data/data-lantai",
+		path: "/master-data/data-lantai",
 		title: "Data Lantai",
 		component: DaftarLantai,
 	},
 	{
-		path: "/workstation/daftar-inventaris",
+		path: "/daftar-inventaris",
 		title: "daftar inventaris",
 		component: DaftarInventaris,
 	},
 	{
-		path: "/workstation/kamera-live/:nama_kamera",
+		path: "/kamera-live/:nama_kamera",
 		title: "CameraDetail",
 		component: CameraDetail,
 	},
 	{
-		// path: "/workstation/kamera-live",
+		// path: "/kamera-live",
 		path: "/kamera-live",
 		title: "CameraList",
 		component: CameraList,
 	},
 
 	{
-		path: "/workstation/kamera-tersimpan",
+		path: "/kamera-tersimpan",
 		title: "CameraSave",
 		component: CameraSave,
 	},
 	{
-		path: "/workstation/kamera-tersimpan/list/:id",
+		path: "/kamera-tersimpan/list/:id",
 		title: "CameraSaveList",
 		component: CameraListSave,
 	},
 	{
-		path: "/workstation/kamera-tersimpan/list/:id/:nama_kamera",
+		path: "/kamera-tersimpan/list/:id/:nama_kamera",
 		title: "CameraSaveList",
 		component: CameraSaveDetail,
 	},
 	{
-		path: "/workstation/kamera-playback",
+		path: "/kamera-playback",
 		title: "kamera playback",
 		component: CameraPlaybackDetail,
 	},
 	{
-		path: "/workstation/pelacakan-wajah-petugas",
+		path: "/pelacakan-wajah-petugas",
 		// path: '/db-employee-search-by-name',
 		title: "EmployeeDatabaseSearchByName",
 		component: EmployeeDatabaseSearchByName,
 	},
 	{
-		path: "/workstation/pelacakan-wajah-prajurit",
+		path: "/pelacakan-wajah-prajurit",
 		// path: '/db-inmate-search-by-name',
 		title: "InmateDatabaseSearchByName",
 		component: InmateDatabaseSearchByName,
 	},
 	{
-		path: "/workstation/pelacakan",
+		path: "/pelacakan",
 		title: "DatabaseSearchList",
 		component: DatabaseSearchList,
 	},
 	{
-		path: "/workstation/live-chat-list",
+		path: "/live-chat-list",
 		title: "LiveChatList",
 		component: LiveChatList,
 	},
 	{
-		path: "/dashboard/pengaturan-list",
+		path: "/pengaturan-list",
 		title: "setting",
 		component: SettingList,
 	},
 	{
-		path: "/workstation/log-riwayat",
+		path: "/log-riwayat",
 		title: "LogListWK",
 		component: LogListWK,
 	},
 	{
-		path: "/workstation/log-riwayat/realtime",
+		path: "/log-riwayat/realtime",
 		title: "RealtimeLogWK",
 		component: RealtimeLogWK,
 	},
 	{
-		path: "/workstation/log-riwayat/gateway",
+		path: "/log-riwayat/gateway",
 		title: "GatewayLogWK",
 		component: GatewayLogWK,
 	},
 	{
-		path: "/workstation/pelacakan-dengan-gambar",
+		path: "/pelacakan-dengan-gambar",
 		title: "DatabaseSearch",
 		component: DatabaseSearch,
 	},
 	{
-		// path: "/workstation/pengaturan-list/manajemen-pengguna",
+		// path: "/pengaturan-list/manajemen-pengguna",
 		path: "/manajemen-pengguna",
 		title: "UserList",
 		component: UserList,
 	},
 	{
-		path: "/dashboard/pengaturan-list/perangkat",
+		path: "/pengaturan-list/perangkat",
 		title: "DeviceList",
 		component: DeviceList,
 	},
 	{
-		// path: "/workstation/pengaturan-list/perangkat/gateway",
+		// path: "/pengaturan-list/perangkat/gateway",
 		path: "/gateway",
 		// path: '/device-gateway-list',
 		title: "DeviceGatewayListWK",
@@ -543,29 +543,29 @@ const coreRoutes = [
 		component: DeviceHelmet,
 	},
 	{
-		// path: "/workstation/pengaturan-list/perangkat/kamera",
+		// path: "/pengaturan-list/perangkat/kamera",
 		path: "/kamera",
 		// path: '/device-camera-list',
 		title: "DeviceCameraList",
 		component: DeviceKameraList,
 	},
 	{
-		// path: "/workstation/pengaturan-list/perangkat/gelang",
+		// path: "/pengaturan-list/perangkat/gelang",
 		path: "/gelang",
 		// path: '/device-bracelet-list',
 		title: "DeviceSmartwatchListWK",
 		component: DeviceSmartwatchListWK,
 	},
 	{
-		// path: "/workstation/pengaturan-list/perangkat/gelang",
+		// path: "/pengaturan-list/perangkat/gelang",
 		path: "/smartwatch",
 		// path: '/device-bracelet-list',
 		title: "DeviceSmartwatchListWK",
 		component: DeviceSmartwatchListWK,
 	},
 	{
-		// path: "/workstation/pengaturan-list/perangkat/gelang",
-		path: "/dashboard/pengaturan-list/perangkat/smartwatch",
+		// path: "/pengaturan-list/perangkat/gelang",
+		path: "/pengaturan-list/perangkat/smartwatch",
 		// path: '/device-bracelet-list',
 		title: "Smartwatch",
 		component: MainMenuSmartwatch,
