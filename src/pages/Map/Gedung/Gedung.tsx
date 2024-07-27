@@ -39,6 +39,25 @@ import {
     apiPeopleDummy
 } from "../../../services/api";
 import { ids } from "webpack";
+import {
+    allVisibleAtom,
+    accessDoorVisibleAtom,
+    cameraVisibleAtom,
+    faceRecognitionVisibleAtom,
+    gatewayVisibleAtom,
+    interactiveDesktopVisibleAtom,
+    interactiveTVisibleAtom,
+    NASVisibleAtom,
+    NVRVisibleAtom,
+    NotificationAtom,
+    pengunjungVisibleAtom,
+    petugasVisibleAtom,
+    selfRegKioskVisibleAtom,
+    wbpVisibleAtom,
+    routerVisibleAtom,
+    isToggleWithDescriptionAtom
+    
+} from "../../../utils/atomstates";
 import LoadingSpinner from "../../../components/BuildingMap/components/LoadingSpinner";
 const Gedung = () => {
   const [isLoading, setIsLoading] = useState(false);
