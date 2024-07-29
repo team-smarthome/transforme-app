@@ -5,35 +5,18 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alerts } from "./AlertSmartwatch";
+import { Alerts } from "./AlertDeviceType";
 import { Error403Message } from "../../../../utils/constants";
 import { Label } from "@windmill/react-ui";
-import {
-	apiReadDeviceModel,
-	apiReadDeviceType,
-	apiReadManufacture,
-	apiReadPlatform,
-} from "../../../../services/api";
+import { apiReadPlatform } from "../../../../services/api";
 
 // interface
 interface platform {
 	platform_id: string;
-	nama_platform: string;
-}
-interface deviceType {
-	device_type_id: string;
-	type: string;
-}
-interface deviceModel {
-	device_model_id: string;
-	model: string;
+	platform: any;
 }
 
-interface manufacture {
-	manufacturer_id: string;
-	manufacture: string;
-}
-interface AddSmartwatchModalProps {
+interface AddDeviceTypeModalProps {
 	closeModal: () => void;
 	onSubmit: (params: any) => void;
 	defaultValue?: any;
@@ -41,7 +24,7 @@ interface AddSmartwatchModalProps {
 	isEdit?: boolean;
 }
 
-export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
+export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 	closeModal,
 	onSubmit,
 	defaultValue,
@@ -53,17 +36,9 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 
 	const [formState, setFormState] = useState(
 		defaultValue || {
-			imei: "",
-			wearer_name: "",
-			health_data_periodic: "",
-			is_used: 0,
-			status: "INACTIVE",
-			device_type_id: "",
-			device_model_id: "",
-			manufacturer_id: "",
-			firmware_version_id: "9c406729-91ce-4b72-bd72-33e665746629",
+			type: "",
 			platform_id: "",
-			nama_platform: "",
+			platform: "",
 		}
 	);
 
@@ -73,9 +48,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 	const [buttonLoad, setButtonLoad] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [platform, setPlatform] = useState<platform[]>([]);
-	const [deviceType, setDeviceType] = useState<deviceType[]>([]);
-	const [deviceModel, setDeviceModel] = useState<deviceModel[]>([]);
-	const [manufacture, setManufacture] = useState<manufacture[]>([]);
 	const [filter, setFilter] = useState("");
 
 	const tokenItem = localStorage.getItem("token");
@@ -95,17 +67,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 				const platforms = platform.data.records;
 				setPlatform(platforms);
 
-				const deviceType = await apiReadDeviceType(params, token);
-				const deviceTypes = deviceType.data.records;
-				setDeviceType(deviceTypes);
-
-				const deviceModel = await apiReadDeviceModel(params, token);
-				const deviceModels = deviceModel.data.records;
-				setDeviceModel(deviceModels);
-
-				const manufacture = await apiReadManufacture(params, token);
-				const manufacturers = manufacture.data.records;
-				setManufacture(manufacturers);
 				setTimeout(() => {
 					setIsLoading(false);
 				}, 300);
@@ -133,12 +94,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		let errorFields = [];
 
 		for (const [key, value] of Object.entries(formState)) {
-			if (
-				key !== "status" &&
-				key !== "is_used" &&
-				key !== "health_data_periodic" &&
-				key !== "deleted_at"
-			) {
+			if (key !== "platform") {
 				if (!value) {
 					errorFields.push(key);
 				}
@@ -324,33 +280,18 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		setFormState({ ...formState, [e.target.name]: e.target.value });
 	};
 
-	const handleDeviceType = (selectedOption: any) => {
-		if (selectedOption) {
-			setFormState({
-				...formState,
-				device_type_id: selectedOption.value,
-				type: selectedOption.label,
-			});
-		} else {
-			setFormState({
-				...formState,
-				device_type_id: "",
-				type: "",
-			});
-		}
-	};
 	const handleChangePlatform = (selectedOption: any) => {
 		if (selectedOption) {
 			setFormState({
 				...formState,
 				platform_id: selectedOption.value,
-				nama_platform: selectedOption.label,
+				platform: selectedOption.label,
 			});
 		} else {
 			setFormState({
 				...formState,
 				platform_id: "",
-				nama_platform: "",
+				platform: "",
 			});
 		}
 	};
@@ -510,46 +451,23 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 								<div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-1 justify-normal">
 									<div className="form-group w-full h-22">
 										<label
-											className="capitalize block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											IMEI
-										</label>
-										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-imei"
-											name="imei"
-											placeholder="imei"
-											onChange={handleChange}
-											value={formState.imei}
-											disabled={isDetail}
-										/>
-										<p className="error-text p-0 m-0">
-											{errors.map((item) =>
-												item === "imei"
-													? "IMEI Wajib Diisi"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label
 											className="block text-sm font-medium text-black dark:text-white"
 											htmlFor="id"
 										>
-											Nama Pengguna
+											TIPE
 										</label>
 										<input
 											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="wearer_name"
-											placeholder="Nama Pengguna"
+											name="type"
+											placeholder="Device Type"
 											onChange={handleChange}
-											value={formState.wearer_name}
+											value={formState.type}
 											disabled={isDetail}
 										/>
 										<p className="error-text p-0 m-0">
 											{errors.map((item) =>
-												item === "wearer_name"
-													? "nama Pengguna Wajib Diisi"
+												item === "type"
+													? "Tipe Wajib Diisi"
 													: ""
 											)}
 										</p>
@@ -567,9 +485,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 												isDetail || isEdit
 													? {
 															value: formState.platform_id,
-															label: formState
-																.platform
-																.nama_platform,
+															label: formState.platform,
 													  }
 													: formState.platform_id
 											}
@@ -586,189 +502,8 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "firmeware_id"
+												item === "platform_id"
 													? "Pilih Tipe Device"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Device Model
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.device_model_id,
-															label: formState
-																.device_model
-																.device_model_name,
-													  }
-													: formState.device_model_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="device_model_id"
-											options={deviceModel.map(
-												(item: deviceModel) => ({
-													value: item.device_model_id,
-													label: item.model,
-												})
-											)}
-											onChange={handleChangeDeviceModel}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "device_model_id"
-													? "Pilih Device Model"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Versi Firmware
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.firmeware_id,
-															label: formState
-																.firmware_version
-																.firmware_version_name,
-													  }
-													: formState.firmeware_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="firmeware_id"
-											// options={ruanganotmil.map(
-											// 	(item) => ({
-											// 		value: item.firmeware_id,
-											// 		label: item.nama_firmware,
-											// 	})
-											// )}
-											// onChange={handleRuanganChange}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "firmeware_id"
-													? "Pilih Ruangan"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Tipe
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.device_type_id,
-															label: formState
-																.device_type
-																.device_type_name,
-													  }
-													: formState.device_type_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="firmeware_id"
-											options={deviceType.map(
-												(item: deviceType) => ({
-													value: item.device_type_id,
-													label: item.type,
-												})
-											)}
-											onChange={handleDeviceType}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "firmeware_id"
-													? "Pilih Tipe Device"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Manufacture
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.manufacturer_id,
-															label: formState
-																.manufacturer
-																.manufacturer_name,
-													  }
-													: formState.manufacturer_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="manufacturer_id"
-											options={manufacture.map(
-												(item: manufacture) => ({
-													value: item.manufacturer_id,
-													label: item.manufacture,
-												})
-											)}
-											onChange={handleChangeManufacture}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "manufacturer_id"
-													? "Pilih Manufacture"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Health Data Period
-										</label>
-										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="health_data_periodic"
-											placeholder="health data period"
-											onChange={handleChange}
-											value={
-												formState.health_data_periodic
-											}
-											disabled={isDetail}
-											type="number"
-										/>
-										<p className="error-text p-0 m-0">
-											{errors.map((item) =>
-												item === "health_data_periodic"
-													? "Health Data Periode Diisi"
 													: ""
 											)}
 										</p>
