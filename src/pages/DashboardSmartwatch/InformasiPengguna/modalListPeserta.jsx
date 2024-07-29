@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import ProfileImg from "../../../../assets/profil.webp";
 import { LaravelApiGetPeserta } from "../../../services/DashboardSmartwatchApi/dashboardApi";
-import useGetAuthUser from "../../../Hooks/useGetAuthUser";
+import useGetAuthUser from "../../../hooks/useGetAuthUser";
 import { useUnauthorizedHandler } from "../../../utils/handleUnauthorizedDashboardSmartwatch";
 import { IoSearchSharp } from "react-icons/io5";
 
