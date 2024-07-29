@@ -269,7 +269,7 @@ const MapToggleButtons = ({
     let path = "";
     switch (name) {
       case "Smartwatch":
-        path = "/smartwatch-list";
+        path = "/smartwatch";
         break;
       case "Pegawai":
         path = "/staff";
@@ -376,7 +376,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }} className="flex flex-row">
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Smart Watch</h5>
+                <h5 className="text-white text-sm">List Smart Watch</h5>
               </div>
             </div>
           )}
@@ -430,7 +430,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Pegawai</h5>
+                <h5 className="text-white text-sm">List Pegawai</h5>
               </div>
             </div>
           )}
@@ -484,7 +484,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdPersonAddAlt1 className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Helmet</h5>
+                <h5 className="text-white text-sm">List Helmet</h5>
               </div>
             </div>
           )}
@@ -538,7 +538,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <MdSignalWifiStatusbar3Bar className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Gateway</h5>
+                <h5 className="text-white text-sm">List Gateway</h5>
               </div>
             </div>
           )}
@@ -589,7 +589,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah PTP & AP</h5>
+                <h5 className="text-white text-sm">List PTP & AP</h5>
               </div>
             </div>
           )}
@@ -643,7 +643,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <TbCameraPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Kamera</h5>
+                <h5 className="text-white text-sm">List Kamera</h5>
               </div>
             </div>
           )}
@@ -694,7 +694,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Access Door</h5>
+                <h5 className="text-white text-sm">List Access Door</h5>
               </div>
             </div>
           )}
@@ -745,7 +745,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Face Rec</h5>
+                <h5 className="text-white text-sm">List Face Rec</h5>
               </div>
             </div>
           )}
@@ -796,7 +796,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <TbDeviceDesktopPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Desktop</h5>
+                <h5 className="text-white text-sm">List Desktop</h5>
               </div>
             </div>
           )}
@@ -847,7 +847,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <TbDeviceDesktopPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah TV</h5>
+                <h5 className="text-white text-sm">List TV</h5>
               </div>
             </div>
           )}
@@ -899,7 +899,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah M-Kiosk</h5>
+                <h5 className="text-white text-sm">List M-Kiosk</h5>
               </div>
             </div>
           )}
@@ -951,7 +951,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah NVR</h5>
+                <h5 className="text-white text-sm">List NVR</h5>
               </div>
             </div>
           )}
@@ -1003,7 +1003,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah NAS</h5>
+                <h5 className="text-white text-sm">List NAS</h5>
               </div>
             </div>
           )}
@@ -1055,7 +1055,7 @@ const MapToggleButtons = ({
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
-                <h5 className="text-white text-sm">Tambah Zona</h5>
+                <h5 className="text-white text-sm">List Zona</h5>
               </div>
             </div>
           )}
