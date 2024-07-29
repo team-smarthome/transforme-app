@@ -1,21 +1,96 @@
-import {
-    XMarkIcon
-} from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
 import { apiReadOneKamera } from "../../services/api";
 import { setZonaColor } from "../../utils/globalFunctions";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 interface ModalCameraProps {
+  data: any;
   name: string;
   handleClose: any;
 }
 
-function ModalCamera({ name, handleClose }: ModalCameraProps) {
+function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
+  let urlStream;
+  const webSocketSecond = "10.34.7.43:5555";
+  const client = useRef(new W3CWebSocket(`ws://${webSocketSecond}`));
+  const [isWebSocketConnected, setIsWebSocketConnected] = useState(false);
+  let getToken = localStorage.getItem("token");
+  const token = JSON.parse(getToken);
+  const [receivedObjects, setReceivedObjects] = useState([]);
+  const [messageCamera, setMessageCamera] = useState();
+  const [play, setPlay] = useState(false);
+
   let [detailCamera, setDetailCamera] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("MENGAPAHARUSBISABIARLAHBISA");
+    // Initialize WebSocket connection
+    client.current = new WebSocket(`ws://${webSocketSecond}`);
+
+    client.current.onopen = () => {
+      setIsWebSocketConnected(true);
+      console.log("WebSocket_Client_Connected");
+    };
+    client.current.onmessage = (message: any) => {
+      const data = JSON.parse(message.data);
+      console.log("KIRIM_MESSAGE_MASE", data);
+
+      setReceivedObjects((prevObjects) => [...prevObjects, data]);
+
+      setMessageCamera(data);
+    };
+    return () => {
+      setIsWebSocketConnected(false);
+      console.log("WebSocket Client DISConnected");
+      client.current.close(); // Close WebSocket connection when component unmounts
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isWebSocketConnected) {
+      sendRequestOnce();
+    }
+  }, [isWebSocketConnected]);
+
+  const sendRequest = (method: any, params: any) => {
+    console.log("MASUKSINIPAKEEKOANJAYYYYA", isWebSocketConnected);
+    console.log("MASUKSINIPAKEEKOANJAYYYYB", !isWebSocketConnected);
+    if (isWebSocketConnected) {
+      console.log("MASUKSINIPAKEEKOANJAYYYY");
+      console.log("MASUKSINIPAKEEKOANJAYYYY", params);
+      client.current.send(JSON.stringify({ method: method, params: params }));
+      setTimeout(() => {
+        urlStream = `http://${webSocketSecond}/stream/${params.listViewCameraData[0].IpAddress}_.m3u8`;
+        console.log("URL_STREAM", urlStream);
+        setPlay(true);
+      }, 5000);
+    } else {
+      console.log("WebSocket connection is not yet established.");
+    }
+  };
+
+  const sendRequestOnce = () => {
+    console.log("MASUKSINIPAKEEKOANJAYYYYAC");
+
+    sendRequest("startLiveView", {
+      listViewCameraData: [
+        {
+          IpAddress: data?.IpAddress,
+          urlRTSP: data?.urlRTSP,
+          deviceName: data?.nama,
+          deviceId: data?.deviceId,
+          token: token?.token,
+          ruangan_otmil_id: "0c9ce686-12cd-435c-8f86-b519b7dd16b8",
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -104,22 +179,29 @@ function ModalCamera({ name, handleClose }: ModalCameraProps) {
           </div>
         </aside>
       </div>
-      <div className="flex flex-col md:flex-row gap-x-5 px-10 ">
-        <ReactPlayer
-          playing={true}
-          // playing={false}
-          controls={true}
-          onBuffer={() => console.log("react player buffering")}
-          onReady={() => console.log("react player ready")}
-          onPlay={() => console.log("react player play")}
-          onPause={() => console.log("react player pause")}
-          onEnded={() => console.log("react player end")}
-          onError={() => console.log("react player error")}
-          onProgress={() => console.log("react player progress")}
-          url={"http://192.168.1.111:5000/stream/192.168.1.5_.m3u8"}
-          // url={["https://www.youtube.com/watch?v=_-3v1MonI54"]}
-        />
-      </div>
+      {play ? (
+        <div className="flex flex-col md:flex-row gap-x-5 px-10">
+          <ReactPlayer
+            playing={true} // Anda dapat mengganti ini dengan variabel state jika perlu
+            controls={true}
+            onBuffer={() => console.log("react player buffering")}
+            onReady={() => console.log("react player ready")}
+            onPlay={() => console.log("react player play")}
+            onPause={() => console.log("react player pause")}
+            onEnded={() => console.log("react player end")}
+            onError={() => console.log("react player error")}
+            onProgress={() => console.log("react player progress")}
+            url={urlStream} // Pastikan urlStream adalah URL yang valid
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row gap-x-5 px-10">
+          <div className="w-full h-96 bg-gray-300 flex items-center justify-center">
+            <p className="text-white">Loading...</p>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 mb-10">
         <p className=" mb-3 text-center bg-slate-500   font-semibold text-white rounded-md mx-8 overflow-scroll	">
           Log Kamera
