@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "tailwindcss/tailwind.css";
 
 import { selectedRoutess } from "../../../utils/atomstates";
-import { DeviceIcon, PetaIcon } from "./IconMenuSmartwatch";
+import { DeviceIcon, PetaIcon , ManufacturingIcon, FirmwareIcon} from "./IconMenuSmartwatch";
+import { GoVersions } from "react-icons/go";
 import MenuItem from "./MenuItemSmartwatch";
 
 const MainMenu = () => {
@@ -59,6 +60,20 @@ const routes = [
 		link: "/peta",
 		icon: PetaIcon,
 	},
+	{
+		id: 3,
+		name: "Firmware",
+		mode: "transforme-monitoring",
+		link: "/pengaturan-list/perangkat/smartwatch/firmware",
+		icon: FirmwareIcon,
+	},
+	{
+		id: 5,
+		name: "manufacture",
+		mode: "transforme-monitoring",
+		link: "/pengaturan-list/perangkat/smartwatch/manufacture",
+		icon: ManufacturingIcon,
+	}
 	
 ];
 

@@ -528,6 +528,193 @@ const Pengunjung = (
 	</svg>
 );
 
+const ManufacturingIcon = (
+	<svg
+	  width="100"
+	  height="80"
+	  viewBox="0 0 24 24"
+	  fill="none"
+	  xmlns="http://www.w3.org/2000/svg"
+	>
+	  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+	  <g
+	    id="SVGRepo_tracerCarrier"
+	    strokeLinecap="round"
+	    strokeLinejoin="round"
+	  ></g>
+	  <g id="SVGRepo_iconCarrier">
+	    <rect
+		 x="2"
+		 y="2"
+		 width="20"
+		 height="20"
+		 rx="2"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></rect>
+	    <rect
+		 x="4"
+		 y="4"
+		 width="8"
+		 height="8"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></rect>
+	    <circle
+		 cx="16"
+		 cy="8"
+		 r="2"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></circle>
+	    <path
+		 d="M4 14H12V16H4V14Z"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M4 18H12V20H4V18Z"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M14 14H20V16H14V14Z"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M14 18H20V20H14V18Z"
+		 fill="#FFFFFF"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	  </g>
+	</svg>
+   );
+
+   const FirmwareIcon = (
+	<svg
+	  width="100"
+	  height="80"
+	  viewBox="0 0 24 24"
+	  fill="none"
+	  xmlns="http://www.w3.org/2000/svg"
+	>
+	  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+	  <g
+	    id="SVGRepo_tracerCarrier"
+	    strokeLinecap="round"
+	    strokeLinejoin="round"
+	  ></g>
+	  <g id="SVGRepo_iconCarrier">
+	    <rect
+		 x="2"
+		 y="2"
+		 width="20"
+		 height="20"
+		 rx="2"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></rect>
+	    <path
+		 d="M10 7V17"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M14 7V17"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M12 2V4"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M8 2V4"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M16 2V4"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M12 20V22"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M8 20V22"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <path
+		 d="M16 20V22"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	    <circle
+		 cx="12"
+		 cy="12"
+		 r="2"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></circle>
+	    <path
+		 d="M7 14H17"
+		 stroke="#FFFFFF"
+		 strokeWidth="1.5"
+		 strokeLinecap="round"
+		 strokeLinejoin="round"
+	    ></path>
+	  </g>
+	</svg>
+   );
+   
+   
+
 export {
 	DeviceIcon,
 	CameraIcon,
@@ -548,4 +735,6 @@ export {
 	DaftarInventarisIcon,
 	eventIcons,
 	Pengunjung,
+	ManufacturingIcon,
+	FirmwareIcon
 };
