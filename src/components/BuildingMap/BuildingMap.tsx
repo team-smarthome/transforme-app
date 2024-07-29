@@ -7,8 +7,9 @@ import {
   GateArea,
   BuildingArea,
   BuildingStaticFromImage,
-  GMap,
+  // GMap,
 } from "./components";
+import DashboardSmartwatch from "../../pages/DashboardSmartwatch";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
@@ -335,7 +336,7 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
       )}
 
       <aside ref={dropdown} className={`${buildingOpen ? "w-200" : "w-full"}`}>
-        <div className="bg-map-outdoor relative w-full px-20 pt-5 pb-10 flex items-center bg-zinc-50 h-[82vh]  justify-center animate-popupin">
+        <div className={`bg-map-outdoor relative w-full  ${selectedMode == "Smartwatch Map" ? " h-[90vh] " : " px-20 h-[82vh] pt-5 pb-10 "}  flex items-center bg-zinc-50   justify-center animate-popupin`}>
           <div className="absolute top-0 z-80  flex flex-row-reverse w-full justify-between px-2">
             <div className="relative group z-1">
               <img
@@ -375,7 +376,12 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
                   ))}
               </div>
             </div>
-            <Breadcrumb url={window.location.href} pageName="Statistic" />
+            {
+              selectedMode !== "Smartwatch Map" && (
+
+                <Breadcrumb url={window.location.href} pageName="Statistic" />
+              )
+            }
           </div>
           {selectedMode == "Satelit" ? (
             <>
@@ -383,7 +389,8 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
             </>
           ) : 
           selectedMode == "Smartwatch Map" ? (
-            <GMap  />
+            <DashboardSmartwatch  />
+            // <GMap  />
           ) :      
           (
             <>
