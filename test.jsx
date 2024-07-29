@@ -1,0 +1,35 @@
+- Keperluan Stream dan Playback :
+	- IP Public atau VPN utk dipasang di PC server (supaya PC server bisa dihit dari IP Public)
+    - Karena Sistem Saat ini proses Stream dan Playback, service nya ada di PC server
+- Device yang ada di transforme 
+	- Smartwatch 
+		- contoh spesifikasi Smartwatch (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- Bracelet 
+		- contoh spesifikasi Bracelet (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- Gateway Bracelet
+		- contoh spesifikasi Gateway Bracelet (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- Gateway / Router Wifi
+		- contoh spesifikasi Gateway /Router Wifi (keperluan Database)
+		- contoh Dokumentasi (kalau ada)
+	- Access Door 
+		- contoh spesifikasi Access Door (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- Face Recognition Device 
+		- contoh spesifikasi Face Recognition Device (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- TV 
+		- contoh spesifikasi TV (keperluan Database)
+		- contoh Dokumentasi (kalau ada) 
+	- M-Kiosk 
+		- contoh spesifikasi M-Kiosk (keperluan Database)
+		- contoh Dokumentasi (kalau ada)
+	- NVR 
+		- contoh spesifikasi NVR (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	- NAS 
+		- contoh spesifikasi NAS (keperluan Database)
+		- contoh Dokumentasi utk bisa terkoneksi dg Sistem 
+	
