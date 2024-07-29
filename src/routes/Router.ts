@@ -159,6 +159,13 @@ const MainMenuSmartwatch = lazy(
 	() => import("../pages/Device/Smartwatch/MainMenuSmartwatch")
 );
 
+const FirmwareList = lazy(
+  () => import("../pages/Device/Smartwatch/Firmware/FirmwareList")
+);
+const Manufacture = lazy(
+  () => import("../pages/Device/Smartwatch/Manufacture/ManufactureList")
+);
+
 const DeviceGatewayListWK = lazy(
 	() => import("../pages/Device/Gateway/GatewayListWK")
 );
@@ -559,8 +566,8 @@ const coreRoutes = [
 		// path: "/pengaturan-list/perangkat/gelang",
 		path: "/gelang",
 		// path: '/device-bracelet-list',
-		title: "DeviceSmartwatchListWK",
-		component: DeviceSmartwatchListWK,
+		title: "DeviceGelangList",
+		component: DeviceGelangList,
 	},
 	{
 		// path: "/pengaturan-list/perangkat/gelang",
@@ -582,6 +589,20 @@ const coreRoutes = [
 		// path: '/device-bracelet-list',
 		title: "Smartwatch",
 		component: MainMenuSmartwatch,
+	},
+	{
+		// path: "/pengaturan-list/perangkat/gelang",
+		path: "/pengaturan-list/perangkat/smartwatch/firmware",
+		// path: '/device-bracelet-list',
+		title: "FirmwareList",
+		component: FirmwareList,
+	},
+	{
+		// path: "/pengaturan-list/perangkat/gelang",
+		path: "/pengaturan-list/perangkat/smartwatch/manufacture",
+		// path: '/device-bracelet-list',
+		title: "Manufacture",
+		component: Manufacture,
 	},
 ];
 
