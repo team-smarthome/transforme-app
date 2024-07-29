@@ -45,7 +45,7 @@ function Pengunjung({
         className={`flex flex-col items-center ${visible ? "flex" : "hidden"}`}
       >
         <span className="relative flex h-4 w-4">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-600 hover:bg-teal-400 opacity-75 z-[82]"></span>
+          {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-600 hover:bg-teal-400 opacity-75 z-[82]"></span> */}
           <button
             onMouseEnter={handleHover}
             onMouseLeave={handleHover}

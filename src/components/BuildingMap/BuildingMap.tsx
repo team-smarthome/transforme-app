@@ -11,6 +11,8 @@ import {
 } from "./components";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useAtom } from "jotai";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Gmap from "../../../assets/gmap.png";
 import Lapisan from "../../../assets/lapisan.png";
 import Satelit from "../../../assets/satelit.png";
@@ -41,7 +43,7 @@ import {
 } from "../../utils/atomstates";
 import { FaBullseye } from "react-icons/fa6";
 import Swal from "sweetalert2";
-
+import Modal, { ModalBuildingMap } from "../Modal";
 
 interface BuildingProps {
   buildingOpen: boolean;
@@ -379,11 +381,9 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
             <>
               <BuildingStaticFromImage handleClickBuilding={handleClick} />
             </>
-          ) : 
-          selectedMode == "Smartwatch Map" ? (
-            <GMap  />
-          ) :      
-          (
+          ) : selectedMode == "Smartwatch Map" ? (
+            <GMap />
+          ) : (
             <>
               <GateArea handleClickBuilding={handleClick} />
               <div className="w-[8%] -ml-5 h-10 border-y border-black bg-zinc-50 opacity-0"></div>
