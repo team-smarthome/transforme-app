@@ -5061,7 +5061,7 @@ export async function apiReadSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/device",
+			url: "http://127.0.0.1:8000/api/device",
 			// url: newwebserviceurl + "gelang",
 			params,
 			headers: {
@@ -5081,7 +5081,7 @@ export async function apiCreateSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: "http://192.168.18.26:8000/api/device",
+			url: "http://127.0.0.1:8000/api/device",
 			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
@@ -5096,11 +5096,50 @@ export async function apiCreateSmartwatch(params, token) {
 		throw error;
 	}
 }
+
+export async function apiUpdateSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteSmartwatch(params, token) {
+	try {
+		const response = await axios({
+			method: "DELETE",
+			url: "http://127.0.0.1:8000/api/device",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export async function apiReadPlatform(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/platform",
+			url: "http://127.0.0.1:8000/api/platform",
 			// url: newwebserviceurl + "platform",
 			params,
 			headers: {
@@ -5120,7 +5159,7 @@ export async function apiReadDeviceType(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/device_type",
+			url: "http://127.0.0.1:8000/api/device_type",
 			// url: newwebserviceurl + "platform",
 			params,
 			headers: {
@@ -5135,11 +5174,69 @@ export async function apiReadDeviceType(params, token) {
 		throw error;
 	}
 }
+export async function apiCreateDeviceType(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/device_type",
+			// url: newwebserviceurl + "device_type",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateDeviceType(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/device_type",
+			// url: newwebserviceurl + "device_type",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteDeviceType(params, token) {
+	try {
+		const response = await axios({
+			method: "DELETE",
+			url: "http://127.0.0.1:8000/api/device_type",
+			// url: newwebserviceurl + "device_type",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export async function apiReadManufacture(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/manufacture",
+			url: "http://127.0.0.1:8000/api/manufacture",
 			// url: newwebserviceurl + "manufacture",
 			params,
 			headers: {
@@ -5159,7 +5256,7 @@ export async function apiReadDeviceModel(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/device_model",
+			url: "http://127.0.0.1:8000/api/device_model",
 			// url: newwebserviceurl + "device_model",
 			params,
 			headers: {
@@ -5179,9 +5276,130 @@ export async function apiReadFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://192.168.18.26:8000/api/firmware",
+			url: "http://127.0.0.1:8000/api/firmware",
 			// url: newwebserviceurl + "firmware",
 			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateFirmware(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://192.168.18.26:8000/api/firmware",
+			// url: newwebserviceurl + "firmware",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch(error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateFirmware(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://localhost:8000/api/firmware",
+			// url: newwebserviceurl + "gateway",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteFirmware(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://192.168.18.26:8000/api/firmware",
+			// url: newwebserviceurl + "firmware",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+
+export async function apiCreateManufacture(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://localhost:8000/api/manufacture",
+			// url: newwebserviceurl + "firmware",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch(error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateManufacture(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://localhost:8000/api/manufacture",
+			// url: newwebserviceurl + "gateway",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteManufacture(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://localhost:8000/api/manufacture",
+			// url: newwebserviceurl + "firmware",
+			data: params,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,

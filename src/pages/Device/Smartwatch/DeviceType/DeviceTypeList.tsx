@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../../common/Loader";
-import { AddSmartwatch } from "./ModalAddSmartwatch";
-import { DeleteSmartwatchModal } from "./ModalDeleteSmartwatch";
-import { Alerts } from "./AlertSmartwatch";
+
+import { Alerts } from "./AlertDeviceType";
 import {
-	apiDeleteGelang,
-	apiCreateSmartwatch,
-	apiUpdateGelang,
-	apiReadSmartwatch,
-	apiUpdateSmartwatch,
-	apiDeleteSmartwatch,
+	apiCreateDeviceType,
+	apiUpdateDeviceType,
+	apiDeleteDeviceType,
+	apiReadDeviceType,
+	apiReadPlatform,
 } from "../../../../services/api";
+import Select from "react-select";
 import Pagination from "../../../../components/Pagination";
 import SearchInputButton from "../../Search";
 import * as xlsx from "xlsx";
@@ -22,27 +21,24 @@ import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Error403Message } from "../../../../utils/constants";
 import { Breadcrumbs } from "../../../../components/Breadcrumbs";
+import { AddDeviceType } from "./ModalAddDeviceType";
+import { DeleteDeviceTypeModal } from "./ModalDeleteDeviceType";
+import { CustomStyles } from "../../../EntryData/CustomStyle";
 
 interface Item {
-	device_id: string;
-	imei: string;
-	wearer_name: string;
-	health_data_periodic: string;
-	status: string;
-	is_used: boolean;
-	device_type_id: string;
-	device_model_id: string;
-	manufacturer_id: string;
-	firmware_version_id: string;
+	id: string;
+	type: string;
 	platform_id: string;
+	platform: string;
 }
 
-const SmartwatchList = () => {
+const DeviceTypeList = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	// useState untuk menampung data dari API
 	const [data, setData] = useState<Item[]>([]);
+	const [dataPlatform, setDataPlatform] = useState([]);
 	const [detailData, setDetailData] = useState<Item | null>(null);
 	const [editData, setEditData] = useState<Item | null>(null);
 	const [deleteData, setDeleteData] = useState<Item | null>(null);
@@ -52,19 +48,14 @@ const SmartwatchList = () => {
 	const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [filter, setFilter] = useState("");
-	const [filterDmac, setFilterDmac] = useState("");
+	const [filterPlatform, setFilterPlatform] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pages, setPages] = useState(0);
 	const [pageSize, setPageSize] = useState(10);
 	const [rows, setRows] = useState(0);
 	const [dataExcel, setDataExcel] = useState([]);
-	const [filteran, setFilteran] = useState("");
 
 	const [isOperator, setIsOperator] = useState<boolean>();
-	const [searchData, setSearchData] = useState({
-		dmac: "",
-		wearer_name: "",
-	});
 
 	const tokenItem = localStorage.getItem("token");
 	const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
@@ -76,36 +67,20 @@ const SmartwatchList = () => {
 	const handleFilterChange = async (e: any) => {
 		const newFilter = e.target.value;
 		setFilter(newFilter);
-
-		// try {
-		//   const response = await apiReadKategoriPerkara({ filter: { nama_kategori_perkara: newFilter } });
-		//   setPages(response.data.pagination.totalPages);
-		//   setRows(response.data.pagination.totalRecords);
-		//   if (response.data.status === 'OK') {
-		//     const result = response.data;
-		//     setData(result.records);
-		//   } else {
-		//     throw new Error('Terjadi kesalahan saat mencari data.');
-		//   }
-		// } catch (error) {
-		//   console.error(error);
-		// }
 	};
-
-	const handleFilterChangeImei = async (e: any) => {
+	const handleFilterChangePlatform = async (e: any) => {
 		const newFilter = e.target.value;
-		setFilterDmac(newFilter);
+		setFilterPlatform(newFilter);
 	};
 
 	const handleSearchClick = async () => {
 		let params = {
-			wearer_name: filter,
-			imei: filterDmac,
+			type: filter,
+			platform_id: filterPlatform,
 			page: currentPage,
-			pageSize: pageSize,
 		};
 		try {
-			const response = await apiReadSmartwatch(params, token);
+			const response = await apiReadDeviceType(params, token);
 			if (response.status === 200) {
 				const result = response.data;
 				setData(result.records);
@@ -194,7 +169,10 @@ const SmartwatchList = () => {
 	useEffect(() => {
 		fetchData();
 	}, [currentPage, pageSize]);
-
+	useEffect(() => {
+		fetchDataPlatform();
+	}, []);
+	console.log(dataPlatform, "kkk");
 	const fetchData = async () => {
 		let params = {
 			page: currentPage,
@@ -202,12 +180,40 @@ const SmartwatchList = () => {
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadSmartwatch(params, token);
+			const response = await apiReadDeviceType(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
 			const result = response.data.records;
 			setData(result);
+			setPages(response.data.pagination.totalPages);
+			setRows(response.data.pagination.totalRecords);
+			setIsLoading(false);
+		} catch (e: any) {
+			if (e.response.status === 403) {
+				navigate("/auth/signin", {
+					state: { forceLogout: true, lastPage: location.pathname },
+				});
+			}
+			Alerts.fire({
+				icon: e.response.status === 403 ? "warning" : "error",
+				title: e.response.status === 403 ? Error403Message : e.message,
+			});
+		}
+	};
+	const fetchDataPlatform = async () => {
+		let params = {
+			page: 1,
+			pageSize: 1000,
+		};
+		setIsLoading(true);
+		try {
+			const response = await apiReadPlatform(params, token);
+			if (response.data.status !== "OK") {
+				throw new Error(response.data.message);
+			}
+			const result = response.data.records;
+			setDataPlatform(result);
 			setPages(response.data.pagination.totalPages);
 			setRows(response.data.pagination.totalRecords);
 			setIsLoading(false);
@@ -233,6 +239,7 @@ const SmartwatchList = () => {
 
 	// function untuk menampilkan modal edit
 	const handleEditClick = (item: Item) => {
+		console.log(item, "eeeeeeeeeee");
 		setEditData(item);
 		setModalEditOpen(true);
 	};
@@ -260,7 +267,7 @@ const SmartwatchList = () => {
 	// function untuk menghapus data
 	const handleSubmitDelete = async (params: any) => {
 		try {
-			const responseDelete = await apiDeleteSmartwatch(params, token);
+			const responseDelete = await apiDeleteDeviceType(params, token);
 			if (responseDelete.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -292,7 +299,7 @@ const SmartwatchList = () => {
 	// function untuk menambah data
 	const handleSubmitAdd = async (params: any) => {
 		try {
-			const responseCreate = await apiCreateSmartwatch(params, token);
+			const responseCreate = await apiCreateDeviceType(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -324,7 +331,7 @@ const SmartwatchList = () => {
 	// function untuk mengubah data
 	const handleSubmitEdit = async (params: any) => {
 		try {
-			const responseEdit = await apiUpdateSmartwatch(params, token);
+			const responseEdit = await apiUpdateDeviceType(params, token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -365,24 +372,8 @@ const SmartwatchList = () => {
 
 	const exportToExcel = async () => {
 		const dataToExcel = [
-			[
-				"Nama Smartwatch",
-				"DMAC",
-				"Tanggal Pasang",
-				"Tanggal aktivasi",
-				"Baterai",
-				"Nama Lokasi",
-				"Nama Ruangan",
-			],
-			...data.map((item: any) => [
-				item.wearer_name,
-				item.dmac,
-				item.tanggal_pasang,
-				item.tanggal_aktivasi,
-				item.baterai,
-				item.nama_lokasi_otmil,
-				item.nama_ruangan_otmil,
-			]),
+			["Tipe", "Platform"],
+			...data.map((item: any) => [item.type, item.platform]),
 		];
 
 		const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
@@ -390,7 +381,9 @@ const SmartwatchList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gelang ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-Tipe-Device ${dayjs(new Date()).format(
+				"DD-MM-YYYY HH.mm"
+			)}.xlsx`
 		);
 	};
 
@@ -416,17 +409,26 @@ const SmartwatchList = () => {
 					<div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
 						<div className="flex w-full i-search">
 							<SearchInputButton
-								value={filterDmac}
-								placehorder="Cari Nomor IMEI"
-								onChange={handleFilterChangeImei}
-							/>
-						</div>
-						<div className="flex w-full search">
-							<SearchInputButton
 								value={filter}
-								placehorder="Cari nama Pengguna"
+								placehorder="Cari Tipe"
 								onChange={handleFilterChange}
 							/>
+						</div>
+						<div className="flex  w-full">
+							<select
+								value={filterPlatform}
+								onChange={handleFilterChangePlatform}
+								className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary w-full flex justify-center"
+							>
+								<option value="">Semua Platform</option>
+								{dataPlatform.map((item: any) => {
+									return (
+										<option value={item.platform_id}>
+											{item.nama_platform}
+										</option>
+									);
+								})}
+							</select>
 						</div>
 						<button
 							className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
@@ -449,20 +451,17 @@ const SmartwatchList = () => {
 								/>
 							</svg>
 						</button>
-
 						<button
 							onClick={exportToExcel}
 							className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium b-excel"
 						>
 							Export&nbsp;Excel
 						</button>
-
 						{/* <div className="w-10"> */}
 						<button>
 							<HiQuestionMarkCircle
-								values={filteran}
+								values={filter}
 								aria-placeholder="Show tutorial"
-								// onChange={}
 								onClick={handleClickTutorial}
 							/>
 						</button>
@@ -491,12 +490,13 @@ const SmartwatchList = () => {
 					>
 						<div className="p-2.5 text-center xl:py-5">
 							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								IMEI
+								TIPE
 							</h5>
 						</div>
-						<div className="p-2.5 text-center xl:p-5">
+
+						<div className="p-2.5 text-center xl:py-5">
 							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								Nama Pengguna
+								PLATFORM
 							</h5>
 						</div>
 						<div
@@ -525,7 +525,7 @@ const SmartwatchList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black truncate dark:text-white">
-											{item.imei}
+											{item.type}
 										</p>
 									</div>
 									<div
@@ -533,7 +533,7 @@ const SmartwatchList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black truncate dark:text-white">
-											{item.wearer_name}
+											{item.platform}
 										</p>
 									</div>
 
@@ -561,7 +561,7 @@ const SmartwatchList = () => {
 						);
 					})}
 					{modalDetailOpen && (
-						<AddSmartwatch
+						<AddDeviceType
 							closeModal={() => setModalDetailOpen(false)}
 							onSubmit={handleSubmitAdd}
 							defaultValue={detailData}
@@ -569,7 +569,7 @@ const SmartwatchList = () => {
 						/>
 					)}
 					{modalEditOpen && (
-						<AddSmartwatch
+						<AddDeviceType
 							closeModal={handleCloseEditModal}
 							onSubmit={handleSubmitEdit}
 							defaultValue={editData}
@@ -577,13 +577,13 @@ const SmartwatchList = () => {
 						/>
 					)}
 					{modalAddOpen && (
-						<AddSmartwatch
+						<AddDeviceType
 							closeModal={handleCloseAddModal}
 							onSubmit={handleSubmitAdd}
 						/>
 					)}
 					{modalDeleteOpen && (
-						<DeleteSmartwatchModal
+						<DeleteDeviceTypeModal
 							closeModal={handleCloseDeleteModal}
 							onSubmit={handleSubmitDelete}
 							defaultValue={deleteData}
@@ -620,4 +620,4 @@ const SmartwatchList = () => {
 	);
 };
 
-export default SmartwatchList;
+export default DeviceTypeList;

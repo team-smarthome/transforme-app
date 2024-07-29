@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export const DeleteSmartwatchModal = ({
+export const DeleteDeviceTypeModal = ({
 	closeModal,
 	onSubmit,
 	defaultValue,
@@ -82,7 +82,7 @@ export const DeleteSmartwatchModal = ({
 								Apakah Anda yakin ingin menghapus data ini?
 							</p>
 							<p className="text-sm text-center text-black dark:text-white">
-								IMEI {defaultValue.imei}{" "}
+								TIPE {defaultValue.type}{" "}
 								<span className="text-red-400">
 									{formState.nama_gelang}
 								</span>{" "}

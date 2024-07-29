@@ -336,7 +336,13 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
       )}
 
       <aside ref={dropdown} className={`${buildingOpen ? "w-200" : "w-full"}`}>
-        <div className={`bg-map-outdoor relative w-full  ${selectedMode == "Smartwatch Map" ? " h-[90vh] " : " px-20 h-[82vh] pt-5 pb-10 "}  flex items-center bg-zinc-50   justify-center animate-popupin`}>
+        <div
+          className={`bg-map-outdoor relative w-full  ${
+            selectedMode == "Smartwatch Map"
+              ? " h-[90vh] "
+              : " px-20 h-[82vh] pt-5 pb-10 "
+          }  flex items-center bg-zinc-50   justify-center animate-popupin`}
+        >
           <div className="absolute top-0 z-80  flex flex-row-reverse w-full justify-between px-2">
             <div className="relative group z-1">
               <img
@@ -376,23 +382,18 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
                   ))}
               </div>
             </div>
-            {
-              selectedMode !== "Smartwatch Map" && (
-
-                <Breadcrumb url={window.location.href} pageName="Statistic" />
-              )
-            }
+            {selectedMode !== "Smartwatch Map" && (
+              <Breadcrumb url={window.location.href} pageName="Statistic" />
+            )}
           </div>
           {selectedMode == "Satelit" ? (
             <>
               <BuildingStaticFromImage handleClickBuilding={handleClick} />
             </>
-          ) : 
-          selectedMode == "Smartwatch Map" ? (
-            <DashboardSmartwatch  />
+          ) : selectedMode == "Smartwatch Map" ? (
+            <DashboardSmartwatch />
+          ) : (
             // <GMap  />
-          ) :      
-          (
             <>
               <GateArea handleClickBuilding={handleClick} />
               <div className="w-[8%] -ml-5 h-10 border-y border-black bg-zinc-50 opacity-0"></div>

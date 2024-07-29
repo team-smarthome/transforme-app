@@ -5,35 +5,19 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alerts } from "./AlertSmartwatch";
+import { Alerts } from "./AlertManufacture";
 import { Error403Message } from "../../../../utils/constants";
 import { Label } from "@windmill/react-ui";
 import {
-	apiReadDeviceModel,
-	apiReadDeviceType,
-	apiReadManufacture,
 	apiReadPlatform,
 } from "../../../../services/api";
 
-// interface
 interface platform {
 	platform_id: string;
 	nama_platform: string;
 }
-interface deviceType {
-	device_type_id: string;
-	type: string;
-}
-interface deviceModel {
-	device_model_id: string;
-	model: string;
-}
 
-interface manufacture {
-	manufacturer_id: string;
-	manufacture: string;
-}
-interface AddSmartwatchModalProps {
+interface AddManufactureModalProps {
 	closeModal: () => void;
 	onSubmit: (params: any) => void;
 	defaultValue?: any;
@@ -41,7 +25,7 @@ interface AddSmartwatchModalProps {
 	isEdit?: boolean;
 }
 
-export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
+export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 	closeModal,
 	onSubmit,
 	defaultValue,
@@ -53,17 +37,9 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 
 	const [formState, setFormState] = useState(
 		defaultValue || {
-			imei: "",
-			wearer_name: "",
-			health_data_periodic: "",
-			is_used: 0,
-			status: "INACTIVE",
-			device_type_id: "",
-			device_model_id: "",
-			manufacturer_id: "",
-			firmware_version_id: "9c406729-91ce-4b72-bd72-33e665746629",
+			manufacture: "",
 			platform_id: "",
-			nama_platform: "",
+     		nama_platform: ""
 		}
 	);
 
@@ -73,9 +49,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 	const [buttonLoad, setButtonLoad] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [platform, setPlatform] = useState<platform[]>([]);
-	const [deviceType, setDeviceType] = useState<deviceType[]>([]);
-	const [deviceModel, setDeviceModel] = useState<deviceModel[]>([]);
-	const [manufacture, setManufacture] = useState<manufacture[]>([]);
 	const [filter, setFilter] = useState("");
 
 	const tokenItem = localStorage.getItem("token");
@@ -94,18 +67,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 				const platform = await apiReadPlatform(params, token);
 				const platforms = platform.data.records;
 				setPlatform(platforms);
-
-				const deviceType = await apiReadDeviceType(params, token);
-				const deviceTypes = deviceType.data.records;
-				setDeviceType(deviceTypes);
-
-				const deviceModel = await apiReadDeviceModel(params, token);
-				const deviceModels = deviceModel.data.records;
-				setDeviceModel(deviceModels);
-
-				const manufacture = await apiReadManufacture(params, token);
-				const manufacturers = manufacture.data.records;
-				setManufacture(manufacturers);
 				setTimeout(() => {
 					setIsLoading(false);
 				}, 300);
@@ -127,17 +88,15 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		};
 		fetchData();
 	}, []);
-
+	// console.log(deviceType, "deviceType");
 	// function
 	const validateForm = () => {
 		let errorFields = [];
 
 		for (const [key, value] of Object.entries(formState)) {
 			if (
-				key !== "status" &&
-				key !== "is_used" &&
-				key !== "health_data_periodic" &&
-				key !== "deleted_at"
+				key !== "manufacture" &&
+				key !== "nama_platform"
 			) {
 				if (!value) {
 					errorFields.push(key);
@@ -145,6 +104,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 			}
 		}
 		if (errorFields.length > 0) {
+			console.log(errorFields, "eeee");
 			setErrors(errorFields);
 			return false;
 		}
@@ -244,8 +204,8 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 				{
 					element: ".i-nama",
 					popover: {
-						title: "Nama Pengguna",
-						description: "Isi nama Pengguna",
+						title: "Manufacture",
+						description: "Isi Manufacture",
 					},
 				},
 				{
@@ -324,21 +284,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		setFormState({ ...formState, [e.target.name]: e.target.value });
 	};
 
-	const handleDeviceType = (selectedOption: any) => {
-		if (selectedOption) {
-			setFormState({
-				...formState,
-				device_type_id: selectedOption.value,
-				type: selectedOption.label,
-			});
-		} else {
-			setFormState({
-				...formState,
-				device_type_id: "",
-				type: "",
-			});
-		}
-	};
 	const handleChangePlatform = (selectedOption: any) => {
 		if (selectedOption) {
 			setFormState({
@@ -355,37 +300,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		}
 	};
 
-	const handleChangeManufacture = (selectedOption: any) => {
-		if (selectedOption) {
-			setFormState({
-				...formState,
-				manufacturer_id: selectedOption.value,
-				manufacture: selectedOption.label,
-			});
-		} else {
-			setFormState({
-				...formState,
-				manufacturer_id: "",
-				manufacture: "",
-			});
-		}
-	};
-
-	const handleChangeDeviceModel = (selectedOption: any) => {
-		if (selectedOption) {
-			setFormState({
-				...formState,
-				device_model_id: selectedOption.value,
-				model: selectedOption.label,
-			});
-		} else {
-			setFormState({
-				...formState,
-				device_model_id: "",
-				model: "",
-			});
-		}
-	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -395,10 +309,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		onSubmit(formState);
 		// closeModal();
 	};
-
-	// const [inputValue, setInputValue] = useState(
-	// 	formState.wbp[0]?.nama_wbp || ""
-	// );
 
 	const modalStyles: any = {
 		backdrop: {
@@ -420,7 +330,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 		},
 	};
 	console.log(formState, "formState");
-	//return
 	return (
 		<div>
 			<div style={modalStyles.backdrop}></div>
@@ -429,7 +338,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 				style={modalStyles.modalContainer}
 				className="modal-container fixed z-[999] flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[85vh] w-1/2 overflow-y-scroll bg-slate-600 border border-slate-800 rounded-md"
 			>
-				{/* <div className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full w-[80vh]"> */}
 				<div className="modal rounded-sm w-full">
 					{isLoading ? (
 						<div>
@@ -470,10 +378,10 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 								<div>
 									<h3 className="text-xl font-semibold text-black dark:text-white">
 										{isDetail
-											? "Detail Data Smartwatch"
+											? "Detail Data Manufacture"
 											: isEdit
-											? "Edit Data Smartwatch"
-											: "Tambah Data Smartwatch"}
+											? "Edit Data Manufacture"
+											: "Tambah Data Manufacture"}
 									</h3>
 								</div>
 
@@ -483,7 +391,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 										<HiQuestionMarkCircle
 											values={filter}
 											aria-placeholder="Show tutorial"
-											// onChange={}
 											onClick={handleClickTutorial}
 										/>
 									</button>
@@ -492,12 +399,10 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 										<HiQuestionMarkCircle
 											values={filter}
 											aria-placeholder="Show tutorial"
-											// onChange={}
 											onClick={handleClickTutorial}
 										/>
 									</button>
 								)}
-								{/* </div> */}
 
 								<strong
 									className="text-xl align-center cursor-pointer "
@@ -513,49 +418,29 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 											className="capitalize block text-sm font-medium text-black dark:text-white"
 											htmlFor="id"
 										>
-											IMEI
+											Manufacture
 										</label>
 										<input
 											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-imei"
-											name="imei"
-											placeholder="imei"
+											name="manufacture"
+											placeholder="manufacture"
 											onChange={handleChange}
-											value={formState.imei}
+											value={formState.manufacture}
 											disabled={isDetail}
 										/>
 										<p className="error-text p-0 m-0">
 											{errors.map((item) =>
-												item === "imei"
-													? "IMEI Wajib Diisi"
+												item === "manufacture"
+													? "Manufacture Wajib Diisi"
 													: ""
 											)}
 										</p>
 									</div>
 									<div className="form-group w-full h-22">
-										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Nama Pengguna
-										</label>
-										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="wearer_name"
-											placeholder="Nama Pengguna"
-											onChange={handleChange}
-											value={formState.wearer_name}
-											disabled={isDetail}
-										/>
-										<p className="error-text p-0 m-0">
-											{errors.map((item) =>
-												item === "wearer_name"
-													? "nama Pengguna Wajib Diisi"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
+										<label 
+                      htmlFor="manufacture_id"
+                      className="capitalize block text-sm font-medium text-black dark:text-white"
+                    >
 											Platform
 										</label>
 										<Select
@@ -567,9 +452,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 												isDetail || isEdit
 													? {
 															value: formState.platform_id,
-															label: formState
-																.platform
-																.nama_platform,
+															label: formState.nama_platform,
 													  }
 													: formState.platform_id
 											}
@@ -586,189 +469,8 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "firmeware_id"
+												item === "platform_id"
 													? "Pilih Tipe Device"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Device Model
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.device_model_id,
-															label: formState
-																.device_model
-																.device_model_name,
-													  }
-													: formState.device_model_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="device_model_id"
-											options={deviceModel.map(
-												(item: deviceModel) => ({
-													value: item.device_model_id,
-													label: item.model,
-												})
-											)}
-											onChange={handleChangeDeviceModel}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "device_model_id"
-													? "Pilih Device Model"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Versi Firmware
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.firmeware_id,
-															label: formState
-																.firmware_version
-																.firmware_version_name,
-													  }
-													: formState.firmeware_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="firmeware_id"
-											// options={ruanganotmil.map(
-											// 	(item) => ({
-											// 		value: item.firmeware_id,
-											// 		label: item.nama_firmware,
-											// 	})
-											// )}
-											// onChange={handleRuanganChange}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "firmeware_id"
-													? "Pilih Ruangan"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Tipe
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.device_type_id,
-															label: formState
-																.device_type
-																.device_type_name,
-													  }
-													: formState.device_type_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="firmeware_id"
-											options={deviceType.map(
-												(item: deviceType) => ({
-													value: item.device_type_id,
-													label: item.type,
-												})
-											)}
-											onChange={handleDeviceType}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "firmeware_id"
-													? "Pilih Tipe Device"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="firmeware_id">
-											Manufacture
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.manufacturer_id,
-															label: formState
-																.manufacturer
-																.manufacturer_name,
-													  }
-													: formState.manufacturer_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="manufacturer_id"
-											options={manufacture.map(
-												(item: manufacture) => ({
-													value: item.manufacturer_id,
-													label: item.manufacture,
-												})
-											)}
-											onChange={handleChangeManufacture}
-										/>
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "manufacturer_id"
-													? "Pilih Manufacture"
-													: ""
-											)}
-										</p>
-									</div>
-									<div className="form-group w-full h-22">
-										<label
-											className="block text-sm font-medium text-black dark:text-white"
-											htmlFor="id"
-										>
-											Health Data Period
-										</label>
-										<input
-											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="health_data_periodic"
-											placeholder="health data period"
-											onChange={handleChange}
-											value={
-												formState.health_data_periodic
-											}
-											disabled={isDetail}
-											type="number"
-										/>
-										<p className="error-text p-0 m-0">
-											{errors.map((item) =>
-												item === "health_data_periodic"
-													? "Health Data Periode Diisi"
 													: ""
 											)}
 										</p>
@@ -780,7 +482,6 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 										isDetail ? "h-auto" : "h-15"
 									}  mt-3`}
 								>
-									{/* <br></br> */}
 									{isDetail ? null : isEdit ? (
 										<button
 											className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
@@ -814,7 +515,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 											) : (
 												""
 											)}
-											Ubah Data Smartwatch
+											Ubah Data Manufacture
 										</button>
 									) : (
 										<button
@@ -849,7 +550,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 											) : (
 												""
 											)}
-											Tambah Data Smartwatch
+											Tambah Data Manufacture
 										</button>
 									)}
 									{errors.filter((item: string) =>
@@ -875,8 +576,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 									{errors.length > 0 && (
 										<div className="error text-center">
 											<p className="text-red-400">
-												Ada data yang masih belum terisi
-												!
+												Ada data yang masih belum terisi !
 											</p>
 										</div>
 									)}

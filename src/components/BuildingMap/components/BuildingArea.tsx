@@ -765,43 +765,44 @@ function BuildingArea({
 
   useEffect(() => {
     dataPetugas();
+    dataCamera();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dataWbp();
-      dataPetugas();
-      dataPengunjung();
-      dataGateway();
-      dataCamera();
-      dataRoutes();
-      dataAccessDoor();
-      dataFaceRec();
-      dataDesktop();
-      dataTV();
-      dataSelfReg();
-      dataNVR();
-      dataNAS();
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     dataWbp();
+  //     dataPetugas();
+  //     dataPengunjung();
+  //     dataGateway();
+  //     dataCamera();
+  //     dataRoutes();
+  //     dataAccessDoor();
+  //     dataFaceRec();
+  //     dataDesktop();
+  //     dataTV();
+  //     dataSelfReg();
+  //     dataNVR();
+  //     dataNAS();
+  //   }, 10000);
 
-    setSelectedMenu("dashboard");
+  //   setSelectedMenu("dashboard");
 
-    dataWbp();
-    dataPetugas();
-    dataPengunjung();
-    dataGateway();
-    dataCamera();
-    dataRoutes();
-    dataAccessDoor();
-    dataFaceRec();
-    dataDesktop();
-    dataTV();
-    dataSelfReg();
-    dataNVR();
-    dataNAS();
+  //   dataWbp();
+  //   dataPetugas();
+  //   dataPengunjung();
+  //   dataGateway();
+  //   dataCamera();
+  //   dataRoutes();
+  //   dataAccessDoor();
+  //   dataFaceRec();
+  //   dataDesktop();
+  //   dataTV();
+  //   dataSelfReg();
+  //   dataNVR();
+  //   dataNAS();
 
-    return () => clearInterval(interval);
-  }, [dataParams]);
+  //   return () => clearInterval(interval);
+  // }, [dataParams]);
 
   useEffect(() => {
     setSelectedMenu("dashboard");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
 import Modal, { ModalCamera } from "../../Modal";
 
@@ -41,7 +41,7 @@ function Camera({
 
     // ` h-[${heightTemp}] w-[${widthTemp}] `;
 
-    console.log("style xxx", style);
+    // console.log("style xxx", style);
 
     return style;
   };
@@ -72,7 +72,7 @@ function Camera({
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalCamera handleClose={handleClose} name={item.nama} />
+        <ModalCamera handleClose={handleClose} name={item.nama} data={item} />
       </Modal>
     </div>
   );
