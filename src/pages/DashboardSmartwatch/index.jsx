@@ -106,7 +106,7 @@ const DashboardSmartwatch = () => {
 					className="h-full w-full flex flex-col gap-4 justify-center bg-slate-800 items-center z-1"
 				>
 					<span className=" text-white font-extrabold text-3xl">
-						S I K A P
+						Loading Data Smartwatch
 					</span>
 					<Spin size="large"></Spin>
 				</div>
