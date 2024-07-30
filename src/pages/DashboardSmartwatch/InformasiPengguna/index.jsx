@@ -1,9 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { Loader } from "@mantine/core";
-// import pesertaData from "../../../DataFetch/pesertaData";
-// import { LaravelApiPesertaList } from "../../../Service/PesertaApi/pesertaApi";
-// import useGetAuthUser from "../../../Hooks/useGetAuthUser";
-// import ListKegiatan from "../ListKegiatan";
 import ModalListPeserta from "./modalListPeserta";
 
 const InformasiKomponen = ({ data, loading }) => {
