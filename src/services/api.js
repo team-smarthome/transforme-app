@@ -5054,7 +5054,64 @@ export async function apiReadPlatform(params, token) {
 		throw error;
 	}
 }
+export async function apiCreatePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/platform",
+			// url: newwebserviceurl + "platform",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 
+export async function apiUpdatePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/platform",
+			// url: newwebserviceurl + "platform",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeletePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "DELETE",
+			url: "http://127.0.0.1:8000/api/platform",
+			// url: newwebserviceurl + "platform",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export async function apiReadDeviceType(params, token) {
 	try {
 		const response = await axios({

@@ -60,7 +60,7 @@ const DataCamera = (props: any) => {
 		groupId: "",
 		groupShow: [],
 		ffmpegIP: "localhost",
-		baseUrl: `http://${webSocketSecond}/stream/`,
+		baseUrl: `http://${webSocketFirst}/stream/`,
 		extenstion: "_.m3u8",
 		girdView: 1,
 		isFullscreenEnabled: false,
@@ -84,10 +84,10 @@ const DataCamera = (props: any) => {
 	const token = JSON.parse(getToken);
 	const errorTimeoutRef: any = useRef(null);
 
-	const client = useRef(new W3CWebSocket(`ws://${webSocketSecond}`));
+	const client = useRef(new W3CWebSocket(`ws://${webSocketFirst}`));
 	useEffect(() => {
 		// Initialize WebSocket connection
-		client.current = new WebSocket(`ws://${webSocketSecond}`);
+		client.current = new WebSocket(`ws://${webSocketFirst}`);
 
 		client.current.onopen = () => {
 			console.log("WebSocket Client Connected");
