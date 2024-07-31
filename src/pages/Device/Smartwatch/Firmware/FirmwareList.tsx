@@ -7,7 +7,8 @@ import {
   apiReadFirmware, 
   apiCreateFirmware, 
   apiUpdateFirmware, 
-  apiDeleteFirmware 
+  apiDeleteFirmware,
+  apiReadPlatform 
 } from "../../../../../src/services/api";
 import Pagination from "../../../../components/Pagination";
 import SearchInputButton from "../../Search";
@@ -34,13 +35,14 @@ const FirmwareList = () => {
   const [detailData, setDetailData] = useState<Item | null>(null);
   const [editData, setEditData] = useState<Item | null>(null);
   const [deleteData, setDeleteData] = useState<Item | null>(null);
+  const [dataPlatform, setDataPlatform] = useState([]);
   const [modalDetailOpen, setModalDetailOpen] = useState(false);
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [modalAddOpen, setModalAddOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [filter, setFilter] = useState("");
-  const [filterDmac, setFilterDmac] = useState("");
+  const [filterPlatform, setFilterPlatform] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -103,9 +105,45 @@ const FirmwareList = () => {
     const newFilter = e.target.value;
     setFilter(newFilter);
   };
+
+  const handleFilterChangePlatform = async (e: any) => {
+		const newFilter = e.target.value;
+		setFilterPlatform(newFilter);
+	};
+
+  const fetchDataPlatform = async () => {
+		let params = {
+			page: 1,
+			pageSize: 1000,
+		};
+		setIsLoading(true);
+		try {
+			const response = await apiReadPlatform(params, token);
+			if (response.data.status !== "OK") {
+				throw new Error(response.data.message);
+			}
+			const result = response.data.records;
+			setDataPlatform(result);
+			setPages(response.data.pagination.totalPages);
+			setRows(response.data.pagination.totalRecords);
+			setIsLoading(false);
+		} catch (e: any) {
+			if (e.response.status === 403) {
+				navigate("/auth/signin", {
+					state: { forceLogout: true, lastPage: location.pathname },
+				});
+			}
+			Alerts.fire({
+				icon: e.response.status === 403 ? "warning" : "error",
+				title: e.response.status === 403 ? Error403Message : e.message,
+			});
+		}
+	};
+
   const handleSearchClick = async () => {
     let params = {
       version: filter,
+      platform_id: filterPlatform,
       page: currentPage,
       pageSize: pageSize,
     };
@@ -150,6 +188,9 @@ const FirmwareList = () => {
   useEffect(() => {
     fetchData();
   }, [currentPage, pageSize]);
+  useEffect(() => {
+		fetchDataPlatform();
+	}, []);
 
   const fetchData = async () => {
     let params = {
@@ -349,6 +390,22 @@ const FirmwareList = () => {
                 onChange={handleFilterChange} 
                 />
             </div>
+            <div className="flex  w-full">
+							<select
+								value={filterPlatform}
+								onChange={handleFilterChangePlatform}
+								className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary w-full flex justify-center"
+							>
+								<option value="">Semua Platform</option>
+								{dataPlatform.map((item: any) => {
+									return (
+										<option value={item.platform_id}>
+											{item.nama_platform}
+										</option>
+									);
+								})}
+							</select>
+						</div>
             <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
               type="button" 
               onClick={handleSearchClick} 
@@ -439,7 +496,7 @@ const FirmwareList = () => {
                       onClick={() => handleDetailClick(item)}
                     >
                       <p className="text-black truncate dark:text-white">
-                        {item.platform}
+                        {item.nama_platform}
                       </p>
                     </div>
                     {/* aksi */}
