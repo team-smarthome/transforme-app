@@ -1,15 +1,21 @@
-import React, { useState } from "react";
-import useGetAuthUser from "./useGetAuthUser";
+import React, { useEffect, useState } from "react";
 import { useUnauthorizedHandler } from "../utils/handleUnauthorizedDashboardSmartwatch";
 import { LaravelApiPengajarList } from "../services/PengajarApi/pengajarApi";
 import { LaravelApiPesertaList } from "../services/PesertaApi/pesertaApi";
-
+import { useAtom } from "jotai";
+import { authLoginDashboardSmartwatch, pengajarDataAtom, pesertaDataAtom } from "../utils/atomDashboardSmartwatch";
 const pengajarData = () => {
+	let [authUserParam] = useAtom(authLoginDashboardSmartwatch);
+	console.log(authUserParam, "Auth User Param");
+	console.log(authUserParam.token, "Auth User Param");
 	const [pengajarList, setPengajarList] = useState();
 	const [pesertaList, setPesertaList] = useState();
-	const authUser = useGetAuthUser();
-	const handleUnauthorized = useUnauthorizedHandler();
 
+	let [pengajarDataTemp, setPengajarDataTemp] = useAtom(pengajarDataAtom);
+	let [pesertaDataTemp, setPesertaDataTemp] = useAtom(pesertaDataAtom);
+
+	const handleUnauthorized = useUnauthorizedHandler();
+	
 	const handlePengajarData = async () => {
 		let params = {
 			search: "",
@@ -19,14 +25,17 @@ const pengajarData = () => {
 		try {
 			const { data } = await LaravelApiPengajarList(
 				params,
-				authUser?.token
+				authUserParam?.token
 			);
 			setPengajarList(data?.records);
+			setPengajarDataTemp(data?.records);
+
 		} catch (error) {
 			console.log(error);
 			const { data } = error?.response;
 			if (data.status === 401) {
 				handleUnauthorized();
+				// handlePengajarData();
 			}
 		}
 	};
@@ -40,9 +49,10 @@ const pengajarData = () => {
 		try {
 			const { data } = await LaravelApiPesertaList(
 				params,
-				authUser?.token
+				authUserParam?.token
 			);
 			setPesertaList(data?.records);
+			setPesertaDataTemp(data?.records);
 		} catch (error) {
 			console.log(error);
 			const { data } = error?.response;

@@ -45,7 +45,7 @@ import {
 import { FaBullseye } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Modal, { ModalBuildingMap } from "../Modal";
-
+import {useLoginDashboardSmartwatch} from "../../services/loginDashboardSmartwatch"
 interface BuildingProps {
   buildingOpen: boolean;
   setBuildingOpen: (arg: boolean) => void;
@@ -95,8 +95,19 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
     isToggleWithDescriptionAtom
   );
   const dropdown = useRef<any>(null);
-
+  const loginDashboardSmartwatch = useLoginDashboardSmartwatch();
   useEffect(() => {
+    const fetchData = async () => {
+      const user = await loginDashboardSmartwatch();
+      if (user) {
+        console.log("User logged in:", user);
+      }
+    };
+
+    fetchData();
+  }, [loginDashboardSmartwatch]);
+  useEffect(() => {
+    console.log("Auth User");
     setSelectedMenu("dashboard");
     const clickHandler = (e: any) => {
       if (

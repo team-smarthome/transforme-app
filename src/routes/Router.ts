@@ -158,6 +158,21 @@ const PlatformList = lazy(
 const DeviceGelangList = lazy(
 	() => import("../pages/Device/Gelang/GelangList")
 );
+const PtpList = lazy(
+	() => import("../pages/Device/PTP/PtpList")
+);
+const TvList = lazy(
+	() => import("../pages/Device/TV/TvList")
+);
+const DesktopList = lazy(
+	() => import("../pages/Device/Desktop/DesktopList")
+);
+const MKioskList = lazy(
+	() => import("../pages/Device/MKiosk/MKioskList")
+);
+const NvrList = lazy(
+	() => import("../pages/Device/NVR/NvrList")
+);
 const MainMenuSmartwatch = lazy(
 	() => import("../pages/Device/Smartwatch/MainMenuSmartwatch")
 );
@@ -571,6 +586,31 @@ const coreRoutes = [
 		// path: '/device-bracelet-list',
 		title: "DeviceGelangList",
 		component: DeviceGelangList,
+	},
+	{
+		path: "/ptp",
+		title: "PtpList",
+		component: PtpList,
+	},
+	{
+		path: "/tv",
+		title: "TvList",
+		component: TvList,
+	},
+	{
+		path: "/desktop",
+		title: "DesktopList",
+		component: DesktopList,
+	},
+	{
+		path: "/m-kiosk",
+		title: "MKioskList",
+		component: MKioskList,
+	},
+	{
+		path: "/nvr",
+		title: "NvrList",
+		component: NvrList,
 	},
 	{
 		// path: "/pengaturan-list/perangkat/gelang",
