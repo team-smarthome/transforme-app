@@ -14,7 +14,7 @@ const InformasiKomponen = ({ data, loading }) => {
 
 	return (
 		<div className=" h-full">
-			{" "}
+			
 			<h1 className="text-white font-semibold text-md h-10">
 				Data Peserta
 			</h1>

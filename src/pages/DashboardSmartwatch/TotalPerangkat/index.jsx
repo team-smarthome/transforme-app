@@ -9,7 +9,7 @@ import {
 const TotalPerangkatKomponen = ({ data }) => {
 	return (
 		<div className="h-full grid grid-rows-3 gap-4">
-			<div className="bg-wRedFlat grid grid-cols-3 rounded-md items-center text-white">
+			<div className="bg-red-500 grid grid-cols-3 rounded-md items-center text-white">
 				<div className="col-span-1 flex justify-center ">
 					<IoWatchOutline className="h-[40px] w-[40px] "></IoWatchOutline>
 				</div>
@@ -20,7 +20,7 @@ const TotalPerangkatKomponen = ({ data }) => {
 					<h2 className="font-semibold">Taruna</h2>
 				</div>
 			</div>
-			<div className="bg-wGreenFlat grid grid-cols-3 rounded-md items-center text-white">
+			<div className="bg-green-500 grid grid-cols-3 rounded-md items-center text-white">
 				<div className="col-span-1 flex justify-center">
 					<HiMiniSignal className="h-[40px] w-[40px]"></HiMiniSignal>
 				</div>
@@ -31,7 +31,7 @@ const TotalPerangkatKomponen = ({ data }) => {
 					<h2 className="font-semibold">Terhubung</h2>
 				</div>
 			</div>
-			<div className="bg-wYellowFlat grid grid-cols-3 rounded-md items-center text-white">
+			<div className="bg-yellow-500 grid grid-cols-3 rounded-md items-center text-white">
 				<div className="col-span-1 flex justify-center">
 					<HiSignalSlash className="h-[40px] w-[40px]"></HiSignalSlash>
 				</div>

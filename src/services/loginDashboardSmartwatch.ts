@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { authLoginDashboardSmartwatch , pesertaDataAtom,pengajarDataAtom, dashboardDataAtom} from "../utils/atomDashboardSmartwatch";
 import { LaravelApiPengajarList } from "./PengajarApi/pengajarApi";
 import { LaravelApiPesertaList } from "./PesertaApi/pesertaApi";
-import { LaravelApiDashboard } from "../../services/DashboardSmartwatchApi/dashboardApi";
+import { LaravelApiDashboard } from "./DashboardSmartwatchApi/dashboardApi";
 let webServiveLaravelSmartwatch = "https://dev-sikap-smartwatch.transforme.co.id/api/";
 export async function LaravelApiLoginSmartwatch(params) {
   try {

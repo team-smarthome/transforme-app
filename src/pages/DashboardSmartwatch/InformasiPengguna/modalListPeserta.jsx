@@ -5,6 +5,7 @@ import { LaravelApiGetPeserta } from "../../../services/DashboardSmartwatchApi/d
 import useGetAuthUser from "../../../hooks/useGetAuthUser";
 import { useUnauthorizedHandler } from "../../../utils/handleUnauthorizedDashboardSmartwatch";
 import { IoSearchSharp } from "react-icons/io5";
+import Pagination from './Pagination'; // Adjust the path as needed
 
 const ModalListPeserta = ({ open, onClose, tahun }) => {
 	const [searchData, setSearchData] = useState("");
@@ -17,7 +18,13 @@ const ModalListPeserta = ({ open, onClose, tahun }) => {
 	const authUser = useGetAuthUser();
 	const handleUnauthorized = useUnauthorizedHandler();
 	const [loading, setLoading] = useState(false);
-
+	const [currentPage, setCurrentPage] = useState(1);
+	const totalItems = 50;
+	const itemsPerPage = 10;
+  
+	const handlePageChange = (page) => {
+	  setCurrentPage(page);
+	};
 	const fetchData = async () => {
 		setLoading(true);
 		let params = {
@@ -52,6 +59,7 @@ const ModalListPeserta = ({ open, onClose, tahun }) => {
 
 	return (
 		<div>
+
 			{open && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
 					<div className="relative w-full max-w-lg bg-white rounded-lg shadow-lg">
@@ -110,11 +118,17 @@ const ModalListPeserta = ({ open, onClose, tahun }) => {
 								</>
 							)}
 							<div className="flex justify-center h-10 items-center mt-4">
-								<Pagination
+								{/* <Pagination
 									simple
 									defaultCurrent={1}
 									total={50}
-								/>
+								/> */}
+								<Pagination
+        total={totalItems}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
 							</div>
 						</div>
 					</div>
