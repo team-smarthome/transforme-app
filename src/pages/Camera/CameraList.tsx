@@ -147,12 +147,12 @@ const CameraList = () => {
 	}, [buildings]);
 
 	const errorTimeoutRef: any = useRef(null);
-	const client = useRef(new W3CWebSocket(`ws://${webSocketSecond}`));
+	const client = useRef(new W3CWebSocket(`ws://${webSocketFirst}`));
 	const [receivedObjects, setReceivedObjects] = useState([]);
 
 	useEffect(() => {
 		// Initialize WebSocket connection
-		client.current = new WebSocket(`ws://${webSocketSecond}`);
+		client.current = new WebSocket(`ws://${webSocketFirst}`);
 
 		client.current.onopen = () => {
 			setIsWebSocketConnected(true);
@@ -397,7 +397,7 @@ const CameraList = () => {
 	const { startPage, endPage } = getPageNumbers();
 
 	const renderThumb = (cam: any) => {
-		const urlStream = `http://${webSocketSecond}/stream/${cam.ip_address}_.m3u8`;
+		const urlStream = `http://${webSocketFirst}/stream/${cam.ip_address}_.m3u8`;
 		console.log(urlStream, "url stream");
 		return (
 			<ReactPlayer

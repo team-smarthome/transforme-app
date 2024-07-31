@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../../common/Loader";
 
-import { Alerts } from "./AlertDeviceType";
+import { Alerts } from "./AlertPlatform";
 import {
-	apiCreateDeviceType,
-	apiUpdateDeviceType,
-	apiDeleteDeviceType,
-	apiReadDeviceType,
+	apiCreatePlatform,
+	apiUpdatePlatform,
+	apiDeletePlatform,
 	apiReadPlatform,
 } from "../../../../services/api";
 import Select from "react-select";
@@ -21,9 +20,10 @@ import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Error403Message } from "../../../../utils/constants";
 import { Breadcrumbs } from "../../../../components/Breadcrumbs";
-import { AddDeviceType } from "./ModalAddDeviceType";
-import { DeleteDeviceTypeModal } from "./ModalDeleteDeviceType";
+
 import { CustomStyles } from "../../../EntryData/CustomStyle";
+import { AddDeviceType } from "./ModalAddPlatform";
+import { DeleteDeviceTypeModal } from "./ModalDeletePlatform";
 
 interface Item {
 	id: string;
@@ -32,7 +32,7 @@ interface Item {
 	platform: string;
 }
 
-const DeviceTypeList = () => {
+const PlatformList = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -75,12 +75,11 @@ const DeviceTypeList = () => {
 
 	const handleSearchClick = async () => {
 		let params = {
-			type: filter,
-			platform_id: filterPlatform,
+			nama_platform: filter,
 			page: currentPage,
 		};
 		try {
-			const response = await apiReadDeviceType(params, token);
+			const response = await apiReadPlatform(params, token);
 			if (response.status === 200) {
 				const result = response.data;
 				setData(result.records);
@@ -180,7 +179,7 @@ const DeviceTypeList = () => {
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadDeviceType(params, token);
+			const response = await apiReadPlatform(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
@@ -267,7 +266,7 @@ const DeviceTypeList = () => {
 	// function untuk menghapus data
 	const handleSubmitDelete = async (params: any) => {
 		try {
-			const responseDelete = await apiDeleteDeviceType(params, token);
+			const responseDelete = await apiDeletePlatform(params, token);
 			if (responseDelete.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -299,7 +298,7 @@ const DeviceTypeList = () => {
 	// function untuk menambah data
 	const handleSubmitAdd = async (params: any) => {
 		try {
-			const responseCreate = await apiCreateDeviceType(params, token);
+			const responseCreate = await apiCreatePlatform(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -331,7 +330,7 @@ const DeviceTypeList = () => {
 	// function untuk mengubah data
 	const handleSubmitEdit = async (params: any) => {
 		try {
-			const responseEdit = await apiUpdateDeviceType(params, token);
+			const responseEdit = await apiUpdatePlatform(params, token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -371,10 +370,7 @@ const DeviceTypeList = () => {
 	}, [isOperator]);
 
 	const exportToExcel = async () => {
-		const dataToExcel = [
-			["Tipe", "Platform"],
-			...data.map((item: any) => [item.type, item.platform]),
-		];
+		const dataToExcel = [["Tipe"], ...data.map((item: any) => [item.type])];
 
 		const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
 		const wb = xlsx.utils.book_new();
@@ -410,25 +406,9 @@ const DeviceTypeList = () => {
 						<div className="flex w-full i-search">
 							<SearchInputButton
 								value={filter}
-								placehorder="Cari Tipe"
+								placehorder="Cari Platform"
 								onChange={handleFilterChange}
 							/>
-						</div>
-						<div className="flex  w-full">
-							<select
-								value={filterPlatform}
-								onChange={handleFilterChangePlatform}
-								className=" rounded border border-stroke py-1 px-4 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-700 dark:text-white dark:focus:border-primary w-full flex justify-center"
-							>
-								<option value="">Semua Platform</option>
-								{dataPlatform.map((item: any) => {
-									return (
-										<option value={item.platform_id}>
-											{item.nama_platform}
-										</option>
-									);
-								})}
-							</select>
 						</div>
 						<button
 							className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
@@ -470,7 +450,7 @@ const DeviceTypeList = () => {
 				</div>
 				<div className="flex justify-between items-center mb-3">
 					<h4 className="ext-xl font-semibold text-black dark:text-white capitalize">
-						data tipe device
+						data platform
 					</h4>
 					{!isOperator && (
 						<button
@@ -485,18 +465,12 @@ const DeviceTypeList = () => {
 				<div className="flex flex-col">
 					<div
 						className={`grid ${
-							isOperator ? "grid-cols-2" : "grid-cols-3"
+							isOperator ? "grid-cols-1" : "grid-cols-2"
 						} rounded-t-md capitalize bg-gray-2 dark:bg-slate-600 `}
 					>
 						<div className="p-2.5 text-center xl:py-5">
 							<h5 className="text-sm font-medium uppercase xsm:text-base">
 								TIPE
-							</h5>
-						</div>
-
-						<div className="p-2.5 text-center xl:py-5">
-							<h5 className="text-sm font-medium uppercase xsm:text-base">
-								PLATFORM
 							</h5>
 						</div>
 						<div
@@ -516,8 +490,8 @@ const DeviceTypeList = () => {
 								<div
 									className={`grid ${
 										isOperator
-											? "grid-cols-2"
-											: "grid-cols-3"
+											? "grid-cols-1"
+											: "grid-cols-2"
 									} rounded-sm bg-gray-2 dark:bg-meta-4`}
 								>
 									<div
@@ -525,18 +499,9 @@ const DeviceTypeList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black truncate dark:text-white">
-											{item.type}
+											{item.nama_platform}
 										</p>
 									</div>
-									<div
-										onClick={() => handleDetailClick(item)}
-										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
-									>
-										<p className="text-black truncate dark:text-white">
-											{item.platform}
-										</p>
-									</div>
-
 									<div
 										className={`hidden items-center ${
 											isOperator
@@ -620,4 +585,4 @@ const DeviceTypeList = () => {
 	);
 };
 
-export default DeviceTypeList;
+export default PlatformList;
