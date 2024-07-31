@@ -281,7 +281,7 @@ const MapToggleButtons = ({
         path = "/gateway";
         break;
       case "PTP":
-        path = "/peta";
+        path = "/ptp";
         break;
       case "Camera":
         path = "/kamera";
@@ -293,16 +293,19 @@ const MapToggleButtons = ({
         path = "/peta";
         break;
       case "Desktop":
-        path = "/peta";
+        path = "/desktop";
         break;
       case "TV":
-        path = "/peta";
+        path = "/tv";
+        break;
+      case "M-Kiosk":
+        path = "/m-kiosk";
         break;
       case "SelfReg":
         path = "/peta";
         break;
       case "NVR":
-        path = "/peta";
+        path = "/nvr";
         break;
       case "NAS":
         path = "/peta";
@@ -585,7 +588,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari PTP & AP</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("PTP")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
@@ -792,7 +797,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari Desktop</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("Desktop")}
+              >
                 <button style={{ color: "white" }}>
                   <TbDeviceDesktopPlus className="w-6 h-6" />
                 </button>
@@ -843,7 +850,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari TV</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              onClick={() => handleNavigateAdd("TV")}
+              >
                 <button style={{ color: "white" }}>
                   <TbDeviceDesktopPlus className="w-6 h-6" />
                 </button>
@@ -895,7 +904,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari M-Kiosk</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              onClick={() => handleNavigateAdd("M-Kiosk")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
@@ -947,7 +958,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari NVR</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("NVR")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>

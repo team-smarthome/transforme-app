@@ -17,22 +17,34 @@ export function LaravelApiLoginSmartwatch(params) {
 	}
 }
 import Swal from "sweetalert2";
+import { useAtom } from "jotai";
+import {
+	authLoginDashboardSmartwatch
+} from "../utils/atomDashboardSmartwatch"
+
+
 const useGetAuthUser = async () => {
+	const [authUser,setAuthUser] = useAtom(authLoginDashboardSmartwatch);
+
 	const params = {
 		nomor_pokok: "2024001",
 		password: "123456",
 	};
 
-	try {
-		const data = await LaravelApiLoginSmartwatch(params);
 
-		console.log('====================================');
-		console.log(data, "Data Login Smartwatch");
-		console.log('====================================');
+	if(!authUser.token){
+	try {
+		const {data} = await LaravelApiLoginSmartwatch(params);
+		console.log(data, "Auth User");
+		console.log(data.records, "Auth User");
+		console.log(data.status, "Auth User");
+
+		
 
 		if (data.status === 200) {
 			const authUser = data.records;
-			console.log(authUser, "Auth User");
+			setAuthUser(authUser);
+			// console.log(data.records, "Auth User");
 			return authUser?.name ? authUser : null;
 		} else {
 			Swal.fire({
@@ -50,6 +62,10 @@ const useGetAuthUser = async () => {
 			text: "Terjadi kesalahan pada server.",
 		});
 		return null;
+	}
+	}
+	else{
+		return authUser;
 	}
 };
 

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import  Loader  from "../../../common/Loader/index";
-// import pesertaData from "../../../services/PesertaApi/pesertaApi";
-// import { LaravelApiPesertaList } from "../../../Service/PesertaApi/pesertaApi";
-// import useGetAuthUser from "../../../hooks/useGetAuthUser";
+
 
 const ListKegiatan = ({ data, loading }) => {
 	const containerRef = useRef(null);
