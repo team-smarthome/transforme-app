@@ -9,12 +9,18 @@ import BestPeformance from "./BestPeformance";
 import { FaBullseye } from "react-icons/fa6";
 import { useUnauthorizedHandler } from "../../utils/handleUnauthorizedDashboardSmartwatch";
 import { LaravelApiDashboard } from "../../services/DashboardSmartwatchApi/dashboardApi";
-import useGetAuthUser from "../../hooks/useGetAuthUser";
 import pengajarData from "../../hooks/pengajarData";
 import { Spin } from "antd";
 // import waveBg from "../../../assets/monior-bg.jpg";
 import waveBg from "../../../assets/monitor-bg.jpg";
 import ListKegiatan from "./ListKegiatan";
+import {
+	authLoginDashboardSmartwatch,
+	pengajarDataAtom,
+	pesertaDataAtom,
+	dashboardDataAtom,
+} from "../../utils/atomDashboardSmartwatch"
+import { useAtom } from "jotai";
 
 const CornerLineTop = () => {
 	return (
@@ -40,8 +46,13 @@ const DashboardSmartwatch = () => {
 	const [loading, setLoading] = useState(false);
 	const [formLoading, setFormLoading] = useState(true);
 	const handleUnauthorized = useUnauthorizedHandler();
-	const [dashboardData, setDashboardData] = useState(null);
-	const authUser = useGetAuthUser();
+	// const [dashboardData, setDashboardData] = useState(null);
+
+	const [authUser,setAuthUser] =  useAtom(authLoginDashboardSmartwatch);
+	const [dashboardData, setDashboardData] =  useAtom(dashboardDataAtom);
+	let [pengajarDataTemp, setPengajarDataTemp] = useAtom(pengajarDataAtom);
+	let [pesertaDataTemp, setPesertaDataTemp] = useAtom(pesertaDataAtom);
+
 	const { pengajarList, pesertaList, handlePesertaData, handlePengajarData } =
 		pengajarData();
 	const [dataList, setDataList] = useState([]);
@@ -49,9 +60,13 @@ const DashboardSmartwatch = () => {
 	const fetchDashboard = async () => {
 		try {
 			const { data } = await LaravelApiDashboard(authUser?.token);
+			console.log(data, "Data Temp");
+			console.log(authUser, "Data Temp");
+
 			if (data.status === 200) {
 				setDashboardData(data?.records);
 			}
+		
 		} catch (error) {
 			console.log(error);
 			const { data } = error?.response;
@@ -62,6 +77,9 @@ const DashboardSmartwatch = () => {
 	};
 
 	useEffect(() => {
+		console.log('====================================');
+		console.log(pesertaDataTemp, pengajarDataTemp, "Data Temp");
+		console.log('====================================');
 		Promise.all([
 			fetchDashboard(),
 			handlePesertaData(),
@@ -69,10 +87,11 @@ const DashboardSmartwatch = () => {
 		]).then(() => setFormLoading(false));
 	}, []);
 
-	console.log(dashboardData, "dash");
+	console.log(dashboardData, "Data Temp");
 	useEffect(() => {
-		if (pesertaList !== undefined && pengajarList !== undefined) {
-			const userList = [...pesertaList, ...pengajarList];
+		
+		if (pesertaDataTemp !== undefined && pengajarDataTemp !== undefined) {
+			const userList = [...pesertaDataTemp, ...pengajarDataTemp];
 
 			let dataDeviceCombine = userList.map((item1) => {
 				let item2 = dashboardData?.perangkat?.detail.find(
@@ -83,9 +102,11 @@ const DashboardSmartwatch = () => {
 					detail: item2,
 				};
 			});
+			console.log(dataDeviceCombine, "Data Temp");
 
 			setDataList(
-				dataDeviceCombine.filter(
+				dataDeviceCombine
+				.filter(
 					(item3) =>
 						item3?.device !== null &&
 						item3?.detail?.n_lat !== 0 &&
@@ -93,7 +114,8 @@ const DashboardSmartwatch = () => {
 				)
 			);
 		}
-	}, [pesertaList, pengajarList, dashboardData]);
+		
+	}, [pesertaDataTemp, pengajarDataTemp, dashboardData]);
 
 	
 

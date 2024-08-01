@@ -1,9 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { Loader } from "@mantine/core";
-// import pesertaData from "../../../DataFetch/pesertaData";
-// import { LaravelApiPesertaList } from "../../../Service/PesertaApi/pesertaApi";
-// import useGetAuthUser from "../../../Hooks/useGetAuthUser";
-// import ListKegiatan from "../ListKegiatan";
 import ModalListPeserta from "./modalListPeserta";
 
 const InformasiKomponen = ({ data, loading }) => {
@@ -19,7 +14,7 @@ const InformasiKomponen = ({ data, loading }) => {
 
 	return (
 		<div className=" h-full">
-			{" "}
+			
 			<h1 className="text-white font-semibold text-md h-10">
 				Data Peserta
 			</h1>

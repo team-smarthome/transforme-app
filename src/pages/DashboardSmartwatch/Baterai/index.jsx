@@ -3,11 +3,11 @@ import { IoBatteryFullOutline, IoBatteryHalfOutline } from "react-icons/io5";
 
 const BateraiKomponen = ({ data }) => {
 	return (
-		<div className="grid grid-cols-3 gap-2 divide-x divide h-full divide-wLineLightBlue  ">
+		<div className="grid grid-cols-3 gap-2 divide-x divide h-full divide-blue-500 bg-slate-700  ">
 			<div className="flex items-center flex-wrap text-center text-white  ">
 				<h1 className="w-full text-xl">Baterai</h1>
 			</div>
-			<div className="grid grid-cols-2 px-2">
+			<div className="grid grid-cols-2 px-2 ">
 				<div className="items-center justify-center flex flex-col text-center">
 					<h1 className="text-3xl text-wGreenFlat animate-pulseCustom">
 						{data?.totalBateryLog?.full
@@ -21,7 +21,7 @@ const BateraiKomponen = ({ data }) => {
 				<div className="items-center justify-center flex flex-col text-center">
 					<IoBatteryFullOutline
 						size={40}
-						className="text-wGreenFlat"
+						className="text-green-500"
 					></IoBatteryFullOutline>
 				</div>
 			</div>
@@ -39,7 +39,7 @@ const BateraiKomponen = ({ data }) => {
 				<div className="items-center justify-center flex flex-col text-center">
 					<IoBatteryHalfOutline
 						size={40}
-						className="text-wYellowFlat"
+						className="text-yellow-500"
 					></IoBatteryHalfOutline>
 				</div>
 			</div>
