@@ -287,10 +287,10 @@ const MapToggleButtons = ({
         path = "/kamera";
         break;
       case "Access":
-        path = "/peta";
+        path = "/access-door";
         break;
       case "Face":
-        path = "/peta";
+        path = "/face-rec";
         break;
       case "Desktop":
         path = "/desktop";
@@ -308,7 +308,7 @@ const MapToggleButtons = ({
         path = "/nvr";
         break;
       case "NAS":
-        path = "/peta";
+        path = "/nas";
         break;
       case "Zone":
         path = "/peta";
@@ -695,7 +695,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm"> Cari Access Door</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("Access")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
@@ -746,7 +748,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari Face Rec</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              onClick={() => handleNavigateAdd("Face")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
@@ -1012,7 +1016,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari NAS</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md">
+              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("NAS")}
+              >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
                 </button>
