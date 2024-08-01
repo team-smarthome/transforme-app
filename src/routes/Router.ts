@@ -173,6 +173,15 @@ const MKioskList = lazy(
 const NvrList = lazy(
 	() => import("../pages/Device/NVR/NvrList")
 );
+const NasList = lazy(
+	() => import("../pages/Device/NAS/NasList")
+);
+const AccessDoorList = lazy(
+	() => import("../pages/Device/AccessDoor/AccessDoorList")
+);
+const FaceRecList = lazy(
+	() => import("../pages/Device/FaceRec/FaceRecList")
+);
 const MainMenuSmartwatch = lazy(
 	() => import("../pages/Device/Smartwatch/MainMenuSmartwatch")
 );
@@ -611,6 +620,21 @@ const coreRoutes = [
 		path: "/nvr",
 		title: "NvrList",
 		component: NvrList,
+	},
+	{
+		path: "/nas",
+		title: "NasList",
+		component: NasList,
+	},
+	{
+		path: "/access-door",
+		title: "AccessDoorList",
+		component: AccessDoorList,
+	},
+	{
+		path: "/face-rec",
+		title: "FaceRecList",
+		component: FaceRecList,
 	},
 	{
 		// path: "/pengaturan-list/perangkat/gelang",
