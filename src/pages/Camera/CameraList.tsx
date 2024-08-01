@@ -40,63 +40,7 @@ const CameraList = () => {
 	}
 
 	const [messageCamera, setMessageCamera] = useState();
-	// useEffect(() => {
-	//   apiLocationOnlineDeviceList()
-	//     .then((res) => {
-	//       setLocationDeviceList(res);
-	//     })
-	//     .catch((e: any) => {
-	//       if (e.response.status === 403) {
-	//         navigate('/', {
-	//           state: { forceLogout: true, lastPage: location.pathname },
-	//         });
-	//       }
-	//       Alerts.fire({
-	//         icon: e.response.status === 403 ? 'warning' : 'error',
-	//         title: e.response.status === 403 ? Error403Message : e.message,
-	//       });
-	//     });
 
-	//   allKameraOtmil()
-	//     .then((res) => {
-	//       setLocationDeviceListOtmil(res);
-	//       console.log(res, 'res otmil');
-	//     })
-	//     .catch((e: any) => {
-	//       if (e.response.status === 403) {
-	//         navigate('/', {
-	//           state: { forceLogout: true, lastPage: location.pathname },
-	//         });
-	//       }
-	//       Alerts.fire({
-	//         icon: e.response.status === 403 ? 'warning' : 'error',
-	//         title: e.response.status === 403 ? Error403Message : e.message,
-	//       });
-	//     });
-
-	//   allKameraLemasmil()
-	//     .then((res) => {
-	//       setLocationDeviceListLemasmil(res);
-	//       console.log(res, 'res lemasmil');
-	//     })
-	//     .catch((e: any) => {
-	//       if (e.response.status === 403) {
-	//         navigate('/', {
-	//           state: { forceLogout: true, lastPage: location.pathname },
-	//         });
-	//       }
-	//       Alerts.fire({
-	//         icon: e.response.status === 403 ? 'warning' : 'error',
-	//         title: e.response.status === 403 ? Error403Message : e.message,
-	//       });
-	//     });
-	// }, []);
-
-	//   useEffect(() => {
-	//     apiLocationOnlineDeviceList().then((res) => {
-	//       setLocationDeviceList(res);
-	//     });
-	//   }, []);
 	useEffect(() => {
 		fetchData();
 	}, []);
@@ -104,7 +48,7 @@ const CameraList = () => {
 	const handleRefreshClick = () => {
 		fetchData();
 	};
-	let getToken = localStorage.getItem("token");
+	let getToken: any = localStorage.getItem("token");
 	const token = JSON.parse(getToken);
 	console.log("token", token);
 	let fetchData = async () => {
@@ -119,7 +63,6 @@ const CameraList = () => {
 			};
 
 			const response = await apiBuilding(dataUser, token?.token);
-			console.log("response from apiBuilding", response);
 
 			if (response.data.status === "OK") {
 				setBuilding(response);
@@ -142,6 +85,7 @@ const CameraList = () => {
 	};
 	useEffect(() => {
 		if (buildings) {
+			console.log("buildings changed, sending request");
 			sendRequestOnce();
 		}
 	}, [buildings]);
@@ -220,6 +164,7 @@ const CameraList = () => {
 		if (onlineCameras && onlineCameras.length > 0) {
 			onlineCameras.forEach((camera) => {
 				// Panggil sendRequest untuk setiap kamera online
+				console.log("Sending request for camera:", camera?.nama_kamera);
 				sendRequest("startLiveView", {
 					listViewCameraData: [
 						{
