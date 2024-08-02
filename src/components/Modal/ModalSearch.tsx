@@ -674,7 +674,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
   ]);
 
   return (
-    <div className="w-full pb-7 text-white p-4 bg-slate-700">
+    <div className="w-[60vw] pb-7 text-white p-4 bg-slate-700">
       <section className="w-full flex mb-4 justify-between">
         <button type="button" onClick={handleClose}>
           <p className="font-semibold text-lg">{`Mencari Data ${hoverData}`}</p>
@@ -683,6 +683,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           <XMarkIcon className="w-6 h-6" />
         </button>
       </section>
+      <div className="flex w-full">
       <div className="flex w-full">
         <Input
           style={CustomInputStyle}
@@ -696,6 +697,21 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         >
           Cari
         </button>
+      </div>
+      <div className="flex w-full">
+        <Input
+          style={CustomInputStyle}
+          className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
+          value={dataSearch}
+          onChange={handleSearchChange}
+        />
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleSearchClick}
+        >
+          Cari
+        </button>
+      </div>
       </div>
 
       {hoverData === "Smartwatch" ? (

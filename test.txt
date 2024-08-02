@@ -1,0 +1,14 @@
+List of Features
+
+1. Menampilkan info tentang status keamanan dan keselamatan saat ini 
+    - Pegawai
+2. Menampilkan Sarana dan infrastruktur di kawasan 
+    - Bangunan (termsuk didalamnya, lantai,ruangan)
+    - Device inventaris (Kamera, Router, dll)
+3. Apabila ada situasi yang tidak semestinya, berikan alert dan pop-up, dan beri opsi tindak lanjut nya
+4. Apabila ada alarm, tunjukkan dimana alarm berasal dan sediakan opsi tindak lanjut nya
+    - Apabila Staf/Visitor memasuki area di luar hak akses yang dimiliki
+5. Kustomisasi skenario tertentu
+    - Hak Akses di Area tertentu (Zona, Bangunan, Ruangan)
+6. Tampilan Dashboard 3D
+    - On Research
