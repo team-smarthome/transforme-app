@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-import { apiBuilding } from "../../services/api";
+import { SlOptionsVertical } from "react-icons/sl";
+import { apiBuilding, apiUpdateKamera } from "../../services/api";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { RiCameraOffLine } from "react-icons/ri";
@@ -10,6 +11,9 @@ import ReactPlayer from "react-player";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { HiRefresh } from "react-icons/hi";
 import ToolsTip from "../../components/ToolsTip";
+import MenuItemComponent from "../../components/MenuItemCameraSave";
+import { Alerts } from "./AlertCamera";
+import { AddKamera } from "../Device/Kamera/ModalAddKamera";
 
 interface BuildingRecord {
 	data?: {
@@ -23,13 +27,18 @@ const CameraList = () => {
 	const navigate = useNavigate();
 	const [isWebSocketConnected, setIsWebSocketConnected] = useState(false);
 	const [buildings, setBuilding] = useState<BuildingRecord>();
+	const [editData, setEditData] = useState(null);
+	const startLiveViewCalled = useRef(false);
 	const [selectedRoom, setSelectedRoom] = useState("");
 	const [selectedBuilding, setSelectedBuilding] = useState("");
 	const [selectedFloor, setSelectedFloor] = useState("");
 	const [columns, setColumns] = useState(2);
+	const [modalEditOpen, setModalEditOpen] = useState(false);
 	const [rows, setRows] = useState(3);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [currentPageCamOnline, setCurrentPageCamOnline] = useState(1);
+	const [menuIndex, setMenuIndex] = useState<number | null>(null);
+	const [hovering, setHovering] = useState(false);
 	const camerasPerPage = columns * rows;
 
 	const webSocketFirst = "192.168.1.111:5000";
@@ -47,6 +56,27 @@ const CameraList = () => {
 
 	const handleRefreshClick = () => {
 		fetchData();
+	};
+
+	const handleIconClick = (index: number) => {
+		setMenuIndex(index === menuIndex ? null : index);
+	};
+
+	const handleMouseEnter = () => {
+		setHovering(true);
+	};
+
+	const handleMouseLeave = () => {
+		setHovering(false);
+		setMenuIndex(null);
+	};
+
+	const handleEditClick = (item: Item) => {
+		setEditData(item);
+		setModalEditOpen(true);
+	};
+	const handleCloseEditModal = () => {
+		setModalEditOpen(false);
 	};
 	let getToken: any = localStorage.getItem("token");
 	const token = JSON.parse(getToken);
@@ -83,13 +113,20 @@ const CameraList = () => {
 		}
 		// setIsLoading(false);
 	};
+	// useEffect(() => {
+	// 	if (buildings) {
+	// 		console.log("buildings changed, sending request");
+	// 		sendRequestOnce();
+	// 	}
+	// }, [buildings]);
+
 	useEffect(() => {
-		if (buildings) {
+		if (buildings && !startLiveViewCalled.current) {
 			console.log("buildings changed, sending request");
 			sendRequestOnce();
+			startLiveViewCalled.current = true;
 		}
 	}, [buildings]);
-
 	const errorTimeoutRef: any = useRef(null);
 	const client = useRef(new W3CWebSocket(`ws://${webSocketFirst}`));
 	const [receivedObjects, setReceivedObjects] = useState([]);
@@ -108,31 +145,7 @@ const CameraList = () => {
 			setReceivedObjects((prevObjects) => [...prevObjects, data]);
 
 			setMessageCamera(data);
-			// if (data.type === 'error') {
-			//   // Tangkap pesan error dan tampilkan kepada pengguna
-			//   clearTimeout(errorTimeoutRef.current); // Hapus timeout sebelumnya (jika ada)
-			//   errorTimeoutRef.current = setTimeout(() => {
-			//     setErrorCam(true);
-			//     console.log(data, 'ini data error');
-			//     console.log('Error from server camera:', data.message);
-			//   }, 1500); // Setelah 2 detik, tampilkan pesan error
-			// }
-			// if (data.type === 'info') {
-			//   clearTimeout(errorTimeoutRef.current); // Hapus timeout jika mendapatkan pesan info
-			//   setErrorCam(false);
-			//   console.log(data, 'ini data berhasil');
-			// }
 		};
-		// client.current.onmessage = (message) => {
-		//   const data = JSON.parse(message.data);
-		//   if (data.type === 'info') {
-		//     // Tangkap pesan error dan tampilkan kepada pengguna
-		//     console.log(data, 'ini data info');
-
-		//     console.log('Error from server camera:', data.message);
-		//   }
-		// };
-		// Cleanup function
 		return () => {
 			setIsWebSocketConnected(false);
 			console.log("WebSocket Client DISConnected");
@@ -214,6 +227,39 @@ const CameraList = () => {
 		driverObj.drive();
 	};
 
+	const handleSubmitEdit = async (params: any) => {
+		console.log(params, "edit");
+		try {
+			const responseEdit = await apiUpdateKamera(params, token);
+			if (responseEdit.data.status === "OK") {
+				Alerts.fire({
+					icon: "success",
+					title: "Berhasil mengubah data",
+				});
+				setModalEditOpen(false);
+				fetchData();
+			} else if (responseEdit.data.status === "NO") {
+				Alerts.fire({
+					icon: "error",
+					title: "Gagal mengubah data",
+				});
+			} else {
+				throw new Error(responseEdit.data.message);
+			}
+		} catch (e: any) {
+			if (e.response.status === 403) {
+				navigate("/", {
+					state: { forceLogout: true, lastPage: location.pathname },
+				});
+			}
+			Alerts.fire({
+				icon: e.response.status === 403 ? "warning" : "error",
+				title: e.response.status === 403 ? Error403Message : e.message,
+			});
+		}
+	};
+
+	// handle select gedung and other
 	const handleSelectBuilding = (e: any) => {
 		const selectedBuildingId = e.target.value;
 		setSelectedBuilding(selectedBuildingId);
@@ -237,6 +283,7 @@ const CameraList = () => {
 		setCurrentPage(1);
 	};
 
+	// pagination
 	const indexOfLastCamera = currentPage * camerasPerPage;
 	const indexOfFirstCamera = indexOfLastCamera - camerasPerPage;
 
@@ -255,7 +302,6 @@ const CameraList = () => {
 			)
 	);
 
-	console.log(totalCameras, "select");
 	const totalCamerasOnline = buildings?.data?.records?.gedung.flatMap(
 		(gedung: any) =>
 			gedung.lantai.flatMap((lantai: any) =>
@@ -273,7 +319,7 @@ const CameraList = () => {
 		indexOfFirstCameraOnline,
 		indexOfLastCameraOnline
 	);
-	console.log("online", currentCamerasOnline);
+
 	const totalPages = Math.ceil(totalCameras.length / camerasPerPage);
 	const totalPagesCameraOnline = Math.ceil(
 		totalCamerasOnline.length / camerasPerPage
@@ -343,7 +389,6 @@ const CameraList = () => {
 
 	const renderThumb = (cam: any) => {
 		const urlStream = `http://${webSocketFirst}/stream/${cam.ip_address}_.m3u8`;
-		console.log(urlStream, "url stream");
 		return (
 			<ReactPlayer
 				url={urlStream}
@@ -418,24 +463,6 @@ const CameraList = () => {
 									>
 										{/* header */}
 										<div className=" flex h-full w-full items-center justify-center rounded-t-lg bg-meta-4 text-white relative">
-											{/* {camera.status_kamera === 'online' ? (
-                        renderThumb(camera)
-                      ) : (
-                        <RiCameraOffLine
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      )} */}
-											{/* {camera.status_kamera === 'online' ? (
-                        renderThumb(camera)
-                      ) : client.current.readyState !== WebSocket.OPEN ? (
-                        <RiErrorWarningFill
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      ) : (
-                        <RiCameraOffLine
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      )} */}
 											{camera.status_kamera ===
 											"online" ? (
 												isWebSocketConnected ? (
@@ -543,43 +570,11 @@ const CameraList = () => {
 			</div>
 		);
 	};
-	console.log(currentCamerasOnline, "ONLINE");
 
-	// console.log(
-	//   currentCamerasOnline.filter((item) =>
-	//     receivedObjects.map((item1) => item1.massage).includes(item?.kamera_id),
-	//   ),
-	//   'TESTING',
-	// );
+	const dataFromMessage = receivedObjects.map((item: any) => item.massage);
 
-	// const test1 = receivedObjects.map((item) => item.massage);
-	// const uniqueArray = test1.filter(
-	//   (obj, index, self) =>
-	//     index === self.findIndex((t) => t?.kamera_id === obj?.kamera_id),
-	// );
-	// console.log(test1, 'AA1');
-	// console.log(uniqueArray, 'AA2');
-
-	// console.log(
-	//   uniqueArray.filter((item) =>
-	//     currentCamerasOnline
-	//       .map((item2) => item2?.kamera_id)
-	//       .includes(item?.kamera_id),
-	//   ),
-	//   'BABABABA',
-	// );
-
-	// const newArray = uniqueArray.filter((item) =>
-	//   currentCamerasOnline
-	//     .map((item2) => item2.kamera_id)
-	//     .includes(item.kamera_id),
-	// );
-	// console.log('BABA2', newArray);
-
-	const test1 = receivedObjects.map((item: any) => item.massage);
-	console.log(test1, "test 11111111");
 	// Reverse the array to prioritize the last occurrence of duplicates
-	const reversedArray = [...test1].reverse();
+	const reversedArray = [...dataFromMessage].reverse();
 
 	const uniqueArray = reversedArray.filter(
 		(obj, index, self) =>
@@ -603,8 +598,6 @@ const CameraList = () => {
 			.map((item2) => item2?.kamera_id)
 			.includes(item?.kamera_id)
 	);
-
-	console.log(newArray, "BABABABA");
 
 	const renderCameraOnlineList = () => {
 		const onlineCamera = buildings?.data?.records?.gedung.flatMap(
@@ -652,12 +645,14 @@ const CameraList = () => {
 							{/* {currentCamerasOnline
                 .filter((item) => receivedObjects.includes(item?.kamera_id))
                 .map((obj) => console.log(obj, 'hasil map'))} */}
-							{newArray.map((camera) => (
+							{newArray.map((camera, index) => (
 								<div
 									key={camera.kamera_id}
 									className={`rounded-sm border bg-meta-4-dark py-2 px-2 shadow-default backdrop-blur-sm relative ${
 										columns && rows === 1 && " h-[28rem]"
-									} hover:bg-slate-700`}
+									} hover:bg-slate-700 group`}
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
 								>
 									<Link
 										to={camera.nama_kamera}
@@ -666,24 +661,6 @@ const CameraList = () => {
 									>
 										{/* header */}
 										<div className=" flex h-full w-full items-center justify-center rounded-t-lg bg-meta-4 text-white relative">
-											{/* {camera.status_kamera === 'online' ? (
-                        renderThumb(camera)
-                      ) : (
-                        <RiCameraOffLine
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      )} */}
-											{/* {camera.status_kamera === 'online' ? (
-                        renderThumb(camera)
-                      ) : client.current.readyState !== WebSocket.OPEN ? (
-                        <RiErrorWarningFill
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      ) : (
-                        <RiCameraOffLine
-                          className={`${rows === 4 ? 'w-2/5 h-2/5' : 'w-3/5 h-3/5'} text-white`}
-                        />
-                      )} */}
 											{camera.status_kamera ===
 											"online" ? (
 												isWebSocketConnected ? (
@@ -709,23 +686,55 @@ const CameraList = () => {
 										</div>
 										{/* footer kamera */}
 
-										<div className="absolute top-1 right-2 flex items-center">
+										<div className="absolute top-1 right-2 flex items-center justify-between w-full px-4">
 											{camera.status_kamera ===
 											"online" ? (
-												<>
+												<div className="flex items-center">
 													<div className="w-2 h-2 rounded-full bg-green-500 mr-2 mt-1 animate-pulse"></div>
 													<h5 className="text-green-500 text-center mt-1">
 														Online
 													</h5>
-												</>
+												</div>
 											) : (
-												<>
+												<div className="flex items-center">
 													<h5 className="text-red-500 text-center mt-1">
 														Offline
 													</h5>
-												</>
+												</div>
 											)}
+
+											<div
+												className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+												onClick={(e) => {
+													e.preventDefault();
+													e.stopPropagation();
+													handleIconClick(index);
+													console.log("test1", index);
+												}}
+											>
+												<SlOptionsVertical
+													size={19}
+													className="text-slate-400 f0nt-bold "
+												/>
+											</div>
 										</div>
+
+										{menuIndex === index && hovering && (
+											<MenuItemComponent
+												onEdit={() =>
+													handleEditClick(camera)
+												}
+												onDelete={() =>
+													console.log(camera)
+												}
+												onDetail={() =>
+													console.log(camera)
+												}
+												onClose={() =>
+													setMenuIndex(null)
+												}
+											/>
+										)}
 										<div className="absolute bottom-2 left-2 text-white">
 											<h4
 												className={`${
@@ -745,6 +754,8 @@ const CameraList = () => {
 							))}
 						</div>
 					)}
+
+					{/* pagination */}
 					<div className="mt-4 flex justify-end">
 						{currentPageCamOnline > 1 && (
 							<button
@@ -784,6 +795,7 @@ const CameraList = () => {
 			</div>
 		);
 	};
+
 	const getRoomLocationCamOnline = (id: any) => {
 		let location = "";
 		buildings?.data?.records?.gedung.forEach((gedung: any) => {
@@ -951,6 +963,15 @@ const CameraList = () => {
 					</>
 				</div>
 			</div>
+
+			{modalEditOpen && (
+				<AddKamera
+					closeModal={handleCloseEditModal}
+					onSubmit={handleSubmitEdit}
+					defaultValue={editData}
+					isEdit={true}
+				/>
+			)}
 		</>
 	);
 };
