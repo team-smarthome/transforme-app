@@ -41,9 +41,10 @@ export const AddDesktop: React.FC<AddDesktopModalProps> = ({ closeModal, onSubmi
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: "",
+      nama_desktop: "",
+      model: "",
       gmac: "",
-      status_gateway: "",
+      status_desktop: "",
       jumlah_gateway: 1,
       lokasi_otmil_id: "",
       nama_lokasi_otmil: "",
@@ -444,15 +445,15 @@ export const AddDesktop: React.FC<AddDesktopModalProps> = ({ closeModal, onSubmi
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-                      name="nama_gateway"
+                      name="nama_desktop"
                       placeholder="Nama Desktop"
                       onChange={handleChange}
-                      value={formState.nama_gateway}
+                      value={formState.nama_desktop}
                       disabled={isDetail}
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map(
-                        (item) => (item === "nama_gateway" ? "Pilih Desktop" : "")
+                        (item) => (item === "nama_desktop" ? "Pilih Desktop" : "")
                       )}
                     </p>
                   </div>
@@ -463,13 +464,13 @@ export const AddDesktop: React.FC<AddDesktopModalProps> = ({ closeModal, onSubmi
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
-                      name="gmac"
+                      name="model"
                       placeholder="Model"
                       onChange={handleChange}
-                      value={formState.gmac}
+                      value={formState.model}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "gmac" ? "Pilih Model" : ""))}</p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "model" ? "Pilih Model" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -478,9 +479,9 @@ export const AddDesktop: React.FC<AddDesktopModalProps> = ({ closeModal, onSubmi
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-                      name="status_gateway"
+                      name="status_desktop"
                       onChange={handleChange}
-                      value={formState.status_gateway}
+                      value={formState.status_desktop}
                       disabled={isDetail}
                     >
                       <option disabled value="">
@@ -492,7 +493,7 @@ export const AddDesktop: React.FC<AddDesktopModalProps> = ({ closeModal, onSubmi
                     </select>
                     <p className="error-text">
                       {errors.map(
-                        (item) => (item === "status_gateway" ? "Pilih Status Desktop" : "")
+                        (item) => (item === "status_desktop" ? "Pilih Status Desktop" : "")
                       )}
                     </p>
                   </div>

@@ -4,10 +4,10 @@ import { AddDesktop } from "./ModalAddDesktop";
 import { DeleteDesktopModal } from "./ModalDeleteDesktop";
 import { Alerts } from "./AlertDesktop";
 import { 
-  apiReadGateway,
-  apiDeleteGateway,
-  apiCreateGateway,
-  apiUpdateGateway
+  apiReadDesktop,
+  apiDeleteDesktop,
+  apiCreateDesktop,
+  apiUpdateDesktop
 } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
@@ -25,16 +25,17 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
   gmac: string;
-  nama_gateway: string;
-  status_gateway: string;
-  jumlah_gateway: string;
+  model: string;
+  nama_desktop: string;
+  status_desktop: string;
+  jumlah_desktop: string;
   lokasi_otmil_id: string;
   ruangan_otmil_id: string;
   jenis_ruangan_otmil: string;
   nama_ruangan_otmil: string;
 }
 
-const GatewayList = () => {
+const DesktopList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -137,15 +138,15 @@ const GatewayList = () => {
   const handleSearchClick = async () => {
     let params = {
       filter: {
-        nama_gateway: filter,
-        status_gateway: filterStatus,
+        nama_desktop: filter,
+        status_desktop: filterStatus,
         nama_lokasi_otmil: "Cimahi",
       },
       page: currentPage,
       pageSize: pageSize,
     };
     try {
-      const response = await apiReadGateway(params, token);
+      const response = await apiReadDesktop(params, token);
       setPages(response.data.pagination.totalPages);
       setRows(response.data.pagination.totalRecords);
       if (response.status === 200) {
@@ -197,7 +198,7 @@ const GatewayList = () => {
     };
     setIsLoading(true);
     try {
-      const response = await apiReadGateway(params, token);
+      const response = await apiReadDesktop(params, token);
       if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
@@ -254,7 +255,7 @@ const GatewayList = () => {
   // function untuk menghapus data
   const handleSubmitDelete = async (params: any) => {
     try {
-      const responseDelete = await apiDeleteGateway(params, token);
+      const responseDelete = await apiDeleteDesktop(params, token);
       if (responseDelete.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -287,7 +288,7 @@ const GatewayList = () => {
   const handleSubmitAdd = async (params: any) => {
     console.log("DATA DARI LIST", params);
     try {
-      const responseCreate = await apiCreateGateway(params, token);
+      const responseCreate = await apiCreateDesktop(params, token);
       if (responseCreate.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -320,7 +321,7 @@ const GatewayList = () => {
   const handleSubmitEdit = async (params: any) => {
     console.log(params, "edit");
     try {
-      const responseEdit = await apiUpdateGateway(params, token);
+      const responseEdit = await apiUpdateDesktop(params, token);
       if (responseEdit.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -363,10 +364,11 @@ const GatewayList = () => {
     const dataToExcel = [
       ["nama desktop", "GMAC", "status desktop", "Nama Lokasi Otmil", "Nama Ruangan Otmil", "Zona"],
       ...data.map((item: any) => [
-        item.nama_gateway,
+        item.nama_desktop,
         item.gmac,
-        // item.status_gateway,
-        item.status_gateway === "tidak" ? "tidak aktif" : item.status_gateway,
+        item.model,
+        // item.status_desktop,
+        item.status_desktop === "tidak" ? "tidak aktif" : item.status_desktop,
         item.nama_lokasi_otmil,
         item.nama_ruangan_otmil,
         item.status_zona_ruangan_otmil,
@@ -411,7 +413,7 @@ const GatewayList = () => {
               </div>
               <select
                 className="ml-2 w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark  dark:focus:border-primary"
-                name="status_gateway"
+                name="status_desktop"
                 value={filterStatus}
                 onChange={handleFilterChangeStatus}
                 id="p-status"
@@ -482,17 +484,17 @@ const GatewayList = () => {
               <div>
                 <div className={`grid ${isOperator ? "grid-cols-5" : "grid-cols-6"} rounded-sm bg-gray-2 dark:bg-meta-4`}>
                   <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black dark:text-white">{item.nama_gateway}</p>
+                    <p className="text-black dark:text-white">{item.nama_desktop}</p>
                   </div>
                   <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black dark:text-white">{item.gmac}</p>
+                    <p className="text-black dark:text-white">{item.model}</p>
                   </div>
                   <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    {item.status_gateway === "aktif" ? (
+                    {item.status_desktop === "aktif" ? (
                       <p className="text-green-500 dark:text-green-300">Aktif</p>
-                    ) : item.status_gateway === "tidak" ? (
+                    ) : item.status_desktop === "tidak" ? (
                       <p className="text-red-500 dark:text-red-300">Tidak Aktif</p>
-                    ) : item.status_gateway === "rusak" ? (
+                    ) : item.status_desktop === "rusak" ? (
                       <p className="text-yellow-500 dark:text-yellow-300">Rusak</p>
                     ) : (
                       <p className="text-black dark:text-white">Status Tidak Dikenali</p>
@@ -565,4 +567,4 @@ const GatewayList = () => {
   );
 };
 
-export default GatewayList;
+export default DesktopList;

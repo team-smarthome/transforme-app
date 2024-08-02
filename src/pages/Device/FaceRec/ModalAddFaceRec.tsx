@@ -45,10 +45,10 @@ export const AddFaceRec: React.FC<AddFaceRecModalProps> = ({ closeModal, onSubmi
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: "",
+      nama_face_rec: "",
       gmac: "",
-      status_gateway: "",
-      jumlah_gateway: 1,
+      status_face_rec: "",
+      jumlah_face_rec: 1,
       lokasi_otmil_id: "",
       nama_lokasi_otmil: "",
       ruangan_otmil_id: "",
@@ -442,13 +442,13 @@ export const AddFaceRec: React.FC<AddFaceRecModalProps> = ({ closeModal, onSubmi
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-                      name="nama_gateway"
+                      name="nama_face_rec"
                       placeholder="Nama Face Rec"
                       onChange={handleChange}
-                      value={formState.nama_gateway}
+                      value={formState.nama_face_rec}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "nama_gateway" ? "Pilih face rec" : ""))}</p>
+                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "nama_face_rec" ? "Pilih face rec" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -472,9 +472,9 @@ export const AddFaceRec: React.FC<AddFaceRecModalProps> = ({ closeModal, onSubmi
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-                      name="status_gateway"
+                      name="status_face_rec"
                       onChange={handleChange}
-                      value={formState.status_gateway}
+                      value={formState.status_face_rec}
                       disabled={isDetail}
                     >
                       <option disabled value="">
@@ -484,7 +484,7 @@ export const AddFaceRec: React.FC<AddFaceRecModalProps> = ({ closeModal, onSubmi
                       <option value="tidak">Tidak Aktif</option>
                       <option value="rusak">Rusak</option>
                     </select>
-                    <p className="error-text">{errors.map((item) => (item === "status_gateway" ? "Pilih Status Face Rec" : ""))}</p>
+                    <p className="error-text">{errors.map((item) => (item === "status_face_rec" ? "Pilih Status Face Rec" : ""))}</p>
                   </div>
 
                   <div className="form-group w-full h-22">
