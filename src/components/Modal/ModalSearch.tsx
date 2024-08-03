@@ -698,7 +698,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           Cari
         </button>
       </div>
-      <div className="flex w-full">
+      {/* <div className="flex w-full">
         <Input
           style={CustomInputStyle}
           className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
@@ -711,7 +711,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         >
           Cari
         </button>
-      </div>
+      </div> */}
       </div>
 
       {hoverData === "Smartwatch" ? (

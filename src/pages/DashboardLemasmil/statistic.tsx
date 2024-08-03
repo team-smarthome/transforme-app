@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChartFive from '../../components/ChardKasus';
+// import ChartFive from '../../components/ChardKasus';
 
 //icon gelang
 let IconBracelet = () => {
@@ -531,7 +531,7 @@ const statisticLemasmil = () => {
       {/* ---Kasus start--- */}
       <div className="mt-8 font-semibold text-2xl tracking-wider">Kasus</div>
       <div className=" flex justify-center w-full bg-blue mt-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartFive />
+        {/* <ChartFive /> */}
       </div>
       {/* ---Kasus End--- */}
     </div>
