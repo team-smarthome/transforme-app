@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../common/Loader";
 import MenuItemComponent from "../../components/MenuItemCameraSave";
 import {
-    apiCreateKameraTersimpan,
-    apiDeleteKameraTersimpan,
-    apiReadKameraTersimpan,
-    apiUpdateKameraTersimpan,
+	apiCreateKameraTersimpan,
+	apiDeleteKameraTersimpan,
+	apiReadKameraTersimpan,
+	apiUpdateKameraTersimpan,
 } from "../../services/api";
 import { Alerts } from "./AlertCamera";
 import { ModalAddCameraSave } from "./ModalAddCameraSave";

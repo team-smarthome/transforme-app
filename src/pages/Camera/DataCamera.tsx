@@ -34,6 +34,7 @@ const DataCamera = (props: any) => {
 	const [cameraSize, setCameraSize] = useState(isIconOpen ? "80%" : "100%");
 	const [loading, setLoading] = useState(false);
 	const [errorCam, setErrorCam] = useState(false);
+
 	const webSocketFirst = "192.168.1.111:5000";
 	const webSocketSecond = "10.34.7.43:5000";
 
@@ -85,67 +86,66 @@ const DataCamera = (props: any) => {
 	const errorTimeoutRef: any = useRef(null);
 
 	const client = useRef(new W3CWebSocket(`ws://${webSocketFirst}`));
-	useEffect(() => {
-		// Initialize WebSocket connection
-		client.current = new WebSocket(`ws://${webSocketFirst}`);
+	// useEffect(() => {
+	// 	// Initialize WebSocket connection
+	// 	client.current = new WebSocket(`ws://${webSocketFirst}`);
 
-		client.current.onopen = () => {
-			console.log("WebSocket Client Connected");
-		};
-		client.current.onmessage = (message: any) => {
-			const data = JSON.parse(message.data);
-			if (data.type === "error") {
-				// Tangkap pesan error dan tampilkan kepada pengguna
-				clearTimeout(errorTimeoutRef.current); // Hapus timeout sebelumnya (jika ada)
-				errorTimeoutRef.current = setTimeout(() => {
-					setErrorCam(true);
-					console.log(data, "ini data error");
-					console.log("Error from server camera:", data.message);
-				}, 1500); // Setelah 2 detik, tampilkan pesan error
-			}
-			if (data.type === "info") {
-				clearTimeout(errorTimeoutRef.current); // Hapus timeout jika mendapatkan pesan info
-				setErrorCam(false);
-				console.log(data, "ini data berhasil");
-			}
+	// 	client.current.onopen = () => {
+	// 		console.log("WebSocket Client Connected");
+	// 	};
+	// 	client.current.onmessage = (message: any) => {
+	// 		const data = JSON.parse(message.data);
+	// 		if (data.type === "error") {
+	// 			// Tangkap pesan error dan tampilkan kepada pengguna
+	// 			clearTimeout(errorTimeoutRef.current); // Hapus timeout sebelumnya (jika ada)
+	// 			errorTimeoutRef.current = setTimeout(() => {
+	// 				setErrorCam(true);
+	// 				console.log(data, "ini data error");
+	// 				console.log("Error from server camera:", data.message);
+	// 			}, 1500); // Setelah 2 detik, tampilkan pesan error
+	// 		}
+	// 		if (data.type === "info") {
+	// 			clearTimeout(errorTimeoutRef.current); // Hapus timeout jika mendapatkan pesan info
+	// 			setErrorCam(false);
+	// 			console.log(data, "ini data berhasil");
+	// 		}
 
-			//! disini ditambah if data type == 'camera_error' (misalnya)
-			//! misal data error dari server camera, seperti ini : {
-			//!   type: 'camera_error',
-			//!   message: [
-			//!     {
-			//!       camera_id: 1,
-			//!       cameraID : abcde,
-			//!       error: 'Camera is not connected',
-			//!      },
-			//!     {
-			//!       camera_id: 2,
-			//!       cameraID : defghi,
-			//!       error: 'Camera is not connected'
-			//!      },
-			//!             ]
-			//! }
-			//! maka kita filter data camera di page ini yang selain data error dari server camera tersebut
+	// 		//! disini ditambah if data type == 'camera_error' (misalnya)
+	// 		//! misal data error dari server camera, seperti ini : {
+	// 		//!   type: 'camera_error',
+	// 		//!   message: [
+	// 		//!     {
+	// 		//!       camera_id: 1,
+	// 		//!       cameraID : abcde,
+	// 		//!       error: 'Camera is not connected',
+	// 		//!      },
+	// 		//!     {
+	// 		//!       camera_id: 2,
+	// 		//!       cameraID : defghi,
+	// 		//!       error: 'Camera is not connected'
+	// 		//!      },
+	// 		//!             ]
+	// 		//! }
+	// 		//! maka kita filter data camera di page ini yang selain data error dari server camera tersebut
 
-			//! masalahnya bagaimana jika kamera error nya kembali bisa hidup ? agar supaya data nya dinamis ke FE juga ?
-			//! sementara kasih tombol refresh page aja ya, atau refresh data camera nya aja
-		};
-		// client.current.onmessage = (message) => {
-		//   const data = JSON.parse(message.data);
-		//   if (data.type === 'info') {
-		//     // Tangkap pesan error dan tampilkan kepada pengguna
-		//     console.log(data, 'ini data info');
+	// 		//! masalahnya bagaimana jika kamera error nya kembali bisa hidup ? agar supaya data nya dinamis ke FE juga ?
+	// 		//! sementara kasih tombol refresh page aja ya, atau refresh data camera nya aja
+	// 	};
+	// 	// client.current.onmessage = (message) => {
+	// 	//   const data = JSON.parse(message.data);
+	// 	//   if (data.type === 'info') {
+	// 	//     // Tangkap pesan error dan tampilkan kepada pengguna
+	// 	//     console.log(data, 'ini data info');
 
-		//     console.log('Error from server camera:', data.message);
-		//   }
-		// };
-		// Cleanup function
-		return () => {
-			console.log("WebSocket Client DISConnected");
-			client.current.close(); // Close WebSocket connection when component unmounts
-		};
-	}, []); // Run once when component mounts
-
+	// 	//     console.log('Error from server camera:', data.message);
+	// 	//   }
+	// 	// };
+	// 	// Cleanup function
+	// 	return () => {
+	// 		console.log("WebSocket Client DISConnected");
+	// 		client.current.close(); // Close WebSocket connection when component unmounts
+	// 	};
+	// }, []);
 	useEffect(() => {
 		const fetchDataAndSendRequest = async () => {
 			await fetchDeviceDetail(); // Assuming fetchDeviceDetail is an async function that fetches device details
@@ -272,12 +272,11 @@ const DataCamera = (props: any) => {
 		return `${day} ${month} ${year} ${time}`;
 	};
 
-	const sendRequest = (method: any, params: any) => {
-		client.current.send(JSON.stringify({ method: method, params: params }));
-	};
+	// const sendRequest = (method: any, params: any) => {
+	// 	client.current.send(JSON.stringify({ method: method, params: params }));
+	// };
 
 	const renderStream1 = (obj: any, index: any) => {
-		console.log("render stream 1", obj);
 		var urlStream = state.baseUrl + obj.IpAddress + state.extenstion;
 		console.log(urlStream, "render stream 1");
 		return (
