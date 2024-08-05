@@ -5,6 +5,8 @@ interface MenuItemComponentProps {
 	onEdit: () => void;
 	onDelete: () => void;
 	onDetail: () => void;
+	onTogglePlay: (kameraId: string, isPlay: boolean) => void;
+	data: any;
 }
 
 const MenuItemComponent: React.FC<MenuItemComponentProps> = ({
@@ -12,10 +14,12 @@ const MenuItemComponent: React.FC<MenuItemComponentProps> = ({
 	onEdit,
 	onDelete,
 	onDetail,
+	onTogglePlay,
+	data,
 }) => {
-	const [isActive, setIsActive] = useState(false);
+	const [isActive, setIsActive] = useState(data.is_play);
 	const menuRef = useRef<HTMLDivElement | null>(null);
-
+	console.log(data, "data g");
 	const handleClickOutside = (event: MouseEvent) => {
 		if (
 			menuRef.current &&
@@ -33,10 +37,12 @@ const MenuItemComponent: React.FC<MenuItemComponentProps> = ({
 	}, []);
 
 	const handleToggleChange = (e: React.MouseEvent) => {
-		e.stopPropagation(); // Stop event propagation
+		e.stopPropagation();
 		e.preventDefault();
-		setIsActive((prev) => !prev);
-		console.log("Toggle status:", !isActive ? "Aktif" : "Nonaktif");
+		const newIsActive = !isActive;
+		setIsActive(newIsActive);
+		console.log("Toggle status:", newIsActive ? "Aktif" : "Nonaktif");
+		onTogglePlay(data.kamera_id, newIsActive);
 	};
 
 	const handleClick = (callback: () => void) => (e: React.MouseEvent) => {
@@ -55,12 +61,12 @@ const MenuItemComponent: React.FC<MenuItemComponentProps> = ({
 					onClick={handleToggleChange}
 				>
 					<span
-						className={`block w-10 h-6 rounded-full ${
+						className={`block w-9 h-5 rounded-full ${
 							isActive ? "bg-green-500" : "bg-slate-300"
 						} transition-colors`}
 					></span>
 					<span
-						className={`absolute left-0 top-0 w-6 h-6 bg-white rounded-full transform transition-transform ${
+						className={`absolute left-0 top-0.5 w-5 h-5 bg-white rounded-full transform transition-transform ${
 							isActive ? "translate-x-4" : "translate-x-0"
 						}`}
 					></span>
