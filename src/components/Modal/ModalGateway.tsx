@@ -1,6 +1,4 @@
-import {
-    XMarkIcon
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { setZonaColor } from "../../utils/globalFunctions";
 
@@ -105,10 +103,10 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             </div>
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
-                <p className="text-xs font-semibold text-white">
-                  ARCHER AX50
+                <p className="text-xs font-semibold text-white">ARCHER AX50</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
                 </p>
-                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -147,7 +145,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
                 <p className="text-xs font-semibold text-white">
                   TP-LINK TL-WR841N
                 </p>
-                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -186,7 +186,9 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
                 <p className="text-xs font-semibold text-white">
                   TP-LINK TL-930E
                 </p>
-                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">
@@ -223,9 +225,11 @@ function ModalGateway({ name, handleClose }: ModalGatewayProps) {
             <div className=" grid grid-cols-1 items-center">
               <div className="flex flex-col w-full">
                 <p className="text-xs font-semibold text-white">
-                TP-LINK TL-920F
+                  TP-LINK TL-920F
                 </p>
-                <p className="text-xs font-base text-slate-500">Transforme Indonesia</p>
+                <p className="text-xs font-base text-slate-500">
+                  Transforme Indonesia
+                </p>
               </div>
               <div className="flex flex-col mt-1 item-center  w-full">
                 <div className="flex items-center gap-2">

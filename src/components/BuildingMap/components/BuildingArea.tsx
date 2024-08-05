@@ -391,7 +391,7 @@ function BuildingArea({
 
   /*----Geteway-----*/
   const dataGateway = async () => {
-    console.log("masuksini");
+    console.log("masuksinikaliya");
     const tokenItem = localStorage.getItem("token");
     const dataToken = tokenItem ? JSON.parse(tokenItem) : null;
     const token = dataToken?.token ? dataToken.token : null;
@@ -411,11 +411,13 @@ function BuildingArea({
         break;
     }
     try {
+      console.log("WKWKWKWKWKWKWKWKKWK", paramsSend);
       const responsePengunjung = await apiReadGatewayDashboard(
         paramsSend,
         token
       );
       const responseData = responsePengunjung.data;
+      console.log(responseData, "responseDataGatewayFromApi");
       if ((responseData.status = "OK")) {
         console.log("dataDashboardWOY", responseData.records);
         setDatagatewayDasboard(responseData.records);
@@ -763,50 +765,51 @@ function BuildingArea({
     return `${zone_height} ${zone_width} ${zone_positionX} ${zone_positionY}`;
   };
 
+  // useEffect(() => {
+  //   // dataPetugas();
+  //   // dataCamera();
+  //   dataGateway();
+  // }, []);
+
   useEffect(() => {
+    const interval = setInterval(() => {
+      dataWbp();
+      dataPetugas();
+      dataPengunjung();
+      dataGateway();
+      dataCamera();
+      dataRoutes();
+      dataAccessDoor();
+      dataFaceRec();
+      dataDesktop();
+      dataTV();
+      dataSelfReg();
+      dataNVR();
+      dataNAS();
+    }, 10000);
+
+    setSelectedMenu("dashboard");
+
+    dataWbp();
     dataPetugas();
+    dataPengunjung();
+    dataGateway();
     dataCamera();
-  }, []);
+    dataRoutes();
+    dataAccessDoor();
+    dataFaceRec();
+    dataDesktop();
+    dataTV();
+    dataSelfReg();
+    dataNVR();
+    dataNAS();
+
+    return () => clearInterval(interval);
+  }, [dataParams]);
 
   // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     dataWbp();
-  //     dataPetugas();
-  //     dataPengunjung();
-  //     dataGateway();
-  //     dataCamera();
-  //     dataRoutes();
-  //     dataAccessDoor();
-  //     dataFaceRec();
-  //     dataDesktop();
-  //     dataTV();
-  //     dataSelfReg();
-  //     dataNVR();
-  //     dataNAS();
-  //   }, 10000);
-
   //   setSelectedMenu("dashboard");
-
-  //   dataWbp();
-  //   dataPetugas();
-  //   dataPengunjung();
-  //   dataGateway();
-  //   dataCamera();
-  //   dataRoutes();
-  //   dataAccessDoor();
-  //   dataFaceRec();
-  //   dataDesktop();
-  //   dataTV();
-  //   dataSelfReg();
-  //   dataNVR();
-  //   dataNAS();
-
-  //   return () => clearInterval(interval);
-  // }, [dataParams]);
-
-  useEffect(() => {
-    setSelectedMenu("dashboard");
-  }, []);
+  // }, []);
 
   const dataWbpSearch = async () => {
     // setLoadingAtomState(true);
@@ -1265,9 +1268,7 @@ function BuildingArea({
       dataNasSearchMap(),
     ]).then(() => {
       setLoadingAtomState(false);
-    }
-    );
-
+    });
   }, []);
 
   // console.log(peopleData, "people")
