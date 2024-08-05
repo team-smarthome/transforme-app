@@ -5334,3 +5334,231 @@ export async function apiDeleteManufacture(params, token) {
     throw error;
   }
 }
+
+export async function apiReadDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadTV(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://127.0.0.1:8000/api/" + "tv",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateTV(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/" + "tv",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateTV(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/" + "tv",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteTV(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://127.0.0.1:8000/api/" + "tv",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}

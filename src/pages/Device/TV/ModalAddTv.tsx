@@ -51,10 +51,11 @@ export const AddTv: React.FC<AddTvModalProps> = ({
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: "",
+      nama_tv: "",
+      model: "",
       gmac: "",
-      status_gateway: "",
-      jumlah_gateway: 1,
+      status_tv: "",
+      jumlah_tv: 1,
       lokasi_otmil_id: "",
       nama_lokasi_otmil: "",
       ruangan_otmil_id: "",
@@ -138,8 +139,8 @@ export const AddTv: React.FC<AddTvModalProps> = ({
         {
           element: ".i-nama",
           popover: {
-            title: "Nama Gateway",
-            description: "Isi nama gateway",
+            title: "Nama TV",
+            description: "Isi nama TV",
           },
         },
         {
@@ -152,8 +153,8 @@ export const AddTv: React.FC<AddTvModalProps> = ({
         {
           element: ".p-status",
           popover: {
-            title: "Status Gateway",
-            description: "Pilih status gateway yang diinginkan",
+            title: "Status TV",
+            description: "Pilih status TV yang diinginkan",
           },
         },
         {
@@ -190,7 +191,7 @@ export const AddTv: React.FC<AddTvModalProps> = ({
             title: `${isEdit ? "Ubah" : "Tambah"}`,
             description: `Klik untuk ${
               isEdit ? "mengubah" : "menambahkan"
-            } data gateway`,
+            } data tv`,
           },
         },
       ],
@@ -493,15 +494,15 @@ export const AddTv: React.FC<AddTvModalProps> = ({
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-                      name="nama_gateway"
+                      name="nama_tv"
                       placeholder="Nama TV"
                       onChange={handleChange}
-                      value={formState.nama_gateway}
+                      value={formState.nama_tv}
                       disabled={isDetail}
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === "nama_gateway" ? "Pilih TV" : ""
+                        item === "nama_tv" ? "Pilih TV" : ""
                       )}
                     </p>
                   </div>
@@ -515,15 +516,15 @@ export const AddTv: React.FC<AddTvModalProps> = ({
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
-                      name="gmac"
+                      name="model"
                       placeholder="Model"
                       onChange={handleChange}
-                      value={formState.gmac}
+                      value={formState.model}
                       disabled={isDetail}
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === "gmac" ? "Pilih Model" : ""
+                        item === "model" ? "Pilih Model" : ""
                       )}
                     </p>
                   </div>
@@ -537,9 +538,9 @@ export const AddTv: React.FC<AddTvModalProps> = ({
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-                      name="status_gateway"
+                      name="status_tv"
                       onChange={handleChange}
-                      value={formState.status_gateway}
+                      value={formState.status_tv}
                       disabled={isDetail}
                     >
                       <option disabled value="">
@@ -551,7 +552,7 @@ export const AddTv: React.FC<AddTvModalProps> = ({
                     </select>
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === "status_gateway" ? "Pilih Status TV" : ""
+                        item === "status_tv" ? "Pilih Status TV" : ""
                       )}
                     </p>
                   </div>
