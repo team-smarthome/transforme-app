@@ -597,7 +597,7 @@ const coreRoutes = [
 		component: DeviceGelangList,
 	},
 	{
-		path: "/ptp",
+		path: "/access-point",
 		title: "PtpList",
 		component: PtpList,
 	},

@@ -1,13 +1,4 @@
-import CardFour from '../components/CardFour';
-import CardOne from '../components/CardOne';
-import CardThree from '../components/CardThree';
-import CardTwo from '../components/CardTwo';
-import ChartOne from '../components/ChartOne';
-import ChartThree from '../components/ChartThree';
-import ChartTwo from '../components/ChartTwo';
-import ChatCard from '../components/ChatCard';
-import MapOne from '../components/MapOne';
-import TableOne from '../components/TableOne';
+
 import { NavLink, useLocation } from 'react-router-dom';
 
 const Home = () => {

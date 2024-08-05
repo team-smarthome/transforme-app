@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../common/Loader";
-import ChartBar from "../../components/chardWBP";
+import ChartBar from "../../components/ChardWBP";
 import Kegiatan from "./event";
 import Gateway from "./gateway";
 import Brecelet from "./gelang";

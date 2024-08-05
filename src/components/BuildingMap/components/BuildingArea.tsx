@@ -1236,19 +1236,38 @@ function BuildingArea({
   };
 
   useEffect(() => {
-    dataWbpSearch();
-    dataPetugasSearch();
-    dataPengunjungSearchMap();
-    dataGatewaySearchMap();
-    dataCameraSearchMap();
-    dataRoutesSearchMap();
-    dataAccessDoorSearchMap();
-    dataFaceRecSearchMap();
-    dataDesktopSearchMap();
-    dataTVSearchMap();
-    dataSelfRecSearchMap();
-    dataNVRearchMap();
-    dataNasSearchMap();
+    // dataWbpSearch();
+    // dataPetugasSearch();
+    // dataPengunjungSearchMap();
+    // dataGatewaySearchMap();
+    // dataCameraSearchMap();
+    // dataRoutesSearchMap();
+    // dataAccessDoorSearchMap();
+    // dataFaceRecSearchMap();
+    // dataDesktopSearchMap();
+    // dataTVSearchMap();
+    // dataSelfRecSearchMap();
+    // dataNVRearchMap();
+    // dataNasSearchMap();
+    Promise.all([
+      dataWbpSearch(),
+      dataPetugasSearch(),
+      dataPengunjungSearchMap(),
+      dataGatewaySearchMap(),
+      dataCameraSearchMap(),
+      dataRoutesSearchMap(),
+      dataAccessDoorSearchMap(),
+      dataFaceRecSearchMap(),
+      dataDesktopSearchMap(),
+      dataTVSearchMap(),
+      dataSelfRecSearchMap(),
+      dataNVRearchMap(),
+      dataNasSearchMap(),
+    ]).then(() => {
+      setLoadingAtomState(false);
+    }
+    );
+
   }, []);
 
   // console.log(peopleData, "people")
@@ -1264,7 +1283,7 @@ function BuildingArea({
   // console.log(dynamicData?.data?.records?.layer1?.gedung[0].zone_positionX, "data gedung")
   // console.log(peopleData.data.records.length, "data jumlah")
   // console.log(dataGedung, "data dummy")
-  return isLoading ? (
+  return loadingAtomState ? (
     <LoadingSpinner />
   ) : (
     <div className="flex-1 relative border-double h-[35rem] bg-map-grass shadow-md shadow-slate-800 bg-slate-100">
