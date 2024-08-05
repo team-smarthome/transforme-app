@@ -62,16 +62,16 @@ function getUrl2(params) {
 }
 
 export const webserviceurl =
-  "https://dev-siram-workstation.transforme.co.id/api/";
+  "https://dev-siram-dashboard.transforme.co.id/api/";
 
 export const newWebservice =
-  "https://dev-siram-workstation.transforme.co.id/api/";
+  "https://dev-siram-dashboard.transforme.co.id/api/";
 export const newwebserviceurl =
-  "https://dev-siram-workstation.transforme.co.id/api/";
+  "https://dev-siram-dashboard.transforme.co.id/api/";
 
-// const newBaseUrl = 'https://dev-siram-workstation.transforme.co.id/api';
+// const newBaseUrl = 'https://dev-siram-dashboard.transforme.co.id/api';
 
-const newBaseUrl = "https://dev-siram-workstation.transforme.co.id/api";
+const newBaseUrl = "https://dev-siram-dashboard.transforme.co.id/api";
 
 function removeBase64Prefix(base64String) {
   // Find the index of the comma that separates the prefix from the actual base64 data
@@ -224,7 +224,7 @@ export async function apiReadAllWBPOtmil(params, token) {
       method: "get",
       // url: webserviceurl + '/siram_api/wbp_profile_read.php',
       // data: params,
-      url: "https://dev-siram-workstation.transforme.co.id/api/wbp_profile",
+      url: "https://dev-siram-dashboard.transforme.co.id/api/wbp_profile",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -274,7 +274,7 @@ export async function apiReadAllWBPOtmilSick(token, params) {
       method: "get",
       // url: webserviceurl + '/siram_api/wbp_profile_read.php',
       // data: requestData,
-      url: "https://dev-siram-workstation.transforme.co.id/api/wbp_profile",
+      url: "https://dev-siram-dashboard.transforme.co.id/api/wbp_profile",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer 12|I9CeMmEIPrIYYxhWjsbfbQaqMaenWM1lIIUK6Vli5eec4821`,
@@ -304,7 +304,7 @@ export async function apiReadAllWBPOtmilIsolasi(token, params) {
       method: "get",
       // url: webserviceurl + "/siram_api/wbp_profile_read.php",
       // data: requestData,
-      url: "https://dev-siram-workstation.transforme.co.id/api/wbp_profile",
+      url: "https://dev-siram-dashboard.transforme.co.id/api/wbp_profile",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer 12|I9CeMmEIPrIYYxhWjsbfbQaqMaenWM1lIIUK6Vli5eec4821`,
@@ -1321,7 +1321,7 @@ export function apiIndoorMapV2() {
   try {
     const response = axios({
       method: "get",
-      url: "https://dev-siram-workstation.transforme.co.id/api/indoor_map?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
+      url: "https://dev-siram-dashboard.transforme.co.id/api/indoor_map?lokasi_otmil_id=890cc9b1-b01f-4d1f-9075-a6a96e851b25",
       headers: {
         "Content-Type": "application/json",
         Authorization:
@@ -1563,7 +1563,7 @@ export async function apiversion() {
   try {
     const response = await axios({
       method: "GET",
-      url: "https://dev-siram-workstation.transforme.co.id/api/version",
+      url: "https://dev-siram-dashboard.transforme.co.id/api/version",
     });
     console.log(response);
     return response;
