@@ -80,7 +80,7 @@ const CameraList = () => {
 	};
 	let getToken: any = localStorage.getItem("token");
 	const token = JSON.parse(getToken);
-	console.log("token", token);
+
 	let fetchData = async () => {
 		try {
 			let dataLocal = localStorage.getItem("dataUser");
@@ -177,7 +177,7 @@ const CameraList = () => {
 		if (onlineCameras && onlineCameras.length > 0) {
 			onlineCameras.forEach((camera) => {
 				// Panggil sendRequest untuk setiap kamera online
-				console.log("Sending request for camera:", camera?.nama_kamera);
+				console.log("Sending request for camera:", camera);
 				sendRequest("startLiveView", {
 					listViewCameraData: [
 						{
@@ -187,6 +187,10 @@ const CameraList = () => {
 							deviceId: camera?.kamera_id,
 							token: token?.token,
 							ruangan_otmil_id: camera?.ruangan_otmil_id,
+							nama_ruangan_otmil: camera?.nama_ruangan_otmil,
+							merk: camera?.merk,
+							model: camera?.model,
+							is_play: camera?.is_play,
 						},
 					],
 				});
@@ -230,7 +234,7 @@ const CameraList = () => {
 	const handleSubmitEdit = async (params: any) => {
 		console.log(params, "edit");
 		try {
-			const responseEdit = await apiUpdateKamera(params, token);
+			const responseEdit = await apiUpdateKamera(params, token?.token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -242,6 +246,37 @@ const CameraList = () => {
 				Alerts.fire({
 					icon: "error",
 					title: "Gagal mengubah data",
+				});
+			} else {
+				throw new Error(responseEdit.data.message);
+			}
+		} catch (e: any) {
+			if (e.response.status === 403) {
+				navigate("/", {
+					state: { forceLogout: true, lastPage: location.pathname },
+				});
+			}
+			Alerts.fire({
+				icon: e.response.status === 403 ? "warning" : "error",
+				title: e.response.status === 403 ? Error403Message : e.message,
+			});
+		}
+	};
+
+	const handleUpdateIsPlay = async (kameraId: any, isPlay: any) => {
+		try {
+			const params = { kamera_id: kameraId, is_play: isPlay };
+			const responseEdit = await apiUpdateKamera(params, token?.token);
+			if (responseEdit.data.status === "OK") {
+				Alerts.fire({
+					icon: "success",
+					title: "Berhasil mengubah status kamera",
+				});
+				fetchData();
+			} else if (responseEdit.data.status === "NO") {
+				Alerts.fire({
+					icon: "error",
+					title: "Gagal mengubah status kamera",
 				});
 			} else {
 				throw new Error(responseEdit.data.message);
@@ -593,6 +628,8 @@ const CameraList = () => {
 			.map((item2) => item2?.kamera_id)
 			.includes(item?.kamera_id)
 	);
+
+	console.log(newArray, "newArray");
 	const newArrayPage = uniqueArrayPage.filter((item) =>
 		currentCameras
 			.map((item2) => item2?.kamera_id)
@@ -733,6 +770,10 @@ const CameraList = () => {
 												onClose={() =>
 													setMenuIndex(null)
 												}
+												onTogglePlay={
+													handleUpdateIsPlay
+												}
+												data={camera}
 											/>
 										)}
 										<div className="absolute bottom-2 left-2 text-white">
