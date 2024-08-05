@@ -13,6 +13,7 @@ interface ModalCameraProps {
 }
 
 function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
+  console.log("datanyamane", data);
   let urlStream;
   const webSocketSecond = "10.34.7.43:5555";
   const client = useRef(new W3CWebSocket(`ws://${webSocketSecond}`));
@@ -22,6 +23,7 @@ function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
   const [receivedObjects, setReceivedObjects] = useState([]);
   const [messageCamera, setMessageCamera] = useState();
   const [play, setPlay] = useState(false);
+  const [connectWS, setNotConnecWS] = useState(false);
 
   let [detailCamera, setDetailCamera] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +36,10 @@ function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
 
     client.current.onopen = () => {
       setIsWebSocketConnected(true);
+      setNotConnecWS(false);
       console.log("WebSocket_Client_Connected");
     };
+
     client.current.onmessage = (message: any) => {
       const data = JSON.parse(message.data);
       console.log("KIRIM_MESSAGE_MASE", data);
@@ -44,6 +48,19 @@ function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
 
       setMessageCamera(data);
     };
+
+    client.current.onerror = (error: Event) => {
+      // console.log("", error);'
+      setNotConnecWS(true);
+    };
+
+    client.current.onclose = (event: CloseEvent) => {
+      if (!event.wasClean) {
+        setNotConnecWS(true);
+        // console.log("WebSocket connection error", event.reason);
+      }
+    };
+
     return () => {
       setIsWebSocketConnected(false);
       console.log("WebSocket Client DISConnected");
@@ -193,6 +210,12 @@ function ModalCamera({ name, handleClose, data }: ModalCameraProps) {
             onProgress={() => console.log("react player progress")}
             url={urlStream} // Pastikan urlStream adalah URL yang valid
           />
+        </div>
+      ) : connectWS ? (
+        <div className="flex flex-col md:flex-row gap-x-5 px-10">
+          <div className="w-full h-96 bg-gray-300 flex items-center justify-center">
+            <p className="text-white">Tidak Dapat Terhubung ke Server</p>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col md:flex-row gap-x-5 px-10">

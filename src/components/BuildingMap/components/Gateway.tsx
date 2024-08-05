@@ -69,12 +69,12 @@ function Gateway({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_gateway}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalGateway handleClose={handleClose} name={item.nama} />
+        <ModalGateway handleClose={handleClose} name={item.nama_gateway} />
       </Modal>
     </div>
   );

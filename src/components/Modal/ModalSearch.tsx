@@ -221,14 +221,16 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         });
         break;
       case "Gateway":
+        console.log("masuksinipakeEKo");
         let paramsNameGateway: any[] = [];
         selectedListGateway.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_gateway;
           paramsNameGateway.push(formattedNama);
         });
+        console.log("paramsNameGateway", paramsNameGateway);
         setSelectedTypeData("Gateway");
         setDataParams({
-          nama: paramsNameGateway,
+          nama_gateway: paramsNameGateway,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -562,8 +564,9 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "Gateway":
-        const filteredGateway = datagatewaySearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredGateway = datagatewaySearch.filter(
+          (data: any) =>
+            data?.nama_gateway?.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataGateway(
           filteredGateway.filter(
@@ -684,21 +687,21 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         </button>
       </section>
       <div className="flex w-full">
-      <div className="flex w-full">
-        <Input
-          style={CustomInputStyle}
-          className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
-          value={dataSearch}
-          onChange={handleSearchChange}
-        />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleSearchClick}
-        >
-          Cari
-        </button>
-      </div>
-      {/* <div className="flex w-full">
+        <div className="flex w-full">
+          <Input
+            style={CustomInputStyle}
+            className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
+            value={dataSearch}
+            onChange={handleSearchChange}
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleSearchClick}
+          >
+            Cari
+          </button>
+        </div>
+        {/* <div className="flex w-full">
         <Input
           style={CustomInputStyle}
           className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
@@ -766,7 +769,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListGateway.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_gateway}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -983,7 +986,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_gateway}`}</p>
             </div>
           </div>
         ))}
