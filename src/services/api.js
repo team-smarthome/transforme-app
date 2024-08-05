@@ -4755,8 +4755,8 @@ export async function apiReadGatewayDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      // url: `${newBaseUrl}/dahsboard_gateway_dummy`,
-      url: "http://localhost:8000/api/dashboard_gateway",
+      url: `${newBaseUrl}/dashboard_gateway`,
+      // url: "http://localhost:8000/api/dashboard_gateway",
       params,
       headers: {
         "Content-Type": "application/json",
