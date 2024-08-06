@@ -7,6 +7,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { RiCameraOffLine } from "react-icons/ri";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { FaPowerOff } from "react-icons/fa6";
 import ReactPlayer from "react-player";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { HiRefresh } from "react-icons/hi";
@@ -14,6 +15,7 @@ import ToolsTip from "../../components/ToolsTip";
 import MenuItemComponent from "../../components/MenuItemCameraSave";
 import { Alerts } from "./AlertCamera";
 import { AddKamera } from "../Device/Kamera/ModalAddKamera";
+import { PowerIcon } from "@heroicons/react/24/outline";
 
 interface BuildingRecord {
 	data?: {
@@ -141,7 +143,7 @@ const CameraList = () => {
 		};
 		client.current.onmessage = (message: any) => {
 			const data = JSON.parse(message.data);
-
+			console.log(data, "data nihhhhhhhhhhhhhhh");
 			setReceivedObjects((prevObjects) => [...prevObjects, data]);
 
 			setMessageCamera(data);
@@ -177,7 +179,6 @@ const CameraList = () => {
 		if (onlineCameras && onlineCameras.length > 0) {
 			onlineCameras.forEach((camera) => {
 				// Panggil sendRequest untuk setiap kamera online
-				console.log("Sending request for camera:", camera);
 				sendRequest("startLiveView", {
 					listViewCameraData: [
 						{
@@ -697,10 +698,18 @@ const CameraList = () => {
 										className="block w-full h-full rounded-lg overflow-hidden relative"
 									>
 										{/* header */}
-										<div className=" flex h-full w-full items-center justify-center rounded-t-lg bg-meta-4 text-white relative">
+										<div className="flex h-full w-full items-center justify-center rounded-t-lg bg-meta-4 text-white relative">
 											{camera.status_kamera ===
 											"online" ? (
-												isWebSocketConnected ? (
+												!camera.is_play ? (
+													<PowerIcon
+														className={`${
+															rows === 4
+																? "w-2/5 h-2/5"
+																: "w-3/5 h-3/5"
+														} text-white`}
+													/>
+												) : isWebSocketConnected ? (
 													renderThumb(camera)
 												) : (
 													<RiErrorWarningFill
@@ -726,12 +735,20 @@ const CameraList = () => {
 										<div className="absolute top-1 right-2 flex items-center justify-between w-full px-4">
 											{camera.status_kamera ===
 											"online" ? (
-												<div className="flex items-center">
-													<div className="w-2 h-2 rounded-full bg-green-500 mr-2 mt-1 animate-pulse"></div>
-													<h5 className="text-green-500 text-center mt-1">
-														Online
-													</h5>
-												</div>
+												camera.is_play ? (
+													<div className="flex items-center">
+														<div className="w-2 h-2 rounded-full bg-green-500 mr-2 mt-1 animate-pulse"></div>
+														<h5 className="text-green-500 text-center mt-1">
+															Online
+														</h5>
+													</div>
+												) : (
+													<div className="flex items-center">
+														<h5 className="text-yellow-500 text-center mt-1">
+															Nonaktif
+														</h5>
+													</div>
+												)
 											) : (
 												<div className="flex items-center">
 													<h5 className="text-red-500 text-center mt-1">
