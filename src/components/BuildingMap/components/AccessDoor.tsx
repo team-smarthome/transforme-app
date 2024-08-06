@@ -68,12 +68,15 @@ function AccessDoor({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_access_door}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalAccessDoor handleClose={handleClose} name={item.nama} />
+        <ModalAccessDoor
+          handleClose={handleClose}
+          name={item.nama_access_door}
+        />
       </Modal>
     </div>
   );

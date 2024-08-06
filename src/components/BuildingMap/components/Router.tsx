@@ -71,12 +71,12 @@ function Router({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_access_point}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalRouter handleClose={handleClose} name={item.nama} />
+        <ModalRouter handleClose={handleClose} name={item.nama_access_point} />
       </Modal>
     </div>
   );

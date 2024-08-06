@@ -4794,7 +4794,7 @@ export async function apiReadRoutesDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_routes_dummy`,
+      url: `${newBaseUrl}/access_point`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4813,7 +4813,7 @@ export async function apiReadAccessDoorDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_access_door_dummy`,
+      url: `${newBaseUrl}/access_door`,
       params,
       headers: {
         "Content-Type": "application/json",
