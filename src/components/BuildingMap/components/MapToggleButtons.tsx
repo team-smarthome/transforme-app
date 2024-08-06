@@ -1,7 +1,7 @@
 import {
-    SignalIcon,
-    VideoCameraIcon,
-    WifiIcon,
+  SignalIcon,
+  VideoCameraIcon,
+  WifiIcon,
 } from "@heroicons/react/24/outline";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
@@ -14,12 +14,12 @@ import { HiQuestionMarkCircle } from "react-icons/hi2";
 import { ImPlus, ImSearch } from "react-icons/im";
 import { LuMonitorCheck, LuScanFace } from "react-icons/lu";
 import {
-    MdOutlineStorage,
-    MdPersonAddAlt1,
-    MdPersonSearch,
-    MdSignalWifiStatusbar3Bar,
-    MdWifiFind,
-    MdMap
+  MdOutlineStorage,
+  MdPersonAddAlt1,
+  MdPersonSearch,
+  MdSignalWifiStatusbar3Bar,
+  MdWifiFind,
+  MdMap,
 } from "react-icons/md";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { SlScreenDesktop } from "react-icons/sl";
@@ -27,10 +27,10 @@ import { SlScreenDesktop } from "react-icons/sl";
 import { Tooltip } from "antd";
 import { useAtom } from "jotai";
 import {
-    TbCameraPlus,
-    TbCameraSearch,
-    TbDeviceDesktopPlus,
-    TbDeviceDesktopSearch,
+  TbCameraPlus,
+  TbCameraSearch,
+  TbDeviceDesktopPlus,
+  TbDeviceDesktopSearch,
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
@@ -555,7 +555,7 @@ const MapToggleButtons = ({
           getPopupContainer={(triggerNode) =>
             triggerNode.parentNode as HTMLElement
           }
-          // title={<span className="text-black">PTP & AP</span>}
+          // title={<span className="text-black"></span>}
           placement="bottom"
           color="white"
           className="text-black flex flex-col items-center justify-center b-ptp"
@@ -581,14 +581,15 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("PTP & AP")}
+                onClick={() => handleClick("PTP")}
               >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
                 <h5 className="text-white text-sm">Cari PTP & AP</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleNavigateAdd("PTP")}
               >
                 <button style={{ color: "white" }}>
@@ -688,14 +689,15 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Access Door")}
+                onClick={() => handleClick("Access")}
               >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
                 </button>
                 <h5 className="text-white text-sm"> Cari Access Door</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleNavigateAdd("Access")}
               >
                 <button style={{ color: "white" }}>
@@ -748,8 +750,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari Face Rec</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-              onClick={() => handleNavigateAdd("Face")}
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("Face")}
               >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
@@ -801,7 +804,8 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari Desktop</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleNavigateAdd("Desktop")}
               >
                 <button style={{ color: "white" }}>
@@ -854,8 +858,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari TV</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-              onClick={() => handleNavigateAdd("TV")}
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("TV")}
               >
                 <button style={{ color: "white" }}>
                   <TbDeviceDesktopPlus className="w-6 h-6" />
@@ -908,8 +913,9 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari M-Kiosk</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-              onClick={() => handleNavigateAdd("M-Kiosk")}
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+                onClick={() => handleNavigateAdd("M-Kiosk")}
               >
                 <button style={{ color: "white" }}>
                   <ImPlus className="w-6 h-6" />
@@ -962,7 +968,8 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari NVR</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleNavigateAdd("NVR")}
               >
                 <button style={{ color: "white" }}>
@@ -1016,7 +1023,8 @@ const MapToggleButtons = ({
                 </button>
                 <h5 className="text-white text-sm">Cari NAS</h5>
               </div>
-              <div className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
+              <div
+                className="flex flex-row gap-2  w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
                 onClick={() => handleNavigateAdd("NAS")}
               >
                 <button style={{ color: "white" }}>

@@ -110,6 +110,8 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
   /* Data Routes */
   const [filteredDataRoutes, setFilteredDataRoutes] =
     useState(dataroutesSearch);
+  console.log("DATANYAADAGKYA", filteredDataRoutes);
+  console.log("HOOVERDATA", hoverData);
   const [selectedListRoutes, setSelectedListRoutes] =
     useAtom(selectedRoutesSearch);
 
@@ -238,12 +240,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "PTP":
         let paramsNamePTP: any[] = [];
         selectedListRoutes.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_access_point;
           paramsNamePTP.push(formattedNama);
         });
         setSelectedTypeData("PTP");
         setDataParams({
-          nama: paramsNamePTP,
+          nama_access_point: paramsNamePTP,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -264,12 +266,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "Access":
         let paramsNameAccess: any[] = [];
         selectedListAccessDoor.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_access_door;
           paramsNameAccess.push(formattedNama);
         });
         setSelectedTypeData("Access");
         setDataParams({
-          nama: paramsNameAccess,
+          nama_access_door: paramsNameAccess,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -575,8 +577,11 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "PTP":
-        const filteredPTP = dataroutesSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredPTP = dataroutesSearch.filter(
+          (data: any) =>
+            data?.nama_access_point
+              ?.toLowerCase()
+              .includes(dataSearch.toLowerCase())
         );
         setFilteredDataRoutes(
           filteredPTP.filter((data: any) => !selectedListRoutes.includes(data))
@@ -593,8 +598,11 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "Access":
-        const filteredAccess = dataaccessDoorSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredAccess = dataaccessDoorSearch.filter(
+          (data: any) =>
+            data?.nama_access_door
+              ?.toLowerCase()
+              .includes(dataSearch.toLowerCase())
         );
         setFilteredDataAccessDoor(
           filteredAccess.filter(
@@ -785,7 +793,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListRoutes.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_access_point}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -817,7 +825,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListAccessDoor.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_access_door}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -1001,7 +1009,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_access_point}`}</p>
             </div>
           </div>
         ))}
@@ -1031,7 +1039,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_access_door}`}</p>
             </div>
           </div>
         ))}

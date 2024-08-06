@@ -1017,6 +1017,7 @@ function BuildingArea({
       const responseRoutes = await apiReadRoutesDashboard(paramsSend, token);
       const responseData = responseRoutes.data;
       if ((responseData.status = "OK")) {
+        console.log("HASILRESPONSENYAINILOH", responseData.records);
         setDataroutesSearch(responseData.records);
         // setLoadingAtomState(false);
       }
