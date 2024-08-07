@@ -68,12 +68,15 @@ function FaceRecognition({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_face_rec}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalFaceRecognition handleClose={handleClose} name={item.nama} />
+        <ModalFaceRecognition
+          handleClose={handleClose}
+          name={item.nama_face_rec}
+        />
       </Modal>
     </div>
   );

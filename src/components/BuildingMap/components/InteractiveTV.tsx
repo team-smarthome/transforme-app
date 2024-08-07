@@ -68,12 +68,12 @@ function InteractiveTV({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_tv}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalInteractiveTV handleClose={handleClose} name={item.nama} />
+        <ModalInteractiveTV handleClose={handleClose} name={item.nama_tv} />
       </Modal>
     </div>
   );

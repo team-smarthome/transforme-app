@@ -279,12 +279,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "Face":
         let paramsNameFace: any[] = [];
         selectedListFaceRec.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_face_rec;
           paramsNameFace.push(formattedNama);
         });
         setSelectedTypeData("Face");
         setDataParams({
-          nama: paramsNameFace,
+          nama_face_rec: paramsNameFace,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -292,12 +292,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "Desktop":
         let paramsNameDesktop: any[] = [];
         selectedListDesktop.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_desktop;
           paramsNameDesktop.push(formattedNama);
         });
         setSelectedTypeData("Desktop");
         setDataParams({
-          nama: paramsNameDesktop,
+          nama_desktop: paramsNameDesktop,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -305,12 +305,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "TV":
         let paramsNameTV: any[] = [];
         selectedListTV.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_tv;
           paramsNameTV.push(formattedNama);
         });
         setSelectedTypeData("TV");
         setDataParams({
-          nama: paramsNameTV,
+          nama_tv: paramsNameTV,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -318,12 +318,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "M-Kiosk":
         let paramsNameSelfRec: any[] = [];
         selectedListSelfRec.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_m_kiosk;
           paramsNameSelfRec.push(formattedNama);
         });
         setSelectedTypeData("M-Kiosk");
         setDataParams({
-          nama: paramsNameSelfRec,
+          nama_m_kiosk: paramsNameSelfRec,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -331,12 +331,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "NVR":
         let paramsNameNVR: any[] = [];
         selectedListNVR.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_nvr;
           paramsNameNVR.push(formattedNama);
         });
         setSelectedTypeData("NVR");
         setDataParams({
-          nama: paramsNameNVR,
+          nama_nvr: paramsNameNVR,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -344,12 +344,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       case "NAS":
         let paramsNameNAS: any[] = [];
         selectedListNAS.map((item: any) => {
-          const formattedNama = item.nama;
+          const formattedNama = item.nama_nas;
           paramsNameNAS.push(formattedNama);
         });
         setSelectedTypeData("NAS");
         setDataParams({
-          nama: paramsNameNAS,
+          nama_nas: paramsNameNAS,
           lokasi_otmil_id: dataLokasiOtmil ?? null,
           lokasi_lemasmil_id: dataLokasiLemasMil ?? null,
         });
@@ -611,8 +611,11 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "Face":
-        const filteredFace = datafaceRecSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredFace = datafaceRecSearch.filter(
+          (data: any) =>
+            data?.nama_face_rec
+              ?.toLowerCase()
+              .includes(dataSearch.toLowerCase())
         );
         setFilteredDataFaceRec(
           filteredFace.filter(
@@ -621,8 +624,9 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "Desktop":
-        const filteredDesktop = datadesktopSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredDesktop = datadesktopSearch.filter(
+          (data: any) =>
+            data?.nama_desktop.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataDesktop(
           filteredDesktop.filter(
@@ -631,16 +635,18 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "TV":
-        const filteredTV = datatvSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredTV = datatvSearch.filter(
+          (data: any) =>
+            data?.nama_tv?.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataTV(
           filteredTV.filter((data: any) => !selectedListTV.includes(data))
         );
         break;
       case "M-Kiosk":
-        const filteredSelfRec = dataselfRecSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredSelfRec = dataselfRecSearch.filter(
+          (data: any) =>
+            data?.nama_m_kiosk?.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataSelfRec(
           filteredSelfRec.filter(
@@ -649,16 +655,18 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         );
         break;
       case "NVR":
-        const filteredNVR = datanvrSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredNVR = datanvrSearch.filter(
+          (data: any) =>
+            data?.nama_nvr?.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataNVR(
           filteredNVR.filter((data: any) => !selectedListNVR.includes(data))
         );
         break;
       case "NAS":
-        const filteredNAS = datanasSearch.filter((data: any) =>
-          data.nama.toLowerCase().includes(dataSearch.toLowerCase())
+        const filteredNAS = datanasSearch.filter(
+          (data: any) =>
+            data?.nama_nas?.toLowerCase().includes(dataSearch.toLowerCase())
         );
         setFilteredDataNAS(
           filteredNAS.filter((data: any) => !selectedListNAS.includes(data))
@@ -845,7 +853,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
                 key={index}
               >
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_face_rec}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -861,7 +869,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListDesktop.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_desktop}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -877,7 +885,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListTV.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_tv}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -893,7 +901,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListSelfRec.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_m_kiosk}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -909,7 +917,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListNVR.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_nvr}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -925,7 +933,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListNAS.map((item: any, index: any) => (
               <div className="mt-3 pl-1 flex" key={index}>
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
-                  <p className="text-slate-950">{item.nama}</p>
+                  <p className="text-slate-950">{item.nama_nas}</p>
                   <FaTrashAlt
                     className="text-red-700 hover: cursor-pointer hover:text-red-500"
                     onClick={() => handleRemoveItem(index)}
@@ -1054,7 +1062,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_face_rec}`}</p>
             </div>
           </div>
         ))}
@@ -1069,7 +1077,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_desktop}`}</p>
             </div>
           </div>
         ))}
@@ -1084,7 +1092,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_tv}`}</p>
             </div>
           </div>
         ))}
@@ -1099,7 +1107,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_m_kiosk}`}</p>
             </div>
           </div>
         ))}
@@ -1114,7 +1122,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_nvr}`}</p>
             </div>
           </div>
         ))}
@@ -1129,7 +1137,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             onClick={() => handleSelectItem(data)}
           >
             <div>
-              <p className="text-white">{`${data.nama}`}</p>
+              <p className="text-white">{`${data.nama_nas}`}</p>
             </div>
           </div>
         ))}

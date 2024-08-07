@@ -68,12 +68,12 @@ function NVR({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_nvr}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalNVR handleClose={handleClose} name={item.nama} />
+        <ModalNVR handleClose={handleClose} name={item.nama_nvr} />
       </Modal>
     </div>
   );

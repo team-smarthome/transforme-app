@@ -743,7 +743,7 @@ const MapToggleButtons = ({
             <div className="absolute ml-25 mt-39 flex flex-col bg-slate-600 p-2 rounded-md shadow  justify-between  z-99999 w-38">
               <div
                 className="flex flex-row gap-2 w-full items-center hover:cursor-pointer hover:bg-slate-700 py-2 px-2 rounded-md"
-                onClick={() => handleClick("Face Recognition")}
+                onClick={() => handleClick("Face")}
               >
                 <button className="mb-1" style={{ color: "white" }}>
                   <ImSearch className="w-6 h-6" />
