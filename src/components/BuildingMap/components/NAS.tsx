@@ -68,14 +68,14 @@ function NAS({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_nas}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
         <ModalNAS
           handleClose={handleClose}
-          name={item.nama}
+          name={item.nama_nas}
           ruangan={item.ruangan}
         />
       </Modal>

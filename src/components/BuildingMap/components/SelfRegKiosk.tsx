@@ -69,12 +69,12 @@ function SelfRegKiosk({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_m_kiosk}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalSelfRegKiosk handleClose={handleClose} name={item.nama} />
+        <ModalSelfRegKiosk handleClose={handleClose} name={item.nama_m_kiosk} />
       </Modal>
     </div>
   );

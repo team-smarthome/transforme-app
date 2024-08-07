@@ -4832,7 +4832,7 @@ export async function apiReadFaceRecDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_face_rec_dummy`,
+      url: `${newBaseUrl}/face_rec`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4851,7 +4851,7 @@ export async function apiReadDesktopDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_desktop_dummy`,
+      url: `${newBaseUrl}/desktop`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4870,7 +4870,7 @@ export async function apiReadTVDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_tv_dummy`,
+      url: `${newBaseUrl}/tv`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4889,7 +4889,7 @@ export async function apiReadSelfDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_self_rec_dummy`,
+      url: `${newBaseUrl}/self_rec`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4908,7 +4908,7 @@ export async function apiReadNVRDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_nvr_dummy`,
+      url: `${newBaseUrl}/nvr`,
       params,
       headers: {
         "Content-Type": "application/json",
@@ -4927,7 +4927,7 @@ export async function apiReadNASDashboard(params, token) {
   try {
     const response = await axios({
       method: "get",
-      url: `${newBaseUrl}/dahsboard_nas_dummy`,
+      url: `${newBaseUrl}/nas`,
       params,
       headers: {
         "Content-Type": "application/json",

@@ -68,12 +68,15 @@ function InteractiveDesktop({
               size === "base" ? "text-xs" : size === "small" ? "text-xs" : null
             } text-black`}
           >
-            {item.nama}
+            {item.nama_desktop}
           </span>
         </div>
       </div>
       <Modal open={open} onClose={handleClose}>
-        <ModalInteractiveDesktop handleClose={handleClose} name={item.nama} />
+        <ModalInteractiveDesktop
+          handleClose={handleClose}
+          name={item.nama_desktop}
+        />
       </Modal>
     </div>
   );
