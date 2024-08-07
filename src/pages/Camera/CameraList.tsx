@@ -16,6 +16,7 @@ import MenuItemComponent from "../../components/MenuItemCameraSave";
 import { Alerts } from "./AlertCamera";
 import { AddKamera } from "../Device/Kamera/ModalAddKamera";
 import { PowerIcon } from "@heroicons/react/24/outline";
+import Loader from "../../common/Loader";
 
 interface BuildingRecord {
 	data?: {
@@ -41,6 +42,7 @@ const CameraList = () => {
 	const [currentPageCamOnline, setCurrentPageCamOnline] = useState(1);
 	const [menuIndex, setMenuIndex] = useState<number | null>(null);
 	const [hovering, setHovering] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const camerasPerPage = columns * rows;
 
 	const webSocketFirst = "192.168.1.111:5000";
@@ -84,6 +86,7 @@ const CameraList = () => {
 	const token = JSON.parse(getToken);
 
 	let fetchData = async () => {
+		console.log("dipanggil lagi cuy");
 		try {
 			let dataLocal = localStorage.getItem("dataUser");
 			let dataUser = JSON.parse(dataLocal!);
@@ -127,6 +130,8 @@ const CameraList = () => {
 			console.log("buildings changed, sending request");
 			sendRequestOnce();
 			startLiveViewCalled.current = true;
+		} else {
+			sendRequestRestartCamera();
 		}
 	}, [buildings]);
 	const errorTimeoutRef: any = useRef(null);
@@ -200,6 +205,38 @@ const CameraList = () => {
 			console.log("Tidak ada kamera online");
 		}
 	};
+	const sendRequestRestartCamera = () => {
+		let onlineCameras = buildings?.data?.records?.gedung.flatMap(
+			(gedung: any) =>
+				gedung.lantai.flatMap((lantai: any) =>
+					lantai.ruangan.flatMap((ruangan: any) => ruangan.kamera)
+				)
+		);
+
+		if (onlineCameras && onlineCameras.length > 0) {
+			onlineCameras.forEach((camera) => {
+				// Panggil sendRequest untuk setiap kamera online
+				sendRequest("restartLiveCamera", {
+					listViewCameraData: [
+						{
+							IpAddress: camera?.ip_address,
+							urlRTSP: camera?.url_rtsp,
+							deviceName: camera?.nama_kamera,
+							deviceId: camera?.kamera_id,
+							token: token?.token,
+							ruangan_otmil_id: camera?.ruangan_otmil_id,
+							// nama_ruangan_otmil: camera?.nama_ruangan_otmil,
+							// merk: camera?.merk,
+							// model: camera?.model,
+							// is_play: camera?.is_play,
+						},
+					],
+				});
+			});
+		} else {
+			console.log("Tidak ada kamera online");
+		}
+	};
 
 	const handleClickTutorial = () => {
 		const driverObj = driver({
@@ -263,16 +300,18 @@ const CameraList = () => {
 			});
 		}
 	};
-
 	const handleUpdateIsPlay = async (kameraId: any, isPlay: any) => {
 		try {
 			const params = { kamera_id: kameraId, is_play: isPlay };
 			const responseEdit = await apiUpdateKamera(params, token?.token);
+			console.log(responseEdit, "responseEdit");
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
 					title: "Berhasil mengubah status kamera",
 				});
+				startLiveViewCalled.current = false;
+				sendRequestRestartCamera();
 				fetchData();
 			} else if (responseEdit.data.status === "NO") {
 				Alerts.fire({
@@ -611,7 +650,7 @@ const CameraList = () => {
 
 	// Reverse the array to prioritize the last occurrence of duplicates
 	const reversedArray = [...dataFromMessage].reverse();
-
+	console.log(reversedArray, "rev");
 	const uniqueArray = reversedArray.filter(
 		(obj, index, self) =>
 			index === self.findIndex((t) => t?.kamera_id === obj?.kamera_id)
@@ -870,7 +909,9 @@ const CameraList = () => {
 		return location;
 	};
 
-	return (
+	return isLoading ? (
+		<Loader />
+	) : (
 		<>
 			<div className="w-full ml-1 flex gap-5  px-7 mt-4 items-center justify-between">
 				<div className="flex items-center justify-between w-1/2">
