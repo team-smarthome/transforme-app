@@ -521,7 +521,7 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
 											className="block text-sm font-medium text-black dark:text-white"
 											htmlFor="id"
 										>
-											Nama Gelang 
+											Nama Gelang
 										</label>
 										<input
 											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
@@ -668,61 +668,6 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
 											{errors.map((item) =>
 												item === "tanggal_aktivasi"
 													? "Pilih Tanggal Aktivasi"
-													: ""
-											)}
-										</p>
-									</div>
-
-									<div className="form-group w-full h-22">
-										<label htmlFor="ruangan_otmil_id">
-											Pilih Ruangan:
-										</label>
-										<Select
-											className="basic-single p-otmil"
-											classNamePrefix="select"
-											isSearchable
-											isClearable={true}
-											defaultValue={
-												isDetail || isEdit
-													? {
-															value: formState.ruangan_otmil_id,
-															label: formState.nama_ruangan_otmil,
-													  }
-													: formState.ruangan_otmil_id
-											}
-											isDisabled={isDetail}
-											styles={customStyles}
-											name="ruangan_otmil_id"
-											options={ruanganotmil.map(
-												(item) => ({
-													value: item.ruangan_otmil_id,
-													label: item.nama_ruangan_otmil,
-												})
-											)}
-											onChange={handleRuanganChange}
-										/>
-										{/* <select
-                      id="ruangan_otmil_id"
-                      name="ruangan_otmil_id"
-                      className="w-full rounded border border-stroke py-3 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary"
-                      value={formState.ruangan_otmil_id}
-                      onChange={handleRuanganChange}
-                      disabled={isDetail}
-                    >
-                      <option value="">Pilih Ruangan</option>
-                      {ruanganotmil.map((item) => (
-                        <option
-                          key={item.ruangan_otmil_id}
-                          value={item.ruangan_otmil_id}
-                        >
-                          {item.nama_ruangan_otmil}
-                        </option>
-                      ))}
-                    </select> */}
-										<p className="error-text">
-											{errors.map((item) =>
-												item === "ruangan_otmil_id"
-													? "Pilih Ruangan"
 													: ""
 											)}
 										</p>
