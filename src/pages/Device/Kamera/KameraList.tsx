@@ -436,16 +436,22 @@ const KameraList = () => {
 			],
 			...data.map((item: any) => [
 				item.nama_kamera,
-				item?.urlRTSP,
+				item?.url_rtsp,
 				item?.ip_address,
 				item?.status_kamera === "offline"
 					? "offline"
 					: item?.status_kamera,
 				item?.merk,
 				item?.model,
-				item?.nama_lokasi_otmil,
-				item?.nama_ruangan_otmil,
-				item?.status_zona_ruangan_otmil,
+				item?.nama_lokasi_otmil !== null
+					? item?.nama_lokasi_otmil
+					: item?.nama_lokasi_lemasmil,
+				item?.nama_ruangan_otmil !== null
+					? item?.nama_ruangan_otmil
+					: item?.nama_ruangan_lemasmil,
+				item?.zona_ruangan_otmil !== null
+					? item?.zona_ruangan_otmil
+					: item?.zona_ruangan_lemasmil,
 			]),
 		];
 
