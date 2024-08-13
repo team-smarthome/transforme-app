@@ -411,10 +411,10 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 								<div>
 									<h3 className="text-xl font-semibold text-black dark:text-white">
 										{isDetail
-											? "Detail Data Smartwatch"
+											? "Detail Data Tipe Device"
 											: isEdit
-											? "Edit Data Smartwatch"
-											: "Tambah Data Smartwatch"}
+											? "Edit Data Tipe Device"
+											: "Tambah Data Tipe Device"}
 									</h3>
 								</div>
 
@@ -549,7 +549,7 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 											) : (
 												""
 											)}
-											Ubah Data Smartwatch
+											Ubah Data Tipe Device
 										</button>
 									) : (
 										<button
@@ -584,7 +584,7 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 											) : (
 												""
 											)}
-											Tambah Data Smartwatch
+											Tambah Data Tipe Device
 										</button>
 									)}
 									{errors.filter((item: string) =>

@@ -110,14 +110,14 @@ const DeviceTypeList = () => {
 					element: ".search",
 					popover: {
 						title: "Search",
-						description: "Mencari nama Smartwatch",
+						description: "Mencari Tipe Device",
 					},
 				},
 				{
 					element: ".i-search",
 					popover: {
 						title: "Search",
-						description: "Mencari nomor DMAC",
+						description: "Mencari Platform",
 					},
 				},
 				{
@@ -125,7 +125,7 @@ const DeviceTypeList = () => {
 					popover: {
 						title: "Button Search",
 						description:
-							"Click button untuk mencari nama smartwatch dan nomor DMAC",
+							"Click button untuk mencari tipe device dan platform",
 					},
 				},
 				{
@@ -139,7 +139,7 @@ const DeviceTypeList = () => {
 					element: ".b-tambah",
 					popover: {
 						title: "Tambah",
-						description: "Menambahkan data perangkat smartwatch",
+						description: "Menambahkan data tipe device",
 					},
 				},
 			],
@@ -407,14 +407,14 @@ const DeviceTypeList = () => {
 			<div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
 				<div className="flex justify-center w-full">
 					<div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
-						<div className="flex w-full i-search">
+						<div className="flex w-full search">
 							<SearchInputButton
 								value={filter}
 								placehorder="Cari Tipe"
 								onChange={handleFilterChange}
 							/>
 						</div>
-						<div className="flex  w-full">
+						<div className="flex  w-full i-search">
 							<select
 								value={filterPlatform}
 								onChange={handleFilterChangePlatform}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loader from "../../../common/Loader";
-import { AddGelang } from "./ModalAddGelang"
+import { AddGelang } from "./ModalAddGelang";
 import { ModalDeleteGelang } from "./ModalDeleteGelang";
 import { Alerts } from "./AlertGelang";
 import {

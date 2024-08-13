@@ -135,14 +135,14 @@ const SmartwatchList = () => {
 					element: ".search",
 					popover: {
 						title: "Search",
-						description: "Mencari nama Smartwatch",
+						description: "Mencari Nama Pengguna",
 					},
 				},
 				{
 					element: ".i-search",
 					popover: {
 						title: "Search",
-						description: "Mencari nomor DMAC",
+						description: "Mencari nomor IMEI",
 					},
 				},
 				{
@@ -150,7 +150,7 @@ const SmartwatchList = () => {
 					popover: {
 						title: "Button Search",
 						description:
-							"Click button untuk mencari nama smartwatch dan nomor DMAC",
+							"Click button untuk mencari nama pengguna dan nomor IMEI",
 					},
 				},
 				{
@@ -366,22 +366,24 @@ const SmartwatchList = () => {
 	const exportToExcel = async () => {
 		const dataToExcel = [
 			[
-				"Nama Smartwatch",
-				"DMAC",
-				"Tanggal Pasang",
-				"Tanggal aktivasi",
-				"Baterai",
-				"Nama Lokasi",
-				"Nama Ruangan",
+				"Nama Pengguna",
+				"IMEI",
+				"Platform",
+				"Device Model",
+				"Versi Firmware",
+				"Tipe",
+				"Manufacture",
+				"health data period",
 			],
 			...data.map((item: any) => [
 				item.wearer_name,
-				item.dmac,
-				item.tanggal_pasang,
-				item.tanggal_aktivasi,
-				item.baterai,
-				item.nama_lokasi_otmil,
-				item.nama_ruangan_otmil,
+				item.imei,
+				item.platform.nama_platform,
+				item.device_model.device_model_name,
+				item.firmware_version.firmware_version_name,
+				item.device_type.device_type_name,
+				item.manufacturer.manufacturer_name,
+				item.health_data_periodic,
 			]),
 		];
 
@@ -390,7 +392,7 @@ const SmartwatchList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gelang ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-device ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 
