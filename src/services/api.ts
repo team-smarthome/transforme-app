@@ -4380,7 +4380,7 @@ export async function apiReadKamera(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: `http://127.0.0.1:8000/api/kamera`,
+			url: `${newBaseUrl}/kamera`,
 			params,
 			headers: {
 				"Content-Type": "application/json",
@@ -4512,7 +4512,7 @@ export async function apiReadGateway(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: webserviceurl + "gateway",
+			url: webserviceurl + "dashboard_gateway",
 			params,
 			headers: {
 				"Content-Type": "application/json",
@@ -5122,28 +5122,26 @@ export async function apiCreatePlatform(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: webserviceurl + "/platform",
-			// url: webserviceurl + "platform",
+			url: newBaseUrl + "platform",
+			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		console.log(params);
 		return response;
 	} catch (error) {
 		console.log(error);
 		throw error;
 	}
 }
-
 export async function apiUpdatePlatform(params, token) {
 	try {
 		const response = await axios({
 			method: "put",
-			url: webserviceurl + "/platform",
-			// url: webserviceurl + "platform",
+			url: webserviceurl + "platform",
+			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
 				"Content-Type": "application/json",
@@ -5162,8 +5160,8 @@ export async function apiDeletePlatform(params, token) {
 	try {
 		const response = await axios({
 			method: "DELETE",
-			url: webserviceurl + "/platform",
-			// url: webserviceurl + "platform",
+			url: webserviceurl + "platform",
+			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
 				"Content-Type": "application/json",
@@ -5317,7 +5315,7 @@ export async function apiCreateFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: webserviceurl + "/firmware",
+			url: webserviceurl + "firmware",
 			// url: webserviceurl + "firmware",
 			data: params,
 			headers: {
@@ -5357,7 +5355,7 @@ export async function apiDeleteFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "delete",
-			url: "http://192.168.18.26:8000/api/firmware",
+			url: webserviceurl + "firmware",
 			// url: webserviceurl + "firmware",
 			data: params,
 			headers: {

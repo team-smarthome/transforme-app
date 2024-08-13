@@ -106,25 +106,17 @@ const PlatformList = () => {
 			showProgress: true,
 			steps: [
 				{
-					element: ".search",
-					popover: {
-						title: "Search",
-						description: "Mencari nama Smartwatch",
-					},
-				},
-				{
 					element: ".i-search",
 					popover: {
 						title: "Search",
-						description: "Mencari nomor DMAC",
+						description: "Mencari nama Platform",
 					},
 				},
 				{
 					element: ".b-search",
 					popover: {
 						title: "Button Search",
-						description:
-							"Click button untuk mencari nama smartwatch dan nomor DMAC",
+						description: "Click button untuk mencari nama Platform",
 					},
 				},
 				{
@@ -138,7 +130,7 @@ const PlatformList = () => {
 					element: ".b-tambah",
 					popover: {
 						title: "Tambah",
-						description: "Menambahkan data perangkat smartwatch",
+						description: "Menambahkan data Platform",
 					},
 				},
 			],
@@ -370,16 +362,17 @@ const PlatformList = () => {
 	}, [isOperator]);
 
 	const exportToExcel = async () => {
-		const dataToExcel = [["Tipe"], ...data.map((item: any) => [item.type])];
+		const dataToExcel = [
+			["Nama Platform"],
+			...data.map((item: any) => [item.nama_platform]),
+		];
 
 		const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
 		const wb = xlsx.utils.book_new();
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Tipe-Device ${dayjs(new Date()).format(
-				"DD-MM-YYYY HH.mm"
-			)}.xlsx`
+			`Data-Platform ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 

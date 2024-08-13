@@ -163,11 +163,11 @@ const KameraList = () => {
 		};
 		try {
 			const response = await apiReadKamera(params.filter, token);
-			setPages(response.data.pagination.totalPages);
-			setRows(response.data.pagination.totalRecords);
 			if (response.status === 200) {
 				const result = response.data;
 				setData(result.records);
+				setPages(response.data.pagination.totalPages);
+				setRows(response.data.pagination.totalRecords);
 			} else {
 				throw new Error("Terjadi kesalahan saat mencari data.");
 			}

@@ -211,10 +211,10 @@ export const AddNVR: React.FC<AddNVRModalProps> = ({
 		e.preventDefault();
 		console.log(formState, "formState");
 
-		// if (!validateForm()) return;
-		// setButtonLoad(true);
+		if (!validateForm()) return;
+		setButtonLoad(true);
 
-		onSubmit(formState).then(() => setButtonLoad(false));
+		onSubmit(formState);
 		// closeModal();
 		console.log(formState, "formstateSuccesValidate");
 	};

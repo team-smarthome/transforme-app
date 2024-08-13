@@ -4391,7 +4391,7 @@ export async function apiReadKamera(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: `http://127.0.0.1:8000/api/kamera`,
+			url: `${newBaseUrl}/kamera`,
 			params,
 			headers: {
 				"Content-Type": "application/json",
@@ -4523,7 +4523,7 @@ export async function apiReadGateway(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: newwebserviceurl + "gateway",
+			url: newwebserviceurl + "dashboard_gateway",
 			params,
 			headers: {
 				"Content-Type": "application/json",
@@ -4825,8 +4825,6 @@ export async function apiReadAllStaffDashboard(params, token) {
 }
 
 export async function apiReadGatewayDashboard(params, token) {
-	console.log("masukkesinmase");
-	console.log("paramsnyaapasaja", params);
 	try {
 		const response = await axios({
 			method: "get",
@@ -5040,7 +5038,7 @@ export async function apiReadSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://127.0.0.1:8000/api/device",
+			url: webserviceurl + "device",
 			// url: newwebserviceurl + "gelang",
 			params,
 			headers: {
@@ -5060,7 +5058,7 @@ export async function apiCreateSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: "http://127.0.0.1:8000/api/device",
+			url: webserviceurl + "device",
 			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
@@ -5079,7 +5077,7 @@ export async function apiUpdateSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "put",
-			url: "http://127.0.0.1:8000/api/device",
+			url: webserviceurl + "device",
 			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
@@ -5099,7 +5097,7 @@ export async function apiDeleteSmartwatch(params, token) {
 	try {
 		const response = await axios({
 			method: "DELETE",
-			url: "http://127.0.0.1:8000/api/device",
+			url: webserviceurl + "device",
 			// url: newwebserviceurl + "gelang",
 			data: params,
 			headers: {
@@ -5117,7 +5115,7 @@ export async function apiReadPlatform(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://127.0.0.1:8000/api/platform",
+			url: webserviceurl + "platform",
 			// url: newwebserviceurl + "platform",
 			params,
 			headers: {
@@ -5132,12 +5130,67 @@ export async function apiReadPlatform(params, token) {
 		throw error;
 	}
 }
+export async function apiCreatePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "platform",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiUpdatePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "platform",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 
+export async function apiDeletePlatform(params, token) {
+	try {
+		const response = await axios({
+			method: "DELETE",
+			url: webserviceurl + "platform",
+			// url: newwebserviceurl + "gelang",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export async function apiReadDeviceType(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://127.0.0.1:8000/api/device_type",
+			url: webserviceurl + "device_type",
 			// url: newwebserviceurl + "device_type",
 			params,
 			headers: {
@@ -5156,7 +5209,7 @@ export async function apiCreateDeviceType(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: "http://127.0.0.1:8000/api/device_type",
+			url: webserviceurl + "device_type",
 			// url: newwebserviceurl + "device_type",
 			data: params,
 			headers: {
@@ -5176,7 +5229,7 @@ export async function apiUpdateDeviceType(params, token) {
 	try {
 		const response = await axios({
 			method: "put",
-			url: "http://127.0.0.1:8000/api/device_type",
+			url: webserviceurl + "device_type",
 			// url: newwebserviceurl + "device_type",
 			data: params,
 			headers: {
@@ -5196,7 +5249,7 @@ export async function apiDeleteDeviceType(params, token) {
 	try {
 		const response = await axios({
 			method: "DELETE",
-			url: "http://127.0.0.1:8000/api/device_type",
+			url: webserviceurl + "device_type",
 			// url: newwebserviceurl + "device_type",
 			data: params,
 			headers: {
@@ -5214,7 +5267,7 @@ export async function apiReadManufacture(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://localhost:8000/api/manufacture",
+			url: webserviceurl + "manufacture",
 			// url: newwebserviceurl + "manufacture",
 			params,
 			headers: {
@@ -5234,7 +5287,7 @@ export async function apiReadDeviceModel(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://127.0.0.1:8000/api/device_model",
+			url: webserviceurl + "device_model",
 			// url: newwebserviceurl + "device_model",
 			params,
 			headers: {
@@ -5254,7 +5307,7 @@ export async function apiReadFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "get",
-			url: "http://127.0.0.1:8000/api/firmware",
+			url: webserviceurl + "firmware",
 			// url: newwebserviceurl + "firmware",
 			params,
 			headers: {
@@ -5274,7 +5327,7 @@ export async function apiCreateFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: "http://127.0.0.1:8000/api/firmware",
+			url: webserviceurl + "firmware",
 			// url: newwebserviceurl + "firmware",
 			data: params,
 			headers: {
@@ -5294,7 +5347,7 @@ export async function apiUpdateFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "put",
-			url: "http://localhost:8000/api/firmware",
+			url: webserviceurl + "firmware",
 			// url: newwebserviceurl + "gateway",
 			data: params,
 			headers: {
@@ -5314,7 +5367,7 @@ export async function apiDeleteFirmware(params, token) {
 	try {
 		const response = await axios({
 			method: "delete",
-			url: "http://192.168.18.26:8000/api/firmware",
+			url: webserviceurl + "firmware",
 			// url: newwebserviceurl + "firmware",
 			data: params,
 			headers: {
@@ -5334,7 +5387,7 @@ export async function apiCreateManufacture(params, token) {
 	try {
 		const response = await axios({
 			method: "post",
-			url: "http://localhost:8000/api/manufacture",
+			url: webserviceurl + "manufacture",
 			// url: newwebserviceurl + "firmware",
 			data: params,
 			headers: {
@@ -5354,7 +5407,7 @@ export async function apiUpdateManufacture(params, token) {
 	try {
 		const response = await axios({
 			method: "put",
-			url: "http://localhost:8000/api/manufacture",
+			url: webserviceurl + "manufacture",
 			// url: newwebserviceurl + "gateway",
 			data: params,
 			headers: {
@@ -5374,7 +5427,7 @@ export async function apiDeleteManufacture(params, token) {
 	try {
 		const response = await axios({
 			method: "delete",
-			url: "http://localhost:8000/api/manufacture",
+			url: webserviceurl + "manufacture",
 			// url: newwebserviceurl + "firmware",
 			data: params,
 			headers: {

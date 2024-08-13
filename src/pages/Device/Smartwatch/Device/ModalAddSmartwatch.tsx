@@ -11,6 +11,7 @@ import { Label } from "@windmill/react-ui";
 import {
 	apiReadDeviceModel,
 	apiReadDeviceType,
+	apiReadFirmware,
 	apiReadManufacture,
 	apiReadPlatform,
 } from "../../../../services/api";
@@ -32,6 +33,10 @@ interface deviceModel {
 interface manufacture {
 	manufacturer_id: string;
 	manufacture: string;
+}
+interface firmware {
+	firmware_version_id: string;
+	version: string;
 }
 interface AddSmartwatchModalProps {
 	closeModal: () => void;
@@ -61,7 +66,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 			device_type_id: "",
 			device_model_id: "",
 			manufacturer_id: "",
-			firmware_version_id: "9c406729-91ce-4b72-bd72-33e665746629",
+			firmware_version_id: "",
 			platform_id: "",
 			nama_platform: "",
 		}
@@ -76,6 +81,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 	const [deviceType, setDeviceType] = useState<deviceType[]>([]);
 	const [deviceModel, setDeviceModel] = useState<deviceModel[]>([]);
 	const [manufacture, setManufacture] = useState<manufacture[]>([]);
+	const [firmware, setFirmware] = useState<firmware[]>([]);
 	const [filter, setFilter] = useState("");
 
 	const tokenItem = localStorage.getItem("token");
@@ -106,6 +112,10 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 				const manufacture = await apiReadManufacture(params, token);
 				const manufacturers = manufacture.data.records;
 				setManufacture(manufacturers);
+
+				const firmware = await apiReadFirmware(params, token);
+				const firmwares = firmware.data.records;
+				setFirmware(firmwares);
 				setTimeout(() => {
 					setIsLoading(false);
 				}, 300);
@@ -386,6 +396,22 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 			});
 		}
 	};
+
+	const handleChangeFirmware = (selectedOption: any) => {
+		if (selectedOption) {
+			setFormState({
+				...formState,
+				firmware_version_id: selectedOption.value,
+				version: selectedOption.label,
+			});
+		} else {
+			setFormState({
+				...formState,
+				firmware_version_id: "",
+				version: "",
+			});
+		}
+	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -653,13 +679,13 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 											isDisabled={isDetail}
 											styles={customStyles}
 											name="firmeware_id"
-											// options={ruanganotmil.map(
-											// 	(item) => ({
-											// 		value: item.firmeware_id,
-											// 		label: item.nama_firmware,
-											// 	})
-											// )}
-											// onChange={handleRuanganChange}
+											options={firmware.map(
+												(item: firmware) => ({
+													value: item.firmware_version_id,
+													label: item.version,
+												})
+											)}
+											onChange={handleChangeFirmware}
 										/>
 										<p className="error-text">
 											{errors.map((item) =>
@@ -739,7 +765,7 @@ export const AddSmartwatch: React.FC<AddSmartwatchModalProps> = ({
 											)}
 											onChange={handleChangeManufacture}
 										/>
-										<p className="error-text">
+										<p className="error-text text-red-500">
 											{errors.map((item) =>
 												item === "manufacturer_id"
 													? "Pilih Manufacture"
