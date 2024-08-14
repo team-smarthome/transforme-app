@@ -116,7 +116,8 @@ export const AddTv: React.FC<AddTvModalProps> = ({
         key !== "jenis_ruangan_lemasmil" &&
         key !== "zona_id_lemasmil" &&
         key !== "status_zona_ruangan_lemasmil" &&
-        key !== "ruangan_lemasmi_id"
+        key !== "ruangan_lemasmil_id" &&
+        key !== "v_tv_topic"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -210,12 +211,11 @@ export const AddTv: React.FC<AddTvModalProps> = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formState, "formState");
 
-    // if (!validateForm()) return;
-    // setButtonLoad(true);
+    if (!validateForm()) return;
+    setButtonLoad(true);
 
-    onSubmit(formState).then(() => setButtonLoad(false));
+    onSubmit(formState);
     // closeModal();
     console.log(formState, "formstateSuccesValidate");
   };
@@ -529,6 +529,27 @@ export const AddTv: React.FC<AddTvModalProps> = ({
                     </p>
                   </div>
 
+                  <div className="form-group w-full h-22">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
+                      Gmac
+                    </label>
+                    <input
+                      className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
+                      name="gmac"
+                      placeholder="Gmac"
+                      onChange={handleChange}
+                      value={formState.gmac}
+                      disabled={isDetail}
+                    />
+                    <p className="error-text p-0 m-0">
+                      {errors.map((item) =>
+                        item === "gmac" ? "Pilih gmac" : ""
+                      )}
+                    </p>
+                  </div>
                   <div className="form-group w-full h-22">
                     <label
                       className="block text-sm font-medium text-black dark:text-white"

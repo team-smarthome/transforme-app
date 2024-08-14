@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { apiReadAllRuanganOtmil, apiReadAlllokasiOtmil, apiReadZona } from "../../../services/api";
+import {
+  apiReadAllRuanganOtmil,
+  apiReadAlllokasiOtmil,
+  apiReadZona,
+} from "../../../services/api";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { HiQuestionMarkCircle } from "react-icons/hi2";
@@ -35,16 +39,23 @@ interface namazona {
   nama_zona: string;
 }
 
-export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defaultValue, isDetail, isEdit }) => {
+export const AddNAS: React.FC<AddNASModalProps> = ({
+  closeModal,
+  onSubmit,
+  defaultValue,
+  isDetail,
+  isEdit,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: "",
+      nama_nas: "",
       gmac: "",
-      status_gateway: "",
-      jumlah_gateway: 1,
+      status_nas: "",
+      v_nas_topic: "",
+      jumlah_nas: 1,
       lokasi_otmil_id: "",
       nama_lokasi_otmil: "",
       ruangan_otmil_id: "",
@@ -105,7 +116,8 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
         key !== "jenis_ruangan_lemasmil" &&
         key !== "zona_id_lemasmil" &&
         key !== "status_zona_ruangan_lemasmil" &&
-        key !== "ruangan_lemasmi_id"
+        key !== "ruangan_lemasmil_id" &&
+        key !== "v_nas_topic"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -178,7 +190,9 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
           element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
           popover: {
             title: `${isEdit ? "Ubah" : "Tambah"}`,
-            description: `Klik untuk ${isEdit ? "mengubah" : "menambahkan"} data gateway`,
+            description: `Klik untuk ${
+              isEdit ? "mengubah" : "menambahkan"
+            } data gateway`,
           },
         },
       ],
@@ -187,7 +201,11 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
     driverObj.drive();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -195,10 +213,10 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
     e.preventDefault();
     console.log(formState, "formState");
 
-    // if (!validateForm()) return;
-    // setButtonLoad(true);
+    if (!validateForm()) return;
+    setButtonLoad(true);
 
-    onSubmit(formState).then(() => setButtonLoad(false));
+    onSubmit(formState);
     // closeModal();
     console.log(formState, "formstateSuccesValidate");
   };
@@ -207,7 +225,9 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
     const selectedRuangan = e.value;
 
     // Temukan data ruangan berdasarkan ID yang dipilih
-    const selectedData = ruanganotmil.find((item) => item.ruangan_otmil_id === selectedRuangan);
+    const selectedData = ruanganotmil.find(
+      (item) => item.ruangan_otmil_id === selectedRuangan
+    );
     if (selectedData) {
       setFormState({
         ...formState,
@@ -335,7 +355,13 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
         ...styles,
         borderRadius: "6px",
 
-        backgroundColor: isDisabled ? undefined : isSelected ? "" : isFocused ? "rgb(51, 133, 255)" : undefined,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? ""
+          : isFocused
+          ? "rgb(51, 133, 255)"
+          : undefined,
 
         ":active": {
           ...styles[":active"],
@@ -386,14 +412,33 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
           {isLoading ? (
             <div>
               <div className="flex flex-row-reverse pr-5 pt-3">
-                <strong className="text-xl align-center cursor-pointer" onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer"
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
               <div className="h-[500px] justify-center flex items-center">
-                <svg className="animate-spin h-20 w-20 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin h-20 w-20 text-white "
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
               </div>
             </div>
@@ -402,11 +447,11 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
               <div className="w-full flex justify-between">
                 <div>
                   <h3 className="text-xl font-semibold text-black dark:text-white">
-                    {
-                      isDetail ? "Detail Data NAS" :
-                      isEdit ? "Edit Data NAS" :
-                      "Tambah Data NAS"
-                    }
+                    {isDetail
+                      ? "Detail Data NAS"
+                      : isEdit
+                      ? "Edit Data NAS"
+                      : "Tambah Data NAS"}
                   </h3>
                 </div>
 
@@ -432,30 +477,43 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                 )}
                 {/* </div> */}
 
-                <strong className="text-xl align-center cursor-pointer " onClick={closeModal}>
+                <strong
+                  className="text-xl align-center cursor-pointer "
+                  onClick={closeModal}
+                >
                   &times;
                 </strong>
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-1 justify-normal">
                   <div className="form-group w-full h-22">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Nama NAS
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-                      name="nama_gateway"
+                      name="nama_nas"
                       placeholder="Nama NAS"
                       onChange={handleChange}
-                      value={formState.nama_gateway}
+                      value={formState.nama_nas}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "nama_gateway" ? "Pilih Desktop" : ""))}</p>
+                    <p className="error-text p-0 m-0">
+                      {errors.map((item) =>
+                        item === "nama_nas" ? "Pilih Desktop" : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
-                      Alamat MAC
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
+                      Gmac
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
@@ -465,32 +523,46 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       value={formState.gmac}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "gmac" ? "Pilih Model" : ""))}</p>
+                    <p className="error-text p-0 m-0">
+                      {errors.map((item) =>
+                        item === "gmac" ? "Pilih Model" : ""
+                      )}
+                    </p>
                   </div>
                   <div className="form-group w-full h-22">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
-                      Model NAS
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
+                      V Nas Topic
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
-                      name="gmac"
-                      placeholder="Model NAS"
+                      name="v_nas_topic"
+                      placeholder="V Nas Topic"
                       onChange={handleChange}
-                      value={formState.gmac}
+                      value={formState.v_nas_topic}
                       disabled={isDetail}
                     />
-                    <p className="error-text p-0 m-0">{errors.map((item) => (item === "gmac" ? "Pilih Model" : ""))}</p>
+                    <p className="error-text p-0 m-0">
+                      {errors.map((item) =>
+                        item === "v_nas_topic" ? "Wajib diisi" : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="form-group w-full h-22">
-                    <label className="block text-sm font-medium text-black dark:text-white" htmlFor="id">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
                       Status NAS
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-                      name="status_gateway"
+                      name="status_nas"
                       onChange={handleChange}
-                      value={formState.status_gateway}
+                      value={formState.status_nas}
                       disabled={isDetail}
                     >
                       <option disabled value="">
@@ -500,7 +572,11 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       <option value="tidak">Tidak Aktif</option>
                       <option value="rusak">Rusak</option>
                     </select>
-                    <p className="error-text">{errors.map((item) => (item === "status_gateway" ? "Pilih Status Desktop" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "status_nas" ? "Pilih Status Desktop" : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -522,7 +598,11 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                         label: formState.nama_ruangan_otmil,
                       }}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "ruangan_otmil_id" ? "Pilih Ruangan" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "ruangan_otmil_id" ? "Pilih Ruangan" : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -535,7 +615,13 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       value={formState.jenis_ruangan_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "jenis_ruangan_otmil" ? "Masukan Jenis Ruangan" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "jenis_ruangan_otmil"
+                          ? "Masukan Jenis Ruangan"
+                          : ""
+                      )}
+                    </p>
                   </div>
 
                   <div className="form-group w-full h-22">
@@ -548,17 +634,46 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       value={formState.nama_lokasi_otmil}
                       disabled={isDetail || isEdit}
                     />
-                    <p className="error-text">{errors.map((item) => (item === "nama_lokasi_otmil" ? "Masukan Nama Lokasi" : ""))}</p>
+                    <p className="error-text">
+                      {errors.map((item) =>
+                        item === "nama_lokasi_otmil"
+                          ? "Masukan Nama Lokasi"
+                          : ""
+                      )}
+                    </p>
                   </div>
                 </div>
 
                 <div className={` ${isDetail ? "h-auto" : "h-15"}  mt-3`}>
                   {isDetail ? null : isEdit ? (
-                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-ubah">
+                    <button
+                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                        buttonLoad ? "bg-slate-400" : ""
+                      }`}
+                      type="submit"
+                      disabled={buttonLoad}
+                      id="b-ubah"
+                    >
                       {buttonLoad ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                       ) : (
                         ""
@@ -566,11 +681,34 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       Ubah Data NAS
                     </button>
                   ) : (
-                    <button className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${buttonLoad ? "bg-slate-400" : ""}`} type="submit" disabled={buttonLoad} id="b-tambah">
+                    <button
+                      className={`items-center btn flex w-full justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:shadow-1 ${
+                        buttonLoad ? "bg-slate-400" : ""
+                      }`}
+                      type="submit"
+                      disabled={buttonLoad}
+                      id="b-tambah"
+                    >
                       {buttonLoad ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                       ) : (
                         ""
@@ -578,15 +716,26 @@ export const AddNAS: React.FC<AddNASModalProps> = ({ closeModal, onSubmit, defau
                       Tambah Data NAS
                     </button>
                   )}
-                  {errors.filter((item: string) => item.startsWith("INVALID_ID")).length > 0 && (
+                  {errors.filter((item: string) =>
+                    item.startsWith("INVALID_ID")
+                  ).length > 0 && (
                     <>
                       <br />
-                      <div className="error">{errors.filter((item: string) => item.startsWith("INVALID_ID"))[0].replace("INVALID_ID_", "")} is not a valid bond</div>
+                      <div className="error">
+                        {errors
+                          .filter((item: string) =>
+                            item.startsWith("INVALID_ID")
+                          )[0]
+                          .replace("INVALID_ID_", "")}{" "}
+                        is not a valid bond
+                      </div>
                     </>
                   )}
                   {errors.length > 0 && (
                     <div className="error text-center">
-                      <p className="text-red-400">Ada data yang masih belum terisi !</p>
+                      <p className="text-red-400">
+                        Ada data yang masih belum terisi !
+                      </p>
                     </div>
                   )}
                 </div>

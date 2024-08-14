@@ -1,10 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-export const DeletePTPModal = ({
-  closeModal,
-  onSubmit,
-  defaultValue,
-}: any) => {
+export const DeletePTPModal = ({ closeModal, onSubmit, defaultValue }: any) => {
   const [formState, setFormState] = useState(defaultValue || {});
   const [errors, setErrors] = useState<string[]>([]);
   const modalContainerRef: any = useRef(null);
@@ -29,27 +25,27 @@ export const DeletePTPModal = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setButtonLoad(true);
-    console.log(formState, 'formState');
+    console.log(formState, "formState");
 
     onSubmit(formState).then(() => setButtonLoad(false));
   };
 
   const modalStyles: any = {
     backdrop: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0, 0, 0, 0.5)', // Background color with transparency for the blur effect
-      backdropFilter: 'blur(5px)', // Adjust the blur intensity as needed
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)", // Background color with transparency for the blur effect
+      backdropFilter: "blur(5px)", // Adjust the blur intensity as needed
       zIndex: 40, // Ensure the backdrop is behind the modal
     },
     modalContainer: {
-      position: 'fixed',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
       // Add your other modal styles here
     },
   };
@@ -82,8 +78,10 @@ export const DeletePTPModal = ({
                 Apakah Anda yakin ingin menghapus data ini?
               </p>
               <p className="text-sm text-center text-black dark:text-white">
-                Nama PTP{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                Nama PTP{" "}
+                <span className="text-red-400">
+                  {formState.nama_access_point}
+                </span>{" "}
                 akan dihapus
               </p>
             </div>
@@ -101,8 +99,8 @@ export const DeletePTPModal = ({
               <button
                 className={`btn flex justify-center rounded py-2 px-6 font-medium text-white  ${
                   buttonLoad
-                    ? 'bg-slate-400 hover:bg-none'
-                    : 'hover:bg-red-400 bg-red-500 '
+                    ? "bg-slate-400 hover:bg-none"
+                    : "hover:bg-red-400 bg-red-500 "
                 }`}
                 type="submit"
                 disabled={buttonLoad}
@@ -130,7 +128,7 @@ export const DeletePTPModal = ({
                     ></path>
                   </svg>
                 ) : (
-                  ''
+                  ""
                 )}
                 Hapus
               </button>

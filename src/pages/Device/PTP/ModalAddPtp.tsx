@@ -51,9 +51,10 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      nama_gateway: "",
+      nama_access_point: "",
       gmac: "",
-      status_gateway: "",
+      status_access_point: "",
+      v_access_point_topic: "",
       jumlah_gateway: 1,
       lokasi_otmil_id: "",
       nama_lokasi_otmil: "",
@@ -98,7 +99,8 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
         key !== "jenis_ruangan_lemasmil" &&
         key !== "zona_id_lemasmil" &&
         key !== "status_zona_ruangan_lemasmil" &&
-        key !== "ruangan_lemasmi_id"
+        key !== "ruangan_lemasmil_id" &&
+        key !== "v_access_point_topic"
       ) {
         if (!value) {
           errorFields.push(key);
@@ -194,12 +196,11 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
     e.preventDefault();
     console.log(formState, "formState");
 
-    // if (!validateForm()) return;
-    // setButtonLoad(true);
+    if (!validateForm()) return;
+    setButtonLoad(true);
 
-    onSubmit(formState).then(() => setButtonLoad(false));
+    onSubmit(formState);
     // closeModal();
-    console.log(formState, "formstateSuccesValidate");
   };
 
   const handleRuanganChange = (e: any) => {
@@ -476,15 +477,15 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-                      name="nama_gateway"
+                      name="nama_access_point"
                       placeholder="Nama PTP"
                       onChange={handleChange}
-                      value={formState.nama_gateway}
+                      value={formState.nama_access_point}
                       disabled={isDetail}
                     />
                     <p className="error-text p-0 m-0">
                       {errors.map((item) =>
-                        item === "nama_gateway" ? "Pilih ptp" : ""
+                        item === "nama_access_point" ? "Pilih ptp" : ""
                       )}
                     </p>
                   </div>
@@ -494,7 +495,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       className="block text-sm font-medium text-black dark:text-white"
                       htmlFor="id"
                     >
-                      Jenis PTP
+                      Gmac
                     </label>
                     <input
                       className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
@@ -510,6 +511,29 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                       )}
                     </p>
                   </div>
+                  <div className="form-group w-full h-22">
+                    <label
+                      className="block text-sm font-medium text-black dark:text-white"
+                      htmlFor="id"
+                    >
+                      V Access Point Topic
+                    </label>
+                    <input
+                      className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-gmac"
+                      name="v_access_point_topic"
+                      placeholder="V Access Point Topic"
+                      onChange={handleChange}
+                      value={formState.v_access_point_topic}
+                      disabled={isDetail}
+                    />
+                    <p className="error-text p-0 m-0">
+                      {errors.map((item) =>
+                        item === "v_access_point_topic"
+                          ? "Pilih Access Point Topic"
+                          : ""
+                      )}
+                    </p>
+                  </div>
 
                   <div className="form-group w-full h-22">
                     <label
@@ -520,9 +544,9 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     </label>
                     <select
                       className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-                      name="status_gateway"
+                      name="status_access_point"
                       onChange={handleChange}
-                      value={formState.status_gateway}
+                      value={formState.status_access_point}
                       disabled={isDetail}
                     >
                       <option disabled value="">
@@ -534,7 +558,7 @@ export const AddGateway: React.FC<AddGatewayModalProps> = ({
                     </select>
                     <p className="error-text">
                       {errors.map((item) =>
-                        item === "status_gateway" ? "Pilih Status PTP" : ""
+                        item === "status_access_point" ? "Pilih Status PTP" : ""
                       )}
                     </p>
                   </div>
