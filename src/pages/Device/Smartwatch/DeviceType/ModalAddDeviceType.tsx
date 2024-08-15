@@ -200,61 +200,15 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 				{
 					element: ".i-nama",
 					popover: {
-						title: "Nama Pengguna",
-						description: "Isi nama Pengguna",
+						title: "Nama Device Tipe",
+						description: "Isi nama Device Tipe",
 					},
 				},
 				{
-					element: ".i-imei",
+					element: ".i-platform",
 					popover: {
-						title: "IMEI",
-						description: "Isi IMEI",
-					},
-				},
-				{
-					element: ".i-baterai",
-					popover: { title: "Baterai", description: "Isi baterai" },
-				},
-				{
-					element: ".i-pasang",
-					popover: {
-						title: "Tanggal Pasang",
-						description: "Menentukan tanggal pasang",
-					},
-				},
-				{
-					element: ".i-aktivasi",
-					popover: {
-						title: "Tanggal Aktivasi",
-						description: "Menentukan tanggal aktivasi",
-					},
-				},
-				{
-					element: ".p-otmil",
-					popover: {
-						title: "Pilih Ruangan Otmil",
-						description: "Pilih ruangan otmil yang diinginkan",
-					},
-				},
-				{
-					element: ".i-jenis",
-					popover: {
-						title: "Jenis Ruangan",
-						description: "Isi jenis ruangan",
-					},
-				},
-				{
-					element: ".i-lokasi",
-					popover: {
-						title: "Nama Lokasi",
-						description: "Pilih nama lokasi",
-					},
-				},
-				{
-					element: ".i-zona",
-					popover: {
-						title: "Zona",
-						description: "Isi zona",
+						title: "Platform",
+						description: "Isi Platform",
 					},
 				},
 				{
@@ -263,7 +217,7 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 						title: `${isEdit ? "Ubah" : "Tambah"}`,
 						description: `Klik untuk ${
 							isEdit ? "mengubah" : "menambahkan"
-						} data gelang`,
+						} data tipe device`,
 					},
 				},
 			],
@@ -477,7 +431,7 @@ export const AddDeviceType: React.FC<AddDeviceTypeModalProps> = ({
 											Platform
 										</label>
 										<Select
-											className="basic-single p-otmil"
+											className="basic-single i-platform"
 											classNamePrefix="select"
 											isSearchable
 											isClearable={true}

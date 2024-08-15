@@ -204,56 +204,10 @@ export const AddFirmware: React.FC<AddFirmwareModalProps> = ({
 					},
 				},
 				{
-					element: ".i-imei",
+					element: ".i-platform",
 					popover: {
-						title: "IMEI",
-						description: "Isi IMEI",
-					},
-				},
-				{
-					element: ".i-baterai",
-					popover: { title: "Baterai", description: "Isi baterai" },
-				},
-				{
-					element: ".i-pasang",
-					popover: {
-						title: "Tanggal Pasang",
-						description: "Menentukan tanggal pasang",
-					},
-				},
-				{
-					element: ".i-aktivasi",
-					popover: {
-						title: "Tanggal Aktivasi",
-						description: "Menentukan tanggal aktivasi",
-					},
-				},
-				{
-					element: ".p-otmil",
-					popover: {
-						title: "Pilih Ruangan Otmil",
-						description: "Pilih ruangan otmil yang diinginkan",
-					},
-				},
-				{
-					element: ".i-jenis",
-					popover: {
-						title: "Jenis Ruangan",
-						description: "Isi jenis ruangan",
-					},
-				},
-				{
-					element: ".i-lokasi",
-					popover: {
-						title: "Nama Lokasi",
-						description: "Pilih nama lokasi",
-					},
-				},
-				{
-					element: ".i-zona",
-					popover: {
-						title: "Zona",
-						description: "Isi zona",
+						title: "Platform",
+						description: "Isi Platform",
 					},
 				},
 				{
@@ -262,7 +216,7 @@ export const AddFirmware: React.FC<AddFirmwareModalProps> = ({
 						title: `${isEdit ? "Ubah" : "Tambah"}`,
 						description: `Klik untuk ${
 							isEdit ? "mengubah" : "menambahkan"
-						} data gelang`,
+						} data firmware`,
 					},
 				},
 			],

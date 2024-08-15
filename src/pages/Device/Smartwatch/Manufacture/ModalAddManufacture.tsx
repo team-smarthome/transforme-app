@@ -8,9 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Alerts } from "./AlertManufacture";
 import { Error403Message } from "../../../../utils/constants";
 import { Label } from "@windmill/react-ui";
-import {
-	apiReadPlatform,
-} from "../../../../services/api";
+import { apiReadPlatform } from "../../../../services/api";
 
 interface platform {
 	platform_id: string;
@@ -39,7 +37,7 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 		defaultValue || {
 			manufacture: "",
 			platform_id: "",
-     		nama_platform: ""
+			nama_platform: "",
 		}
 	);
 
@@ -94,10 +92,7 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 		let errorFields = [];
 
 		for (const [key, value] of Object.entries(formState)) {
-			if (
-				key !== "manufacture" &&
-				key !== "nama_platform"
-			) {
+			if (key !== "manufacture" && key !== "nama_platform") {
 				if (!value) {
 					errorFields.push(key);
 				}
@@ -209,56 +204,10 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 					},
 				},
 				{
-					element: ".i-imei",
+					element: ".i-platform",
 					popover: {
-						title: "IMEI",
-						description: "Isi IMEI",
-					},
-				},
-				{
-					element: ".i-baterai",
-					popover: { title: "Baterai", description: "Isi baterai" },
-				},
-				{
-					element: ".i-pasang",
-					popover: {
-						title: "Tanggal Pasang",
-						description: "Menentukan tanggal pasang",
-					},
-				},
-				{
-					element: ".i-aktivasi",
-					popover: {
-						title: "Tanggal Aktivasi",
-						description: "Menentukan tanggal aktivasi",
-					},
-				},
-				{
-					element: ".p-otmil",
-					popover: {
-						title: "Pilih Ruangan Otmil",
-						description: "Pilih ruangan otmil yang diinginkan",
-					},
-				},
-				{
-					element: ".i-jenis",
-					popover: {
-						title: "Jenis Ruangan",
-						description: "Isi jenis ruangan",
-					},
-				},
-				{
-					element: ".i-lokasi",
-					popover: {
-						title: "Nama Lokasi",
-						description: "Pilih nama lokasi",
-					},
-				},
-				{
-					element: ".i-zona",
-					popover: {
-						title: "Zona",
-						description: "Isi zona",
+						title: "Platform",
+						description: "Isi Platform",
 					},
 				},
 				{
@@ -267,7 +216,7 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 						title: `${isEdit ? "Ubah" : "Tambah"}`,
 						description: `Klik untuk ${
 							isEdit ? "mengubah" : "menambahkan"
-						} data gelang`,
+						} data manufacture`,
 					},
 				},
 			],
@@ -437,10 +386,10 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 										</p>
 									</div>
 									<div className="form-group w-full h-22">
-										<label 
-                      htmlFor="manufacture_id"
-                      className="capitalize block text-sm font-medium text-black dark:text-white"
-                    >
+										<label
+											htmlFor="manufacture_id"
+											className="capitalize block text-sm font-medium text-black dark:text-white"
+										>
 											Platform
 										</label>
 										<Select
@@ -576,7 +525,8 @@ export const AddManufacture: React.FC<AddManufactureModalProps> = ({
 									{errors.length > 0 && (
 										<div className="error text-center">
 											<p className="text-red-400">
-												Ada data yang masih belum terisi !
+												Ada data yang masih belum terisi
+												!
 											</p>
 										</div>
 									)}

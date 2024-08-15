@@ -281,13 +281,6 @@ export const AddGelang: React.FC<AddGelangModalProps> = ({
 					},
 				},
 				{
-					element: ".i-zona",
-					popover: {
-						title: "Zona",
-						description: "Isi zona",
-					},
-				},
-				{
 					element: `${isEdit ? "#b-ubah" : "#b-tambah"}`,
 					popover: {
 						title: `${isEdit ? "Ubah" : "Tambah"}`,
