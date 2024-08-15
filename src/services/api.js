@@ -433,12 +433,12 @@ export async function apiVisitorWNAList(params) {
 			filters: {
 				must: params.name
 					? [
-						{
-							match: {
-								name: params.name,
+							{
+								match: {
+									name: params.name,
+								},
 							},
-						},
-					]
+					  ]
 					: [],
 				must_not: [
 					{
@@ -5767,6 +5767,82 @@ export async function apiDeleteFaceRec(params, token) {
 		const response = await axios({
 			method: "delete",
 			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadAccessDoor(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: `${newBaseUrl}/access_door`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateAccessDoor(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: `${newBaseUrl}/access_door`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateAccessDoor(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: `${newBaseUrl}/access_door`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteAccessDoor(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: `${newBaseUrl}/access_door`,
 			params,
 			headers: {
 				"Content-Type": "application/json",

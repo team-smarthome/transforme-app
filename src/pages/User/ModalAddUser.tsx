@@ -539,7 +539,7 @@ export const AddUserModal: React.FC<AddUserModalProps> = ({
 											? "Detail Data Pengguna"
 											: isEdit
 											? "Edit Data Pengguna"
-											: "Add Data Pengguna"}
+											: "Tambah Data Pengguna"}
 									</h3>
 								</div>
 
