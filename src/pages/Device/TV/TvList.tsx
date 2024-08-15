@@ -141,12 +141,12 @@ const GatewayList = () => {
         nama_tv: filter,
         status_tv: filterStatus,
         nama_lokasi_otmil: "Cimahi",
+        page: currentPage,
+        pageSize: pageSize,
       },
-      page: currentPage,
-      pageSize: pageSize,
     };
     try {
-      const response = await apiReadTV(params, token);
+      const response = await apiReadTV(params.filter, token);
       setPages(response.data.pagination.totalPages);
       setRows(response.data.pagination.totalRecords);
       if (response.status === 200) {
@@ -544,9 +544,7 @@ const GatewayList = () => {
                     onClick={() => handleDetailClick(item)}
                     className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
                   >
-                    <p className="text-black dark:text-white">
-                      {item.nama_tv}
-                    </p>
+                    <p className="text-black dark:text-white">{item.nama_tv}</p>
                   </div>
                   <div
                     onClick={() => handleDetailClick(item)}

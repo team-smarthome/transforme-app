@@ -3,7 +3,12 @@ import Loader from "../../../common/Loader";
 import { AddNAS } from "./ModalAddNas";
 import { DeleteNASModal } from "./ModalDeleteNas";
 import { Alerts } from "./AlertNas";
-import { apiReadGateway, apiDeleteGateway, apiCreateGateway, apiUpdateGateway } from "../../../services/api";
+import {
+  apiReadNASDashboard,
+  apiDeleteNas,
+  apiCreateNas,
+  apiUpdateNas,
+} from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
 import * as xlsx from "xlsx";
@@ -20,9 +25,9 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
   gmac: string;
-  nama_gateway: string;
-  status_gateway: string;
-  jumlah_gateway: string;
+  nama_nas: string;
+  status_nas: string;
+  jumlah_nas: string;
   lokasi_otmil_id: string;
   ruangan_otmil_id: string;
   jenis_ruangan_otmil: string;
@@ -118,15 +123,15 @@ const NASList = () => {
   const handleSearchClick = async () => {
     let params = {
       filter: {
-        nama_gateway: filter,
-        status_gateway: filterStatus,
+        nama_nas: filter,
+        status_nas: filterStatus,
         nama_lokasi_otmil: "Cimahi",
+        page: currentPage,
+        pageSize: pageSize,
       },
-      page: currentPage,
-      pageSize: pageSize,
     };
     try {
-      const response = await apiReadGateway(params, token);
+      const response = await apiReadNASDashboard(params.filter, token);
       setPages(response.data.pagination.totalPages);
       setRows(response.data.pagination.totalRecords);
       if (response.status === 200) {
@@ -178,7 +183,7 @@ const NASList = () => {
     };
     setIsLoading(true);
     try {
-      const response = await apiReadGateway(params, token);
+      const response = await apiReadNASDashboard(params, token);
       if (response.data.status !== "OK") {
         throw new Error(response.data.message);
       }
@@ -235,7 +240,7 @@ const NASList = () => {
   // function untuk menghapus data
   const handleSubmitDelete = async (params: any) => {
     try {
-      const responseDelete = await apiDeleteGateway(params, token);
+      const responseDelete = await apiDeleteNas(params, token);
       if (responseDelete.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -268,7 +273,7 @@ const NASList = () => {
   const handleSubmitAdd = async (params: any) => {
     console.log("DATA DARI LIST", params);
     try {
-      const responseCreate = await apiCreateGateway(params, token);
+      const responseCreate = await apiCreateNas(params, token);
       if (responseCreate.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -301,7 +306,7 @@ const NASList = () => {
   const handleSubmitEdit = async (params: any) => {
     console.log(params, "edit");
     try {
-      const responseEdit = await apiUpdateGateway(params, token);
+      const responseEdit = await apiUpdateNas(params, token);
       if (responseEdit.data.status === "OK") {
         Alerts.fire({
           icon: "success",
@@ -342,14 +347,29 @@ const NASList = () => {
 
   const exportToExcel = async () => {
     const dataToExcel = [
-      ["nama nas", "GMAC", "status nas", "Nama Lokasi Otmil", "Nama Ruangan Otmil"],
-      ...data.map((item: any) => [item.nama_gateway, item.gmac, item.status_gateway === "tidak" ? "tidak aktif" : item.status_gateway, item.nama_lokasi_otmil, item.nama_ruangan_otmil]),
+      [
+        "Nama nas",
+        "GMAC",
+        "Status nas",
+        "Nama Lokasi Otmil",
+        "Nama Ruangan Otmil",
+      ],
+      ...data.map((item: any) => [
+        item.nama_nas,
+        item.gmac,
+        item.status_nas === "tidak" ? "tidak aktif" : item.status_nas,
+        item.nama_lokasi_otmil,
+        item.nama_ruangan_otmil,
+      ]),
     ];
 
     const ws = xlsx.utils.aoa_to_sheet(dataToExcel);
     const wb = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
-    xlsx.writeFile(wb, `Data-nas ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`);
+    xlsx.writeFile(
+      wb,
+      `Data-nas ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+    );
   };
 
   useEffect(() => {
@@ -374,11 +394,15 @@ const NASList = () => {
           <div className="mb-4 flex gap-2 items-center border-[1px] border-slate-800 px-4 py-2 rounded-md">
             <div className="flex w-full">
               <div className="search">
-                <SearchInputButton value={filter} placehorder="Cari nama NAS" onChange={handleFilterChange} />
+                <SearchInputButton
+                  value={filter}
+                  placehorder="Cari nama NAS"
+                  onChange={handleFilterChange}
+                />
               </div>
               <select
                 className="ml-2 w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark  dark:focus:border-primary"
-                name="status_gateway"
+                name="status_nas"
                 value={filterStatus}
                 onChange={handleFilterChangeStatus}
                 id="p-status"
@@ -389,13 +413,32 @@ const NASList = () => {
                 <option value="rusak">Rusak</option>
               </select>
             </div>
-            <button className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search" type="button" onClick={handleSearchClick} id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-black">
-                <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+            <button
+              className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search"
+              type="button"
+              onClick={handleSearchClick}
+              id="button-addon1"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="h-5 w-5 text-black"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
 
-            <button onClick={exportToExcel} className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel">
+            <button
+              onClick={exportToExcel}
+              className="text-white rounded-sm bg-blue-500 px-10 py-1 text-sm font-medium excel"
+            >
               Export&nbsp;Excel
             </button>
 
@@ -412,66 +455,118 @@ const NASList = () => {
           </div>
         </div>
         <div className="flex justify-between items-center mb-3">
-          <h4 className="ext-xl font-semibold text-black dark:text-white">Data Perangkat NAS</h4>
+          <h4 className="ext-xl font-semibold text-black dark:text-white">
+            Data Perangkat NAS
+          </h4>
           {!isOperator && (
-            <button onClick={() => setModalAddOpen(true)} className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah">
+            <button
+              onClick={() => setModalAddOpen(true)}
+              className=" text-black rounded-md font-semibold bg-blue-300 py-2 px-3 b-tambah"
+            >
               Tambah
             </button>
           )}
         </div>
 
         <div className="flex flex-col">
-          <div className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${isOperator ? "grid-cols-5" : "grid-cols-6"}`}>
+          <div
+            className={`grid  rounded-t-md bg-gray-2 dark:bg-slate-600 ${
+              isOperator ? "grid-cols-4" : "grid-cols-5"
+            }`}
+          >
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Nama NAS</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Nama NAS
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Model NAS</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Gmac
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Alamat MAC</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Status
+              </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Status</h5>
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Ruangan
+              </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Ruangan</h5>
-            </div>
-            <div className={` ${isOperator ? "hidden" : "sm:block"} hidden p-2.5 text-center xl:p-5`}>
-              <h5 className="text-sm font-medium uppercase xsm:text-base">Aksi</h5>
+            <div
+              className={` ${
+                isOperator ? "hidden" : "sm:block"
+              } hidden p-2.5 text-center xl:p-5`}
+            >
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Aksi
+              </h5>
             </div>
           </div>
 
           {data.map((item: any) => {
             return (
               <div>
-                <div className={`grid ${isOperator ? "grid-cols-5" : "grid-cols-6"} rounded-sm bg-gray-2 dark:bg-meta-4`}>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black dark:text-white">{item.nama_gateway}</p>
+                <div
+                  className={`grid ${
+                    isOperator ? "grid-cols-4" : "grid-cols-5"
+                  } rounded-sm bg-gray-2 dark:bg-meta-4`}
+                >
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_nas}
+                    </p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
                     <p className="text-black dark:text-white">{item.gmac}</p>
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black dark:text-white">{item.gmac}</p>
-                  </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    {item.status_gateway === "aktif" ? (
-                      <p className="text-green-500 dark:text-green-300">Aktif</p>
-                    ) : item.status_gateway === "tidak" ? (
-                      <p className="text-red-500 dark:text-red-300">Tidak Aktif</p>
-                    ) : item.status_gateway === "rusak" ? (
-                      <p className="text-yellow-500 dark:text-yellow-300">Rusak</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    {item.status_nas === "aktif" ? (
+                      <p className="text-green-500 dark:text-green-300">
+                        Aktif
+                      </p>
+                    ) : item.status_nas === "tidak" ? (
+                      <p className="text-red-500 dark:text-red-300">
+                        Tidak Aktif
+                      </p>
+                    ) : item.status_nas === "rusak" ? (
+                      <p className="text-yellow-500 dark:text-yellow-300">
+                        Rusak
+                      </p>
                     ) : (
-                      <p className="text-black dark:text-white">Status Tidak Dikenali</p>
+                      <p className="text-black dark:text-white">
+                        Status Tidak Dikenali
+                      </p>
                     )}
                   </div>
-                  <div onClick={() => handleDetailClick(item)} className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                    <p className="text-black dark:text-white">{item.nama_ruangan_otmil}</p>
+                  <div
+                    onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
                   </div>
-                  <div className={`hidden items-center ${isOperator ? "hidden" : "block sm:flex"} justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}>
+                  <div
+                    className={`hidden items-center ${
+                      isOperator ? "hidden" : "block sm:flex"
+                    } justify-center p-2.5 xl:p-5 flex-wrap lg:flex-nowrap gap-2`}
+                  >
                     <div className="relative">
-                      <DropdownAction handleEditClick={() => handleEditClick(item)} handleDeleteClick={() => handleDeleteClick(item)}></DropdownAction>
+                      <DropdownAction
+                        handleEditClick={() => handleEditClick(item)}
+                        handleDeleteClick={() => handleDeleteClick(item)}
+                      ></DropdownAction>
                     </div>
                   </div>
                 </div>
@@ -479,10 +574,35 @@ const NASList = () => {
               </div>
             );
           })}
-          {modalDetailOpen && <AddNAS closeModal={() => setModalDetailOpen(false)} onSubmit={handleSubmitAdd} defaultValue={detailData} isDetail={true} />}
-          {modalEditOpen && <AddNAS closeModal={handleCloseEditModal} onSubmit={handleSubmitEdit} defaultValue={editData} isEdit={true} />}
-          {modalAddOpen && <AddNAS closeModal={handleCloseAddModal} onSubmit={handleSubmitAdd} />}
-          {modalDeleteOpen && <DeleteNASModal closeModal={handleCloseDeleteModal} onSubmit={handleSubmitDelete} defaultValue={deleteData} />}
+          {modalDetailOpen && (
+            <AddNAS
+              closeModal={() => setModalDetailOpen(false)}
+              onSubmit={handleSubmitAdd}
+              defaultValue={detailData}
+              isDetail={true}
+            />
+          )}
+          {modalEditOpen && (
+            <AddNAS
+              closeModal={handleCloseEditModal}
+              onSubmit={handleSubmitEdit}
+              defaultValue={editData}
+              isEdit={true}
+            />
+          )}
+          {modalAddOpen && (
+            <AddNAS
+              closeModal={handleCloseAddModal}
+              onSubmit={handleSubmitAdd}
+            />
+          )}
+          {modalDeleteOpen && (
+            <DeleteNASModal
+              closeModal={handleCloseDeleteModal}
+              onSubmit={handleSubmitDelete}
+              defaultValue={deleteData}
+            />
+          )}
         </div>
 
         {data.length === 0 ? null : (
@@ -502,7 +622,11 @@ const NASList = () => {
                 <option value="1000">1000</option>
               </select>
             </div>
-            <Pagination currentPage={currentPage} totalPages={pages} onChangePage={handleChagePage} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={pages}
+              onChangePage={handleChagePage}
+            />
           </div>
         )}
       </div>

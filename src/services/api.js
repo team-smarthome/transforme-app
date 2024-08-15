@@ -433,12 +433,12 @@ export async function apiVisitorWNAList(params) {
 			filters: {
 				must: params.name
 					? [
-							{
-								match: {
-									name: params.name,
-								},
+						{
+							match: {
+								name: params.name,
 							},
-					  ]
+						},
+					]
 					: [],
 				must_not: [
 					{
@@ -4881,7 +4881,62 @@ export async function apiReadRoutesDashboard(params, token) {
 		throw error;
 	}
 }
+export async function apiCreateAccessPoint(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: `${newBaseUrl}/access_point`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 
+export async function apiUpdateAccessPoint(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: `${newBaseUrl}/access_point`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteAccessPoint(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: `${newBaseUrl}/access_point`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export async function apiReadAccessDoorDashboard(params, token) {
 	try {
 		const response = await axios({
@@ -5015,6 +5070,62 @@ export async function apiReadNASDashboard(params, token) {
 	}
 }
 
+export async function apiCreateNas(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: `${newBaseUrl}/nas`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateNas(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: `${newBaseUrl}/nas`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteNas(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: `${newBaseUrl}/nas`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
 export function apiIndoorMapVVIP() {
 	try {
 		const response = axios({
@@ -5430,6 +5541,233 @@ export async function apiDeleteManufacture(params, token) {
 			url: webserviceurl + "manufacture",
 			// url: newwebserviceurl + "firmware",
 			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+export async function apiReadDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteDesktop(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://127.0.0.1:8000/api/" + "desktop",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadTV(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: `${newBaseUrl}/tv`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateTV(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: `${newBaseUrl}/tv`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateTV(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: `${newBaseUrl}/tv`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteTV(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: `${newBaseUrl}/tv`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteFaceRec(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: "http://127.0.0.1:8000/api/" + "face_rec",
+			params,
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
