@@ -5846,3 +5846,79 @@ export async function apiDeleteAccessDoor(params, token) {
 		throw error;
 	}
 }
+
+export async function apiReadHelmet(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: `${newBaseUrl}/helmet`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateHelmet(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: `${newBaseUrl}/helmet`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateHelmet(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: `${newBaseUrl}/helmet`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteHelmet(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: `${newBaseUrl}/helmet`,
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
