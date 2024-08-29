@@ -122,7 +122,7 @@ const DashboardSmartwatch = () => {
 	console.log(dataList, "List Data");
 
 	return (
-		<div className="h-full w-full">
+		<div className="h-full w-full bg-slate-800">
 			{formLoading ? (
 				<div
 					className="h-full w-full flex flex-col gap-4 justify-center bg-slate-800 items-center z-1"

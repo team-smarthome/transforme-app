@@ -10,6 +10,7 @@ import {
   // GMap,
 } from "./components";
 import DashboardSmartwatch from "../../pages/DashboardSmartwatch";
+import DashboardPin from "../../pages/DashboardPin";
 import MapToggleButtons from "./components/MapToggleButtons";
 import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
@@ -45,7 +46,7 @@ import {
 import { FaBullseye } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import Modal, { ModalBuildingMap } from "../Modal";
-import {useLoginDashboardSmartwatch} from "../../services/loginDashboardSmartwatch"
+import { useLoginDashboardSmartwatch } from "../../services/loginDashboardSmartwatch";
 interface BuildingProps {
   buildingOpen: boolean;
   setBuildingOpen: (arg: boolean) => void;
@@ -301,6 +302,11 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
       name: "Smartwatch Map",
       image: Gmap,
     },
+    {
+      id: 4,
+      name: "Smart Pin Map",
+      image: Gmap,
+    },
   ];
   const handleSelectedMode = (name) => {
     setSelectedMode(name);
@@ -351,6 +357,8 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
           className={`bg-map-outdoor relative w-full  ${
             selectedMode == "Smartwatch Map"
               ? " h-[90vh] "
+              : selectedMode == "Smart Pin Map"
+              ? " h-[85vh] "
               : " px-20 h-[82vh] pt-5 pb-10 "
           }  flex items-center bg-zinc-50   justify-center animate-popupin`}
         >
@@ -393,9 +401,10 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
                   ))}
               </div>
             </div>
-            {selectedMode !== "Smartwatch Map" && (
-              <Breadcrumb url={window.location.href} pageName="Statistic" />
-            )}
+            {(selectedMode !== "Smartwatch Map" && selectedMode !== "Smart Pin Map") && (
+  <Breadcrumb url={window.location.href} pageName="Statistic" />
+)}
+
           </div>
           {selectedMode == "Satelit" ? (
             <>
@@ -403,6 +412,8 @@ function BuildingMap({ buildingOpen, setBuildingOpen }: BuildingProps) {
             </>
           ) : selectedMode == "Smartwatch Map" ? (
             <DashboardSmartwatch />
+          ) : selectedMode == "Smart Pin Map" ? (
+            <DashboardPin />
           ) : (
             // <GMap  />
             <>
