@@ -33,6 +33,9 @@ import {
 } from "../../utils/atomstates";
 import { useAtom } from "jotai";
 import { FaTrashAlt } from "react-icons/fa";
+import { apiGedungOtmilRead, apiLantaiOtmilRead, apiReadAllRuanganOtmil, apiReadGateway } from "../../services/api";
+import Loader from "../../common/Loader";
+import SearchInputButtonModal from "../BuildingMap/components/Search";
 
 interface ModalSearchProps {
   handleClose: () => void;
@@ -65,6 +68,41 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
   const [dataselfRecSearch] = useAtom(dataSelfRecSearch);
   const [datanvrSearch] = useAtom(dataNVRearch);
   const [datanasSearch] = useAtom(dataNasSearch);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [dataList, setDataList] = useState([]);
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  //List Daftar Option
+  const [optionsGedung, setOptionsGedung] = useState([]);
+  const [optionsLantai, setOptionsLantai] = useState([]);
+  const [optionsRuangan, setOptionsRuangan] = useState([]);
+
+  const [optionsGateWay, setOptionsGateWay] = useState([]);
+
+  //Filter Baru Indoor Maps
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [selectedBuilding, setSelectedBuilding] = useState("");
+  const [selectedFloor, setSelectedFloor] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pages, setPages] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+
+  //Fiter Device
+
+  const [filterGateWay, setFilterGateWay] = useState("");
+  const [selectedStatusGateWay, setSelectedStatusGateWay] = useState("");
+
+  const [filterCamera, setFilterCamera] = useState("");
+  const [selectedStatusKamera, setSelectedStatusKamera] = useState("");
+
+  const [selectedTv, setSelectedTv] = useState("");
+  const [selectedStatusTv, setSelectedStatusTv] = useState("");
+
+  const [selectedNVR, setSelectedNVR] = useState("");
+  const [selectedStatusNVR, setSelectedStatusNVR] = useState("");
 
   /* Data WBP */
   const [filteredData, setFilteredData] = useState(datawbpSearch);
@@ -177,8 +215,155 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   const dataUser = JSON.parse(localStorage.getItem("dataUser") || "{}") as any;
 
+  let getToken: any = localStorage.getItem("token");
+  const token = JSON.parse(getToken);
+
   const dataLokasiOtmil = dataUser.lokasi_otmil_id;
   const dataLokasiLemasMil = dataUser.lokasi_lemasmil_id;
+
+  // handle select gedung and other
+  const handleSelectBuilding = (e: any) => {
+    const selectedBuildingId = e.target.value;
+    setSelectedBuilding(selectedBuildingId);
+    setSelectedFloor("");
+    setSelectedRoom("");
+    // setFilterGateWay("");
+    // setSelectedStatusGateWay("");
+  };
+
+  const handleSelectFloor = (e: any) => {
+    const selectedFloorId = e.target.value;
+    setSelectedFloor(selectedFloorId);
+    setSelectedRoom(""); // Reset selected room when floor changes
+    // setFilterGateWay("");
+    // setSelectedStatusGateWay("");
+  };
+
+  const handleSelectRoom = (e: any) => {
+    const selectedRoomId = e.target.value;
+    setSelectedRoom(selectedRoomId); // Reset selected room when floor changes
+    setFilterGateWay("");
+    setFilterCamera("");
+    // setSelectedStatusGateWay("");
+  };
+
+  //Handle GateWay
+
+  const handleFilterGateWay = (e: any) => {
+    const newFilter = e.target.value;
+    setFilterGateWay(newFilter);
+    setSelectedStatusGateWay(""); // Reset selected room when floor changes
+  };
+
+  const handleSelecStatustGateWay = (e: any) => {
+    const selectedStatusGateWayId = e.target.value;
+    setSelectedStatusGateWay(selectedStatusGateWayId);
+  };
+
+  //Handle Camera
+
+  const handleFilterCamera = (e: any) => {
+    const newFilter = e.target.value;
+    setFilterCamera(newFilter);
+    setSelectedStatusKamera(""); // Reset selected room when floor changes
+  };
+
+  const handleSelecStatustCamera = (e: any) => {
+    const selectedStatusCameraId = e.target.value;
+    setSelectedStatusKamera(selectedStatusCameraId);
+  };
+
+  //Handle TV
+
+  const handleSelectTv = (e: any) => {
+    const selectedTvId = e.target.value;
+    setSelectedTv(selectedTvId);
+    setSelectedStatusTv(""); // Reset selected room when floor changes
+  };
+
+  const handleSelecStatustTv = (e: any) => {
+    const selectedStatusTvId = e.target.value;
+    setSelectedStatusTv(selectedStatusTvId);
+  };
+
+  //Handle NVR
+
+  const handleSelectNVR = (e: any) => {
+    const selectedNVRId = e.target.value;
+    setSelectedNVR(selectedNVRId);
+    setSelectedStatusNVR(""); // Reset selected room when floor changes
+  };
+
+  const handleSelecStatustNVR = (e: any) => {
+    const selectedStatusNVRId = e.target.value;
+    setSelectedStatusNVR(selectedStatusNVRId);
+  };
+
+  const handleClickRoom = (roomId: any) => {
+    console.log("id", roomId);
+    setSelectedRoom(roomId);
+    setCurrentPage(1);
+  };
+
+  const handleSearchDataClick = async () => {
+    setIsLoading(true);
+    // let params
+    // if (selectedBuilding === "" && selectedFloor === "" && selectedRoom === "" && filterGateWay === "" && selectedStatusGateWay === "") {
+    //   params = {}
+    // } else {
+    //   params = {
+    //     filter: {
+    //       gedung_otmil_id: selectedBuilding,
+    //       lantai_otmil_id: selectedFloor,
+    //       ruangan_otmil_id: selectedRoom,
+    //       nama_gateway: filterGateWay,
+    //       status_gateway: selectedStatusGateWay
+    //     }
+    //   }
+    // }
+    const params = {
+      filter: {
+        ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+        ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+        ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+        ...(filterGateWay && { nama_gateway: filterGateWay }),
+        ...(selectedStatusGateWay && { status_gateway: selectedStatusGateWay }),
+      }
+    };
+
+    // Hapus `filter` jika semua nilai kosong
+    if (Object.keys(params.filter).length === 0) {
+      delete params.filter;
+    }
+
+    // Tentukan parameter yang akan digunakan untuk permintaan API
+    const requestParams = Object.keys(params.filter || {}).length === 0 ? {} : params.filter;
+    try {
+      // if (selectedBuilding === "" && selectedFloor === "" && selectedRoom === "" && filterGateWay === "" && selectedStatusGateWay === "") {
+      //   console.log("Masuk ke Kosong");
+
+      //   const { data } = await apiReadGateway(params, token?.token);
+      //   setDataList(data?.records);
+      // } else {
+      //   console.log("Masuk ke Filter");
+
+      //   const { data } = await apiReadGateway(params.filter, token?.token);
+      //   setDataList(data?.records);
+      // }
+      console.log(requestParams.length === 0 ? "Masuk ke Kosong" : "Masuk ke Filter");
+
+      const { data } = await apiReadGateway(requestParams, token?.token);
+      setDataList(data?.records);
+      // setPagination({
+      //   ...pagination,
+      //   total: data?.pages?.meta?.total || 0,
+      // });
+    } catch (error: any) {
+      // console.log(error.message);
+      console.log("error", error);
+    }
+    setIsLoading(false);
+  }
 
   const handleSearchClick = () => {
     switch (hoverData) {
@@ -535,6 +720,93 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     }
   };
 
+  //Fetch Data API
+
+  const fetchDataGedung = async () => {
+    setIsLoading(true);
+    let params
+    try {
+      const { data } = await apiGedungOtmilRead(params, token?.token);
+      setOptionsGedung(data?.records);
+      // setPagination({
+      //   ...pagination,
+      //   total: data?.pages?.meta?.total || 0,
+      // });
+    } catch (error: any) {
+      // console.log(error.message);
+      console.log("error", error);
+    }
+    setIsLoading(false);
+  };
+
+  console.log(dataList.length,"Panjang data list bro");
+  
+
+  const fetchDataLantai = async () => {
+    setIsLoading(true);
+    let params = {
+      gedung_otmil_id: selectedBuilding
+    }
+    console.log(params, "ini param bro");
+
+    try {
+      const { data } = await apiLantaiOtmilRead(params, token?.token);
+      setOptionsLantai(data?.records);
+    } catch (error: any) {
+      console.log("error", error);
+    }
+    setIsLoading(false);
+  };
+
+  const fetchDataRuangan = async () => {
+    setIsLoading(true);
+    let params = {
+      lantai_otmil_id: selectedFloor
+    }
+    console.log(params, "ini param bro");
+
+    try {
+      const { data } = await apiReadAllRuanganOtmil(params, token?.token);
+      setOptionsRuangan(data?.records);
+    } catch (error: any) {
+      console.log("error", error);
+    }
+    setIsLoading(false);
+  };
+
+  const fetchDataGateWay = async () => {
+    setIsLoading(true);
+    let params = {
+      ruangan_otmil_id: selectedRoom
+    }
+
+    try {
+      const { data } = await apiReadGateway(params, token?.token);
+      setOptionsGateWay(data?.records);
+    } catch (error: any) {
+      console.log("error", error);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDataGedung();
+  }, []);
+
+  useEffect(() => {
+    fetchDataRuangan();
+    fetchDataLantai();
+    if (selectedBuilding || selectedFloor) {
+      handleSearchDataClick();
+    }
+  }, [selectedBuilding, selectedFloor]);
+
+  // useEffect(() => {
+  //   if (hoverData === "Gateway") {
+  //     fetchDataGateWay();
+  //   }
+  // }, [hoverData, selectedRoom]);
+
   useEffect(() => {
     switch (hoverData) {
       case "Smartwatch":
@@ -692,8 +964,10 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     datanasSearch,
   ]);
 
-  return (
-    <div className="w-[60vw] pb-7 text-white p-4 bg-slate-700">
+  return isLoading ? (
+    <Loader />
+  ) :
+    (<div className="w-[60vw] pb-7 text-white p-4 bg-slate-700">
       <section className="w-full flex mb-4 justify-between">
         <button type="button" onClick={handleClose}>
           <p className="font-semibold text-lg">{`Mencari Data ${hoverData}`}</p>
@@ -703,22 +977,283 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
         </button>
       </section>
       <div className="flex w-full">
-        <div className="flex w-full">
-          <Input
-            style={CustomInputStyle}
-            className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
-            value={dataSearch}
-            onChange={handleSearchChange}
-          />
+        <div className="flex w-full gap-2">
+          {optionsGedung.length > 0 && (
+            <select
+              value={selectedBuilding}
+              onChange={handleSelectBuilding}
+              className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+            >
+              <option disabled value="">
+                Pilih Gedung
+              </option>
+              {optionsGedung.map((building) => (
+                <option key={building.gedung_otmil_id} value={building.gedung_otmil_id}>
+                  {building.nama_gedung_otmil}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {selectedBuilding && (optionsLantai.length > 0) && (
+            <>
+              {/* {buildings?.data?.records?.gedung?.find(
+              (building) =>
+                building.gedung_otmil_id ===
+                selectedBuilding
+            )?.lantai.length > 0 &&  */}
+              {/* ( */}
+              <select
+                value={selectedFloor}
+                onChange={handleSelectFloor}
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Lantai
+                </option>
+                {optionsLantai.map((building) => (
+                  <option key={building.lantai_otmil_id} value={building.lantai_otmil_id}>
+                    {building.nama_lantai}
+                  </option>
+                ))}
+              </select>
+              {/* ) */}
+              {/* } */}
+            </>
+          )}
+
+          {selectedFloor && (
+            <>
+              {/* {buildings?.data?.records?.gedung
+            ?.find(
+              (building) =>
+                building.gedung_otmil_id ===
+                selectedBuilding
+            )
+            ?.lantai.find(
+              (floor: any) =>
+                floor.lantai_otmil_id === selectedFloor
+            )?.ruangan.length > 0 && ( */}
+              <select
+                value={selectedRoom}
+                onChange={handleSelectRoom
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Ruangan
+                </option>
+                {optionsRuangan.map((item) => (
+                  <option key={item.ruangan_otmil_id} value={item.ruangan_otmil_id}>
+                    {item.nama_ruangan_otmil}
+                  </option>
+                ))}
+                {/* <option value="Ruangan 1">Ruangan 1</option>
+              <option value="Ruangan 2">Ruangan 2</option>
+              <option value="Ruangan 3">Ruangan 3</option>
+              <option value="Ruangan 4">Ruangan 4</option> */}
+              </select>
+              {/* ) */}
+              {/* } */}
+            </>
+          )
+
+          }
+
+          {/* Filter GateWay */}
+
+          {hoverData === "Gateway" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterGateWay}
+                  placehorder="Cari nama GateWay"
+                  onChange={handleFilterGateWay}
+                />
+              </div>
+              {/* <select
+              value={filterGateWay}
+              onChange={handleFilterGateWay
+              }
+              className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+            >
+              <option disabled value="">
+                Pilih Gate Way
+              </option>
+              {optionsGateWay.map((item) => (
+                <option key={item.gateway_id} value={item.gateway_id}>
+                  {item.nama_gateway}
+                </option>
+              ))}
+            </select> */}
+            </>
+          )}
+
+          {filterGateWay && hoverData === "Gateway" && (
+            <>
+              <select
+                value={selectedStatusGateWay}
+                onChange={handleSelecStatustGateWay
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status Gate Way
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter Kamera */}
+
+          {selectedRoom && hoverData === "Camera" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterCamera}
+                  placehorder="Cari nama Camera"
+                  onChange={handleFilterCamera}
+                />
+              </div>
+              {/* <select
+              value={selectedKamera}
+              onChange={handleSelectCamera
+              }
+              className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+            >
+              <option disabled value="">
+                Pilih Camera
+              </option>
+              <option value="Kamera1">Kamera1</option>
+              <option value="Kamera2">Kamera2</option>
+            </select> */}
+            </>
+          )}
+
+          {filterCamera && hoverData === "Camera" && (
+            <>
+              <select
+                value={selectedStatusKamera}
+                onChange={handleSelecStatustCamera
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status Camera
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter Tv */}
+
+          {selectedRoom && hoverData === "TV" && (
+            <>
+              <select
+                value={selectedTv}
+                onChange={handleSelectTv
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih TV
+                </option>
+                <option value="Televisi1">Televisi1</option>
+                <option value="Televisi2">Televisi2</option>
+                {/* {optionsGateWay.map((item) => (
+              <option key={item.gateway_id} value={item.gateway_id}>
+                {item.nama_gateway}
+              </option>
+            ))} */}
+              </select>
+            </>
+          )}
+
+          {selectedTv && hoverData === "TV" && (
+            <>
+              <select
+                value={selectedStatusTv}
+                onChange={handleSelecStatustTv
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status TV
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter NVR */}
+
+          {selectedRoom && hoverData === "NVR" && (
+            <>
+              <select
+                value={selectedNVR}
+                onChange={handleSelectNVR
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih NVR
+                </option>
+                <option value="NVR 1">NVR 1</option>
+                <option value="NVR 2">NVR 2</option>
+                {/* {optionsGateWay.map((item) => (
+              <option key={item.gateway_id} value={item.gateway_id}>
+                {item.nama_gateway}
+              </option>
+            ))} */}
+              </select>
+            </>
+          )}
+
+          {selectedNVR && hoverData === "NVR" && (
+            <>
+              <select
+                value={selectedStatusNVR}
+                onChange={handleSelecStatustNVR
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status NVR
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleSearchClick}
+            className=" rounded-sm bg-blue-300 px-6 py-1 text-xs font-medium b-search ml-auto mr-3"
+            type="button"
+            onClick={handleSearchDataClick}
+            id="button-addon1"
+            data-te-ripple-init
+            data-te-ripple-color="light"
           >
-            Cari
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-5 w-5 text-black"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
-        </div>
-        {/* <div className="flex w-full">
-        <Input
+
+          {/* <Input
           style={CustomInputStyle}
           className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
           value={dataSearch}
@@ -729,9 +1264,118 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           onClick={handleSearchClick}
         >
           Cari
-        </button>
-      </div> */}
+        </button> */}
+        </div>
+        {/* <div className="flex w-full">
+      <Input
+        style={CustomInputStyle}
+        className="mr-2 py-2 border-2 border-slate-950 rounded-md w-full"
+        value={dataSearch}
+        onChange={handleSearchChange}
+      />
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handleSearchClick}
+      >
+        Cari
+      </button>
+    </div> */}
       </div>
+
+      {(hoverData === "Gateway" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-3"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama GateWay
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status GateWay
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+              {/* <div className="p-2.5 text-center xl:p-5">
+          <h5 className="text-sm font-medium uppercase xsm:text-base">
+            Status
+          </h5>
+        </div>
+        <div className="p-2.5 text-center xl:p-5">
+          <h5 className="text-sm font-medium uppercase xsm:text-base">
+            Ruangan
+          </h5>
+        </div> */}
+              {/* <div
+          className={` hidden p-2.5 text-center xl:p-5`}
+        >
+          <h5 className="text-sm font-medium uppercase xsm:text-base">
+            Aksi
+          </h5>
+        </div> */}
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_gateway}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_gateway === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_gateway === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+
+      ) :
+        <div className="flex flex-col mt-3 justify-center items-center h-full">
+          <p className="text-2xl">Data tidak ada! (Silahkan tekan tombol cari!)</p>
+        </div>
+        // null
+      }
+
+
+
 
       {hoverData === "Smartwatch" ? (
         <div className="flex flex-wrap w-[84%]">
@@ -849,7 +1493,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             {selectedListFaceRec.map((item: any, index: any) => (
               <div
                 className="
-              mt-3 pl-1 flex"
+            mt-3 pl-1 flex"
                 key={index}
               >
                 <div className="bg-neutral-400 flex justify-between items-center px-2 py-1 rounded-md gap-2">
@@ -1141,8 +1785,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             </div>
           </div>
         ))}
-    </div>
-  );
+    </div>)
 }
 
 export default ModalSearch;
