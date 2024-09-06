@@ -38,7 +38,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 	const handleMenuClick = (menu: string) => {
 		setOpenMenu(openMenu === menu ? null : menu);
 	};
-
+	console.log(openMenu, "openmenu");
 	const isActive = (path: string) =>
 		location.pathname === path || location.pathname.startsWith(path);
 
@@ -197,6 +197,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 		}
 	}, [sidebarExpanded]);
 
+	useEffect(() => {
+		// Reset openMenu when the location changes
+		if (
+			!isActive("/device-management") &&
+			openMenu === "deviceManagement"
+		) {
+			setOpenMenu(null);
+		}
+	}, [location.pathname]);
 	return (
 		<>
 			<aside
@@ -540,8 +549,510 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									</>
 								)}
 							</SidebarLinkGroup>
-							{/* statistik */}
+
+							<SidebarLinkGroup
+								activeCondition={
+									pathname === "/manajemen-gedung" ||
+									pathname.includes("gedung")
+								}
+							>
+								{(handleClick, open) => (
+									<>
+										<NavLink
+											to="#"
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname ===
+													"/manajemen-gedung" ||
+												pathname.includes("gedung")
+													? "!text-white g-graydark dark:bg-meta-4"
+													: ""
+											}`}
+											onClick={(e) => {
+												e.preventDefault();
+												handleClick();
+											}}
+										>
+											<svg
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M5 2H19C19.5523 2 20 2.44772 20 3V21C20 21.5523 19.5523 22 19 22H14V17H10V22H5C4.44772 22 4 21.5523 4 21V3C4 2.44772 4.44772 2 5 2ZM9 4H7V6H9V4ZM17 4H15V6H17V4ZM7 8H9V10H7V8ZM15 8H17V10H15V8ZM7 12H9V14H7V12ZM15 12H17V14H15V12ZM7 16H9V18H7V16ZM15 16H17V18H15V16ZM13 8H11V10H13V8ZM11 12H13V14H11V12Z"
+													fill="#fff"
+												/>
+											</svg>
+											Manajemen Gedung
+											<svg
+												className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+													open && "rotate-180"
+												}`}
+												width="20"
+												height="20"
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+													fill=""
+												/>
+											</svg>
+										</NavLink>
+										{/* <!-- Nested Dropdown Menu Start --> */}
+										<div
+											className={`translate transform overflow-hidden ${
+												!open && "hidden"
+											}`}
+										>
+											<ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
+												<li>
+													<NavLink
+														to="/manajemen-gedung/gedung"
+														onClick={() =>
+															handleNavLinkClick(
+																"gedung"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-gedung/gedung" &&
+															"!text-white"
+														}`}
+													>
+														Gedung
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-gedung/data-lantai"
+														onClick={() =>
+															handleNavLinkClick(
+																"lantai"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-gedung/data-lantai" &&
+															"!text-white"
+														}`}
+													>
+														Lantai
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-gedung/ruangan"
+														onClick={() =>
+															handleNavLinkClick(
+																"firmware"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-gedung/ruangan" &&
+															"!text-white"
+														}`}
+													>
+														Ruangan
+													</NavLink>
+												</li>
+											</ul>
+										</div>
+										{/* <!-- Nested Dropdown Menu End --> */}
+									</>
+								)}
+							</SidebarLinkGroup>
+
+							<SidebarLinkGroup
+								activeCondition={
+									pathname === "/manajemen-pegawai" ||
+									pathname.includes("pegawai")
+								}
+							>
+								{(handleClick, open) => (
+									<>
+										<NavLink
+											to="#"
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname ===
+													"/manajemen-pegawai" ||
+												pathname.includes("pegawai")
+													? "!text-white g-graydark dark:bg-meta-4"
+													: ""
+											}`}
+											onClick={(e) => {
+												e.preventDefault();
+												handleClick();
+											}}
+										>
+											<svg
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M12 2C10.3431 2 9 3.34315 9 5C9 6.65685 10.3431 8 12 8C13.6569 8 15 6.65685 15 5C15 3.34315 13.6569 2 12 2ZM7 5C7 2.23858 9.23858 0 12 0C14.7614 0 17 2.23858 17 5C17 7.76142 14.7614 10 12 10C9.23858 10 7 7.76142 7 5ZM4 22C4 18.6863 6.68629 16 10 16H14C17.3137 16 20 18.6863 20 22C20 22.5523 19.5523 23 19 23H5C4.44772 23 4 22.5523 4 22ZM18 22C18 19.7909 16.2091 18 14 18H10C7.79086 18 6 19.7909 6 22H18Z"
+													fill="#fff"
+												/>
+											</svg>
+											Manajemen Pegawai
+											<svg
+												className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+													open && "rotate-180"
+												}`}
+												width="20"
+												height="20"
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+													fill=""
+												/>
+											</svg>
+										</NavLink>
+										{/* <!-- Nested Dropdown Menu Start --> */}
+										<div
+											className={`translate transform overflow-hidden ${
+												!open && "hidden"
+											}`}
+										>
+											<ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
+												<li>
+													<NavLink
+														to="/manajemen-pegawai/departemen"
+														onClick={() =>
+															handleNavLinkClick(
+																"departemen"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pegawai/departemen" &&
+															"!text-white"
+														}`}
+													>
+														Departemen
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-pegawai/hak-akses"
+														onClick={() =>
+															handleNavLinkClick(
+																"pegawai"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pegawai/hak-akses" &&
+															"!text-white"
+														}`}
+													>
+														Hak Akses Staff
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-pegawai/staff"
+														onClick={() =>
+															handleNavLinkClick(
+																"pegawai"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pegawai/staff" &&
+															"!text-white"
+														}`}
+													>
+														Staff
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-pegawai/jabatan"
+														onClick={() =>
+															handleNavLinkClick(
+																"device-type"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pegawai/jabatan" &&
+															"!text-white"
+														}`}
+													>
+														Jabatan
+													</NavLink>
+												</li>
+											</ul>
+										</div>
+										{/* <!-- Nested Dropdown Menu End --> */}
+									</>
+								)}
+							</SidebarLinkGroup>
+
+							<SidebarLinkGroup
+								activeCondition={
+									pathname === "/manajemen-pengunjung" ||
+									pathname.includes("pegawai")
+								}
+							>
+								{(handleClick, open) => (
+									<>
+										<NavLink
+											to="#"
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname ===
+													"/manajemen-pengunjung" ||
+												pathname.includes("pengunjung")
+													? "!text-white g-graydark dark:bg-meta-4"
+													: ""
+											}`}
+											onClick={(e) => {
+												e.preventDefault();
+												handleClick();
+											}}
+										>
+											<svg
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M9 2C7.34315 2 6 3.34315 6 5C6 6.65685 7.34315 8 9 8C10.6569 8 12 6.65685 12 5C12 3.34315 10.6569 2 9 2ZM4 5C4 2.23858 6.23858 0 9 0C11.7614 0 14 2.23858 14 5C14 7.76142 11.7614 10 9 10C6.23858 10 4 7.76142 4 5ZM15 8C13.3431 8 12 9.34315 12 11C12 12.6569 13.3431 14 15 14C16.6569 14 18 12.6569 18 11C18 9.34315 16.6569 8 15 8ZM10 11C10 8.23858 12.2386 6 15 6C17.7614 6 20 8.23858 20 11C20 13.7614 17.7614 16 15 16C12.2386 16 10 13.7614 10 11ZM9 12H14C16.7614 12 19 14.2386 19 17V20C19 20.5523 18.5523 21 18 21H6C5.44772 21 5 20.5523 5 20V17C5 14.2386 7.23858 12 10 12ZM7 19H17V17C17 15.3431 15.6569 14 14 14H10C8.34315 14 7 15.3431 7 17V19Z"
+													fill="#fff"
+												/>
+											</svg>
+											Manajemen Pengunjung
+											<svg
+												className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+													open && "rotate-180"
+												}`}
+												width="20"
+												height="20"
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+													fill=""
+												/>
+											</svg>
+										</NavLink>
+										{/* <!-- Nested Dropdown Menu Start --> */}
+										<div
+											className={`translate transform overflow-hidden ${
+												!open && "hidden"
+											}`}
+										>
+											<ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
+												<li>
+													<NavLink
+														to="/manajemen-pengunjung/pengunjung"
+														onClick={() =>
+															handleNavLinkClick(
+																"pengunjung"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pengunjung/departemen" &&
+															"!text-white"
+														}`}
+													>
+														Penunjung
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/manajemen-pengunjung/hak-akses-pengunjung"
+														onClick={() =>
+															handleNavLinkClick(
+																"hak-akses-pengunjung"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/manajemen-pengunjung/hak-akses-pengunjung" &&
+															"!text-white"
+														}`}
+													>
+														Hak Akses Pengunjung
+													</NavLink>
+												</li>
+											</ul>
+										</div>
+										{/* <!-- Nested Dropdown Menu End --> */}
+									</>
+								)}
+							</SidebarLinkGroup>
+
+							<SidebarLinkGroup
+								activeCondition={
+									pathname === "/sistem-monitoring" ||
+									pathname.includes("pegawai")
+								}
+							>
+								{(handleClick, open) => (
+									<>
+										<NavLink
+											to="#"
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname ===
+													"/sistem-monitoring" ||
+												pathname.includes("monitoring")
+													? "!text-white g-graydark dark:bg-meta-4"
+													: ""
+											}`}
+											onClick={(e) => {
+												e.preventDefault();
+												handleClick();
+											}}
+										>
+											<svg
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M2 3C2 1.89543 2.89543 1 4 1H20C21.1046 1 22 1.89543 22 3V17C22 18.1046 21.1046 19 20 19H13V21H16C16.5523 21 17 21.4477 17 22C17 22.5523 16.5523 23 16 23H8C7.44772 23 7 22.5523 7 22C7 21.4477 7.44772 21 8 21H11V19H4C2.89543 19 2 18.1046 2 17V3ZM4 3H20V17H4V3ZM6 5H18V15H6V5ZM12 7C12.5523 7 13 7.44772 13 8V12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12V8C11 7.44772 11.4477 7 12 7Z"
+													fill="#fff"
+												/>
+											</svg>
+											Sistem Monitoring
+											<svg
+												className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+													open && "rotate-180"
+												}`}
+												width="20"
+												height="20"
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+													fill=""
+												/>
+											</svg>
+										</NavLink>
+										{/* <!-- Nested Dropdown Menu Start --> */}
+										<div
+											className={`translate transform overflow-hidden ${
+												!open && "hidden"
+											}`}
+										>
+											<ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
+												<li>
+													<NavLink
+														to="/sistem-monitoring/kamera-live"
+														onClick={() =>
+															handleNavLinkClick(
+																"kamera-live"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/sistem-monitoring/kamera-live" &&
+															"!text-white"
+														}`}
+													>
+														Live View
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/sistem-monitoring/kamera-playback"
+														onClick={() =>
+															handleNavLinkClick(
+																"kamera-playback"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/sistem-monitoring/kamera-playback" &&
+															"!text-white"
+														}`}
+													>
+														Playback
+													</NavLink>
+												</li>
+											</ul>
+										</div>
+										{/* <!-- Nested Dropdown Menu End --> */}
+									</>
+								)}
+							</SidebarLinkGroup>
+
 							<li>
+								<NavLink
+									to="/daftar-inventaris"
+									onClick={() => handleNavLinkClick("petas")}
+									className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+										pathname.includes(
+											"daftar-inventaris"
+										) && "bg-graydark dark:bg-meta-4"
+									}`}
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth="1.5"
+										stroke="currentColor"
+										width="20"
+										height="20"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M3 3.75H21V20.25H3V3.75Z"
+										/>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M6 8.25H18M6 12H18M6 15.75H18"
+										/>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M9 6.75H9.01M15 6.75H15.01M12 6.75H12.01"
+										/>
+									</svg>
+									Inventory
+								</NavLink>
+							</li>
+							{/* statistik */}
+							{/* <li>
 								<NavLink
 									to="/statistic"
 									onClick={() => handleNavLinkClick("petas")}
@@ -581,9 +1092,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									</svg>
 									Statistik
 								</NavLink>
-							</li>
+							</li> */}
 							{/* <!-- Menu Item Aktifitas Pengunjung --> */}
-							<li>
+							{/* <li>
 								<NavLink
 									to="/staff"
 									onClick={() => handleNavLinkClick("petas")}
@@ -609,10 +1120,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									</svg>
 									Staff
 								</NavLink>
-							</li>
+							</li> */}
 
 							{/* <!-- Menu Item Kamera --> */}
-							<li>
+							{/* <li>
 								<NavLink
 									to="/kamera-live"
 									onClick={() => handleNavLinkClick("petas")}
@@ -651,7 +1162,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									</svg>
 									Kamera Live
 								</NavLink>
-							</li>
+							</li> */}
 							{/* <!-- Menu Item Kamera --> */}
 
 							{/* <!-- Menu Item Gelang --> */}
@@ -714,7 +1225,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 							{/* <!-- Menu Item Gelang --> */}
 
 							{/* <!-- Menu Item Manajemen Pengguna --> */}
-							{isSuperAdmin && (
+							{/* {isSuperAdmin && (
 								<li>
 									<NavLink
 										to="/manajemen-pengguna"
@@ -758,9 +1269,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 										Manajemen Pengguna
 									</NavLink>
 								</li>
-							)}
-							{/* <!-- Menu Item Manajemen Pengguna --> */}
-							<SidebarLinkGroup
+							)} */}
+							{/* <!-- Menu Item Smartwatch --> */}
+							{/* <SidebarLinkGroup
 								activeCondition={
 									pathname === "/smartwatch" ||
 									pathname.includes("smartwatch")
@@ -814,7 +1325,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 												/>
 											</svg>
 										</NavLink>
-										{/* <!-- Nested Dropdown Menu Start --> */}
+									
 										<div
 											className={`translate transform overflow-hidden ${
 												!open && "hidden"
@@ -908,11 +1419,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 												</li>
 											</ul>
 										</div>
-										{/* <!-- Nested Dropdown Menu End --> */}
+									
 									</>
 								)}
-							</SidebarLinkGroup>
-							<li>
+							</SidebarLinkGroup> */}
+							{/* <li>
 								<NavLink
 									to="/kamera"
 									onClick={() => handleNavLinkClick("petas")}
@@ -951,7 +1462,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									</svg>
 									Kamera
 								</NavLink>
-							</li>
+							</li> */}
 							{/* <li>
 								<NavLink
 									to="/gateway"

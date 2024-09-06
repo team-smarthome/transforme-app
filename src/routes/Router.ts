@@ -158,30 +158,16 @@ const PlatformList = lazy(
 const DeviceGelangList = lazy(
 	() => import("../pages/Device/Gelang/GelangList")
 );
-const PtpList = lazy(
-	() => import("../pages/Device/PTP/PtpList")
-);
-const TvList = lazy(
-	() => import("../pages/Device/TV/TvList")
-);
-const DesktopList = lazy(
-	() => import("../pages/Device/Desktop/DesktopList")
-);
-const MKioskList = lazy(
-	() => import("../pages/Device/MKiosk/MKioskList")
-);
-const NvrList = lazy(
-	() => import("../pages/Device/NVR/NvrList")
-);
-const NasList = lazy(
-	() => import("../pages/Device/NAS/NasList")
-);
+const PtpList = lazy(() => import("../pages/Device/PTP/PtpList"));
+const TvList = lazy(() => import("../pages/Device/TV/TvList"));
+const DesktopList = lazy(() => import("../pages/Device/Desktop/DesktopList"));
+const MKioskList = lazy(() => import("../pages/Device/MKiosk/MKioskList"));
+const NvrList = lazy(() => import("../pages/Device/NVR/NvrList"));
+const NasList = lazy(() => import("../pages/Device/NAS/NasList"));
 const AccessDoorList = lazy(
 	() => import("../pages/Device/AccessDoor/AccessDoorList")
 );
-const FaceRecList = lazy(
-	() => import("../pages/Device/FaceRec/FaceRecList")
-);
+const FaceRecList = lazy(() => import("../pages/Device/FaceRec/FaceRecList"));
 const MainMenuSmartwatch = lazy(
 	() => import("../pages/Device/Smartwatch/MainMenuSmartwatch")
 );
@@ -349,7 +335,7 @@ const coreRoutes = [
 		component: DaftarKasus,
 	},
 	{
-		path: "/staff",
+		path: "manajemen-pegawai/staff",
 		title: "MasterDataStaff",
 		component: MasterDataStaff,
 	},
@@ -401,7 +387,7 @@ const coreRoutes = [
 		component: MasterDataStaff,
 	},
 	{
-		path: "/master-data/pengunjung",
+		path: "/manajemen-pengunjung/pengunjung",
 		title: "MasterDataVisitor",
 		component: MasterDataVisitor,
 	},
@@ -416,7 +402,7 @@ const coreRoutes = [
 		component: MasterDataKategoriPerkara,
 	},
 	{
-		path: "/master-data/ruangan",
+		path: "/manajemen-gedung/ruangan",
 		title: "MasterDataRoom",
 		component: MasterDataRoom,
 	},
@@ -466,12 +452,12 @@ const coreRoutes = [
 		component: PengadilanMiliter,
 	},
 	{
-		path: "/master-data/gedung",
+		path: "/manajemen-gedung/gedung",
 		title: "Data Gedung",
 		component: DaftarGedung,
 	},
 	{
-		path: "/master-data/data-lantai",
+		path: "/manajemen-gedung/data-lantai",
 		title: "Data Lantai",
 		component: DaftarLantai,
 	},
@@ -481,13 +467,13 @@ const coreRoutes = [
 		component: DaftarInventaris,
 	},
 	{
-		path: "/kamera-live/:nama_kamera",
+		path: "sistem-monitoring/kamera-live/:nama_kamera",
 		title: "CameraDetail",
 		component: CameraDetail,
 	},
 	{
 		// path: "/kamera-live",
-		path: "/kamera-live",
+		path: "sistem-monitoring/kamera-live",
 		title: "CameraList",
 		component: CameraList,
 	},
@@ -508,7 +494,7 @@ const coreRoutes = [
 		component: CameraSaveDetail,
 	},
 	{
-		path: "/kamera-playback",
+		path: "sistem-monitoring/kamera-playback",
 		title: "kamera playback",
 		component: CameraPlaybackDetail,
 	},
