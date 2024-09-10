@@ -1051,6 +1051,143 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 									Inventory
 								</NavLink>
 							</li>
+
+							<SidebarLinkGroup
+								activeCondition={
+									pathname === "/sistem-monitoring" ||
+									pathname.includes("pegawai")
+								}
+							>
+								{(handleClick, open) => (
+									<>
+										<NavLink
+											to="#"
+											className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+												pathname === "/absensi" ||
+												pathname.includes("absensi")
+													? "!text-white g-graydark dark:bg-meta-4"
+													: ""
+											}`}
+											onClick={(e) => {
+												e.preventDefault();
+												handleClick();
+											}}
+										>
+											<svg
+												width="18"
+												height="18"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M19 4H18V2C18 1.44772 17.5523 1 17 1C16.4477 1 16 1.44772 16 2V4H8V2C8 1.44772 7.55228 1 7 1C6.44772 1 6 1.44772 6 2V4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4ZM5 8H19V20H5V8ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10ZM7 14H9V16H7V14ZM11 14H13V16H11V14ZM15 14H17V16H15V14Z"
+													fill="#fff"
+												/>
+											</svg>
+											Absensi
+											<svg
+												className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+													open && "rotate-180"
+												}`}
+												width="20"
+												height="20"
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fillRule="evenodd"
+													clipRule="evenodd"
+													d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+													fill=""
+												/>
+											</svg>
+										</NavLink>
+										{/* <!-- Nested Dropdown Menu Start --> */}
+										<div
+											className={`translate transform overflow-hidden ${
+												!open && "hidden"
+											}`}
+										>
+											<ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6 ml-4">
+												<li>
+													<NavLink
+														to="/absensi/calendar-shift"
+														onClick={() =>
+															handleNavLinkClick(
+																"calendar-shift"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/absensi/calendar-shift" &&
+															"!text-white"
+														}`}
+													>
+														Jadwal Shift Kerja
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/absensi/group-shift"
+														onClick={() =>
+															handleNavLinkClick(
+																"group-shift"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/absensi/group-shift" &&
+															"!text-white"
+														}`}
+													>
+														Grup Petugas Shift
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/absensi/data-schedule-shift"
+														onClick={() =>
+															handleNavLinkClick(
+																"data-schedule-shift"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/absensi/data-schedule-shift" &&
+															"!text-white"
+														}`}
+													>
+														Data Shift
+													</NavLink>
+												</li>
+												<li>
+													<NavLink
+														to="/absensi/penugasan"
+														onClick={() =>
+															handleNavLinkClick(
+																"penugasan"
+															)
+														}
+														className={`${"group relative flex items-center gap-2.5 rounded-md px-4 py-2  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white "} ${
+															pathname ===
+																"/absensi/penugasan" &&
+															"!text-white"
+														}`}
+													>
+														Data Penugasan
+													</NavLink>
+												</li>
+											</ul>
+										</div>
+										{/* <!-- Nested Dropdown Menu End --> */}
+									</>
+								)}
+							</SidebarLinkGroup>
+
 							{/* statistik */}
 							{/* <li>
 								<NavLink

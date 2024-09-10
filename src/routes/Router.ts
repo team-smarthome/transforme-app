@@ -346,27 +346,27 @@ const coreRoutes = [
 	},
 
 	{
-		path: "/shift-jaga",
+		path: "/absensi",
 		title: "Shift Jaga",
 		component: ShiftJaga,
 	},
 	{
-		path: "/shift-jaga/calendar-shift",
+		path: "/absensi/calendar-shift",
 		title: "Calendar Shift",
 		component: CalendarShift,
 	},
 	{
-		path: "/shift-jaga/group-shift",
+		path: "/absensi/group-shift",
 		title: "GroupShift",
 		component: GroupShift,
 	},
 	{
-		path: "/shift-jaga/penugasan",
+		path: "/absensi/penugasan",
 		title: "Penugasan",
 		component: Penugasan,
 	},
 	{
-		path: "/shift-jaga/data-schedule-shift",
+		path: "/absensi/data-schedule-shift",
 		title: "DataSceduleShift",
 		component: DataSceduleShift,
 	},
