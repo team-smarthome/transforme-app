@@ -1,5 +1,13 @@
 import { lazy } from "react";
 import CameraDetail from "../pages/Camera/CameraDetail";
+import AutoGateDualSystemList from "../pages/Device/AutogateDualSystem/AutoGateDualSystemList";
+import AutoGateSingleSystemList from "../pages/Device/AutogateSingle/AutoGateSingleSystemList";
+import PalmVeinAccessControlList from "../pages/Device/PalmVeinAccessControl/PalmVeinAccessControlList";
+import RegistrationKiosList from "../pages/Device/RegistrationKios/RegistrationKiosList";
+import MesinXrayList from "../pages/Device/MesinXray/MesinXrayList";
+import SmartLockerList from "../pages/Device/SmartLocker/SmartLockerList";
+import GateParkingList from "../pages/Device/GateParking/GateParkingList";
+import EmergencyPushButtonList from "../pages/Device/EmergencyPushButton/EmergencyPushButtonList";
 
 const Statistic = lazy(() => import("../pages/Statistic"));
 
@@ -562,6 +570,46 @@ const coreRoutes = [
 		// path: '/device-gateway-list',
 		title: "DeviceGatewayListWK",
 		component: DeviceGatewayListWK,
+	},
+	{
+		path: "/autogatedual",
+		title: "AutoGateDualSystemList",
+		component: AutoGateDualSystemList,
+	},
+	{
+		path: "/autogatesingle",
+		title: "AutoGateSingleSystemList",
+		component: AutoGateSingleSystemList,
+	},
+	{
+		path: "/palm-vein-access-control",
+		title: "PalmVeinAccessControlList",
+		component: PalmVeinAccessControlList,
+	},
+	{
+		path: "/registration-kios",
+		title: "RegistrationKiosList",
+		component: RegistrationKiosList,
+	},
+	{
+		path: "/mesin-xray",
+		title: "MesinXrayList",
+		component: MesinXrayList,
+	},
+	{
+		path: "/smart-locker",
+		title: "SmartLockerList",
+		component: SmartLockerList,
+	},
+	{
+		path: "/gate-parking",
+		title: "GateParkingList",
+		component: GateParkingList,
+	},
+	{
+		path: "/emergency-push-button",
+		title: "EmergencyPushButtonList",
+		component: EmergencyPushButtonList,
 	},
 	{
 		path: "/helmet",
