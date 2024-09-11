@@ -538,6 +538,118 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 																				Kamera
 																			</NavLink>
 																		</li>
+																		<li>
+																			<NavLink
+																				to="/autogatedual"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/autogatedual"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Auto Gate Dual System
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/autogatesingle"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/autogatesingle"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Auto Gate Single System
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/palm-vein-access-control"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/palm-vein-access-control"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Palm Vein Access Control
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/registration-kios"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/registration-kios"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Registration Kios
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/mesin-xray"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/mesin-xray"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Mesin Xray
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/smart-locker"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/smart-locker"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Smart Locker
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/gate-parking"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/gate-parking"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Gate Parking
+																			</NavLink>
+																		</li>
+																		<li>
+																			<NavLink
+																				to="/emergency-push-button"
+																				className={`group relative flex items-center gap-2.5 rounded-md px-4 py-2 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+																					isActive(
+																						"/emergency-push-button"
+																					)
+																						? "text-white"
+																						: ""
+																				}`}
+																			>
+																				Emergency Push Button
+																			</NavLink>
+																		</li>
 																	</ul>
 																</div>
 															</>
