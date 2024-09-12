@@ -8,6 +8,10 @@ import {
 	apiDeleteGateway,
 	apiCreateGateway,
 	apiUpdateGateway,
+	apiReadPalmVeinAccess,
+	apiCreatePalmVeinAccess,
+	apiUpdatePalmVeinAccess,
+	apiDeletePalmVeinAccess,
 } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
@@ -26,7 +30,7 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 interface Item {
 	gmac: string;
 	nama_gateway: string;
-	status_gateway: string;
+	status_palm_vein_access_control: string;
 	jumlah_gateway: string;
 	lokasi_otmil_id: string;
 	ruangan_otmil_id: string;
@@ -145,7 +149,7 @@ const PalmVeinAccessControlList = () => {
 			pageSize: pageSize,
 		};
 		try {
-			const response = await apiReadGateway(params.filter, token);
+			const response = await apiReadPalmVeinAccess(params.filter, token);
 			setPages(response.data.pagination.totalPages);
 			setRows(response.data.pagination.totalRecords);
 			if (response.status === 200) {
@@ -197,7 +201,7 @@ const PalmVeinAccessControlList = () => {
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadGateway(params, token);
+			const response = await apiReadPalmVeinAccess(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
@@ -254,7 +258,7 @@ const PalmVeinAccessControlList = () => {
 	// function untuk menghapus data
 	const handleSubmitDelete = async (params: any) => {
 		try {
-			const responseDelete = await apiDeleteGateway(params, token);
+			const responseDelete = await apiDeletePalmVeinAccess(params, token);
 			if (responseDelete.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -287,7 +291,7 @@ const PalmVeinAccessControlList = () => {
 	const handleSubmitAdd = async (params: any) => {
 		console.log("DATA DARI LIST", params);
 		try {
-			const responseCreate = await apiCreateGateway(params, token);
+			const responseCreate = await apiCreatePalmVeinAccess(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -320,7 +324,7 @@ const PalmVeinAccessControlList = () => {
 	const handleSubmitEdit = async (params: any) => {
 		console.log(params, "edit");
 		try {
-			const responseEdit = await apiUpdateGateway(params, token);
+			const responseEdit = await apiUpdatePalmVeinAccess(params, token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -546,7 +550,7 @@ const PalmVeinAccessControlList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black dark:text-white">
-											{item.nama_gateway}
+											{item.nama_palm_vein_access_control}
 										</p>
 									</div>
 									<div
@@ -561,15 +565,15 @@ const PalmVeinAccessControlList = () => {
 										onClick={() => handleDetailClick(item)}
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
-										{item.status_gateway === "aktif" ? (
+										{item.status_palm_vein_access_control === "aktif" ? (
 											<p className="text-green-500 dark:text-green-300">
 												Aktif
 											</p>
-										) : item.status_gateway === "tidak" ? (
+										) : item.status_palm_vein_access_control === "tidak" ? (
 											<p className="text-red-500 dark:text-red-300">
 												Tidak Aktif
 											</p>
-										) : item.status_gateway === "rusak" ? (
+										) : item.status_palm_vein_access_control === "rusak" ? (
 											<p className="text-yellow-500 dark:text-yellow-300">
 												Rusak
 											</p>

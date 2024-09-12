@@ -51,10 +51,10 @@ export const AddPalmVeinAccess: React.FC<AddGatewayModalProps> = ({
 
 	const [formState, setFormState] = useState(
 		defaultValue || {
-			nama_gateway: "",
+			nama_palm_vein_access_control: "",
 			gmac: "",
-			status_gateway: "",
-			jumlah_gateway: 1,
+			status_palm_vein_access_control: "",
+			// jumlah_gateway: 1,
 			lokasi_otmil_id: "",
 			nama_lokasi_otmil: "",
 			ruangan_otmil_id: "",
@@ -490,15 +490,15 @@ export const AddPalmVeinAccess: React.FC<AddGatewayModalProps> = ({
 										</label>
 										<input
 											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="nama_gateway"
+											name="nama_palm_vein_access_control"
 											placeholder="Nama Palm Vein Access"
 											onChange={handleChange}
-											value={formState.nama_gateway}
+											value={formState.nama_palm_vein_access_control}
 											disabled={isDetail}
 										/>
 										<p className="error-text p-0 m-0">
 											{errors.map((item) =>
-												item === "nama_gateway"
+												item === "nama_palm_vein_access_control"
 													? "Pilih gateway"
 													: ""
 											)}
@@ -538,9 +538,9 @@ export const AddPalmVeinAccess: React.FC<AddGatewayModalProps> = ({
 										</label>
 										<select
 											className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-											name="status_gateway"
+											name="status_palm_vein_access_control"
 											onChange={handleChange}
-											value={formState.status_gateway}
+											value={formState.status_palm_vein_access_control}
 											disabled={isDetail}
 										>
 											<option disabled value="">
@@ -554,7 +554,7 @@ export const AddPalmVeinAccess: React.FC<AddGatewayModalProps> = ({
 										</select>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "status_gateway"
+												item === "status_palm_vein_access_control"
 													? "Pilih Status Gateway"
 													: ""
 											)}

@@ -4,10 +4,10 @@ import { AddAutoGateDual } from "./ModalAdd";
 import { DeleteAutoGateDualModal } from "./ModalDelete";
 import { Alerts } from "./Alert";
 import {
-	apiReadGateway,
-	apiDeleteGateway,
-	apiCreateGateway,
-	apiUpdateGateway,
+	apiReadAutoGateDual,
+	apiCreateAutoGateDual,
+	apiUpdateAutoGateDual,
+	apiDeleteAutoGateDual,
 } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
@@ -137,15 +137,15 @@ const AutoGateDualSystemList = () => {
 	const handleSearchClick = async () => {
 		let params = {
 			filter: {
-				nama_gateway: filter,
-				status_gateway: filterStatus,
+				nama_autogate_dual: filter,
+				status_autogate_dual: filterStatus,
 				nama_lokasi_otmil: "Cimahi",
 			},
 			page: currentPage,
 			pageSize: pageSize,
 		};
 		try {
-			const response = await apiReadGateway(params.filter, token);
+			const response = await apiReadAutoGateDual(params.filter, token);
 			setPages(response.data.pagination.totalPages);
 			setRows(response.data.pagination.totalRecords);
 			if (response.status === 200) {
@@ -197,7 +197,7 @@ const AutoGateDualSystemList = () => {
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadGateway(params, token);
+			const response = await apiReadAutoGateDual(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
@@ -254,7 +254,7 @@ const AutoGateDualSystemList = () => {
 	// function untuk menghapus data
 	const handleSubmitDelete = async (params: any) => {
 		try {
-			const responseDelete = await apiDeleteGateway(params, token);
+			const responseDelete = await apiDeleteAutoGateDual(params, token);
 			if (responseDelete.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -287,7 +287,7 @@ const AutoGateDualSystemList = () => {
 	const handleSubmitAdd = async (params: any) => {
 		console.log("DATA DARI LIST", params);
 		try {
-			const responseCreate = await apiCreateGateway(params, token);
+			const responseCreate = await apiCreateAutoGateDual(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -320,7 +320,7 @@ const AutoGateDualSystemList = () => {
 	const handleSubmitEdit = async (params: any) => {
 		console.log(params, "edit");
 		try {
-			const responseEdit = await apiUpdateGateway(params, token);
+			const responseEdit = await apiUpdateAutoGateDual(params, token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -546,7 +546,7 @@ const AutoGateDualSystemList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black dark:text-white">
-											{item.nama_gateway}
+											{item.nama_autogate_dual}
 										</p>
 									</div>
 									<div
@@ -561,15 +561,15 @@ const AutoGateDualSystemList = () => {
 										onClick={() => handleDetailClick(item)}
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
-										{item.status_gateway === "aktif" ? (
+										{item.status_autogate_dual === "aktif" ? (
 											<p className="text-green-500 dark:text-green-300">
 												Aktif
 											</p>
-										) : item.status_gateway === "tidak" ? (
+										) : item.status_autogate_dual === "tidak" ? (
 											<p className="text-red-500 dark:text-red-300">
 												Tidak Aktif
 											</p>
-										) : item.status_gateway === "rusak" ? (
+										) : item.status_autogate_dual === "rusak" ? (
 											<p className="text-yellow-500 dark:text-yellow-300">
 												Rusak
 											</p>

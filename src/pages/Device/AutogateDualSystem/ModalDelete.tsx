@@ -83,7 +83,7 @@ export const DeleteAutoGateDualModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama auto gate dual{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_autogate_dual}</span>{' '}
                 akan dihapus
               </p>
             </div>
