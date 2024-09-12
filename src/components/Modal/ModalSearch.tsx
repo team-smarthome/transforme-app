@@ -33,7 +33,7 @@ import {
 } from "../../utils/atomstates";
 import { useAtom } from "jotai";
 import { FaTrashAlt } from "react-icons/fa";
-import { apiGedungOtmilRead, apiLantaiOtmilRead, apiReadAllRuanganOtmil, apiReadGateway } from "../../services/api";
+import { apiGedungOtmilRead, apiLantaiOtmilRead, apiReadAccessDoorDashboard, apiReadAllRuanganOtmil, apiReadDesktopDashboard, apiReadGateway, apiReadKamera, apiReadNVRDashboard, apiReadRoutesDashboard, apiReadTVDashboard } from "../../services/api";
 import Loader from "../../common/Loader";
 import SearchInputButtonModal from "../BuildingMap/components/Search";
 
@@ -92,7 +92,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   //Fiter Device
 
-  const [filterGateWay, setFilterGateWay] = useState("");
+  const [filterInputSearch, setFilterInputSearch] = useState("");
   const [selectedStatusGateWay, setSelectedStatusGateWay] = useState("");
 
   const [filterCamera, setFilterCamera] = useState("");
@@ -103,6 +103,12 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
   const [selectedNVR, setSelectedNVR] = useState("");
   const [selectedStatusNVR, setSelectedStatusNVR] = useState("");
+
+  const [selectedStatusPTP, setSelectedStatusPTP] = useState("");
+
+  const [selectedStatusAccessDoor, setSelectedStatusAccessDoor] = useState("");
+
+  const [selectedStatusDesktop, setSelectedStatusDesktop] = useState("");
 
   /* Data WBP */
   const [filteredData, setFilteredData] = useState(datawbpSearch);
@@ -242,17 +248,23 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
   const handleSelectRoom = (e: any) => {
     const selectedRoomId = e.target.value;
     setSelectedRoom(selectedRoomId); // Reset selected room when floor changes
-    setFilterGateWay("");
-    setFilterCamera("");
+    setFilterInputSearch("");
+    // setFilterCamera("");
     // setSelectedStatusGateWay("");
   };
 
   //Handle GateWay
 
-  const handleFilterGateWay = (e: any) => {
+  const handleFilterInputSearch = (e: any) => {
     const newFilter = e.target.value;
-    setFilterGateWay(newFilter);
+    setFilterInputSearch(newFilter);
     setSelectedStatusGateWay(""); // Reset selected room when floor changes
+    setSelectedStatusKamera("");
+    setSelectedStatusTv("");
+    setSelectedStatusNVR("");
+    setSelectedStatusPTP("");
+    setSelectedStatusAccessDoor("");
+    setSelectedStatusDesktop("");
   };
 
   const handleSelecStatustGateWay = (e: any) => {
@@ -268,7 +280,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     setSelectedStatusKamera(""); // Reset selected room when floor changes
   };
 
-  const handleSelecStatustCamera = (e: any) => {
+  const handleSelectStatusCamera = (e: any) => {
     const selectedStatusCameraId = e.target.value;
     setSelectedStatusKamera(selectedStatusCameraId);
   };
@@ -299,6 +311,25 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     setSelectedStatusNVR(selectedStatusNVRId);
   };
 
+  //Handle PTP
+
+  const handleSelecStatustPTP = (e: any) => {
+    const selectedStatusPTPId = e.target.value;
+    setSelectedStatusPTP(selectedStatusPTPId);
+  };
+
+  //Handle Access Door
+  const handleSelecStatustAccessDoor = (e: any) => {
+    const selectedStatusAccessDoorId = e.target.value;
+    setSelectedStatusAccessDoor(selectedStatusAccessDoorId);
+  };
+
+  //Handle Desktop
+  const handleSelecStatustDesktop = (e: any) => {
+    const selectedStatusDesktopId = e.target.value;
+    setSelectedStatusDesktop(selectedStatusDesktopId);
+  };
+
   const handleClickRoom = (roomId: any) => {
     console.log("id", roomId);
     setSelectedRoom(roomId);
@@ -321,15 +352,77 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     //     }
     //   }
     // }
-    const params = {
-      filter: {
-        ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
-        ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
-        ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
-        ...(filterGateWay && { nama_gateway: filterGateWay }),
-        ...(selectedStatusGateWay && { status_gateway: selectedStatusGateWay }),
-      }
-    };
+    let params
+    hoverData === "Gateway" ?
+      (
+        params = {
+          filter: {
+            ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+            ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+            ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+            ...(filterInputSearch && { nama_gateway: filterInputSearch }),
+            ...(selectedStatusGateWay && { status_gateway: selectedStatusGateWay }),
+          }
+        }
+      ) : hoverData === "Camera" ?
+        (
+          params = {
+            filter: {
+              ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+              ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+              ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+              ...(filterInputSearch && { nama_kamera: filterInputSearch }),
+              ...(selectedStatusKamera && { status_kamera: selectedStatusKamera }),
+            }
+          }
+        ) : hoverData === "TV" ?
+          (params = {
+            filter: {
+              ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+              ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+              ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+              ...(filterInputSearch && { nama_tv: filterInputSearch }),
+              ...(selectedStatusTv && { status_tv: selectedStatusTv }),
+            }
+          }) : hoverData === "NVR" ?
+            (params = {
+              filter: {
+                ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+                ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+                ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+                ...(filterInputSearch && { nama_nvr: filterInputSearch }),
+                ...(selectedStatusNVR && { status_nvr: selectedStatusNVR }),
+              }
+            }) : hoverData === "PTP" ?
+            (params = {
+              filter: {
+                ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+                ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+                ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+                ...(filterInputSearch && { nama_access_point: filterInputSearch }),
+                ...(selectedStatusPTP && { status_access_point: selectedStatusPTP }),
+              }
+            }) : hoverData === "Access" ?
+            (params = {
+              filter: {
+                ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+                ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+                ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+                ...(filterInputSearch && { nama_access_door: filterInputSearch }),
+                ...(selectedStatusAccessDoor && { status_access_door: selectedStatusAccessDoor }),
+              }
+            }) : hoverData === "Desktop" ?
+            (params = {
+              filter: {
+                ...(selectedBuilding && { gedung_otmil_id: selectedBuilding }),
+                ...(selectedFloor && { lantai_otmil_id: selectedFloor }),
+                ...(selectedRoom && { ruangan_otmil_id: selectedRoom }),
+                ...(filterInputSearch && { nama_desktop: filterInputSearch }),
+                ...(selectedStatusDesktop && { status_desktop: selectedStatusDesktop }),
+              }
+            })
+            : (params = {})
+
 
     // Hapus `filter` jika semua nilai kosong
     if (Object.keys(params.filter).length === 0) {
@@ -352,8 +445,32 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
       // }
       console.log(requestParams.length === 0 ? "Masuk ke Kosong" : "Masuk ke Filter");
 
-      const { data } = await apiReadGateway(requestParams, token?.token);
-      setDataList(data?.records);
+      if (hoverData === "Gateway") {
+        const { data } = await apiReadGateway(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "Camera") {
+        const { data } = await apiReadKamera(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "TV") {
+        const { data } = await apiReadTVDashboard(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "NVR") {
+        const { data } = await apiReadNVRDashboard(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "PTP") {
+        const { data } = await apiReadRoutesDashboard(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "Access") {
+        const { data } = await apiReadAccessDoorDashboard(requestParams, token?.token);
+        setDataList(data?.records);
+      } else if (hoverData === "Desktop") {
+        const { data } = await apiReadDesktopDashboard(requestParams, token?.token);
+        setDataList(data?.records);
+      } else {
+        console.log("Tidak masuk ke API Manapun");
+        
+      }
+
       // setPagination({
       //   ...pagination,
       //   total: data?.pages?.meta?.total || 0,
@@ -739,8 +856,8 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
     setIsLoading(false);
   };
 
-  console.log(dataList.length,"Panjang data list bro");
-  
+  console.log(dataList.length, "Panjang data list bro");
+
 
   const fetchDataLantai = async () => {
     setIsLoading(true);
@@ -1066,9 +1183,9 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             <>
               <div className="search">
                 <SearchInputButtonModal
-                  value={filterGateWay}
+                  value={filterInputSearch}
                   placehorder="Cari nama GateWay"
-                  onChange={handleFilterGateWay}
+                  onChange={handleFilterInputSearch}
                 />
               </div>
               {/* <select
@@ -1089,7 +1206,7 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
             </>
           )}
 
-          {filterGateWay && hoverData === "Gateway" && (
+          {filterInputSearch && hoverData === "Gateway" && (
             <>
               <select
                 value={selectedStatusGateWay}
@@ -1108,7 +1225,19 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
           {/* Filter Kamera */}
 
-          {selectedRoom && hoverData === "Camera" && (
+          {hoverData === "Camera" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama Camera"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
+            </>
+          )}
+
+          {/* {selectedRoom && hoverData === "Camera" && (
             <>
               <div className="search">
                 <SearchInputButtonModal
@@ -1117,63 +1246,41 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
                   onChange={handleFilterCamera}
                 />
               </div>
-              {/* <select
-              value={selectedKamera}
-              onChange={handleSelectCamera
-              }
-              className="p-2 border rounded w-36 bg-meta-4 font-semibold"
-            >
-              <option disabled value="">
-                Pilih Camera
-              </option>
-              <option value="Kamera1">Kamera1</option>
-              <option value="Kamera2">Kamera2</option>
-            </select> */}
             </>
-          )}
+          )} */}
 
-          {filterCamera && hoverData === "Camera" && (
+          {filterInputSearch && hoverData === "Camera" && (
             <>
               <select
                 value={selectedStatusKamera}
-                onChange={handleSelecStatustCamera
+                onChange={handleSelectStatusCamera
                 }
                 className="p-2 border rounded w-36 bg-meta-4 font-semibold"
               >
                 <option disabled value="">
                   Pilih Status Camera
                 </option>
-                <option value="aktif">Online</option>
-                <option value="tidak">Offline</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
               </select>
             </>
           )}
 
           {/* Filter Tv */}
 
-          {selectedRoom && hoverData === "TV" && (
+          {hoverData === "TV" && (
             <>
-              <select
-                value={selectedTv}
-                onChange={handleSelectTv
-                }
-                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
-              >
-                <option disabled value="">
-                  Pilih TV
-                </option>
-                <option value="Televisi1">Televisi1</option>
-                <option value="Televisi2">Televisi2</option>
-                {/* {optionsGateWay.map((item) => (
-              <option key={item.gateway_id} value={item.gateway_id}>
-                {item.nama_gateway}
-              </option>
-            ))} */}
-              </select>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama TV"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
             </>
           )}
 
-          {selectedTv && hoverData === "TV" && (
+          {filterInputSearch && hoverData === "TV" && (
             <>
               <select
                 value={selectedStatusTv}
@@ -1192,29 +1299,19 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
 
           {/* Filter NVR */}
 
-          {selectedRoom && hoverData === "NVR" && (
+          {hoverData === "NVR" && (
             <>
-              <select
-                value={selectedNVR}
-                onChange={handleSelectNVR
-                }
-                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
-              >
-                <option disabled value="">
-                  Pilih NVR
-                </option>
-                <option value="NVR 1">NVR 1</option>
-                <option value="NVR 2">NVR 2</option>
-                {/* {optionsGateWay.map((item) => (
-              <option key={item.gateway_id} value={item.gateway_id}>
-                {item.nama_gateway}
-              </option>
-            ))} */}
-              </select>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama NVR"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
             </>
           )}
 
-          {selectedNVR && hoverData === "NVR" && (
+          {filterInputSearch && hoverData === "NVR" && (
             <>
               <select
                 value={selectedStatusNVR}
@@ -1224,6 +1321,99 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
               >
                 <option disabled value="">
                   Pilih Status NVR
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter PTP */}
+
+          {hoverData === "PTP" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama PTP"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
+            </>
+          )}
+
+          {filterInputSearch && hoverData === "PTP" && (
+            <>
+              <select
+                value={selectedStatusPTP}
+                onChange={handleSelecStatustPTP
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status PTP
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter Access Door */}
+
+          {hoverData === "Access" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama Access Door"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
+            </>
+          )}
+
+          {filterInputSearch && hoverData === "Access" && (
+            <>
+              <select
+                value={selectedStatusAccessDoor}
+                onChange={handleSelecStatustAccessDoor
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status Access Door
+                </option>
+                <option value="aktif">Online</option>
+                <option value="tidak">Offline</option>
+              </select>
+            </>
+          )}
+
+          {/* Filter Desktop */}
+
+          {hoverData === "Desktop" && (
+            <>
+              <div className="search">
+                <SearchInputButtonModal
+                  value={filterInputSearch}
+                  placehorder="Cari nama Desktop"
+                  onChange={handleFilterInputSearch}
+                />
+              </div>
+            </>
+          )}
+
+          {filterInputSearch && hoverData === "Desktop" && (
+            <>
+              <select
+                value={selectedStatusDesktop}
+                onChange={handleSelecStatustDesktop
+                }
+                className="p-2 border rounded w-36 bg-meta-4 font-semibold"
+              >
+                <option disabled value="">
+                  Pilih Status Desktop
                 </option>
                 <option value="aktif">Online</option>
                 <option value="tidak">Offline</option>
@@ -1367,9 +1557,447 @@ function ModalSearch({ handleClose, hoverData }: ModalSearchProps) {
           })}
         </>
 
+      ) : (hoverData === "Camera" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-5"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama Kamera
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Merk Kamera
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Model Kamera
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status Kamera
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_kamera}
+                    </p>
+                  </div>
+                  <div
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.merk}
+                    </p>
+                  </div>
+                  <div
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.model}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_kamera === "online" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_kamera === "offline" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+      ) : (hoverData === "TV" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-4"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama TV
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Model TV
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status TV
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_tv}
+                    </p>
+                  </div>
+                  <div
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.model}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_tv === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_tv === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+      ) : (hoverData === "NVR" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-3"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama NVR
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status NVR
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_nvr}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_nvr === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_nvr === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+      ) : (hoverData === "PTP" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-3"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama PTP
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status PTP
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_access_point}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_access_point === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_access_point === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+      ) : (hoverData === "Access" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-3"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama Access Door
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status Access Door
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_access_door}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_access_door === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_access_door === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
+      ) : (hoverData === "Desktop" && dataList.length > 0) ? (
+        <>
+          <div className="flex flex-col mt-3">
+            <div
+              className="grid rounded-t-md bg-gray-2 dark:bg-slate-600 grid-cols-3"
+            >
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Nama Desktop
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Status Desktop
+                </h5>
+              </div>
+              <div className="p-2.5 text-center xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  Ruangan
+                </h5>
+              </div>
+            </div>
+          </div>
+          {dataList.map((item: any) => {
+            return (
+              <div>
+                <div
+                  className={"grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4"}
+                >
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_desktop}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.status_desktop === "aktif" ? (
+                        <p className="text-green-500 dark:text-green-300">
+                          Online
+                        </p>
+                      ) : item.status_desktop === "tidak" ? (
+                        <p className="text-red-500 dark:text-red-300">
+                          Offline
+                        </p>
+                      ) : null}
+                    </p>
+                  </div>
+                  <div
+                    // onClick={() => handleDetailClick(item)}
+                    className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                  >
+                    <p className="text-black dark:text-white">
+                      {item.nama_ruangan_otmil}
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-slate-600"></div>
+              </div>
+            );
+          })}
+        </>
       ) :
         <div className="flex flex-col mt-3 justify-center items-center h-full">
-          <p className="text-2xl">Data tidak ada! (Silahkan tekan tombol cari!)</p>
+          <p className="text-xl text-slate-400 pt-8">Data tidak ada! (Silahkan tekan tombol cari!)</p>
         </div>
         // null
       }
