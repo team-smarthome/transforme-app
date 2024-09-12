@@ -4584,6 +4584,234 @@ export async function apiCreateGateway(params, token) {
 	}
 }
 
+export async function apiReadAutoGateDual(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "autogate_dual_system",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateAutoGateDual(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: newwebserviceurl + "autogate_dual_system",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateAutoGateDual(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "autogate_dual_system",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteAutoGateDual(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "autogate_dual_system",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadAutoGateSingle(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "autogate_single",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateAutoGateSingle(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "autogate_single",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateAutoGateSingle(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "autogate_single",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteAutoGateSingle(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "autogate_single",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadPalmVeinAccess(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "palm_vein_access_control",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreatePalmVeinAccess(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "palm_vein_access_control",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdatePalmVeinAccess(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "palm_vein_access_control",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeletePalmVeinAccess(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "palm_vein_access_control",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
 export async function apiReadNvr(params, token) {
 	try {
 		const response = await axios({

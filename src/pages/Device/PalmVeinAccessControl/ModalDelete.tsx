@@ -83,7 +83,7 @@ export const DeletePalmVeinAccessModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama palm vein access{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_palm_vein_access_control}</span>{' '}
                 akan dihapus
               </p>
             </div>
