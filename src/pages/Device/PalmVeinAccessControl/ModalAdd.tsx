@@ -204,8 +204,8 @@ export const AddPalmVeinAccess: React.FC<AddGatewayModalProps> = ({
 		e.preventDefault();
 		console.log(formState, "formState");
 
-		// if (!validateForm()) return;
-		// setButtonLoad(true);
+		if (!validateForm()) return;
+		setButtonLoad(true);
 
 		onSubmit(formState).then(() => setButtonLoad(false));
 		// closeModal();

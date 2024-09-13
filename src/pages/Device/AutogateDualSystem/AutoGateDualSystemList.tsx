@@ -25,8 +25,8 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
 	gmac: string;
-	nama_gateway: string;
-	status_gateway: string;
+	nama_autogate_dual: string;
+	status_autogate_dual: string;
 	jumlah_gateway: string;
 	lokasi_otmil_id: string;
 	ruangan_otmil_id: string;
@@ -362,20 +362,20 @@ const AutoGateDualSystemList = () => {
 	const exportToExcel = async () => {
 		const dataToExcel = [
 			[
-				"Nama Gateway",
+				"Nama Auto Gate Dual",
 				"GMAC",
-				"status gateway",
+				"status autogatedual",
 				"Nama Lokasi Otmil",
 				"Nama Ruangan Otmil",
 				// "Zona",
 			],
 			...data.map((item: any) => [
-				item.nama_gateway,
+				item.nama_autogate_dual,
 				item.gmac,
-				// item.status_gateway,
-				item.status_gateway === "tidak"
+				// item.status_autogate_dual,
+				item.status_autogate_dual === "tidak"
 					? "tidak aktif"
-					: item.status_gateway,
+					: item.status_autogate_dual,
 				item.nama_lokasi_otmil,
 				item.nama_ruangan_otmil,
 				// item.status_zona_ruangan_otmil,
@@ -387,7 +387,7 @@ const AutoGateDualSystemList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-AutoGate Dual ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 
@@ -423,7 +423,7 @@ const AutoGateDualSystemList = () => {
 							</div>
 							<select
 								className="ml-2 w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark  dark:focus:border-primary"
-								name="status_gateway"
+								name="status_autogate_dual"
 								value={filterStatus}
 								onChange={handleFilterChangeStatus}
 								id="p-status"

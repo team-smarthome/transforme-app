@@ -4,10 +4,6 @@ import { AddPalmVeinAccess } from "./ModalAdd";
 import { DeletePalmVeinAccessModal } from "./ModalDelete";
 import { Alerts } from "./Alert";
 import {
-	apiReadGateway,
-	apiDeleteGateway,
-	apiCreateGateway,
-	apiUpdateGateway,
 	apiReadPalmVeinAccess,
 	apiCreatePalmVeinAccess,
 	apiUpdatePalmVeinAccess,
@@ -29,7 +25,7 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
 	gmac: string;
-	nama_gateway: string;
+	nama_palm_vein_access_control: string;
 	status_palm_vein_access_control: string;
 	jumlah_gateway: string;
 	lokasi_otmil_id: string;
@@ -141,8 +137,8 @@ const PalmVeinAccessControlList = () => {
 	const handleSearchClick = async () => {
 		let params = {
 			filter: {
-				nama_gateway: filter,
-				status_gateway: filterStatus,
+				nama_palm_vein_access_control: filter,
+				status_palm_vein_access_control: filterStatus,
 				nama_lokasi_otmil: "Cimahi",
 			},
 			page: currentPage,
@@ -366,20 +362,20 @@ const PalmVeinAccessControlList = () => {
 	const exportToExcel = async () => {
 		const dataToExcel = [
 			[
-				"Nama Gateway",
+				"Nama Palm Vein",
 				"GMAC",
-				"status gateway",
+				"status palmvein",
 				"Nama Lokasi Otmil",
 				"Nama Ruangan Otmil",
 				// "Zona",
 			],
 			...data.map((item: any) => [
-				item.nama_gateway,
+				item.nama_palm_vein_access_control,
 				item.gmac,
-				// item.status_gateway,
-				item.status_gateway === "tidak"
+				// item.status_palm_vein_access_control,
+				item.status_palm_vein_access_control === "tidak"
 					? "tidak aktif"
-					: item.status_gateway,
+					: item.status_palm_vein_access_control,
 				item.nama_lokasi_otmil,
 				item.nama_ruangan_otmil,
 				// item.status_zona_ruangan_otmil,
@@ -391,7 +387,7 @@ const PalmVeinAccessControlList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-PalmVein ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 
@@ -427,7 +423,7 @@ const PalmVeinAccessControlList = () => {
 							</div>
 							<select
 								className="ml-2 w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark  dark:focus:border-primary"
-								name="status_gateway"
+								name="status_palm_vein_access_control"
 								value={filterStatus}
 								onChange={handleFilterChangeStatus}
 								id="p-status"

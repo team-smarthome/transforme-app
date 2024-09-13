@@ -362,20 +362,20 @@ const RegistrationKiosList = () => {
 	const exportToExcel = async () => {
 		const dataToExcel = [
 			[
-				"Nama Gateway",
+				"Nama RegistrationKios",
 				"GMAC",
-				"status gateway",
+				"status registrationkios",
 				"Nama Lokasi Otmil",
 				"Nama Ruangan Otmil",
 				// "Zona",
 			],
 			...data.map((item: any) => [
-				item.nama_gateway,
+				item.nama_registration_kios,
 				item.gmac,
 				// item.status_gateway,
-				item.status_gateway === "tidak"
+				item.status_registration_kios === "tidak"
 					? "tidak aktif"
-					: item.status_gateway,
+					: item.status_registration_kios,
 				item.nama_lokasi_otmil,
 				item.nama_ruangan_otmil,
 				// item.status_zona_ruangan_otmil,
@@ -387,7 +387,7 @@ const RegistrationKiosList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-RegistrationKios ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 
