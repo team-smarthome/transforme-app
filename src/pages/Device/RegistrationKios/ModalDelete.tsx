@@ -83,7 +83,7 @@ export const DeleteRegistrationKiosModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama registration kios{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_registration_kios}</span>{' '}
                 akan dihapus
               </p>
             </div>

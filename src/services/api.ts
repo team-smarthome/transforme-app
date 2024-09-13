@@ -4812,6 +4812,386 @@ export async function apiDeletePalmVeinAccess(params, token) {
 	}
 }
 
+export async function apiReadRegistrationKios(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "registration_kios",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateRegistrationKios(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "registration_kios",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateRegistrationKios(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "registration_kios",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteRegistrationKios(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "registration_kios",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadMesinXray(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "xray_mechine",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateMesinXray(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "xray_mechine",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateMesinXray(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "xray_mechine",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteMesinXray(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "xray_mechine",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadSmartLocker(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "smartlocker",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateSmartLocker(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "smartlocker",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateSmartLocker(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "smartlocker",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadGateParking(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "gate_parking",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateGateParking(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "gate_parking",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateGateParking(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "gate_parking",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteGateParking(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "gate_parking",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiReadEmergencyPushButton(params, token) {
+	try {
+		const response = await axios({
+			method: "get",
+			url: webserviceurl + "emergency_push_button",
+			params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiCreateEmergencyPushButton(params, token) {
+	try {
+		const response = await axios({
+			method: "post",
+			url: webserviceurl + "emergency_push_button",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiUpdateEmergencyPushButton(params, token) {
+	try {
+		const response = await axios({
+			method: "put",
+			url: webserviceurl + "emergency_push_button",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteEmergencyPushButton(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "emergency_push_button",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+export async function apiDeleteSmartLocker(params, token) {
+	try {
+		const response = await axios({
+			method: "delete",
+			url: webserviceurl + "smartlocker",
+			data: params,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		console.log(params);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
 export async function apiReadNvr(params, token) {
 	try {
 		const response = await axios({

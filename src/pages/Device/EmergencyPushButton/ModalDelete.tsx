@@ -83,7 +83,7 @@ export const DeleteEmergencyPushButtonModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama emergency push button{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_emergency_push_button}</span>{' '}
                 akan dihapus
               </p>
             </div>

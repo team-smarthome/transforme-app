@@ -4,10 +4,10 @@ import { AddMesinXray } from "./ModalAdd";
 import { DeleteMesinXrayModal } from "./ModalDelete";
 import { Alerts } from "./Alert";
 import {
-	apiReadGateway,
-	apiDeleteGateway,
-	apiCreateGateway,
-	apiUpdateGateway,
+	apiReadMesinXray,
+	apiCreateMesinXray,
+	apiUpdateMesinXray,
+	apiDeleteMesinXray,
 } from "../../../services/api";
 import Pagination from "../../../components/Pagination";
 import SearchInputButton from "../Search";
@@ -25,8 +25,8 @@ import { Breadcrumbs } from "../../../components/Breadcrumbs";
 
 interface Item {
 	gmac: string;
-	nama_gateway: string;
-	status_gateway: string;
+	nama_xray_mechine: string;
+	status_xray_mechine: string;
 	jumlah_gateway: string;
 	lokasi_otmil_id: string;
 	ruangan_otmil_id: string;
@@ -137,15 +137,15 @@ const MesinXrayList = () => {
 	const handleSearchClick = async () => {
 		let params = {
 			filter: {
-				nama_gateway: filter,
-				status_gateway: filterStatus,
+				nama_xray_mechine: filter,
+				status_xray_mechine: filterStatus,
 				nama_lokasi_otmil: "Cimahi",
 			},
 			page: currentPage,
 			pageSize: pageSize,
 		};
 		try {
-			const response = await apiReadGateway(params.filter, token);
+			const response = await apiReadMesinXray(params.filter, token);
 			setPages(response.data.pagination.totalPages);
 			setRows(response.data.pagination.totalRecords);
 			if (response.status === 200) {
@@ -197,7 +197,7 @@ const MesinXrayList = () => {
 		};
 		setIsLoading(true);
 		try {
-			const response = await apiReadGateway(params, token);
+			const response = await apiReadMesinXray(params, token);
 			if (response.data.status !== "OK") {
 				throw new Error(response.data.message);
 			}
@@ -254,7 +254,7 @@ const MesinXrayList = () => {
 	// function untuk menghapus data
 	const handleSubmitDelete = async (params: any) => {
 		try {
-			const responseDelete = await apiDeleteGateway(params, token);
+			const responseDelete = await apiDeleteMesinXray(params, token);
 			if (responseDelete.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -287,7 +287,7 @@ const MesinXrayList = () => {
 	const handleSubmitAdd = async (params: any) => {
 		console.log("DATA DARI LIST", params);
 		try {
-			const responseCreate = await apiCreateGateway(params, token);
+			const responseCreate = await apiCreateMesinXray(params, token);
 			if (responseCreate.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -320,7 +320,7 @@ const MesinXrayList = () => {
 	const handleSubmitEdit = async (params: any) => {
 		console.log(params, "edit");
 		try {
-			const responseEdit = await apiUpdateGateway(params, token);
+			const responseEdit = await apiUpdateMesinXray(params, token);
 			if (responseEdit.data.status === "OK") {
 				Alerts.fire({
 					icon: "success",
@@ -370,12 +370,12 @@ const MesinXrayList = () => {
 				// "Zona",
 			],
 			...data.map((item: any) => [
-				item.nama_gateway,
+				item.nama_xray_mechine,
 				item.gmac,
-				// item.status_gateway,
-				item.status_gateway === "tidak"
+				// item.status_xray_mechine,
+				item.status_xray_mechine === "tidak"
 					? "tidak aktif"
-					: item.status_gateway,
+					: item.status_xray_mechine,
 				item.nama_lokasi_otmil,
 				item.nama_ruangan_otmil,
 				// item.status_zona_ruangan_otmil,
@@ -387,7 +387,7 @@ const MesinXrayList = () => {
 		xlsx.utils.book_append_sheet(wb, ws, "Sheet1");
 		xlsx.writeFile(
 			wb,
-			`Data-Gateway ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
+			`Data-MesinXray ${dayjs(new Date()).format("DD-MM-YYYY HH.mm")}.xlsx`
 		);
 	};
 
@@ -423,7 +423,7 @@ const MesinXrayList = () => {
 							</div>
 							<select
 								className="ml-2 w-3/6 text-sm rounded border border-stroke  dark:text-gray dark:bg-slate-800 py-1 pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark  dark:focus:border-primary"
-								name="status_gateway"
+								name="status_xray_mechine"
 								value={filterStatus}
 								onChange={handleFilterChangeStatus}
 								id="p-status"
@@ -546,7 +546,7 @@ const MesinXrayList = () => {
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
 										<p className="text-black dark:text-white">
-											{item.nama_gateway}
+											{item.nama_xray_mechine}
 										</p>
 									</div>
 									<div
@@ -561,15 +561,15 @@ const MesinXrayList = () => {
 										onClick={() => handleDetailClick(item)}
 										className="cursor-pointer hidden items-center justify-center p-2.5 sm:flex xl:p-5"
 									>
-										{item.status_gateway === "aktif" ? (
+										{item.status_xray_mechine === "aktif" ? (
 											<p className="text-green-500 dark:text-green-300">
 												Aktif
 											</p>
-										) : item.status_gateway === "tidak" ? (
+										) : item.status_xray_mechine === "tidak" ? (
 											<p className="text-red-500 dark:text-red-300">
 												Tidak Aktif
 											</p>
-										) : item.status_gateway === "rusak" ? (
+										) : item.status_xray_mechine === "rusak" ? (
 											<p className="text-yellow-500 dark:text-yellow-300">
 												Rusak
 											</p>

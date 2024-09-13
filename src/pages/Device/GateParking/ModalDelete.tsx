@@ -83,7 +83,7 @@ export const DeleteGateParkingModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama gate parking{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_gate_parking}</span>{' '}
                 akan dihapus
               </p>
             </div>

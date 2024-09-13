@@ -51,9 +51,9 @@ export const AddGateParking: React.FC<AddGatewayModalProps> = ({
 
 	const [formState, setFormState] = useState(
 		defaultValue || {
-			nama_gateway: "",
+			nama_gate_parking: "",
 			gmac: "",
-			status_gateway: "",
+			status_gate_parking: "",
 			jumlah_gateway: 1,
 			lokasi_otmil_id: "",
 			nama_lokasi_otmil: "",
@@ -490,16 +490,16 @@ export const AddGateParking: React.FC<AddGatewayModalProps> = ({
 										</label>
 										<input
 											className="w-full rounded border border-stroke  py-[11px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary i-nama"
-											name="nama_gateway"
+											name="nama_gate_parking"
 											placeholder="Nama Gate Parking"
 											onChange={handleChange}
-											value={formState.nama_gateway}
+											value={formState.nama_gate_parking}
 											disabled={isDetail}
 										/>
 										<p className="error-text p-0 m-0">
 											{errors.map((item) =>
-												item === "nama_gateway"
-													? "Pilih gateway"
+												item === "nama_gate_parking"
+													? "Pilih gateparking"
 													: ""
 											)}
 										</p>
@@ -538,9 +538,9 @@ export const AddGateParking: React.FC<AddGatewayModalProps> = ({
 										</label>
 										<select
 											className="w-full rounded border border-stroke py-[13.5px] pl-3 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-slate-800 dark:text-white dark:focus:border-primary p-status"
-											name="status_gateway"
+											name="status_gate_parking"
 											onChange={handleChange}
-											value={formState.status_gateway}
+											value={formState.status_gate_parking}
 											disabled={isDetail}
 										>
 											<option disabled value="">
@@ -554,7 +554,7 @@ export const AddGateParking: React.FC<AddGatewayModalProps> = ({
 										</select>
 										<p className="error-text">
 											{errors.map((item) =>
-												item === "status_gateway"
+												item === "status_gate_parking"
 													? "Pilih Status Gateway"
 													: ""
 											)}

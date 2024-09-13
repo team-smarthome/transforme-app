@@ -83,7 +83,7 @@ export const DeleteMesinXrayModal = ({
               </p>
               <p className="text-sm text-center text-black dark:text-white">
                 Nama mesin xray{' '}
-                <span className="text-red-400">{formState.nama_gateway}</span>{' '}
+                <span className="text-red-400">{formState.nama_xray_mechine}</span>{' '}
                 akan dihapus
               </p>
             </div>
